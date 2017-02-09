@@ -26,6 +26,7 @@ namespace hub_client
         public static GameClient Client { get; private set; }
 
         #region Windows
+        private static Login _login;
         private static Chat _chat;
         #endregion
 
@@ -39,9 +40,10 @@ namespace hub_client
 
             Client = new GameClient();
             _chat = new Chat(Client.ChatAdmin);
+            _login = new Login();
 
             StartConnexion();
-            _chat.Show();
+            _login.Show();
         }
 
         public static void StartConnexion()

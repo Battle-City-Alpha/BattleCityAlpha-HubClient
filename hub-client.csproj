@@ -75,7 +75,28 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Windows\Controls\BCA_BlurLabel.xaml.cs">
+      <DependentUpon>BCA_BlurLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
+      <DependentUpon>BCA_Button.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\Chat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_BlurLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -99,6 +120,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Icons\BCA.ico" />
+    <Resource Include="Assets\Background\yu_gi_oh___render__by_alanmac95-d9s3y4s.png" />
+    <Resource Include="Assets\Background\yugioh_movie_2016__render__by_alanmac95-d8zw5iq.png" />
+    <Resource Include="Assets\Background\yugioh_cover_by_alanmac95-datss57.jpg" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

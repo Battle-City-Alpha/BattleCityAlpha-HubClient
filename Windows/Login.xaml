@@ -1,0 +1,57 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Battle City Alpha - Connexion" Height="215.301" Width="470.804" Icon="/hub-client;component/Assets/Icons/BCA.ico" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Window.Background>
+        <ImageBrush ImageSource="/hub-client;component/Assets/Background/yugioh_cover_by_alanmac95-datss57.jpg"/>
+    </Window.Background>
+    <Grid Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="134*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,-0.4,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_BlurLabel x:Name="lblUsername"  Grid.Row="0" Grid.Column="0" Width="Auto" Height="Auto"/>
+            <TextBox Grid.Column="1" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,-0.4,31.8" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_BlurLabel x:Name="lblPassword"  Grid.Row="1" Grid.Column="0" Width="Auto" Height="Auto"/>
+            <TextBox Grid.Column="1" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Controls:BCA_BlurLabel x:Name="lblForgottenPassword"  Grid.Row="2" Grid.Column="0" Width="Auto" Height="Auto"/>
+            <Controls:BCA_BlurLabel x:Name="lblRegister"  Grid.Row="2" Grid.Column="1" Width="Auto" Height="Auto"/>
+            
+            <CheckBox Content="Se souvenir" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontStretch="Expanded" FontStyle="Oblique" FontWeight="Medium" TextOptions.TextFormattingMode="Display" BorderBrush="Black">
+                <CheckBox.Effect>
+                    <DropShadowEffect BlurRadius="10"/>
+                </CheckBox.Effect>
+            </CheckBox>
+        </Grid>
+        <Controls:BCA_Button Grid.Row="3" Grid.Column="1"/>
+    </Grid>
+</Window>
