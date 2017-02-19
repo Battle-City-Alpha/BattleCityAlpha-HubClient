@@ -25,16 +25,19 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
         }
 
-        public void InitLabel(string text, int fontsize = -1)
+        public void InitLabel(string text, Color front, Color back, int fontsize = -1)
         {
             lblBackground.Content = text;
             lblText.Content = text;
 
             if (fontsize != -1)
             {
-                lblBackground.FontSize = fontsize;
+                lblBackground.FontSize = fontsize + 5;
                 lblText.FontSize = fontsize;
             }
+
+            lblBackground.Background = new SolidColorBrush(back);
+            lblText.Foreground = new SolidColorBrush(front);
 
         }
     }

@@ -122,8 +122,24 @@
     </EmbeddedResource>
     <Resource Include="Assets\Icons\BCA.ico" />
     <Resource Include="Assets\Background\yu_gi_oh___render__by_alanmac95-d9s3y4s.png" />
-    <Resource Include="Assets\Background\yugioh_movie_2016__render__by_alanmac95-d8zw5iq.png" />
     <Resource Include="Assets\Background\yugioh_cover_by_alanmac95-datss57.jpg" />
+    <Resource Include="Assets\Background\astrograph_sorcerer__artwork__by_alanmac95-daslic0.png" />
+    <Resource Include="Assets\Background\magician_s_archive__artwork__by_alanmac95-d9s038v.jpg" />
+    <Resource Include="Assets\Background\red_eyes_toon_dragon__anime__by_alanmac95-d9q0ed1.jpg" />
+    <Resource Include="Assets\Background\odd_eyes_toon_rebellion_dragon_by_alanmac95-dakhyxv.jpg" />
+    <Resource Include="Assets\Background\blue_eyes_alternative_toon_dragon_by_alanmac95-daolh4z.jpg" />
+    <Resource Include="Assets\Background\bearded_griffin_by_ink_leviathan-dacbdph.png" />
+    <Resource Include="Assets\Background\at__celestkirin_by_ink_leviathan-d8ejou6.png" />
+    <Resource Include="Assets\Background\eye_of_the_storm_by_ink_leviathan-da115u1.png" />
+    <Resource Include="Assets\Background\yu_gi_oh__your_move_by_ink_leviathan-d7m7xyg.jpg" />
+    <Resource Include="Assets\Background\Sans titre 2.png" />
+    <Resource Include="Assets\Background\yugi.png" />
+    <Resource Include="Assets\Background\yu_gi_oh___minerva_lightsworn_saint_by_kurosakikeroro-d8z7ctb.jpg" />
+    <Resource Include="Assets\Background\at__the_wanderer_by_ink_leviathan-d99auwe.png" />
+    <Resource Include="Assets\Background\king_gauntly__old_character__by_ink_leviathan-d8svcfq.png" />
+    <Resource Include="Assets\Background\your_special_place_in_hell_by_ink_leviathan-d9bjcsp.png" />
+    <Resource Include="Assets\Background\boo.png" />
+    <Resource Include="Assets\Background\test.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

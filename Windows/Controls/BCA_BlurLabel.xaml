@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hub_client.Windows.Controls"
-             mc:Ignorable="d" Height="34.427" Width="113.24">
+             mc:Ignorable="d">
     <Grid>
-        <Label x:Name="lblBackground" Content="Some Text" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF292929" Opacity="0.4">
+        <Label x:Name="lblBackground" FontFamily="Dosis" Content="Some Text" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF0600FF" Opacity="0.6">
             <Label.Effect>
-                <BlurEffect Radius="20"/>
+                <BlurEffect Radius="30"/>
             </Label.Effect>
         </Label>
-        <Label x:Name="lblText" Content="Some Text" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+        <Label x:Name="lblText" FontFamily="Dosis" Content="Some Text" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 </UserControl>

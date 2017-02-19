@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Connexion" Height="215.301" Width="470.804" Icon="/hub-client;component/Assets/Icons/BCA.ico" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Window.Background>
-        <ImageBrush ImageSource="/hub-client;component/Assets/Background/yugioh_cover_by_alanmac95-datss57.jpg"/>
+        <ImageBrush ImageSource="/hub-client;component/Assets/Background/yugi.png" Stretch="UniformToFill"/>
     </Window.Background>
-    <Grid Margin="0,10,0,0">
+    <Grid Margin="0,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="43*"/>
             <ColumnDefinition Width="134*"/>
@@ -17,41 +17,139 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,-0.4,0">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Controls:BCA_BlurLabel x:Name="lblUsername"  Grid.Row="0" Grid.Column="0" Width="Auto" Height="Auto"/>
-            <TextBox Grid.Column="1" Margin="5"/>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label FontFamily="Dosis" FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            </Border>
+            <TextBox Grid.Column="1" FontSize="22" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+                <TextBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </TextBox.Background>
+            </TextBox>
         </Grid>
-        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,-0.4,31.8" Grid.RowSpan="2">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,3,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Controls:BCA_BlurLabel x:Name="lblPassword"  Grid.Row="1" Grid.Column="0" Width="Auto" Height="Auto"/>
-            <TextBox Grid.Column="1" Margin="5"/>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label FontFamily="Dosis" FontSize="15" Content="Mot de passe:" Foreground="White"/>
+            </Border>
+            <Controls:BCA_BlurLabel x:Name="lblPassword"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+            <PasswordBox Grid.Column="1" Margin="5,3" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+                <PasswordBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </PasswordBox.Background>
+            </PasswordBox>
         </Grid>
-        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Controls:BCA_BlurLabel x:Name="lblForgottenPassword"  Grid.Row="2" Grid.Column="0" Width="Auto" Height="Auto"/>
-            <Controls:BCA_BlurLabel x:Name="lblRegister"  Grid.Row="2" Grid.Column="1" Width="Auto" Height="Auto"/>
-            
-            <CheckBox Content="Se souvenir" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontStretch="Expanded" FontStyle="Oblique" FontWeight="Medium" TextOptions.TextFormattingMode="Display" BorderBrush="Black">
-                <CheckBox.Effect>
-                    <DropShadowEffect BlurRadius="10"/>
-                </CheckBox.Effect>
-            </CheckBox>
+            <Border BorderThickness="1" CornerRadius="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" RenderTransformOrigin="0.5,0.5" BorderBrush="White">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform x:Name="rotateTransform" Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="rotateTransform"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="-5" Duration="0:0:0.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="rotateTransform"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="-5" To="0" Duration="0:0:0.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.8,0" SpreadMethod="Reflect">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="#FF051952" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Label FontFamily="Dosis" FontSize="15" Content="S'inscrire !" Foreground="White"/>
+            </Border>
+            <Border BorderThickness="1" CornerRadius="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" RenderTransformOrigin="0.5,0.5" BorderBrush="White">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform x:Name="rotateTransform1" Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="rotateTransform1"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="-5" Duration="0:0:0.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="rotateTransform1"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="-5" To="0" Duration="0:0:0.5"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.8,0.3" SpreadMethod="Reflect">
+                        <GradientStop Color="#FF0B0B1F" Offset="0"/>
+                        <GradientStop Color="#FF0C2262" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Label FontFamily="Dosis" FontSize="15" Content="Mot de passe oublié" Foreground="White"/>
+            </Border>
+
+
         </Grid>
-        <Controls:BCA_Button Grid.Row="3" Grid.Column="1"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <CheckBox  FontFamily="Dosis" Content="Se souvenir" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontStretch="Expanded" FontStyle="Oblique" FontWeight="Medium" TextOptions.TextFormattingMode="Display" BorderBrush="Black" FontSize="15" Padding="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Border>
+            <Controls:BCA_Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Window>

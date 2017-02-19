@@ -24,30 +24,17 @@ namespace hub_client.Windows.Controls
         public BCA_Button()
         {
             InitializeComponent();
+            text.InitLabel("Jouer", Colors.White, (Color)ColorConverter.ConvertFromString("#FF0600FF"), 22);
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DoubleAnimation da = new DoubleAnimation();
-            da.From = 1;
-            da.To = 0.5;
-            da.Duration = new Duration(TimeSpan.FromSeconds(1));
-            da.AutoReverse = true;
-            da.RepeatBehavior = RepeatBehavior.Forever;
-            border.Background.BeginAnimation(OpacityProperty, da);
-            border.Background.Opacity = 0.5;
+            border.BorderThickness = new Thickness(3);
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        private void border_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DoubleAnimation da = new DoubleAnimation();
-            da.From = 0.5;
-            da.To = 1;
-            da.Duration = new Duration(TimeSpan.FromSeconds(1));
-            da.AutoReverse = true;
-            da.RepeatBehavior = RepeatBehavior.Forever;
-            border.Background.BeginAnimation(OpacityProperty, da);
-            border.Background.Opacity = 1;
+            border.BorderThickness = new Thickness(2);
         }
     }
 }

@@ -22,10 +22,6 @@ namespace hub_client.Windows
         public Login()
         {
             InitializeComponent();
-            lblUsername.InitLabel("Nom d'utilisateur:");
-            lblPassword.InitLabel("Mot de passe:");
-            lblForgottenPassword.InitLabel("Mot de passe oublié:");
-            lblRegister.InitLabel("S'inscrire !");
         }
     }
 }
