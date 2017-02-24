@@ -1,17 +1,258 @@
-﻿<Window x:Class="hub_client.Windows.Chat"
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Chat"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
+        xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
         mc:Ignorable="d"
-        Title="Chat" Height="300" Width="300">
-    <Grid>
+        Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <RichTextBox x:Name="chat" Grid.Row="0" Height="Auto" Width="Auto" Padding="5" />
-        <TextBox x:Name="chatTB" Grid.Row="1" Height="Auto" Width="Auto" Margin="5" KeyUp="TextBox_KeyUp"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène"/>
+            <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique"/>
+            <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks"/>
+            <Controls:BCA_ColorButton x:Name="btnRanking" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Classement"/>
+            <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="25,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="349*"/>
+                    <RowDefinition Height="38*"/>
+                </Grid.RowDefinitions>
+                <Controls:BCA_Listbox Margin="10" Grid.Row="0"/>
+                <Controls:BCA_TextBox Margin="10,0,10,10" Grid.Row="1"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="349*"/>
+                    <RowDefinition Height="38*"/>
+                </Grid.RowDefinitions>
+                <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10"/>
+                <Controls:BCA_TextBox Grid.Row="1" Margin="10,0,10,10"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <wpfspark:ToggleSwitch
+                               ThumbWidth="25"
+                               BorderThickness="2"
+                               CheckedForeground="White"
+                               CheckedText="Actif"
+                               CornerRadius="10"
+                               FontFamily="Dosis"
+                               FontSize="22"
+                               FontWeight="Normal"
+                               Height="37"
+                               HorizontalAlignment="Left"
+                               x:Name="AfkSwitch"
+                               Padding="0"
+                               ThumbBorderThickness="2"
+                               ThumbCornerRadius="7"
+                               ThumbGlowColor="Gray"
+                               ThumbShineCornerRadius="6,6,3,3"
+                               UncheckedForeground="White"
+                               UncheckedText="Absent"
+                               VerticalAlignment="Center"
+                               Width="100" Margin="58,0,0,0" BorderBrush="White">
+                <wpfspark:ToggleSwitch.UncheckedBackground>
+                    <LinearGradientBrush EndPoint="0,1"
+                                     StartPoint="0.5,0.5" SpreadMethod="Reflect" Opacity="0.85">
+                        <GradientStop Color="#FFDF0E0E"
+                                  Offset="0.1" />
+                        <GradientStop Color="#FF9C0E0E"
+                                  Offset="0.5" />
+                        <GradientStop Color="#FF650505"
+                                  Offset="1" />
+                    </LinearGradientBrush>
+                </wpfspark:ToggleSwitch.UncheckedBackground>
+                <wpfspark:ToggleSwitch.CheckedBackground>
+                    <LinearGradientBrush EndPoint="0,1"
+                                     StartPoint="0.5,0.5" SpreadMethod="Reflect" Opacity="0.85">
+                        <GradientStop Color="#FF16CA52"
+                                  Offset="0" />
+                        <GradientStop Color="#FF118E37"
+                                  Offset="0.52" />
+                        <GradientStop Color="#FF0C2F0B"
+                                  Offset="1" />
+                    </LinearGradientBrush>
+                </wpfspark:ToggleSwitch.CheckedBackground>
+                <wpfspark:ToggleSwitch.ThumbBackground>
+                    <LinearGradientBrush EndPoint="0,1"
+                                     StartPoint="0,0">
+                        <GradientStop Color="#FF28172C"
+                                  Offset="0" />
+                        <GradientStop Color="#A5A5A5"
+                                  Offset="0.5" />
+                        <GradientStop Color="#FCFCF6"
+                                  Offset="1" />
+                    </LinearGradientBrush>
+                </wpfspark:ToggleSwitch.ThumbBackground>
+                <wpfspark:ToggleSwitch.ThumbBorderBrush>
+                    <LinearGradientBrush EndPoint="0,1"
+                                     StartPoint="0,0">
+                        <GradientStop Color="#F6F6F6"
+                                  Offset="0" />
+                        <GradientStop Color="#959595"
+                                  Offset="0.5" />
+                        <GradientStop Color="#565656"
+                                  Offset="1" />
+                    </LinearGradientBrush>
+                </wpfspark:ToggleSwitch.ThumbBorderBrush>
+            </wpfspark:ToggleSwitch>
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="4.4,0,343.6,-0.2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Controls:BCA_ColorButton x:Name="btnProfil" Width="Auto" Height="Auto" Margin="5" Grid.Column="0" ButtonText="Profil" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951">
+                    <Controls:BCA_ColorButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Controls:BCA_ColorButton.RenderTransform>
+                </Controls:BCA_ColorButton>
+                <Controls:BCA_ColorButton x:Name="btnFAQ" Width="Auto" Height="Auto" Margin="5" Grid.Column="1" ButtonText="FAQ" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnFAQ_MouseLeftButtonDown">
+                    <Controls:BCA_ColorButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Controls:BCA_ColorButton.RenderTransform>
+                </Controls:BCA_ColorButton>
+                <Controls:BCA_ColorButton x:Name="btnCGU" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="CGU" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnCGU_MouseLeftButtonDown">
+                    <Controls:BCA_ColorButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Controls:BCA_ColorButton.RenderTransform>
+                </Controls:BCA_ColorButton>
+                <Controls:BCA_ColorButton x:Name="btnNote" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" RenderTransformOrigin="0.5,0.5" ButtonTextSize="22" Color1="#FF280E69" Color2="#FF410951">
+                    <Controls:BCA_ColorButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Controls:BCA_ColorButton.RenderTransform>
+                </Controls:BCA_ColorButton>
+                <Image Width="Auto" Height="Auto" Grid.Column="3" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="/hub-client;component/Assets/Logo/Notes.png">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform x:Name="rotateTransform" Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="Image.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="rotateTransform"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="-3" Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Image.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="rotateTransform"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="-3" To="0" Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+                </Image>
+                <Controls:BCA_ColorButton x:Name="btnDiscord" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951">
+                    <Controls:BCA_ColorButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Controls:BCA_ColorButton.RenderTransform>
+                </Controls:BCA_ColorButton>
+                <Image Width="Auto" Height="Auto" Grid.Column="4" Source="pack://siteoforigin:,,,/Assets/Logo/Discord.png" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeftButtonUp="Image_MouseLeftButtonUp">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform x:Name="rotateTransform1" Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="Image.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="rotateTransform1"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="-3" Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Image.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="rotateTransform1"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="-3" To="0" Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+                </Image>
+            </Grid>
+            <Controls:BCA_ColorButton x:Name="btnChannel" Width="203" Height="Auto" Margin="0,5,29.6,4.8" Grid.Column="2" ButtonText="Place" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FFEA1313" Color2="#FF5F0B08" HorizontalAlignment="Right" MouseLeftButtonDown="BtnAnimations_MouseLeftButtonDown">
+                <Controls:BCA_ColorButton.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Controls:BCA_ColorButton.RenderTransform>
+            </Controls:BCA_ColorButton>
+        </Grid>
     </Grid>
 </Window>

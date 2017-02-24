@@ -21,10 +21,30 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_Button : UserControl
     {
+        public static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register
+            (
+                 "ButtonText",
+                 typeof(string),
+                 typeof(BCA_Button),
+                 new PropertyMetadata(string.Empty)
+            );
+
+        public string ButtonText
+        {
+            get { return (string)GetValue(ButtonTextProperty); }
+            set { SetValue(ButtonTextProperty, value); }
+        }
+
+
         public BCA_Button()
         {
             InitializeComponent();
-            text.InitLabel("Jouer", Colors.White, (Color)ColorConverter.ConvertFromString("#FF0600FF"), 22);
+            this.Loaded += BCA_Button_Loaded;
+        }
+
+        private void BCA_Button_Loaded(object sender, RoutedEventArgs e)
+        {
+            text.InitLabel(ButtonText, Colors.White, (Color)ColorConverter.ConvertFromString("#FF14126E"), 22);
         }
 
         private void border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -22,6 +22,7 @@ namespace hub_client
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public static AppConfig AppConfig;
+        public static AppDesignConfig AppDesignConfig;
 
         public static GameClient Client { get; private set; }
 
@@ -33,17 +34,33 @@ namespace hub_client
         public static void Init()
         {
             string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");
+            string AppDesignConfigPath = Path.Combine(path, "style.json");
+
             if (File.Exists(AppConfigPath))
                 AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
             else
                 AppConfig = new AppConfig();
+            if (File.Exists(AppDesignConfigPath))
+                AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
+            else
+                AppDesignConfig = new AppDesignConfig();
+
+            SaveConfig(AppConfigPath, AppDesignConfigPath);
 
             Client = new GameClient();
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login();
 
             StartConnexion();
-            _login.Show();
+            _chat.Show();
+        }
+
+        public static void SaveConfig(string ConfigPath, string DesignConfigPath)
+        {
+            if (!Directory.Exists(ConfigPath))
+                Directory.CreateDirectory(Path.Combine(AppDataPath, "BattleCityAlphaLauncher"));
+            File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(AppConfig));
+            File.WriteAllText(DesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
         }
 
         public static void StartConnexion()

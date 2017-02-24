@@ -34,7 +34,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\Icon\BCA.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -45,6 +55,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,13 +71,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFSpark">
+      <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\WPFSpark.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\AppDesignConfig.cs" />
     <Compile Include="Configuration\AppTools.cs" />
+    <Compile Include="Enums\MessageType.cs" />
     <Compile Include="FormExecution.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
@@ -81,8 +100,26 @@
     <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
       <DependentUpon>BCA_Button.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Controls\BCA_RichTextBox.xaml.cs">
+      <DependentUpon>BCA_RichTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_ColorButton.xaml.cs">
+      <DependentUpon>BCA_ColorButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_Listbox.xaml.cs">
+      <DependentUpon>BCA_Listbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_TextBox.xaml.cs">
+      <DependentUpon>BCA_TextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Notes.xaml.cs">
+      <DependentUpon>Notes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PopBox.xaml.cs">
+      <DependentUpon>PopBox.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\Chat.xaml">
       <SubType>Designer</SubType>
@@ -96,7 +133,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Controls\BCA_RichTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_ColorButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_Listbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Notes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PopBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,26 +181,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Assets\Icons\BCA.ico" />
-    <Resource Include="Assets\Background\yu_gi_oh___render__by_alanmac95-d9s3y4s.png" />
-    <Resource Include="Assets\Background\yugioh_cover_by_alanmac95-datss57.jpg" />
-    <Resource Include="Assets\Background\astrograph_sorcerer__artwork__by_alanmac95-daslic0.png" />
-    <Resource Include="Assets\Background\magician_s_archive__artwork__by_alanmac95-d9s038v.jpg" />
-    <Resource Include="Assets\Background\red_eyes_toon_dragon__anime__by_alanmac95-d9q0ed1.jpg" />
-    <Resource Include="Assets\Background\odd_eyes_toon_rebellion_dragon_by_alanmac95-dakhyxv.jpg" />
-    <Resource Include="Assets\Background\blue_eyes_alternative_toon_dragon_by_alanmac95-daolh4z.jpg" />
-    <Resource Include="Assets\Background\bearded_griffin_by_ink_leviathan-dacbdph.png" />
-    <Resource Include="Assets\Background\at__celestkirin_by_ink_leviathan-d8ejou6.png" />
-    <Resource Include="Assets\Background\eye_of_the_storm_by_ink_leviathan-da115u1.png" />
-    <Resource Include="Assets\Background\yu_gi_oh__your_move_by_ink_leviathan-d7m7xyg.jpg" />
-    <Resource Include="Assets\Background\Sans titre 2.png" />
-    <Resource Include="Assets\Background\yugi.png" />
-    <Resource Include="Assets\Background\yu_gi_oh___minerva_lightsworn_saint_by_kurosakikeroro-d8z7ctb.jpg" />
-    <Resource Include="Assets\Background\at__the_wanderer_by_ink_leviathan-d99auwe.png" />
-    <Resource Include="Assets\Background\king_gauntly__old_character__by_ink_leviathan-d8svcfq.png" />
-    <Resource Include="Assets\Background\your_special_place_in_hell_by_ink_leviathan-d9bjcsp.png" />
-    <Resource Include="Assets\Background\boo.png" />
-    <Resource Include="Assets\Background\test.png" />
+    <Resource Include="Assets\Icon\BCA.ico" />
+    <None Include="app.manifest" />
+    <None Include="Assets\Background\Button.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\Login.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\Chat.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Logo\Discord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Assets\Logo\Notes.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

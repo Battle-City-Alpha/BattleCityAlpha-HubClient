@@ -1,0 +1,27 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Notes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Notes" Height="511.829" Width="485.122" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Controls:BCA_Chat x:Name="notesBox" Margin="5"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_ColorButton x:Name="btnSave" Grid.Column="0" Margin="5" ButtonText="Sauvegarder" ButtonTextSize="22" Width="Auto" Height="Auto" MouseLeftButtonDown="btnSave_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnClear" Grid.Column="1" Margin="5" ButtonText="Réinitialiser" ButtonTextSize="22" Width="Auto" Height="Auto" MouseLeftButtonDown="btnClear_MouseLeftButtonDown"/>
+        </Grid>
+    </Grid>
+</Window>
