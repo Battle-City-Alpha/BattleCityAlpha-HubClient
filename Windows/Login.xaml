@@ -61,7 +61,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border BorderThickness="1" CornerRadius="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" RenderTransformOrigin="0.5,0.5" BorderBrush="White">
+            <Border x:Name="btnRegister" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" RenderTransformOrigin="0.5,0.5" BorderBrush="White" MouseLeftButtonDown="Border_MouseLeftButtonDown" MouseLeftButtonUp="btnRegister_MouseLeftButtonUp">
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>

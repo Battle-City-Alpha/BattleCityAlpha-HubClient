@@ -54,9 +54,9 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="162*"/>
+                <ColumnDefinition Width="212*"/>
+                <ColumnDefinition Width="147*"/>
             </Grid.ColumnDefinitions>
             <wpfspark:ToggleSwitch
                                ThumbWidth="25"
@@ -78,7 +78,7 @@
                                UncheckedForeground="White"
                                UncheckedText="Absent"
                                VerticalAlignment="Center"
-                               Width="100" Margin="58,0,0,0" BorderBrush="White">
+                               Width="100" Margin="58,14,0,13.8" BorderBrush="White">
                 <wpfspark:ToggleSwitch.UncheckedBackground>
                     <LinearGradientBrush EndPoint="0,1"
                                      StartPoint="0.5,0.5" SpreadMethod="Reflect" Opacity="0.85">
@@ -124,7 +124,7 @@
                     </LinearGradientBrush>
                 </wpfspark:ToggleSwitch.ThumbBorderBrush>
             </wpfspark:ToggleSwitch>
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="4.4,0,343.6,-0.2" >
+            <Grid Grid.Column="1" Margin="5,0,5,-0.2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -152,7 +152,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Controls:BCA_ColorButton x:Name="btnCGU" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="CGU" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnCGU_MouseLeftButtonDown">
+                <Controls:BCA_ColorButton x:Name="btnReplay" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="Replay" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnCGU_MouseLeftButtonDown">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -172,7 +172,8 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Image Width="Auto" Height="Auto" Grid.Column="3" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="/hub-client;component/Assets/Logo/Notes.png">
+
+                <Image Width="Auto" Height="Auto" Grid.Column="3" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="pack://siteoforigin:,,,/Assets/Logo/Notes.png">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -201,7 +202,7 @@
                             </BeginStoryboard>
                         </EventTrigger>
                     </Image.Triggers>
-                </Image>
+                </Image>                
                 <Controls:BCA_ColorButton x:Name="btnDiscord" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
@@ -254,5 +255,6 @@
                 </Controls:BCA_ColorButton.RenderTransform>
             </Controls:BCA_ColorButton>
         </Grid>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="1129,335.2,-187,0" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

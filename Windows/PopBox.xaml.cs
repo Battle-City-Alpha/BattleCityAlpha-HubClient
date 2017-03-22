@@ -22,11 +22,12 @@ namespace hub_client.Windows
     {
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
-        public PopBox(string txt)
+        public PopBox(string txt, string title)
         {
             InitializeComponent();
-            popText.Content = txt;
+            popText.Text = txt;
             Loaded += PopBox_Loaded;
+            Title = title;
         }
 
         public void LoadStyle()

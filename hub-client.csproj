@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\System.Windows.Interactivity.dll</HintPath>
@@ -84,8 +85,12 @@
     <Compile Include="Configuration\AppTools.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="FormExecution.cs" />
+    <Compile Include="Helpers\HardwareIdManager.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
+    <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\RegisterAdminstrator.cs" />
     <Compile Include="Windows\Chat.xaml.cs">
       <DependentUpon>Chat.xaml</DependentUpon>
     </Compile>
@@ -120,6 +125,9 @@
     </Compile>
     <Compile Include="Windows\PopBox.xaml.cs">
       <DependentUpon>PopBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Register.xaml.cs">
+      <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\Chat.xaml">
       <SubType>Designer</SubType>
@@ -161,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Network\GameClient.cs" />
@@ -195,9 +207,12 @@
     <None Include="Assets\Logo\Discord.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="Assets\Logo\Notes.png" />
+    <None Include="Assets\Logo\Notes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
@@ -214,9 +229,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\BCA.Network\BCA.Network.csproj">
+    <ProjectReference Include="..\Libraries\BCA.Network\BCA.csproj">
       <Project>{4E818F97-BB68-461C-8F2C-A03F8D3EF9E4}</Project>
-      <Name>BCA.Network</Name>
+      <Name>BCA</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

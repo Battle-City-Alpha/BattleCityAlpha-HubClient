@@ -16,5 +16,10 @@ namespace hub_client
     {
         private Logger logger = LogManager.GetCurrentClassLogger();
         Main BCA = new hub_client.Main();
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            logger.Trace("[APPLICATION] Exit : sender -> {0}, reason -> {1}", sender.ToString(), e.ToString());
+        }
     }
 }

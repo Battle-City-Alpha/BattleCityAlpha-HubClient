@@ -18,7 +18,7 @@
             <Border.Background>
                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
             </Border.Background>
-            <Label x:Name="popText" FontFamily="Dosis" FontSize="16" Content="Nom d'utilisateur:" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <TextBlock x:Name="popText" Margin="5" FontFamily="Dosis" FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
         </Border>
         <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Height="Auto" Width="120" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
     </Grid>

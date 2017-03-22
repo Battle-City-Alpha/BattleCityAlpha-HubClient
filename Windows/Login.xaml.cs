@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hub_client.WindowsAdministrator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,23 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Login : Window
     {
-        public Login()
+        LoginAdminstrator _admin;
+
+        public Login(LoginAdminstrator admin)
         {
             InitializeComponent();
+            _admin = admin;
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            btnRegister.BorderThickness = new Thickness(2);
+            FormExecution.OpenRegisterForm();
+        }
+
+        private void btnRegister_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            btnRegister.BorderThickness = new Thickness(1);
         }
     }
 }

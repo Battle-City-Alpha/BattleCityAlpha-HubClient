@@ -1,4 +1,5 @@
 ﻿using hub_client.Configuration;
+using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,13 +22,15 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Notes : Window
     {
+        private NotesAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
         string path;
 
-        public Notes()
+        public Notes(NotesAdministrator admin)
         {
             InitializeComponent();
             Loaded += Notes_Loaded;
+            _admin = admin;
             path = System.IO.Path.Combine(FormExecution.path, "notes.bca");
         }
 
@@ -52,8 +55,7 @@ namespace hub_client.Windows
         private void btnSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             File.WriteAllText(path, notesBox.GetText());
-            PopBox box = new PopBox("Contenu sauvegardé !");
-            box.Show();
+            _admin.Client.OpenPopBox("Contenu sauvegardé !", "Opération réussie");
         }
 
         private void btnClear_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

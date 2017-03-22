@@ -1,4 +1,5 @@
 ﻿using hub_client.Configuration;
+using hub_client.Helpers;
 using hub_client.Network;
 using hub_client.Windows;
 using Newtonsoft.Json;
@@ -21,6 +22,8 @@ namespace hub_client
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
+        public static string HID = HardwareIdManager.GetId();
+
         public static AppConfig AppConfig;
         public static AppDesignConfig AppDesignConfig;
 
@@ -28,6 +31,7 @@ namespace hub_client
 
         #region Windows
         private static Login _login;
+        private static Register _register;
         private static Chat _chat;
         #endregion
 
@@ -48,11 +52,20 @@ namespace hub_client
             SaveConfig(AppConfigPath, AppDesignConfigPath);
 
             Client = new GameClient();
+            Client.PopMessageBox += Client_PopMessageBox;
+
             _chat = new Chat(Client.ChatAdmin);
-            _login = new Login();
+            _login = new Login(Client.LoginAdmin);
 
             StartConnexion();
-            _chat.Show();
+            _login.Show();
+            logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_PopMessageBox(string text, string title)
+        {
+            PopBox box = new PopBox(text, title);
+            box.ShowDialog();
         }
 
         public static void SaveConfig(string ConfigPath, string DesignConfigPath)
@@ -61,10 +74,12 @@ namespace hub_client
                 Directory.CreateDirectory(Path.Combine(AppDataPath, "BattleCityAlphaLauncher"));
             File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(AppConfig));
             File.WriteAllText(DesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
+            logger.Trace("Config Saved.");
         }
 
         public static void StartConnexion()
         {
+            logger.Trace("Attempt of connexion...");
 #if DEBUG
             Client.Connect(IPAddress.Parse("127.0.0.1"), 9100);
 #else
@@ -83,6 +98,13 @@ namespace hub_client
         {
             Client.Update();
             Task.Delay(1).ContinueWith((previous) => UpdateNetwork());
+        }
+
+        public static void OpenRegisterForm()
+        {
+            logger.Trace("Open register form");
+            _register = new Register(Client.RegisterAdmin);
+            _register.Show();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace hub_client.Windows
             List<BCA_ColorButton> HeadButtons = new List<BCA_ColorButton>();
             HeadButtons.AddRange(new[] { btnArene, btnShop, btnDecks, btnRanking, btnTools });
             List<BCA_ColorButton> BottomButtons = new List<BCA_ColorButton>();
-            BottomButtons.AddRange(new[] { btnProfil, btnFAQ, btnCGU, btnNote, btnDiscord });
+            BottomButtons.AddRange(new[] { btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord });
 
             foreach(BCA_ColorButton btn in HeadButtons)
             {
@@ -118,7 +118,7 @@ namespace hub_client.Windows
         private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             btnNote.ClickedAnimation();
-            Notes note = new Notes();
+            Notes note = new Notes(_admin.Client.NotesAdmin);
             note.Show();
         }
 
