@@ -24,5 +24,15 @@ namespace hub_client.Windows.Controls
         {
             InitializeComponent();
         }
+
+        public string GetText()
+        {
+            return tbChat.Text;
+        }
+
+        public void Clear()
+        {
+            tbChat.Clear();
+        }
     }
 }

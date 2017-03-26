@@ -9,7 +9,7 @@
         <Border.Background>
             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
         </Border.Background>
-        <RichTextBox x:Name="chat" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" FontFamily="Dosis" BorderBrush="{x:Null}" BorderThickness="0">
+        <RichTextBox x:Name="chat" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" FontFamily="Dosis" BorderBrush="{x:Null}" BorderThickness="0" IsReadOnly="True">
             
         </RichTextBox>
     </Border>

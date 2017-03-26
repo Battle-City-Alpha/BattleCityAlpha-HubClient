@@ -55,9 +55,9 @@ namespace hub_client.Windows
             if (password == passwordConfirm)
                 _admin.Client.Send(PacketType.Register, new StandardClientRegister
                 {
-                    username = username,
-                    password = CryptoManager.Encryption(password, encryptKey),
-                    email = email,
+                    Username = username,
+                    Password = CryptoManager.Encryption(password, encryptKey),
+                    Email = email,
                     HID = HID
                 });
             else

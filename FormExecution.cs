@@ -49,9 +49,13 @@ namespace hub_client
             else
                 AppDesignConfig = new AppDesignConfig();
 
+
+            AppDesignConfig = new AppDesignConfig(); //To debug config
+
             SaveConfig(AppConfigPath, AppDesignConfigPath);
 
             Client = new GameClient();
+
             Client.PopMessageBox += Client_PopMessageBox;
 
             _chat = new Chat(Client.ChatAdmin);
@@ -60,6 +64,13 @@ namespace hub_client
             StartConnexion();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        public static bool CanCloseApp()
+        {
+            if (_chat == null)
+                return true;
+            return false;
         }
 
         private static void Client_PopMessageBox(string text, string title)

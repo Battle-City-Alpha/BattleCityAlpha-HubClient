@@ -23,21 +23,20 @@ namespace hub_client.Windows.Controls
         public BCA_Chat()
         {
             InitializeComponent();
+            Clear();
         }
 
         public void OnColoredMessage(Color color, string text, bool IsBold, bool IsItalic)
         {
-            Brush b = new SolidColorBrush(color);
-            TextRange tr = new TextRange(chat.Document.ContentEnd, chat.Document.ContentEnd);
-            tr.Text = text;
-            tr.ApplyPropertyValue(TextElement.ForegroundProperty, b);
-            tr.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
-            tr.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
+            Paragraph pr = new Paragraph(new Run("["+DateTime.Now.ToString("HH:mm")+"]"+text));
+            pr.FontFamily = new FontFamily("Dosis");
             if (IsBold)
-                tr.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                pr.FontWeight = FontWeights.Bold;
             if (IsItalic)
-                tr.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Italic);
-            this.chat.AppendText(Environment.NewLine);
+                pr.FontStyle = FontStyles.Italic;
+            pr.Foreground = new SolidColorBrush(color);
+            pr.Margin = new Thickness(0);
+            chat.Document.Blocks.Add(pr);
             ScrollToCarret();
         }
 

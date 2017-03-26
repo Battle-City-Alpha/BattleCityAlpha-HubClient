@@ -10,6 +10,6 @@
         <Border.Background>
             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
         </Border.Background>
-        <ListBox x:Name="lb" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" FontSize="14" Foreground="Black"/>
+        <ListBox x:Name="lb" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" FontSize="16" Foreground="Black"/>
     </Border>
 </UserControl>

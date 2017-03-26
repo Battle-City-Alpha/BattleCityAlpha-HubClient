@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Connexion" Height="215.301" Width="470.804" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Battle City Alpha - Connexion" Height="215.301" Width="470.804" ResizeMode="NoResize" WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Login.png" Stretch="UniformToFill"/>
     </Window.Background>
@@ -31,7 +32,7 @@
                 </Border.Background>
                 <Label FontFamily="Dosis" FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
             </Border>
-            <TextBox Grid.Column="1" FontSize="22" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox x:Name="tbUsername" Grid.Column="1" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </TextBox.Background>
@@ -49,7 +50,7 @@
                 <Label FontFamily="Dosis" FontSize="15" Content="Mot de passe:" Foreground="White"/>
             </Border>
             <Controls:BCA_BlurLabel x:Name="lblPassword"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
-            <PasswordBox Grid.Column="1" Margin="5,3" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+            <PasswordBox x:Name="pbPassword" Grid.Column="1" Margin="5,3" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center" FontSize="15">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </PasswordBox.Background>
@@ -147,9 +148,9 @@
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.7"/>
                 </Border.Background>
-                <CheckBox  FontFamily="Dosis" Content="Se souvenir" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontStretch="Expanded" FontStyle="Oblique" FontWeight="Medium" TextOptions.TextFormattingMode="Display" BorderBrush="Black" FontSize="15" Padding="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <CheckBox x:Name="cbRememberMe"  FontFamily="Dosis" Content="Se souvenir" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontStretch="Expanded" FontStyle="Oblique" FontWeight="Medium" TextOptions.TextFormattingMode="Display" BorderBrush="Black" FontSize="15" Padding="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Border>
-            <Controls:BCA_Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" ButtonText="Jouer"/>
+            <Controls:BCA_Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" ButtonText="Jouer" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>
         </Grid>
     </Grid>
 </Window>

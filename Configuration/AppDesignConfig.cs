@@ -17,5 +17,11 @@ namespace hub_client.Configuration
         public Color Color2HomePlaceButton = (Color)ColorConverter.ConvertFromString("#FF5F0B08");
         public Color Color1HomeAnimationButton = (Color)ColorConverter.ConvertFromString("#FF149A2D");
         public Color Color2HomeAnimationButton = (Color)ColorConverter.ConvertFromString("#FF005613");
+
+
+        public Color StandardMessageColor = Colors.Black;
+        public Color AnimationMessageColor = Colors.OrangeRed;
+        public Color InformationMessageColor = Colors.DarkBlue;
+        public Color LauncherMessageColor = Colors.DarkViolet;
     }
 }

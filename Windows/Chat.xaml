@@ -40,8 +40,8 @@
                     <RowDefinition Height="349*"/>
                     <RowDefinition Height="38*"/>
                 </Grid.RowDefinitions>
-                <Controls:BCA_Listbox Margin="10" Grid.Row="0"/>
-                <Controls:BCA_TextBox Margin="10,0,10,10" Grid.Row="1"/>
+                <Controls:BCA_Listbox x:Name="lbUserlist" Margin="10" Grid.Row="0"/>
+                <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -49,7 +49,7 @@
                     <RowDefinition Height="38*"/>
                 </Grid.RowDefinitions>
                 <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10"/>
-                <Controls:BCA_TextBox Grid.Row="1" Margin="10,0,10,10"/>
+                <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,0,10,5" KeyUp="tbChat_KeyUp"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">

@@ -1,4 +1,5 @@
-﻿using BCA.Network.Packets.Enums;
+﻿using BCA.Network.Packets;
+using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
@@ -32,8 +33,33 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             _admin = admin;
+
             _admin.ChatMessage += _admin_ChatMessage;
             this.Loaded += Chat_Loaded;
+            _admin.LoginComplete += _admin_LoginComplete;
+            _admin.AddHubPlayer += _admin_AddHubPlayer;
+            _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
+        }
+
+        private void _admin_RemoveHubPlayer(string username)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                lbUserlist.RemoveItem(username);
+            });
+        }
+
+        private void _admin_AddHubPlayer(string username)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                lbUserlist.AddItem(username);
+            });
+        }
+
+        private void _admin_LoginComplete()
+        {
+            Show();
         }
 
         private void Chat_Loaded(object sender, RoutedEventArgs e)
@@ -65,22 +91,9 @@ namespace hub_client.Windows
             btnChannel.Update();
         }
 
-        private void _admin_ChatMessage(string msg)
+        private void _admin_ChatMessage(Color c, string msg, bool italic, bool bold)
         {
-            //chat.AppendText(msg);
-        }
-
-        private void TextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                    //StandardClientChatMessage packet = new StandardClientChatMessage(chatTB.Text);
-                    //FormExecution.Client.Send(PacketType.ChatMessage, packet);
-                    //chatTB.Clear();
-                    break;
-            }
-            e.Handled = true;
+            Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(c, msg, italic, bold); });
         }
 
         private void BtnAnimations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -135,6 +148,48 @@ namespace hub_client.Windows
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-20.html");
+        }
+
+        private void tbChat_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    Packet packet = ParseMessage(tbChat.GetText());
+                    _admin.Client.Send(PacketType.ChatMessage, packet);
+                    tbChat.Clear();
+                    break;
+            }
+            e.Handled = true;
+        }
+
+        private Packet ParseMessage(string txt)
+        {
+            if (txt[0] == '/')
+            {
+                txt = txt.Substring(1);
+                string cmd = txt.Split(' ')[0].ToString().ToUpper();
+                switch (cmd)
+                {
+                    case "ANIM":
+                        return new StandardClientChatMessage
+                        {
+                            Type = ChatMessageType.Animation,
+                            Message = txt.Substring(cmd.Length + 1)
+                        };
+                    case "INFO":
+                        return new StandardClientChatMessage
+                        {
+                            Type = ChatMessageType.Information,
+                            Message = txt.Substring(cmd.Length + 1)
+                        };
+                }
+            }
+            return new StandardClientChatMessage
+            {
+                Type = ChatMessageType.Standard,
+                Message = txt
+            };
         }
     }
 }

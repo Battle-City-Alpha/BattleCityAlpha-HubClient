@@ -82,7 +82,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration\AppDesignConfig.cs" />
-    <Compile Include="Configuration\AppTools.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="FormExecution.cs" />
     <Compile Include="Helpers\HardwareIdManager.cs" />

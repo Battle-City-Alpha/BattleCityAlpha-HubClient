@@ -11,9 +11,17 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
+        public event Action LoginComplete;
+
         public LoginAdminstrator(GameClient client)
         {
             Client = client;
+            Client.LoginComplete += LoginAdminstrator_LoginComplete;
+        }
+
+        private void LoginAdminstrator_LoginComplete()
+        {
+            LoginComplete?.Invoke();
         }
     }
 }

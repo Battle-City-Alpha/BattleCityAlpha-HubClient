@@ -23,7 +23,21 @@ namespace hub_client.Windows.Controls
         public BCA_Listbox()
         {
             InitializeComponent();
-            lb.Items.Add("Tic-Tac-Toc");
+        }
+
+        public void AddItem(string username)
+        {
+            if (!lb.Items.Contains(username))
+                lb.Items.Add(username);
+        }
+        public void RemoveItem(string username)
+        {
+            if (lb.Items.Contains(username))
+                lb.Items.Remove(username);
+        }
+        public void Clear()
+        {
+            lb.Items.Clear();
         }
     }
 }

@@ -13,7 +13,6 @@ namespace hub_client.Configuration
         public bool RememberMe = false;
         public string Username;
         public string Password;
-        public string Key = AppTools.GenerateKey();
 
         public void Save()
         {
