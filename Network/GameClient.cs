@@ -122,6 +122,9 @@ namespace hub_client.Network
                 case PacketType.PlayerList:
                     OnUpdateHubPlayerList(JsonConvert.DeserializeObject<StandardServerPlayerlist>(packet));
                     break;
+                case PacketType.CommandError:
+                    OnCommandError(JsonConvert.DeserializeObject<StandardServerCommandError>(packet));
+                    break;
             }
         }
 
@@ -149,6 +152,10 @@ namespace hub_client.Network
                     c = FormExecution.AppDesignConfig.InformationMessageColor;
                     msg = "[Information - " + packet.Username + "]:" + packet.Message;
                     italic = true;
+                    break;
+                case ChatMessageType.Greet:
+                    c = FormExecution.AppDesignConfig.GreetMessageColor;
+                    msg = "[Greet - " + packet.Username + "]:" + packet.Message;
                     break;
                 default:
                     c = FormExecution.AppDesignConfig.LauncherMessageColor;
@@ -237,6 +244,41 @@ namespace hub_client.Network
             foreach (string username in packet.Userlist)
                 AddHubPlayer?.Invoke(username);
             logger.Trace("UpdatePlayerList - {0}", packet.Userlist);
+        }
+
+        private void OnCommandError(StandardServerCommandError packet)
+        {
+            CommandErrorType type = packet.Type;
+
+            Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
+            string msg;
+            bool italic = false;
+            bool bold = false;
+
+            switch (type)
+            {
+                case CommandErrorType.ArgTooLong:
+                    msg = "••• Un des arguments donné est trop long.";
+                    break;
+                case CommandErrorType.NoError:
+                    msg = "••• L'opération a réussie.";
+                    break;
+                case CommandErrorType.NotVip:
+                    msg = "••• Seul les joueurs VIP peuvent effectuer cette opération.";
+                    break;
+                case CommandErrorType.SmallRank:
+                    msg = "••• Vous ne disposez pas de droits suffisants pour effectuer cette opération.";
+                    break;
+                case CommandErrorType.UnknownError:
+                    msg = "••• Une erreur inconnue s'est produite durant cette opération.";
+                    break;
+                default:
+                    msg = "••• Erreur inconnue, impossible à traiter.";
+                    break;
+            }
+
+            ChatMessageRecieved?.Invoke(c, msg, italic, bold);
+            logger.Trace("COMMAND ERROR MESSAGE MESSAGE - Type : {0} |  Message : {1}", packet.Type, msg);
         }
 
     }

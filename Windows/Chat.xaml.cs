@@ -2,6 +2,8 @@
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
+using hub_client.Helpers;
+using hub_client.Network;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
@@ -29,10 +31,13 @@ namespace hub_client.Windows
         bool _animationChat = false;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
+        private ChatCommandParser _cmdParser;
+
         public Chat(ChatAdministrator admin)
         {
             InitializeComponent();
             _admin = admin;
+            _cmdParser = new ChatCommandParser();
 
             _admin.ChatMessage += _admin_ChatMessage;
             this.Loaded += Chat_Loaded;
@@ -155,15 +160,16 @@ namespace hub_client.Windows
             switch (e.Key)
             {
                 case Key.Enter:
-                    Packet packet = ParseMessage(tbChat.GetText());
-                    _admin.Client.Send(PacketType.ChatMessage, packet);
+                    NetworkData data = ParseMessage(tbChat.GetText());
+                    if (data != null)
+                        _admin.Client.Send(data.Type, data.Packet);
                     tbChat.Clear();
                     break;
             }
             e.Handled = true;
         }
 
-        private Packet ParseMessage(string txt)
+        private NetworkData ParseMessage(string txt)
         {
             if (txt[0] == '/')
             {
@@ -172,24 +178,20 @@ namespace hub_client.Windows
                 switch (cmd)
                 {
                     case "ANIM":
-                        return new StandardClientChatMessage
-                        {
-                            Type = ChatMessageType.Animation,
-                            Message = txt.Substring(cmd.Length + 1)
-                        };
+                        return new NetworkData(PacketType.ChatMessage, _cmdParser.AnimationMessage(txt.Substring(cmd.Length + 1)));
                     case "INFO":
-                        return new StandardClientChatMessage
-                        {
-                            Type = ChatMessageType.Information,
-                            Message = txt.Substring(cmd.Length + 1)
-                        };
+                        return new NetworkData(PacketType.ChatMessage, _cmdParser.InformationMessage(txt.Substring(cmd.Length + 1)));
+                    case "SETMOTD":
+                        return new NetworkData(PacketType.ChatMessage, _cmdParser.SetMessageOfTheDay(txt.Substring(cmd.Length + 1)));
+                    case "SETGREET":
+                        return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
+                    default:
+                        _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                        return null;
                 }
             }
-            return new StandardClientChatMessage
-            {
-                Type = ChatMessageType.Standard,
-                Message = txt
-            };
+
+            return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
         }
     }
 }
