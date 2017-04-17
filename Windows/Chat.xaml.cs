@@ -6,6 +6,7 @@ using hub_client.Helpers;
 using hub_client.Network;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Chat : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         ChatAdministrator _admin;
         bool _animationChat = false;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
@@ -52,6 +55,7 @@ namespace hub_client.Windows
             {
                 lbUserlist.RemoveItem(username);
             });
+            logger.Trace("{0} added to userlist.", username);
         }
 
         private void _admin_AddHubPlayer(string username)
@@ -60,6 +64,7 @@ namespace hub_client.Windows
             {
                 lbUserlist.AddItem(username);
             });
+            logger.Trace("{0} removed from userlist.", username);
         }
 
         private void _admin_LoginComplete()
@@ -70,6 +75,7 @@ namespace hub_client.Windows
         private void Chat_Loaded(object sender, RoutedEventArgs e)
         {
             LoadStyle();
+            logger.Trace("Style loaded.");
         }
 
         private void LoadStyle()
@@ -126,6 +132,7 @@ namespace hub_client.Windows
         {
             btnDiscord.ClickedAnimation();
             System.Diagnostics.Process.Start("https://discordapp.com/invite/seEZAwV");
+            logger.Trace("Discord clicked.");
         }
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -138,6 +145,7 @@ namespace hub_client.Windows
             btnNote.ClickedAnimation();
             Notes note = new Notes(_admin.Client.NotesAdmin);
             note.Show();
+            logger.Trace("Notes clicked.");
         }
 
         private void Image_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
@@ -148,11 +156,13 @@ namespace hub_client.Windows
         private void btnFAQ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-681.html");
+            logger.Trace("FAQ clicked.");
         }
 
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-20.html");
+            logger.Trace("CGU clicked.");
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -163,6 +173,7 @@ namespace hub_client.Windows
                     NetworkData data = ParseMessage(tbChat.GetText());
                     if (data != null)
                         _admin.Client.Send(data.Type, data.Packet);
+                    logger.Info("Chat send : {0}.", data);
                     tbChat.Clear();
                     break;
             }
@@ -171,27 +182,38 @@ namespace hub_client.Windows
 
         private NetworkData ParseMessage(string txt)
         {
-            if (txt[0] == '/')
+            try
             {
-                txt = txt.Substring(1);
-                string cmd = txt.Split(' ')[0].ToString().ToUpper();
-                switch (cmd)
+                if (txt[0] == '/')
                 {
-                    case "ANIM":
-                        return new NetworkData(PacketType.ChatMessage, _cmdParser.AnimationMessage(txt.Substring(cmd.Length + 1)));
-                    case "INFO":
-                        return new NetworkData(PacketType.ChatMessage, _cmdParser.InformationMessage(txt.Substring(cmd.Length + 1)));
-                    case "SETMOTD":
-                        return new NetworkData(PacketType.ChatMessage, _cmdParser.SetMessageOfTheDay(txt.Substring(cmd.Length + 1)));
-                    case "SETGREET":
-                        return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
-                    default:
-                        _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
-                        return null;
+                    txt = txt.Substring(1);
+                    string cmd = txt.Split(' ')[0].ToString().ToUpper();
+                    switch (cmd)
+                    {
+                        case "ANIM":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.AnimationMessage(txt.Substring(cmd.Length + 1)));
+                        case "INFO":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.InformationMessage(txt.Substring(cmd.Length + 1)));
+                        case "SETMOTD":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetMessageOfTheDay(txt.Substring(cmd.Length + 1)));
+                        case "SETGREET":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
+                        case "KICK":
+                            return new NetworkData(PacketType.Kick, _cmdParser.Kick(txt.Substring(cmd.Length + 1)));
+                        default:
+                            _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                            return null;
+                    }
                 }
-            }
 
-            return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
+                return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
+            }
+            catch (Exception ex)
+            {
+                _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Une erreur s'est produite.", false, false);
+                logger.Error("Chat input error : {0}", ex.ToString());
+                return null;
+            }
         }
     }
 }

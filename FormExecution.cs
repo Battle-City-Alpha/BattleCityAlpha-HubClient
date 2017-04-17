@@ -12,6 +12,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace hub_client
 {
@@ -57,6 +58,7 @@ namespace hub_client
             Client = new GameClient();
 
             Client.PopMessageBox += Client_PopMessageBox;
+            Client.Shutdown += Client_Shutdown;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -64,6 +66,11 @@ namespace hub_client
             StartConnexion();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_Shutdown()
+        {
+            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
         public static bool CanCloseApp()

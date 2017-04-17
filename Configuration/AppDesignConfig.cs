@@ -24,5 +24,6 @@ namespace hub_client.Configuration
         public Color InformationMessageColor = Colors.DarkBlue;
         public Color LauncherMessageColor = Colors.DarkViolet;
         public Color GreetMessageColor = Colors.ForestGreen;
+        public Color StaffMessageColor = Colors.Red;
     }
 }

@@ -28,6 +28,7 @@ namespace hub_client.Network
         public event Action<Color, string, bool, bool> ChatMessageRecieved;
         public event Action<string> AddHubPlayer;
         public event Action<string> RemoveHubPlayer;
+        public event Action Shutdown;
         #endregion
         #region RegisterForm Events
         public event Action RegistrationComplete;
@@ -125,6 +126,15 @@ namespace hub_client.Network
                 case PacketType.CommandError:
                     OnCommandError(JsonConvert.DeserializeObject<StandardServerCommandError>(packet));
                     break;
+                case PacketType.Kick:
+                    OnKick(JsonConvert.DeserializeObject<StandardServerKick>(packet));
+                    break;
+                case PacketType.Ban:
+                    OnBan(JsonConvert.DeserializeObject<StandardServerBan>(packet));
+                    break;
+                case PacketType.Mute:
+                    OnMute(JsonConvert.DeserializeObject<StandardServerMute>(packet));
+                    break;
             }
         }
 
@@ -146,16 +156,20 @@ namespace hub_client.Network
                 case ChatMessageType.Animation:
                     c = FormExecution.AppDesignConfig.AnimationMessageColor;
                     msg = "[Animation - " + packet.Username + "]:" + packet.Message;
-                    bold = true;
                     break;
                 case ChatMessageType.Information:
                     c = FormExecution.AppDesignConfig.InformationMessageColor;
                     msg = "[Information - " + packet.Username + "]:" + packet.Message;
-                    italic = true;
+                    bold = true;
                     break;
                 case ChatMessageType.Greet:
                     c = FormExecution.AppDesignConfig.GreetMessageColor;
                     msg = "[Greet - " + packet.Username + "]:" + packet.Message;
+                    break;
+                case ChatMessageType.Staff:
+                    c = FormExecution.AppDesignConfig.StaffMessageColor;
+                    msg = "[Staff - " + packet.Username + "]:" + packet.Message;
+                    italic = true;
                     break;
                 default:
                     c = FormExecution.AppDesignConfig.LauncherMessageColor;
@@ -163,7 +177,7 @@ namespace hub_client.Network
                     break;
             }
 
-            ChatMessageRecieved?.Invoke(c, msg, italic, bold);
+            ChatMessageRecieved?.Invoke(c, msg, bold, italic);
             logger.Trace("CHAT MESSAGE - Type : {0} | Username : {1} | Message : {2}", packet.Type, packet.Username, packet.Message);
         }
 
@@ -272,6 +286,9 @@ namespace hub_client.Network
                 case CommandErrorType.UnknownError:
                     msg = "••• Une erreur inconnue s'est produite durant cette opération.";
                     break;
+                case CommandErrorType.PlayerNotConnected:
+                    msg = "••• L'utilisateur ciblé n'est pas connecté.";
+                    break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
                     break;
@@ -279,6 +296,23 @@ namespace hub_client.Network
 
             ChatMessageRecieved?.Invoke(c, msg, italic, bold);
             logger.Trace("COMMAND ERROR MESSAGE MESSAGE - Type : {0} |  Message : {1}", packet.Type, msg);
+        }
+
+        public void OnKick(StandardServerKick packet)
+        {
+            OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur");
+            Shutdown?.Invoke();
+        }
+
+        public void OnBan(StandardServerBan packet)
+        {
+            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur");
+            Shutdown?.Invoke();
+        }
+
+        public void OnMute(StandardServerMute packet)
+        {
+            OpenPopBox("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Mute");
         }
 
     }
