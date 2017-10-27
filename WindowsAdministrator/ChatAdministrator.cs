@@ -1,4 +1,5 @@
-﻿using hub_client.Network;
+﻿using BCA.Common;
+using hub_client.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,9 @@ namespace hub_client.WindowsAdministrator
 
         public event Action LoginComplete;
         public event Action<Color, string, bool, bool> ChatMessage;
-        public event Action<string> AddHubPlayer;
-        public event Action<string> RemoveHubPlayer;
+        public event Action<PlayerInfo> AddHubPlayer;
+        public event Action<PlayerInfo> RemoveHubPlayer;
+        public event Action<string, string> ClearChat;
 
         public ChatAdministrator(GameClient client)
         {
@@ -24,16 +26,32 @@ namespace hub_client.WindowsAdministrator
             Client.LoginComplete += Client_LoginComplete;
             Client.AddHubPlayer += Client_AddHubPlayer;
             Client.RemoveHubPlayer += Client_RemoveHubPlayer;
+            Client.ClearChat += Client_ClearChat;
+            Client.Banlist += Client_Banlist;
         }
 
-        private void Client_RemoveHubPlayer(string username)
+        private void Client_Banlist(string[] players)
         {
-            RemoveHubPlayer?.Invoke(username);
+            string bl = "Banlist : ";
+            foreach (string player in players)
+                bl += player + ",";
+
+            ChatMessage?.Invoke(FormExecution.AppDesignConfig.StaffMessageColor, bl, false, false);
         }
 
-        private void Client_AddHubPlayer(string username)
+        private void Client_ClearChat(string username, string reason)
         {
-            AddHubPlayer?.Invoke(username);
+            ClearChat?.Invoke(username, reason);
+        }
+
+        private void Client_RemoveHubPlayer(PlayerInfo infos)
+        {
+            RemoveHubPlayer?.Invoke(infos);
+        }
+
+        private void Client_AddHubPlayer(PlayerInfo infos)
+        {
+            AddHubPlayer?.Invoke(infos);
         }
 
         private void Client_LoginComplete()

@@ -1,4 +1,4 @@
-﻿using BCA.Network.Packets;
+﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
@@ -9,17 +9,9 @@ using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -31,7 +23,6 @@ namespace hub_client.Windows
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         ChatAdministrator _admin;
-        bool _animationChat = false;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
         private ChatCommandParser _cmdParser;
@@ -47,24 +38,31 @@ namespace hub_client.Windows
             _admin.LoginComplete += _admin_LoginComplete;
             _admin.AddHubPlayer += _admin_AddHubPlayer;
             _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
+            _admin.ClearChat += _admin_ClearChat;
         }
 
-        private void _admin_RemoveHubPlayer(string username)
+        private void _admin_ClearChat(string username, string reason)
+        {
+            chat.Clear();
+            _admin_ChatMessage(style.InformationMessageColor, String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
+        }
+
+        private void _admin_RemoveHubPlayer(PlayerInfo infos)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                lbUserlist.RemoveItem(username);
+                lbUserlist.Items.Remove(infos.Username);
             });
-            logger.Trace("{0} added to userlist.", username);
+            logger.Trace("{0} added to userlist.", infos);
         }
 
-        private void _admin_AddHubPlayer(string username)
+        private void _admin_AddHubPlayer(PlayerInfo infos)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                lbUserlist.AddItem(username);
+                lbUserlist.Items.Add(infos.Username);
             });
-            logger.Trace("{0} removed from userlist.", username);
+            logger.Trace("{0} removed from userlist.", infos);
         }
 
         private void _admin_LoginComplete()
@@ -81,7 +79,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> HeadButtons = new List<BCA_ColorButton>();
-            HeadButtons.AddRange(new[] { btnArene, btnShop, btnDecks, btnRanking, btnTools });
+            HeadButtons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools });
             List<BCA_ColorButton> BottomButtons = new List<BCA_ColorButton>();
             BottomButtons.AddRange(new[] { btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord });
 
@@ -97,35 +95,11 @@ namespace hub_client.Windows
                 btn.Color2 = style.Color2HomeBottomButton;
                 btn.Update();
             }
-            btnChannel.Color1 = style.Color1HomePlaceButton;
-            btnChannel.Color2 = style.Color2HomePlaceButton;
-            btnChannel.Update();
         }
 
         private void _admin_ChatMessage(Color c, string msg, bool italic, bool bold)
         {
             Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(c, msg, italic, bold); });
-        }
-
-        private void BtnAnimations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            chat.Clear();
-            if (_animationChat)
-            {
-                btnChannel.ButtonText = "Place";
-                btnChannel.Color1 = (Color)ColorConverter.ConvertFromString("#FFEA1313");
-                btnChannel.Color2 = (Color)ColorConverter.ConvertFromString("#FF5F0B08");
-                chat.OnColoredMessage(Colors.DarkViolet, "••• Vous entrez dans le canal principal : Place.", false,false);
-            }
-            else
-            {
-                btnChannel.ButtonText = "Animations";
-                btnChannel.Color1 = (Color)ColorConverter.ConvertFromString("#FF149A2D");
-                btnChannel.Color2 = (Color)ColorConverter.ConvertFromString("#FF005613");
-                chat.OnColoredMessage(Colors.DarkViolet, "••• Vous entrez dans le canal animation & tournoi : Animations.", false, false);
-            }
-            _animationChat = !_animationChat;
-            btnChannel.Update();
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -161,8 +135,7 @@ namespace hub_client.Windows
 
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-20.html");
-            logger.Trace("CGU clicked.");
+            FormExecution.Client_LaunchYGOPro("-r");
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -172,7 +145,7 @@ namespace hub_client.Windows
                 case Key.Enter:
                     NetworkData data = ParseMessage(tbChat.GetText());
                     if (data != null)
-                        _admin.Client.Send(data.Type, data.Packet);
+                        _admin.Client.Send(data);
                     logger.Info("Chat send : {0}.", data);
                     tbChat.Clear();
                     break;
@@ -200,12 +173,25 @@ namespace hub_client.Windows
                             return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
                         case "KICK":
                             return new NetworkData(PacketType.Kick, _cmdParser.Kick(txt.Substring(cmd.Length + 1)));
+                        case "BAN":
+                            return new NetworkData(PacketType.Ban, _cmdParser.Ban(txt.Substring(cmd.Length + 1)));
+                        case "MUTE":
+                            return new NetworkData(PacketType.Mute, _cmdParser.Mute(txt.Substring(cmd.Length + 1)));
+                        case "CLEAR":
+                            return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Substring(cmd.Length + 1)));
+                        case "MPALL":
+                            return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
+                        case "PANEL":
+                            Panel panel = new Panel(_admin.Client.PanelAdmin);
+                            panel.Show();
+                            return null;
+                        case "BANLIST":
+                            return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
                         default:
                             _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
                             return null;
                     }
                 }
-
                 return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
             }
             catch (Exception ex)
@@ -214,6 +200,43 @@ namespace hub_client.Windows
                 logger.Error("Chat input error : {0}", ex.ToString());
                 return null;
             }
+        }
+
+        private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string target = lbUserlist.SelectedItem.ToString();
+            if (target != null)
+                FormExecution.OpenNewPrivateForm(target);
+        }
+
+        private void btnProfil_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Profil profil = new Profil(_admin.Client.ProfilAdmin);
+            profil.Show();
+            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { Username = _admin.Client.GetPlayerInfo(FormExecution.Username) });
+            _admin.Client.Send(data);
+        }
+
+        private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            NetworkData data = new NetworkData(PacketType.UpdateCollection, new StandardClientAskCollection());
+            _admin.Client.Send(data);
+        }
+
+        private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenArena();
+        }
+
+        private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenShop();
+        }
+
+        private void btnAnimations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/forum-25.html");
+            logger.Trace("Animations clicked.");
         }
     }
 }

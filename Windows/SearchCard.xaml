@@ -1,0 +1,130 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.SearchCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Recherche de Cartes" Height="528.858" Width="868.918" Icon="/hub-client;component/Assets/Icon/BCA.ico"
+        Loaded="Window_Loaded">
+    <Window.Background>
+        <ImageBrush ImageSource="/hub-client;component/Assets/Background/SearchCard.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Border CornerRadius="15" Margin="10" Grid.Row="0">
+            <Border.Background>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </Border.Background>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Choix :" FontFamily="Dosis" FontSize="24"/>
+                    <ComboBox x:Name="cb_cardtype" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attribut :" FontFamily="Dosis" FontSize="24"/>
+                    <ComboBox x:Name="cb_cardattribute" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Type :" FontFamily="Dosis" FontSize="24"/>
+                    <ComboBox x:Name="cb_cardrace" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Archétype :" FontFamily="Dosis" FontSize="24"/>
+                    <ComboBox x:Name="cb_setnames" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Column="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Niveau :" FontFamily="Dosis" FontSize="24"/>
+                    <TextBox x:Name="tb_level" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attaque :" FontFamily="Dosis" FontSize="24"/>
+                    <TextBox x:Name="tb_attack" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Défense :" FontFamily="Dosis" FontSize="24"/>
+                    <TextBox x:Name="tb_defence" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Nom :" FontFamily="Dosis" FontSize="24"/>
+                    <TextBox x:Name="tb_name" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24"/>
+                </Grid>
+                <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Center">
+                    <Controls:BCA_ColorButton x:Name="btn_search" Width="Auto" Height="Auto" Grid.Column="2" ButtonText="Chercher" VerticalAlignment="Center" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown" Color1="#FFCD0000" Color2="#FF880D0D" />
+                    <Controls:BCA_ColorButton x:Name="btn_found" Width="Auto" Height="Auto" Grid.Column="2" ButtonText="Trouver" VerticalAlignment="Center" Margin="0,10,0,0" Color1="#FFCD0000" Color2="#FF880D0D" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="15" Margin="10" Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </Border.Background>
+                <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
+            </Border>
+            <Border CornerRadius="15" Margin="10" Grid.Column="1">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="25*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Margin="0">
+                        <TextBlock x:Name="tb_cardname" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2">
+                        <TextBlock x:Name="tb_cardtype" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2">
+                        <TextBlock x:Name="tb_cardattribute" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2">
+                        <TextBlock x:Name="tb_cardlevel" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="3">
+                        <TextBlock x:Name="tb_cardatkdef" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2">
+                        <TextBlock x:Name="tb_carddesc" Text="???" FontFamily="Dosis" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border CornerRadius="15" Margin="10" Grid.Column="2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </Border.Background>
+                <Image x:Name="img_card" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="5"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

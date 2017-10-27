@@ -1,0 +1,20 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.PrivateMessage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="PrivateMessage" Height="402.229" Width="347.522" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Controls:BCA_Chat x:Name="rtbChat" Grid.Row="0" Margin="10"/>
+        <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,3" KeyUp="BCA_TextBox_KeyUp"/>
+    </Grid>
+</Window>

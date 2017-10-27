@@ -1,11 +1,17 @@
-﻿using hub_client.Configuration;
+﻿using BCA.Common;
+using BCA.Common.Enums;
+using hub_client.Assets;
+using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Network;
 using hub_client.Windows;
+using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,22 +30,31 @@ namespace hub_client
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public static string HID = HardwareIdManager.GetId();
+        public static string Username;
 
         public static AppConfig AppConfig;
         public static AppDesignConfig AppDesignConfig;
+        public static AssetsManager AssetsManager;
 
         public static GameClient Client { get; private set; }
+
+        public static Dictionary<string, PrivateMessageAdministrator> PrivateForms = new Dictionary<string, PrivateMessageAdministrator>();
 
         #region Windows
         private static Login _login;
         private static Register _register;
         private static Chat _chat;
+        private static Arena _arena;
+        private static Shop _shop;
+        private static Purchase _purchase;
         #endregion
 
         public static void Init()
         {
             string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");
             string AppDesignConfigPath = Path.Combine(path, "style.json");
+            AssetsManager = new AssetsManager();
+            CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
 
             if (File.Exists(AppConfigPath))
                 AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
@@ -50,7 +65,7 @@ namespace hub_client
             else
                 AppDesignConfig = new AppDesignConfig();
 
-
+            BoosterManager.LoadList();
             AppDesignConfig = new AppDesignConfig(); //To debug config
 
             SaveConfig(AppConfigPath, AppDesignConfigPath);
@@ -58,7 +73,10 @@ namespace hub_client
             Client = new GameClient();
 
             Client.PopMessageBox += Client_PopMessageBox;
+            Client.ChoicePopBox += Client_ChoicePopBox;
             Client.Shutdown += Client_Shutdown;
+            Client.PrivateMessageReceived += Client_PrivateMessageReceived;
+            Client.LaunchYGOPro += Client_LaunchYGOPro;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -66,6 +84,40 @@ namespace hub_client
             StartConnexion();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_ChoicePopBox(PlayerInfo player, DuelType type)
+        {
+            ChoicePopBox box = new ChoicePopBox(player, type);
+            box.ShowDialog();
+        }
+
+        public static void Client_LaunchYGOPro(string arg)
+        {
+            Process Game = new Process();
+            Game.StartInfo.FileName = Path.Combine(FormExecution.path, "BattleCityAlpha", "BCA.exe");
+            Game.StartInfo.WorkingDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha");
+            Game.StartInfo.Arguments = arg;
+            Game.Start();
+        }
+
+        private static void Client_PrivateMessageReceived(string username, string message)
+        {
+            if (PrivateForms.ContainsKey(username))
+                PrivateForms[username].PrivateMessageRecieved(message);
+            else
+            {
+                OpenNewPrivateForm(username);
+                PrivateForms[username].PrivateMessageRecieved(message);
+            }
+        }
+
+        public static void OpenNewPrivateForm(string username)
+        {
+            PrivateMessageAdministrator admin = new PrivateMessageAdministrator(Client);
+            PrivateMessage form = new PrivateMessage(username, admin);
+            PrivateForms.Add(username, admin);
+            form.Show();
         }
 
         private static void Client_Shutdown()
@@ -80,10 +132,13 @@ namespace hub_client
             return false;
         }
 
-        private static void Client_PopMessageBox(string text, string title)
+        private static void Client_PopMessageBox(string text, string title, bool showDialog)
         {
             PopBox box = new PopBox(text, title);
-            box.ShowDialog();
+            if (showDialog)
+                box.ShowDialog();
+            else
+                box.Show();
         }
 
         public static void SaveConfig(string ConfigPath, string DesignConfigPath)
@@ -123,6 +178,28 @@ namespace hub_client
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
             _register.Show();
+        }
+
+        public static void OpenArena()
+        {
+            logger.Trace("Open arena");
+            _arena = new Arena(Client.ArenaAdmin);
+            _arena.Show();
+        }
+
+        public static void OpenShop()
+        {
+            logger.Trace("Open Shop");
+            _shop = new Shop(Client.ShopAdmin);
+            _shop.Show();
+        }
+
+        public static void OpenPurchase(string title)
+        {
+            logger.Trace("Open Purchase");
+            _purchase = new Purchase(Client.PurchaseAdmin);
+            _purchase.Title = title;
+            _purchase.Show();
         }
     }
 }

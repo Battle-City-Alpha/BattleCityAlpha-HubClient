@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
-        xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
         mc:Ignorable="d"
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico">
     <Window.Background>
@@ -24,10 +23,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène"/>
-            <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique"/>
-            <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks"/>
-            <Controls:BCA_ColorButton x:Name="btnRanking" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Classement"/>
+            <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène" MouseLeftButtonDown="btnArene_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animation" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options"/>
         </Grid>
         <Grid Grid.Row="1" Margin="25,0">
@@ -40,7 +39,12 @@
                     <RowDefinition Height="349*"/>
                     <RowDefinition Height="38*"/>
                 </Grid.RowDefinitions>
-                <Controls:BCA_Listbox x:Name="lbUserlist" Margin="10" Grid.Row="0"/>
+                <Border CornerRadius="15" Margin="10,5">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <ListBox x:Name="lbUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18"/>
+                </Border>
                 <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1"/>
             </Grid>
             <Grid Grid.Column="1">
@@ -58,72 +62,6 @@
                 <ColumnDefinition Width="212*"/>
                 <ColumnDefinition Width="147*"/>
             </Grid.ColumnDefinitions>
-            <wpfspark:ToggleSwitch
-                               ThumbWidth="25"
-                               BorderThickness="2"
-                               CheckedForeground="White"
-                               CheckedText="Actif"
-                               CornerRadius="10"
-                               FontFamily="Dosis"
-                               FontSize="22"
-                               FontWeight="Normal"
-                               Height="37"
-                               HorizontalAlignment="Left"
-                               x:Name="AfkSwitch"
-                               Padding="0"
-                               ThumbBorderThickness="2"
-                               ThumbCornerRadius="7"
-                               ThumbGlowColor="Gray"
-                               ThumbShineCornerRadius="6,6,3,3"
-                               UncheckedForeground="White"
-                               UncheckedText="Absent"
-                               VerticalAlignment="Center"
-                               Width="100" Margin="58,14,0,13.8" BorderBrush="White">
-                <wpfspark:ToggleSwitch.UncheckedBackground>
-                    <LinearGradientBrush EndPoint="0,1"
-                                     StartPoint="0.5,0.5" SpreadMethod="Reflect" Opacity="0.85">
-                        <GradientStop Color="#FFDF0E0E"
-                                  Offset="0.1" />
-                        <GradientStop Color="#FF9C0E0E"
-                                  Offset="0.5" />
-                        <GradientStop Color="#FF650505"
-                                  Offset="1" />
-                    </LinearGradientBrush>
-                </wpfspark:ToggleSwitch.UncheckedBackground>
-                <wpfspark:ToggleSwitch.CheckedBackground>
-                    <LinearGradientBrush EndPoint="0,1"
-                                     StartPoint="0.5,0.5" SpreadMethod="Reflect" Opacity="0.85">
-                        <GradientStop Color="#FF16CA52"
-                                  Offset="0" />
-                        <GradientStop Color="#FF118E37"
-                                  Offset="0.52" />
-                        <GradientStop Color="#FF0C2F0B"
-                                  Offset="1" />
-                    </LinearGradientBrush>
-                </wpfspark:ToggleSwitch.CheckedBackground>
-                <wpfspark:ToggleSwitch.ThumbBackground>
-                    <LinearGradientBrush EndPoint="0,1"
-                                     StartPoint="0,0">
-                        <GradientStop Color="#FF28172C"
-                                  Offset="0" />
-                        <GradientStop Color="#A5A5A5"
-                                  Offset="0.5" />
-                        <GradientStop Color="#FCFCF6"
-                                  Offset="1" />
-                    </LinearGradientBrush>
-                </wpfspark:ToggleSwitch.ThumbBackground>
-                <wpfspark:ToggleSwitch.ThumbBorderBrush>
-                    <LinearGradientBrush EndPoint="0,1"
-                                     StartPoint="0,0">
-                        <GradientStop Color="#F6F6F6"
-                                  Offset="0" />
-                        <GradientStop Color="#959595"
-                                  Offset="0.5" />
-                        <GradientStop Color="#565656"
-                                  Offset="1" />
-                    </LinearGradientBrush>
-                </wpfspark:ToggleSwitch.ThumbBorderBrush>
-            </wpfspark:ToggleSwitch>
             <Grid Grid.Column="1" Margin="5,0,5,-0.2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -132,7 +70,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Controls:BCA_ColorButton x:Name="btnProfil" Width="Auto" Height="Auto" Margin="5" Grid.Column="0" ButtonText="Profil" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951">
+                <Controls:BCA_ColorButton x:Name="btnProfil" Width="Auto" Height="Auto" Margin="5" Grid.Column="0" ButtonText="Profil" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnProfil_MouseLeftButtonDown">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -244,16 +182,6 @@
                     </Image.Triggers>
                 </Image>
             </Grid>
-            <Controls:BCA_ColorButton x:Name="btnChannel" Width="203" Height="Auto" Margin="0,5,29.6,4.8" Grid.Column="2" ButtonText="Place" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FFEA1313" Color2="#FF5F0B08" HorizontalAlignment="Right" MouseLeftButtonDown="BtnAnimations_MouseLeftButtonDown">
-                <Controls:BCA_ColorButton.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Controls:BCA_ColorButton.RenderTransform>
-            </Controls:BCA_ColorButton>
         </Grid>
         <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="1129,335.2,-187,0" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Width="100"/>
     </Grid>

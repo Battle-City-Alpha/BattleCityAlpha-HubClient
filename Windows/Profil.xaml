@@ -1,0 +1,162 @@
+﻿<Window x:Class="hub_client.Windows.Profil"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Profil" Height="338.229" Width="606.722" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg" Opacity="0.8"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="59*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,167.8" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Width="96" Height="96">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
+
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15" Margin="10">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontFamily="Dosis" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Cartes" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock x:Name="tb_cardnumber" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="Niveau" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock x:Name="tb_level" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Text="Expérience" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
+                        <TextBlock x:Name="tb_experience" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,7,0,-0.2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15" Margin="10">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Classées" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Victoires :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rankedwin" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Défaites :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rankedlose" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ELO :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_elo" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Rang :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rank" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" CornerRadius="15" Margin="10">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Non Classées" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Victoires :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_unrankedwin" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Défaites :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_unrankedlose" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Abandon :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_giveup" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Rage Quit :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_ragequit" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

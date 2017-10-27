@@ -1,0 +1,25 @@
+﻿<Window x:Class="hub_client.Windows.Purchase"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Purchase" Height="448.8" Width="513.6">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Shop.png" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="15" Margin="10,5" Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </Border.Background>
+            <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
+        </Border>
+        <Image Grid.Column="1" x:Name="img_card" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10"/>
+    </Grid>
+</Window>

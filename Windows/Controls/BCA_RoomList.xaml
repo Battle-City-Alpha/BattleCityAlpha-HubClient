@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.BCA_RoomList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="RoomItemTemplate">
+            <Grid Height="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Path=Image}" Stretch="Fill" Grid.Column="0"/>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" FontFamily="Dosis" Foreground="Black" Grid.Row="0" FontSize="24"/>
+                    <TextBlock Text="{Binding Path=Players}" HorizontalAlignment="Center" FontFamily="Dosis" Foreground="Black" Grid.Row="1" FontSize="24"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="_ListBoxItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="_Border" CornerRadius="5"
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="_Border" Property="BorderBrush" Value="Black"/>
+                                <Setter TargetName="_Border" Property="BorderThickness" Value="1"/>
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Border CornerRadius="15" BorderBrush="Black" BorderThickness="1">
+        <Border.Background>
+            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.9"/>
+        </Border.Background>
+        <ListBox FontFamily="Dosis" x:Name="Itemslist" Foreground="Black" Background="{x:Null}" Margin="7" BorderThickness="0" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemTemplate="{DynamicResource RoomItemTemplate}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}"/>
+    </Border>
+</UserControl>

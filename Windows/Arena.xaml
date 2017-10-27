@@ -1,0 +1,70 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Arena"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Arena" Height="568" Width="1100" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Arena.png"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66*"/>
+            <RowDefinition Height="358*"/>
+            <RowDefinition Height="66*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
+                <TextBlock Text="Classé" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="3"/>
+            </Border>
+            <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Border.Background>
+                <TextBlock Text="Non Classé" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="3"/>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,4.8,-0.4,0.6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_RoomList x:Name="rankedList" Margin="40,3" Grid.Column="0"/>
+            <Controls:BCA_RoomList x:Name="unrankedList" Margin="40,3" Grid.Column="1"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,0.4,-0.4,0.2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="5" Width="Auto" Height="Auto" ButtonText="Jouer" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505"/>
+                <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Controls:BCA_ColorButton x:Name="btn_single" Margin="5" Width="Auto" Height="Auto" ButtonText="Single" Grid.Column="0" Color1="#FF06977A" Color2="#FF105D5F"/>
+                <Controls:BCA_ColorButton x:Name="btn_match" Margin="5" Width="Auto" Height="Auto" ButtonText="Match" Grid.Column="1" Color1="#FF3948EE" Color2="#FF011F9C"/>
+                <Controls:BCA_ColorButton x:Name="btn_tag" Margin="5" Width="Auto" Height="Auto" ButtonText="Tag" Grid.Column="2" Color1="#FF5D0DCD" Color2="#FF560473"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

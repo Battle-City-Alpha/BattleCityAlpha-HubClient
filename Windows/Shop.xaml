@@ -1,0 +1,143 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Shop"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Battle City Alpha - Boutique" Height="579.439" Width="965.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Shop.png" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Border CornerRadius="15" Margin="10" Grid.Row="0">
+            <Border.Background>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Battle Points : " FontSize="24" FontFamily="Dosis" Margin="10"/>
+                    <TextBlock x:Name="tb_bps" Text="????" FontSize="24" FontFamily="Dosis" Margin="10"/>
+                </StackPanel>
+                <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown"/>
+                <Controls:BCA_ColorButton x:Name="btn_5vs1" Margin="10" Width="Auto" Height="Auto" ButtonText="5 vs 1" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_5vs1_MouseLeftButtonDown"/>
+                <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="37*"/>
+                <ColumnDefinition Width="86*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="207*"/>
+                    <RowDefinition Height="22*"/>
+                </Grid.RowDefinitions>
+                <Border CornerRadius="15" Margin="10,5">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.5"/>
+                    </Border.Background>
+                    <ListBox x:Name="lb_booster" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_booster_SelectionChanged"/>
+                </Border>
+                <ComboBox x:Name="cbBooster" Grid.Row="1" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18" FontFamily="Dosis" SelectedIndex="0"/>
+            </Grid>
+            <Grid Grid.Column="1" Margin="6.2,0,0.2,-0.4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="142*"/>
+                    <ColumnDefinition Width="159*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="15" Margin="10" Grid.Column="0" >
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.5"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="395*"/>
+                            <RowDefinition Height="44*"/>
+                        </Grid.RowDefinitions>
+                        <Image x:Name="img_booster" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,2.8,-0.4,0.2">
+                            <TextBlock Padding="5" Text="Date : " FontSize="24" FontFamily="Dosis"/>
+                            <TextBlock x:Name="tb_date" Padding="5" Text="???" FontSize="24" FontFamily="Dosis"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Border CornerRadius="15" Margin="10,0" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.5"/>
+                        </Border.Background>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Padding="5" Text="Prix : " FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock Padding="5" x:Name="tb_price" Text="????" FontSize="24" FontFamily="Dosis"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Padding="5" x:Name="tb_numbercardpack" Text="????" FontSize="24" FontFamily="Dosis" HorizontalAlignment="Center"/>
+                                <TextBlock Padding="5" Text="Cartes/pack" FontSize="24" FontFamily="Dosis" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                <TextBlock Padding="5" Text="Cartes possédées : " FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock Padding="5" x:Name="tb_cardgot" Text="????" FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock Padding="5" Text="/" FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock Padding="5" x:Name="tb_totalcard" Text="????" FontSize="24" FontFamily="Dosis"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Padding="5" Text="Cartes importantes : " FontSize="24" FontFamily="Dosis"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+                                <TextBlock x:Name="tb_card1" Text="-????" FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock x:Name="tb_card2" Text="-????" FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock x:Name="tb_card3" Text="-????" FontSize="24" FontFamily="Dosis"/>
+                                <TextBlock x:Name="tb_card4" Text="-????"  FontSize="24" FontFamily="Dosis"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="15" Margin="10,60,10,10" Grid.Column="0" Grid.Row="2">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.5"/>
+                        </Border.Background>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="tb_numberpack" FontFamily="Dosis" FontSize="24" Grid.Column="0" Margin="3" PreviewTextInput="NumberValidationTextBox" TextChanged="tb_numberpack_TextChanged"/>
+                            <TextBlock x:Name="tb_realprice" Text="????" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="1" VerticalAlignment="Center"/>
+                            <TextBlock Text="BPs" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center"/>
+                            <Controls:BCA_ColorButton x:Name="btn_purchase" Margin="1" Width="Auto" Height="Auto" ButtonText="Acheter" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_purchase_MouseLeftButtonDown"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
