@@ -145,5 +145,137 @@ namespace hub_client.Helpers
                 Message = txt
             };
         }
+
+        public StandardClientGivePoints GiveBattlePoints(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            int points = -1;
+            Int32.TryParse(args[1], out points);
+            if (points == -1)
+                return null;
+
+            return new StandardClientGivePoints
+            {
+                Target = target,
+                Points = points,
+                PrestigePoint = false
+            };
+        }
+        public StandardClientGivePoints GivePrestigePoints(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            int points = -1;
+            Int32.TryParse(args[1], out points);
+            if (points == -1)
+                return null;
+
+            return new StandardClientGivePoints
+            {
+                Target = target,
+                Points = points,
+                PrestigePoint = true
+            };
+        }
+        public StandardClientGiveAvatar GiveAvatar(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+                return null;
+
+            int id = -1;
+            Int32.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGiveAvatar
+            {
+                Target = target,
+                Avatar = id
+            };
+        }
+        public StandardClientGiveCard GiveCard(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+                return null;
+
+            int id = -1;
+            Int32.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGiveCard
+            {
+                Target = target,
+                Id = id
+            };
+        }
+
+        public StandardClientEnabled EnabledAccount(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            string reason;
+            if (args.Length < 2)
+                reason = "Aucune.";
+            else
+                reason = txt.Substring(target.Length + 1);
+            return new StandardClientEnabled
+            {
+                Target = target,
+                Reason = reason
+            };
+        }
+
+        public StandardClientDisabled DisabledAccount(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            string reason;
+            if (args.Length < 2)
+                reason = "Aucune.";
+            else
+                reason = txt.Substring(target.Length + 1);
+            return new StandardClientDisabled
+            {
+                Target = target,
+                Reason = reason
+            };
+        }
+
+        public StandardClientRanker Ranker(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+                return null;
+
+            int rang = -1;
+            Int32.TryParse(args[1], out rang);
+            if (rang == -1)
+                return null;
+
+            return new StandardClientRanker
+            {
+                Player = infos,
+                Rank = (PlayerRank)rang
+            };
+        }
     }
 }

@@ -1,0 +1,58 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Tools"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Tools" Height="433.353" Width="663.659">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Tools.png"/>
+    </Window.Background>
+    <Grid>
+        <TabControl x:Name="tabControl" Background="{x:Null}">
+            <TabItem Header="Battle City Alpha - Jeu">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_color" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les images"/>
+                    <Controls:BCA_ColorButton x:Name="btn_img" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs"/>
+                    <Controls:BCA_ColorButton x:Name="btn_save" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

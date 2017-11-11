@@ -31,6 +31,7 @@ namespace hub_client.Network
         public event Action<string, string, bool> PopMessageBox;
         public event Action<PlayerInfo, DuelType> ChoicePopBox;
         public event Action<string> LaunchYGOPro;
+        public event Action LaunchTrade;
         #region ChatForm Events
         public event Action<Color, string, bool, bool> ChatMessageRecieved;
         public event Action<PlayerInfo> AddHubPlayer;
@@ -64,6 +65,9 @@ namespace hub_client.Network
         public event Action<PlayerInfo[]> UpdatePanelUserlist;
         public event Action<string[], string, string, int> UpdatePanelUser;
         #endregion
+        #region TradeForm Events
+        public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -75,6 +79,7 @@ namespace hub_client.Network
         public ShopAdministrator ShopAdmin;
         public PurchaseAdministrator PurchaseAdmin;
         public PanelAdministrator PanelAdmin;
+        public TradeAdministrator TradeAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -98,6 +103,7 @@ namespace hub_client.Network
             ShopAdmin = new ShopAdministrator(this);
             PurchaseAdmin = new PurchaseAdministrator(this);
             PanelAdmin = new PanelAdministrator(this);
+            TradeAdmin = new TradeAdministrator(this);
         }
 
         private void InitManager()
@@ -227,6 +233,21 @@ namespace hub_client.Network
                 case PacketType.Banlist:
                     OnBanlist(JsonConvert.DeserializeObject<StandardServerBanlist>(packet));
                     break;
+                case PacketType.GivePoints:
+                    OnGivePoints(JsonConvert.DeserializeObject<StandardServerGetPoints>(packet));
+                    break;
+                case PacketType.GiveCard:
+                    OnGiveCard(JsonConvert.DeserializeObject<StandardServerGetCard>(packet));
+                    break;
+                case PacketType.GiveAvatar:
+                    OnGiveAvatar(JsonConvert.DeserializeObject<StandardServerGetAvatar>(packet));
+                    break;
+                case PacketType.TradeRequest:
+                    OnTradeRequest(JsonConvert.DeserializeObject<StandardServerTradeRequest>(packet));
+                    break;
+                case PacketType.TradeRequestAnswer:
+                    OnTradeRequestAnswer(JsonConvert.DeserializeObject<StandardServerTradeRequestAnswer>(packet));
+                    break;
             }
         }
 
@@ -243,7 +264,7 @@ namespace hub_client.Network
             {
                 case ChatMessageType.Standard:
                     c = FormExecution.AppDesignConfig.StandardMessageColor;
-                    msg = ParseUsername(packet.Player.Username, packet.Player.Rank) + ":" + packet.Message;
+                    msg = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
                     break;
                 case ChatMessageType.Animation:
                     c = FormExecution.AppDesignConfig.AnimationMessageColor;
@@ -255,6 +276,8 @@ namespace hub_client.Network
                     bold = true;
                     break;
                 case ChatMessageType.Greet:
+                    if (!FormExecution.ClientConfig.Greet)
+                        return;
                     c = FormExecution.AppDesignConfig.GreetMessageColor;
                     msg = "[Greet - " + packet.Player.Username + "]:" + packet.Message;
                     break;
@@ -336,13 +359,13 @@ namespace hub_client.Network
         private void OnAddHubPlayer(StandardServerAddHubPlayer packet)
         {
             PlayerManager.UpdatePlayer(packet.Infos);
-            AddHubPlayer?.Invoke(packet.Infos);
+            Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(packet.Infos));
             logger.Trace("AddHubPlayer - {0}", packet.Infos);
         }
 
         private void OnRemoveHubPlayer(StandardServerRemoveHubPlayer packet)
         {
-            RemoveHubPlayer?.Invoke(packet.Infos);
+            Application.Current.Dispatcher.Invoke(() => RemoveHubPlayer?.Invoke(packet.Infos));
             PlayerManager.Remove(packet.Infos);
             logger.Trace("RemoveHubPlayer - {0}", packet.Infos);
         }
@@ -352,7 +375,7 @@ namespace hub_client.Network
             foreach (PlayerInfo infos in packet.Userlist)
             {
                 PlayerManager.UpdatePlayer(infos);
-                AddHubPlayer?.Invoke(infos);
+                Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(infos));
             }
             logger.Trace("UpdatePlayerList - {0}", packet.Userlist);
         }
@@ -385,6 +408,9 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.PlayerNotConnected:
                     msg = "••• L'utilisateur ciblé n'est pas connecté.";
+                    break;
+                case CommandErrorType.PlayerNotExisted:
+                    msg = "••• L'utilisateur ciblé n'existe pas.";
                     break;
                 case CommandErrorType.NotEnoughMoney:
                     msg = "Tu n'as pas assez de points !";
@@ -422,7 +448,7 @@ namespace hub_client.Network
 
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
         {
-            packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank) + ":" + packet.Message;
+            packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
             PrivateMessageReceived?.Invoke(packet.Player.Username, packet.Message);
             logger.Trace("PRIVATE MESSAGE RECEIVED - From : {0} | Message : {1}", packet.Player, packet.Message);
         }
@@ -454,6 +480,8 @@ namespace hub_client.Network
 
         public void OnDuelRequest(StandardServerDuelRequest packet)
         {
+            if (FormExecution.ClientConfig.Request)
+                return;
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Type);
             Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Type));
         }
@@ -500,22 +528,68 @@ namespace hub_client.Network
             logger.Trace("BANLIST - {0}", packet.Players);
         }
 
-        public string ParseUsername(string username, PlayerRank rank)
+        public void OnGivePoints(StandardServerGetPoints packet)
+        {
+            string type = "Battle";
+            if (packet.PrestigePoints)
+                type = "Pretige";
+            OpenPopBox("Vous avez reçu " + packet.Points + " " + type + " points de la part de " + packet.Player.Username, "Réception de points");
+            logger.Trace("GET POINTS - From : {0} | Amount : {1} | Prestige : {2}", packet.Player.Username, packet.Points, packet.PrestigePoints);
+        }
+        public void OnGiveCard(StandardServerGetCard packet)
+        {
+            OpenPopBox("Vous avez reçu la carte : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de carte");
+            logger.Trace("GET CARD - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+        public void OnGiveAvatar(StandardServerGetAvatar packet)
+        {
+            OpenPopBox("Vous avez reçu l'avatar : " + packet.Id + " de la part de " + packet.Player.Username, "Réception d'avatar");
+            logger.Trace("GET CARD - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+
+        public void OnTradeRequest(StandardServerTradeRequest packet)
+        {
+            if (FormExecution.ClientConfig.Request)
+                return;
+            Thread.Sleep(100);
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
+            logger.Trace("Trade REQUEST - From {0} | Type : {1}", packet.Player.Username, DuelType.Trade);
+        }
+
+        public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
+        {
+            Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
+            logger.Trace("Trade REQUEST ANSWER - From {0} | Type : {1} | Result : {2}", packet.Player.Username, DuelType.Trade, packet.Result);
+            if (packet.Result)
+            {
+                Application.Current.Dispatcher.Invoke(() => LaunchTrade?.Invoke());
+                Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { PlayerManager.GetInfos(FormExecution.Username), packet.Player }, packet.Collections));
+            }
+            else
+                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false,false));
+        }
+
+        public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {
             switch (rank)
             {
                 case PlayerRank.Owner:
-                    return "#Administrateur#" + username;
+                    return "♛" + username;
+                case PlayerRank.Bot:
+                    return "☎" + username;
                 case PlayerRank.Moderator:
-                    return "#Modérateur#" + username;
+                    return "♝" + username;
                 case PlayerRank.Animator:
-                    return "#Animateur#" + username;
+                    return "♞" + username;
                 case PlayerRank.Developper:
-                    return "#Développeur#" + username;
+                    return "♣" + username;
                 case PlayerRank.Contributor:
-                    return "#Contributeur#" + username;
+                    return "♟" + username;
                 default:
-                    return username;
+                    if (isVip)
+                        return "✮" + username;
+                    else
+                        return username;
             }
         }
 

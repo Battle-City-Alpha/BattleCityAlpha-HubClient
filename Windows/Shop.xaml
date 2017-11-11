@@ -23,14 +23,12 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Battle Points : " FontSize="24" FontFamily="Dosis" Margin="10"/>
                     <TextBlock x:Name="tb_bps" Text="????" FontSize="24" FontFamily="Dosis" Margin="10"/>
                 </StackPanel>
                 <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown"/>
-                <Controls:BCA_ColorButton x:Name="btn_5vs1" Margin="10" Width="Auto" Height="Auto" ButtonText="5 vs 1" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_5vs1_MouseLeftButtonDown"/>
                 <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1"/>
             </Grid>
         </Border>

@@ -58,7 +58,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_5vs1, btn_prestigeshop, btn_purchase, btn_searchcard });
+            Buttons.AddRange(new[] { btn_prestigeshop, btn_purchase, btn_searchcard });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -200,11 +200,6 @@ namespace hub_client.Windows
         {
             SearchCard form = new SearchCard();
             form.Show();
-        }
-
-        private void btn_5vs1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

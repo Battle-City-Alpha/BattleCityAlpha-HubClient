@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
+using BCA.Network.Packets;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using System;
@@ -25,15 +26,20 @@ namespace hub_client.Windows
     {
         private AppDesignConfig style = FormExecution.AppDesignConfig;
         StandardClientDuelRequestAnswer packet;
+        bool trade = false;
 
         public ChoicePopBox(PlayerInfo player, DuelType type)
         {
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, type);
+            if (type == DuelType.Trade)
+            {
+                trade = true;
+                txt = String.Format("Vous avez été invité en échange par {0}.", player.Username);
+            }
             InitializeComponent();
             popText.Text = txt;
             Loaded += PopBox_Loaded;
             Title = "Requête de duel";
-
             packet = new StandardClientDuelRequestAnswer { Player = player, Type = type };
         }
 
@@ -65,7 +71,10 @@ namespace hub_client.Windows
 
         private void SendAnswer()
         {
-            FormExecution.Client.Send(BCA.Network.Packets.Enums.PacketType.DuelRequestAnswer, packet);
+            if (!trade)
+                FormExecution.Client.Send(BCA.Network.Packets.Enums.PacketType.DuelRequestAnswer, packet);
+            else
+                FormExecution.Client.Send(BCA.Network.Packets.Enums.PacketType.TradeRequestAnswer, new StandardClientTradeRequestAnswer { Player = packet.Player, Result = packet.Result });
         }
     }
 }

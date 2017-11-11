@@ -35,6 +35,7 @@ namespace hub_client
         public static AppConfig AppConfig;
         public static AppDesignConfig AppDesignConfig;
         public static AssetsManager AssetsManager;
+        public static ClientConfig ClientConfig;
 
         public static GameClient Client { get; private set; }
 
@@ -53,6 +54,7 @@ namespace hub_client
         {
             string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");
             string AppDesignConfigPath = Path.Combine(path, "style.json");
+            string ClientConfigPath = Path.Combine(path, "client_config.json");
             AssetsManager = new AssetsManager();
             CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
 
@@ -64,6 +66,10 @@ namespace hub_client
                 AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
             else
                 AppDesignConfig = new AppDesignConfig();
+            if (File.Exists(ClientConfigPath))
+                ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
+            else
+                ClientConfig = new ClientConfig();
 
             BoosterManager.LoadList();
             AppDesignConfig = new AppDesignConfig(); //To debug config
@@ -77,6 +83,7 @@ namespace hub_client
             Client.Shutdown += Client_Shutdown;
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
             Client.LaunchYGOPro += Client_LaunchYGOPro;
+            Client.LaunchTrade += Client_LaunchTrade;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -84,6 +91,12 @@ namespace hub_client
             StartConnexion();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LaunchTrade()
+        {
+            Trade trade = new Trade(Client.TradeAdmin);
+            trade.Show();
         }
 
         private static void Client_ChoicePopBox(PlayerInfo player, DuelType type)
@@ -200,6 +213,12 @@ namespace hub_client
             _purchase = new Purchase(Client.PurchaseAdmin);
             _purchase.Title = title;
             _purchase.Show();
+        }
+
+        public static void OpenTools()
+        {
+            Tools tools = new Tools();
+            tools.Show();
         }
     }
 }

@@ -36,6 +36,9 @@ namespace hub_client.Configuration
         public Color Color1SearchCardButton = (Color)ColorConverter.ConvertFromString("#FFCD0000");
         public Color Color2SearchCardButton = (Color)ColorConverter.ConvertFromString("#FF880D0D");
 
+        public Color Color1ToolsButton = (Color)ColorConverter.ConvertFromString("#FF001EBF");
+        public Color Color2ToolsButton = (Color)ColorConverter.ConvertFromString("#FF070B3A");
+
         public Color StandardMessageColor = Colors.Black;
         public Color AnimationMessageColor = Colors.OrangeRed;
         public Color InformationMessageColor = Colors.DarkBlue;

@@ -15,7 +15,12 @@ namespace hub_client
     public partial class App : Application
     {
         private Logger logger = LogManager.GetCurrentClassLogger();
-        Main BCA = new hub_client.Main();
+
+        public App()
+        {
+            ShutdownMode = ShutdownMode.OnLastWindowClose;
+            Main BCA = new hub_client.Main();
+        }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {

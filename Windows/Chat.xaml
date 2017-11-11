@@ -27,7 +27,7 @@
             <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animation" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options"/>
+            <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options" MouseLeftButtonDown="btnTools_MouseLeftButtonDown"/>
         </Grid>
         <Grid Grid.Row="1" Margin="25,0">
             <Grid.ColumnDefinitions>
@@ -43,7 +43,58 @@
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <ListBox x:Name="lbUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18"/>
+                    <ListView x:Name="lvUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" BorderThickness="0">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
+                                <MenuItem x:Name="duelrequest" Header="Requête de duel" Click="duelrequest_Click"/>
+                                <MenuItem x:Name="traderequest" Header="Requête d'échange" Click="traderequest_Click"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="GridViewColumnHeader">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn DisplayMemberBinding="{Binding Username}" />
+                            </GridView>
+                        </ListView.View>
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <Expander IsExpanded="True">
+                                                        <Expander.Header>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="20" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="[" FontSize="20" Foreground="Black" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="{Binding ItemCount}" FontSize="20" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Bottom" />
+                                                                <TextBlock Text="]" FontSize="20" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Bottom" />
+                                                            </StackPanel>
+                                                        </Expander.Header>
+                                                        <ItemsPresenter />
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView x:Name="listView" Height="100" Width="100">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ListView>
+                    
                 </Border>
                 <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1"/>
             </Grid>

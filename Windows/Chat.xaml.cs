@@ -10,6 +10,8 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -27,9 +29,12 @@ namespace hub_client.Windows
 
         private ChatCommandParser _cmdParser;
 
+        private List<PlayerInfo> Players;
+
         public Chat(ChatAdministrator admin)
         {
             InitializeComponent();
+
             _admin = admin;
             _cmdParser = new ChatCommandParser();
 
@@ -39,6 +44,22 @@ namespace hub_client.Windows
             _admin.AddHubPlayer += _admin_AddHubPlayer;
             _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
             _admin.ClearChat += _admin_ClearChat;
+
+            Players = new List<PlayerInfo>();
+            lvUserlist.Items.Clear();
+            lvUserlist.ItemsSource = Players;
+        }
+
+        private void UpdateList()
+        {
+            try
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
+                view.GroupDescriptions.Clear();
+                view.GroupDescriptions.Add(groupDescription);
+            }
+            catch (Exception ex) { }
         }
 
         private void _admin_ClearChat(string username, string reason)
@@ -49,19 +70,19 @@ namespace hub_client.Windows
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                lbUserlist.Items.Remove(infos.Username);
-            });
+            Players.Remove(infos);
+            UpdateList();
+            if (FormExecution.ClientConfig.Connexion_Message)
+                _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
 
         private void _admin_AddHubPlayer(PlayerInfo infos)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                lbUserlist.Items.Add(infos.Username);
-            });
+            Players.Add(infos);
+            UpdateList();
+            if (FormExecution.ClientConfig.Connexion_Message)
+                _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} removed from userlist.", infos);
         }
 
@@ -187,6 +208,20 @@ namespace hub_client.Windows
                             return null;
                         case "BANLIST":
                             return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
+                        case "GIVEBATTLEPOINTS":
+                            return new NetworkData(PacketType.GivePoints, _cmdParser.GiveBattlePoints(txt.Substring(cmd.Length + 1)));
+                        case "GIVEPRESTIGEPOINTS":
+                            return new NetworkData(PacketType.GivePoints, _cmdParser.GivePrestigePoints(txt.Substring(cmd.Length + 1)));
+                        case "GIVECARD":
+                            return new NetworkData(PacketType.GiveCard, _cmdParser.GiveCard(txt.Substring(cmd.Length + 1)));
+                        case "GIVEAVATAR":
+                            return new NetworkData(PacketType.GiveAvatar, _cmdParser.GiveAvatar(txt.Substring(cmd.Length + 1)));
+                        case "ENABLED":
+                            return new NetworkData(PacketType.EnabledAccount, _cmdParser.EnabledAccount(txt.Substring(cmd.Length + 1)));
+                        case "DISABLED":
+                            return new NetworkData(PacketType.DisabledAccount, _cmdParser.DisabledAccount(txt.Substring(cmd.Length + 1)));
+                        case "PROMOTE":
+                            return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
                         default:
                             _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
                             return null;
@@ -204,7 +239,7 @@ namespace hub_client.Windows
 
         private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string target = lbUserlist.SelectedItem.ToString();
+            string target = lvUserlist.SelectedItem.ToString();
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }
@@ -237,6 +272,35 @@ namespace hub_client.Windows
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/forum-25.html");
             logger.Trace("Animations clicked.");
+        }
+
+        private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenTools();
+        }
+
+        private void pm_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            string target = lvUserlist.SelectedItem.ToString();
+            if (target != null)
+                FormExecution.OpenNewPrivateForm(target);
+        }
+
+        private void duelrequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            string target = lvUserlist.SelectedItem.ToString();
+            //if (target != null)
+            // TODO DuelRequest
+        }
+
+        private void traderequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+            if (target != null)
+                    FormExecution.Client.Send(PacketType.TradeRequest, new StandardClientTradeRequest { Player = target });
         }
     }
 }

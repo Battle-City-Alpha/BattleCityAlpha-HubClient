@@ -1,0 +1,86 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Trade"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Trade" Height="661.493" Width="1064.561">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Trade.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="435*"/>
+            <RowDefinition Height="197*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" CornerRadius="15" Margin="5,5,4.8,4.2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                </Border.Background>
+                <ListView x:Name="lvPlayer1" Margin="5" Background="{x:Null}" FontSize="22" FontFamily="Dosis" Grid.Row="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Quantity}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+            <Controls:BCA_TextBox x:Name="tb_search1" Grid.Row="1" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" CornerRadius="15" Margin="5,5,4.8,4.2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                </Border.Background>
+                <ListView x:Name="lvPlayer2" Margin="5" Background="{x:Null}" FontSize="22" FontFamily="Dosis" Grid.Row="0" Foreground="Black">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Quantity}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+            <Controls:BCA_TextBox x:Name="tb_search2" Grid.Row="1" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,2.8,528.4,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="15" Margin="10,5" Grid.Column="0">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                </Border.Background>
+                <ListBox x:Name="lb_choice" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0"/>
+            </Border>
+            <Controls:BCA_ColorButton Grid.Column="1" VerticalAlignment="Center" Margin="10" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Valider"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0.2,2.8,0.4,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="155*"/>
+                <RowDefinition Height="38*"/>
+            </Grid.RowDefinitions>
+            <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,10,9.8,11.2"/>
+            <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,1.8,9.8,3.6"/>
+        </Grid>
+    </Grid>
+</Window>
