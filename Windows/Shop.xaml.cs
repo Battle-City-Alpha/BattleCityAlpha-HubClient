@@ -41,6 +41,7 @@ namespace hub_client.Windows
             _admin = admin;
 
             _admin.UpdateBoosterInfo += UpdateBoosterInfo;
+            _admin.UpdateBattlePoints += _admin_UpdateBattlePoints;
 
             cbBooster.Items.Add("Booster");
             cbBooster.Items.Add("Booster Pack");
@@ -53,6 +54,11 @@ namespace hub_client.Windows
             cbBooster.Items.Add("Battle Pack");
 
             LoadStyle();
+        }
+
+        private void _admin_UpdateBattlePoints(int points)
+        {
+            tb_bps.Text = points.ToString();
         }
 
         private void LoadStyle()
@@ -180,13 +186,17 @@ namespace hub_client.Windows
 
         private void tb_numberpack_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int numberPacket = Convert.ToInt32(tb_numberpack.Text);
-            if (numberPacket > 24)
-                numberPacket = 24;
-            if (numberPacket < 0)
-                numberPacket = 0;
-            tb_realprice.Text = (numberPacket * BoosterChoosen.Price).ToString();
-            tb_numberpack.Text = numberPacket.ToString();
+            try
+            {
+                int numberPacket = Convert.ToInt32(tb_numberpack.Text);
+                if (numberPacket > 24)
+                    numberPacket = 24;
+                if (numberPacket < 0)
+                    numberPacket = 0;
+                tb_realprice.Text = (numberPacket * BoosterChoosen.Price).ToString();
+                tb_numberpack.Text = numberPacket.ToString();
+            }
+            catch { tb_numbercardpack.Text = "1";  };            
         }
 
         private void btn_purchase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

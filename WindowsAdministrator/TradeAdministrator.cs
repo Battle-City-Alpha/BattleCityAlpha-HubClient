@@ -13,12 +13,34 @@ namespace hub_client.WindowsAdministrator
         public GameClient Client;
 
         public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
+        public event Action<string, string> GetMessage;
+        public event Action<List<PlayerCard>> UpdateCardsToOffer;
+        public event Action TradeExit;
 
         public TradeAdministrator(GameClient client)
         {
             Client = client;
 
-            Client.InitTrade += Client_InitTrade; ;
+            Client.InitTrade += Client_InitTrade;
+            Client.GetMessage += Client_GetMessage;
+            Client.UpdateCardsToOffer += Client_UpdateCardsToOffer;
+            Client.TradeExit += Client_TradeExit;
+            
+        }
+
+        private void Client_TradeExit()
+        {
+            TradeExit?.Invoke();
+        }
+
+        private void Client_UpdateCardsToOffer(List<PlayerCard> cards)
+        {
+            UpdateCardsToOffer?.Invoke(cards);
+        }
+
+        private void Client_GetMessage(string username, string message)
+        {
+            GetMessage?.Invoke(username, message);
         }
 
         private void Client_InitTrade(int arg1, PlayerInfo[] arg2, Dictionary<int, PlayerCard>[] arg3)

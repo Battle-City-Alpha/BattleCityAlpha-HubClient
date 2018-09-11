@@ -47,7 +47,7 @@ namespace hub_client.Network
         public event Action LoginComplete;
         #endregion
         #region PrivateForm Events
-        public event Action<string, string> PrivateMessageReceived;
+        public event Action<PlayerInfo, string> PrivateMessageReceived;
         #endregion
         #region ProfilForm Events
         public event Action<StandardServerProfilInfo> ProfilUpdate;
@@ -57,6 +57,7 @@ namespace hub_client.Network
         #endregion
         #region Shop Events
         public event Action<int, int, int, int, int> UpdateBoosterInfo;
+        public event Action<int> UpdateBattlePoints;
         #endregion
         #region PurchaseForm Events
         public event Action<int[]> PurchaseItem;
@@ -67,6 +68,9 @@ namespace hub_client.Network
         #endregion
         #region TradeForm Events
         public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
+        public event Action<string, string> GetMessage;
+        public event Action<List<PlayerCard>> UpdateCardsToOffer;
+        public event Action TradeExit;
         #endregion
 
         #region Administrator
@@ -247,6 +251,15 @@ namespace hub_client.Network
                     break;
                 case PacketType.TradeRequestAnswer:
                     OnTradeRequestAnswer(JsonConvert.DeserializeObject<StandardServerTradeRequestAnswer>(packet));
+                    break;
+                case PacketType.TradeMessage:
+                    OnTradeMessage(JsonConvert.DeserializeObject<StandardServerTradeMessage>(packet));
+                    break;
+                case PacketType.TradeProposition:
+                    OnTradeProposition(JsonConvert.DeserializeObject<StandardServerTradeProposition>(packet));
+                    break;
+                case PacketType.TradeExit:
+                    OnTradeExit(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
                     break;
             }
         }
@@ -449,7 +462,7 @@ namespace hub_client.Network
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
         {
             packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
-            PrivateMessageReceived?.Invoke(packet.Player.Username, packet.Message);
+            PrivateMessageReceived?.Invoke(packet.Player, packet.Message);
             logger.Trace("PRIVATE MESSAGE RECEIVED - From : {0} | Message : {1}", packet.Player, packet.Message);
         }
 
@@ -501,6 +514,7 @@ namespace hub_client.Network
         public void OnPurchaseItem(StandardServerPurchaseItem packet)
         {
             Application.Current.Dispatcher.Invoke(() => PurchaseItem?.Invoke(packet.Cards));
+            Application.Current.Dispatcher.Invoke(() => UpdateBattlePoints?.Invoke(packet.Points));
             logger.Trace("PURCHASE ITEMS - {0}", packet.Cards);
         }
 
@@ -551,8 +565,8 @@ namespace hub_client.Network
         {
             if (FormExecution.ClientConfig.Request)
                 return;
-            Thread.Sleep(100);
-            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
+
+            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
             logger.Trace("Trade REQUEST - From {0} | Type : {1}", packet.Player.Username, DuelType.Trade);
         }
 
@@ -567,6 +581,26 @@ namespace hub_client.Network
             }
             else
                 Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false,false));
+        }
+
+        public void OnTradeMessage(StandardServerTradeMessage packet)
+        {
+            logger.Trace("TRADE MESSAGE - From {0} | Type : {1} | Message : {2}", packet.Player.Username, DuelType.Trade, packet.Message);
+            Application.Current.Dispatcher.Invoke(() => GetMessage?.Invoke(packet.Player.Username, packet.Message));
+        }
+
+        public void OnTradeProposition(StandardServerTradeProposition packet)
+        {
+            logger.Trace("TRADE PROPOSITION - Cards {0}", packet.Cards.ToArray());
+            Application.Current.Dispatcher.Invoke(() => UpdateCardsToOffer?.Invoke(packet.Cards));
+
+        }
+
+        public void OnTradeExit(StandardServerTradeExit packet)
+        {
+            logger.Trace("TRADE Exit }");
+            Application.Current.Dispatcher.Invoke(() => TradeExit?.Invoke());
+
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)

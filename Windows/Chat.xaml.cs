@@ -48,6 +48,13 @@ namespace hub_client.Windows
             Players = new List<PlayerInfo>();
             lvUserlist.Items.Clear();
             lvUserlist.ItemsSource = Players;
+
+            tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
+        }
+
+        private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //TODO Find player.
         }
 
         private void UpdateList()
@@ -239,7 +246,7 @@ namespace hub_client.Windows
 
         private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string target = lvUserlist.SelectedItem.ToString();
+            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString()); 
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }
@@ -260,7 +267,8 @@ namespace hub_client.Windows
 
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FormExecution.OpenArena();
+            // FormExecution.OpenArena();
+            _admin.Client.OpenPopBox("Fonctionnalité à venir !", "Message technique");
         }
 
         private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -282,7 +290,7 @@ namespace hub_client.Windows
         private void pm_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            string target = lvUserlist.SelectedItem.ToString();
+            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }

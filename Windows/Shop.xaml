@@ -69,6 +69,7 @@
                             <TextBlock Padding="5" Text="Date : " FontSize="24" FontFamily="Dosis"/>
                             <TextBlock x:Name="tb_date" Padding="5" Text="???" FontSize="24" FontFamily="Dosis"/>
                         </StackPanel>
+                        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="132,209,0,0" VerticalAlignment="Top" Width="100"/>
                     </Grid>
                 </Border>
                 <Grid Grid.Column="1">

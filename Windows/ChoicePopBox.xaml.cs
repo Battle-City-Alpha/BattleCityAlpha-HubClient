@@ -30,13 +30,13 @@ namespace hub_client.Windows
 
         public ChoicePopBox(PlayerInfo player, DuelType type)
         {
+            InitializeComponent();
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, type);
             if (type == DuelType.Trade)
             {
                 trade = true;
                 txt = String.Format("Vous avez été invité en échange par {0}.", player.Username);
             }
-            InitializeComponent();
             popText.Text = txt;
             Loaded += PopBox_Loaded;
             Title = "Requête de duel";

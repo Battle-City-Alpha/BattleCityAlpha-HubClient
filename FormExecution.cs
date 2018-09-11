@@ -89,6 +89,7 @@ namespace hub_client
             _login = new Login(Client.LoginAdmin);
 
             StartConnexion();
+            _login.Topmost = true;
             _login.Show();
             logger.Trace("FormExecution initialisation.");
         }
@@ -102,6 +103,8 @@ namespace hub_client
         private static void Client_ChoicePopBox(PlayerInfo player, DuelType type)
         {
             ChoicePopBox box = new ChoicePopBox(player, type);
+            box.Owner = _chat;
+            box.Topmost = true;
             box.ShowDialog();
         }
 
@@ -114,19 +117,20 @@ namespace hub_client
             Game.Start();
         }
 
-        private static void Client_PrivateMessageReceived(string username, string message)
+        private static void Client_PrivateMessageReceived(PlayerInfo user, string message)
         {
-            if (PrivateForms.ContainsKey(username))
-                PrivateForms[username].PrivateMessageRecieved(message);
+            if (PrivateForms.ContainsKey(user.Username))
+                PrivateForms[user.Username].PrivateMessageRecieved(message);
             else
             {
-                OpenNewPrivateForm(username);
-                PrivateForms[username].PrivateMessageRecieved(message);
+                OpenNewPrivateForm(user);
+                PrivateForms[user.Username].PrivateMessageRecieved(message);
             }
         }
 
-        public static void OpenNewPrivateForm(string username)
+        public static void OpenNewPrivateForm(PlayerInfo user)
         {
+            string username = user.Username;
             PrivateMessageAdministrator admin = new PrivateMessageAdministrator(Client);
             PrivateMessage form = new PrivateMessage(username, admin);
             PrivateForms.Add(username, admin);

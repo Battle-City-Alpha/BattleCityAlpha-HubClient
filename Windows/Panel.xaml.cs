@@ -40,6 +40,18 @@ namespace hub_client.Windows
 
             _admin.Client.Send(PacketType.PanelUserlist, new StandardClientOpenPanel { });
             LoadStyle();
+
+            tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
+        }
+
+        private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lbUserlist.Items.Clear();
+            foreach (PlayerInfo info in profiles)
+                if (info.Username.Contains(tbUserlist.GetText()))
+                    lbUserlist.Items.Add(info.Username);
+            if (tbUserlist.GetText() == "")
+                _admin_UpdatePlayersList(profiles);
         }
 
         private void _admin_UpdateProfile(string[] accounts, string ip, string obs, int bp)

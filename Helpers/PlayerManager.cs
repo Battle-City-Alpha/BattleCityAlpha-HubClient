@@ -43,9 +43,9 @@ namespace hub_client.Helpers
         {
             string file = "";
             foreach (var card in cards)
-                file += card.Key + ":" + card.Value.Quantity + Environment.NewLine;
-            File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "chest.list"));
-            File.WriteAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "chest.list"), file);
+                file += card.Key + " " + card.Value.Quantity + Environment.NewLine;
+            File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "Chest.list"));
+            File.WriteAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "Chest.list"), file);
         }
     }
 }
