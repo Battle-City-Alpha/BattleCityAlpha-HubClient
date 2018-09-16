@@ -297,6 +297,12 @@ namespace hub_client.Windows
                 validate = true;
                 _admin.Client.Send(PacketType.TradeProposition, new StandardClientTradeProposition { Id = _id, Cards = _cardsToOffer });
             }
+            else
+            {
+                btnProposition.IsEnabled = false;
+                btnValidate.IsEnabled = false;
+                _admin.Client.Send(PacketType.TradeAnswer, new StandardClientTradeAnswer { Id = _id, Result = true });
+            }
         }
     }
 }

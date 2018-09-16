@@ -600,8 +600,7 @@ namespace hub_client.Network
         {
             logger.Trace("TRADE Exit }");
             Application.Current.Dispatcher.Invoke(() => TradeExit?.Invoke());
-
-        }
+        }        
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {

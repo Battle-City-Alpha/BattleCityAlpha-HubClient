@@ -61,10 +61,10 @@
       <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\..\..\..\..\..\Logiciel\Battle City Alpha\Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>..\Librairies\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -570,7 +570,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\BCA.Network\BCA.csproj">
+    <ProjectReference Include="..\BattleCityAlpha-NetworkLibrary\BCA.csproj">
       <Project>{4E818F97-BB68-461C-8F2C-A03F8D3EF9E4}</Project>
       <Name>BCA</Name>
     </ProjectReference>
