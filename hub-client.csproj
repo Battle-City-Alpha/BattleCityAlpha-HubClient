@@ -112,6 +112,7 @@
     <Compile Include="Enums\PurchasePrice.cs" />
     <Compile Include="Enums\PurchaseType.cs" />
     <Compile Include="FormExecution.cs" />
+    <Compile Include="Helpers\BlacklistManager.cs" />
     <Compile Include="Helpers\BoosterManager.cs" />
     <Compile Include="Helpers\ChatCommandParser.cs" />
     <Compile Include="Helpers\HardwareIdManager.cs" />

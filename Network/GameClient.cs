@@ -87,6 +87,7 @@ namespace hub_client.Network
         #endregion
 
         public PlayerManager PlayerManager;
+        public BlacklistManager BlacklistManager;
 
         public GameClient() : base(new NetworkClient())
         {
@@ -113,6 +114,7 @@ namespace hub_client.Network
         private void InitManager()
         {
             PlayerManager = new PlayerManager();
+            BlacklistManager = new BlacklistManager();
         }
 
         public void OpenPopBox(string text, string title, bool showdialog = false)
@@ -266,6 +268,9 @@ namespace hub_client.Network
 
         private void OnChatMessage(StandardServerChatMessage packet)
         {
+            if (BlacklistManager.CheckBlacklist(packet.Player))
+                return;
+
             ChatMessageType type = packet.Type;
 
             Color c;
@@ -461,6 +466,9 @@ namespace hub_client.Network
 
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
         {
+            if (BlacklistManager.CheckBlacklist(packet.Player))
+                return;
+
             packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
             PrivateMessageReceived?.Invoke(packet.Player, packet.Message);
             logger.Trace("PRIVATE MESSAGE RECEIVED - From : {0} | Message : {1}", packet.Player, packet.Message);
@@ -493,6 +501,9 @@ namespace hub_client.Network
 
         public void OnDuelRequest(StandardServerDuelRequest packet)
         {
+            if (BlacklistManager.CheckBlacklist(packet.Player))
+                return;
+
             if (FormExecution.ClientConfig.Request)
                 return;
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Type);
@@ -563,6 +574,9 @@ namespace hub_client.Network
 
         public void OnTradeRequest(StandardServerTradeRequest packet)
         {
+            if (BlacklistManager.CheckBlacklist(packet.Player))
+                return;
+
             if (FormExecution.ClientConfig.Request)
                 return;
 

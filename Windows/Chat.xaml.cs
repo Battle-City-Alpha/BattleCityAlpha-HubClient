@@ -229,6 +229,9 @@ namespace hub_client.Windows
                             return new NetworkData(PacketType.DisabledAccount, _cmdParser.DisabledAccount(txt.Substring(cmd.Length + 1)));
                         case "PROMOTE":
                             return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
+                        case "BLACKLIST":
+                            _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                            return null;
                         default:
                             _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
                             return null;
