@@ -49,6 +49,7 @@
                                 <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
                                 <MenuItem x:Name="duelrequest" Header="Requête de duel" Click="duelrequest_Click"/>
                                 <MenuItem x:Name="traderequest" Header="Requête d'échange" Click="traderequest_Click"/>
+                                <MenuItem x:Name="setblacklist" Header="Blacklister" Click="setblacklist_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>

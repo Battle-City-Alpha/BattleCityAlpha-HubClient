@@ -221,6 +221,7 @@ namespace hub_client
 
         public static void OpenTools()
         {
+            logger.Trace("Open Tools");
             Tools tools = new Tools();
             tools.Show();
         }

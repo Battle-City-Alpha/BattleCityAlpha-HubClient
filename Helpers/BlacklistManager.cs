@@ -23,12 +23,14 @@ namespace hub_client.Helpers
 
         public void AddPlayer(PlayerInfo player)
         {
-            Blacklist.Add(player);
+            if (!Blacklist.Contains(player))
+                Blacklist.Add(player);
         }
 
         public void RemovePlayer(PlayerInfo player)
         {
-            Blacklist.Remove(player);
+            if (Blacklist.Contains(player))
+                Blacklist.Remove(player);
         }
 
         public bool CheckBlacklist(PlayerInfo player)
@@ -38,7 +40,15 @@ namespace hub_client.Helpers
 
         public string GetList()
         {
-            return Blacklist.ToString();
+            string bl = "Blacklist : ";
+            foreach (PlayerInfo info in Blacklist)
+                bl += info.Username + ",";
+            return bl.Substring(bl.Length - 2);
+        }
+
+        public void Save()
+        {
+            File.WriteAllText("blacklist.json", JsonConvert.SerializeObject(Blacklist));
         }
     }
 }

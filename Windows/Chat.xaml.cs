@@ -230,7 +230,8 @@ namespace hub_client.Windows
                         case "PROMOTE":
                             return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
                         case "BLACKLIST":
-                            _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                            Blacklist blacklist = new Blacklist(_admin.Client.BlacklistManager);
+                            blacklist.Show();
                             return null;
                         default:
                             _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
@@ -312,6 +313,19 @@ namespace hub_client.Windows
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
             if (target != null)
                     FormExecution.Client.Send(PacketType.TradeRequest, new StandardClientTradeRequest { Player = target });
+        }
+
+        private void setblacklist_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+            if (target != null)
+            {
+                _admin.Client.BlacklistManager.AddPlayer(target);
+                _admin.Client.BlacklistManager.AddPlayer(target);
+                _admin.Client.BlacklistManager.Save();
+                _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
+            }
         }
     }
 }

@@ -68,12 +68,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.1\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.9\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Librairies\WPFSpark\WPFSpark\bin\Debug\System.Windows.Interactivity.dll</HintPath>
@@ -134,6 +139,9 @@
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
     <Compile Include="Windows\Arena.xaml.cs">
       <DependentUpon>Arena.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Blacklist.xaml.cs">
+      <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Chat.xaml.cs">
       <DependentUpon>Chat.xaml</DependentUpon>
@@ -202,6 +210,10 @@
       <DependentUpon>Trade.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\Arena.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Blacklist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -542,7 +554,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
@@ -571,7 +583,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BattleCityAlpha-NetworkLibrary\BCA.csproj">
+    <ProjectReference Include="..\Libraries\BCA.Network\BCA.csproj">
       <Project>{4E818F97-BB68-461C-8F2C-A03F8D3EF9E4}</Project>
       <Name>BCA</Name>
     </ProjectReference>
