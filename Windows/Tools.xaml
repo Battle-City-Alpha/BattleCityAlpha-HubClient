@@ -14,8 +14,9 @@
             <TabItem Header="Battle City Alpha - Jeu">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="124*"/>
+                        <ColumnDefinition Width="203*"/>
+                        <ColumnDefinition Width="326*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -23,33 +24,68 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="5,26,5.4,26.4" VerticalAlignment="Center" Grid.ColumnSpan="2">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="1" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                    <Border Grid.Row="0" Grid.Column="2" CornerRadius="15" Margin="4.6,26,5,26.4" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                    <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Margin="4.6,26.6,5,26.8" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,5" VerticalAlignment="Center">
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,26.6,5.4,26.8" VerticalAlignment="Center" Grid.ColumnSpan="2">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Controls:BCA_ColorButton x:Name="btn_color" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les images"/>
-                    <Controls:BCA_ColorButton x:Name="btn_img" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs"/>
-                    <Controls:BCA_ColorButton x:Name="btn_save" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                    <Controls:BCA_ColorButton x:Name="btn_img" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="9.6,26.2,10,26.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les images" MouseLeftButtonDown="btn_img_MouseLeftButtonDown"/>
+                    <Controls:BCA_ColorButton x:Name="btn_color" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,26.2,10.4,26.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs" MouseLeftButtonDown="btn_color_MouseLeftButtonDown" Grid.ColumnSpan="2"/>
+                    <Controls:BCA_ColorButton x:Name="btn_save" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Battle City Alpha - Gestion des avatars">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" VerticalAlignment="Center" Grid.ColumnSpan="3" Padding="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Choix de l'avatar : " FontSize="24" FontFamily="Dosis" Margin="10"/>
+                            <ComboBox Name="cb_avatar" FontSize="24" FontFamily="Dosis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Numéro de l'avatar" Grid.Column="1" SelectionChanged="cb_avatar_SelectionChanged"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Width="96" Height="96">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                        </Border.Background>
+                        <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder"/>
                 </Grid>
             </TabItem>
         </TabControl>

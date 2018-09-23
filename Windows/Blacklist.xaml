@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Blacklist" Height="461.707" Width="257.561">
+        Title="Blacklist" Height="461.707" Width="257.561" Icon="/hub-client;component/Assets/Icon/BCA.ico">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Panel.png" Stretch="UniformToFill"/>
     </Window.Background>

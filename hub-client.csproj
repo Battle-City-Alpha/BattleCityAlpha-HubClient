@@ -108,6 +108,7 @@
     <Compile Include="Cards\SQLCommands.cs" />
     <Compile Include="Configuration\AppDesignConfig.cs" />
     <Compile Include="Configuration\ClientConfig.cs" />
+    <Compile Include="Configuration\YgoproConfig.cs" />
     <Compile Include="Enums\CardAttribute.cs" />
     <Compile Include="Enums\CardFormat.cs" />
     <Compile Include="Enums\CardRace.cs" />

@@ -577,7 +577,7 @@ namespace hub_client.Network
             if (BlacklistManager.CheckBlacklist(packet.Player))
                 return;
 
-            if (FormExecution.ClientConfig.Request)
+            if (FormExecution.ClientConfig.Trade)
                 return;
 
             Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
