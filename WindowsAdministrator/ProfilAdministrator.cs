@@ -1,4 +1,5 @@
-﻿using BCA.Network.Packets.Standard.FromServer;
+﻿using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Network;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
-        public event Action<int, string, int, int, int, int, int, int, int, int, int, int, int> UpdateProfil;
+        public event Action<int, string, int, int, int, int, int, int, PlayerRank, int, int, int, int> UpdateProfil;
 
         public ProfilAdministrator(GameClient client)
         {

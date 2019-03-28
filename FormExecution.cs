@@ -89,7 +89,7 @@ namespace hub_client
             _login = new Login(Client.LoginAdmin);
 
             StartConnexion();
-            _login.Topmost = true;
+            _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
         }
@@ -222,7 +222,7 @@ namespace hub_client
         public static void OpenTools()
         {
             logger.Trace("Open Tools");
-            Tools tools = new Tools();
+            Tools tools = new Tools(Client.ToolsAdmin);
             tools.Show();
         }
     }

@@ -211,5 +211,11 @@ namespace hub_client.Windows
             SearchCard form = new SearchCard();
             form.Show();
         }
+
+        private void btn_brocante_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Brocante form = new Brocante();
+            form.Show();
+        }
     }
 }

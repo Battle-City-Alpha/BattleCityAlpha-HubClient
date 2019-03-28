@@ -72,6 +72,9 @@ namespace hub_client.Network
         public event Action<List<PlayerCard>> UpdateCardsToOffer;
         public event Action TradeExit;
         #endregion
+        #region ToolsForm Events
+        public event Action<int[]> LoadAvatars;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -84,6 +87,8 @@ namespace hub_client.Network
         public PurchaseAdministrator PurchaseAdmin;
         public PanelAdministrator PanelAdmin;
         public TradeAdministrator TradeAdmin;
+        public BrocanteAdministrator BrocanteAdmin;
+        public ToolsAdministrator ToolsAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -109,6 +114,8 @@ namespace hub_client.Network
             PurchaseAdmin = new PurchaseAdministrator(this);
             PanelAdmin = new PanelAdministrator(this);
             TradeAdmin = new TradeAdministrator(this);
+            BrocanteAdmin = new BrocanteAdministrator(this);
+            ToolsAdmin = new ToolsAdministrator(this);
         }
 
         private void InitManager()
@@ -263,6 +270,9 @@ namespace hub_client.Network
                 case PacketType.TradeExit:
                     OnTradeExit(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
                     break;
+                case PacketType.LoadAvatar:
+                    OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
+                    break;
             }
         }
 
@@ -380,14 +390,12 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(packet.Infos));
             logger.Trace("AddHubPlayer - {0}", packet.Infos);
         }
-
         private void OnRemoveHubPlayer(StandardServerRemoveHubPlayer packet)
         {
             Application.Current.Dispatcher.Invoke(() => RemoveHubPlayer?.Invoke(packet.Infos));
             PlayerManager.Remove(packet.Infos);
             logger.Trace("RemoveHubPlayer - {0}", packet.Infos);
         }
-
         private void OnUpdateHubPlayerList(StandardServerPlayerlist packet)
         {
             foreach (PlayerInfo infos in packet.Userlist)
@@ -450,14 +458,12 @@ namespace hub_client.Network
             logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker,  packet.Reason);
             Shutdown?.Invoke();
         }
-
         public void OnBan(StandardServerBan packet)
         {
             OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur");
             logger.Trace("BANNED - By : {0} | Time : {1} | Reason : {2}", packet.Banner, packet.Time, packet.Reason);
             Shutdown?.Invoke();
         }
-
         public void OnMute(StandardServerMute packet)
         {
             OpenPopBox("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Mute");
@@ -521,7 +527,6 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdateBoosterInfo?.Invoke(packet.CardGot, packet.TotalCard, packet.Price, packet.CardPerPack, packet.BattlePoints));
             logger.Trace("UPDATE BOOSTER INFO - {0}/{1} | Price : {2} | BP : {3}", packet.CardGot, packet.TotalCard, packet.Price, packet.BattlePoints);
         }
-
         public void OnPurchaseItem(StandardServerPurchaseItem packet)
         {
             Application.Current.Dispatcher.Invoke(() => PurchaseItem?.Invoke(packet.Cards));
@@ -540,7 +545,6 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdatePanelUserlist?.Invoke(packet.Players));
             logger.Trace("UPDATE PANEL USERLIST - Players : {0}", packet.Players);
         }
-
         public void OnPanelUpdateProfile(StandardServerPanelUpdateProfile packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePanelUser?.Invoke(packet.Accounts, packet.IP, packet.Observation, packet.Points));
@@ -583,7 +587,6 @@ namespace hub_client.Network
             Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
             logger.Trace("Trade REQUEST - From {0} | Type : {1}", packet.Player.Username, DuelType.Trade);
         }
-
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
         {
             Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
@@ -596,25 +599,30 @@ namespace hub_client.Network
             else
                 Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false,false));
         }
-
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {
             logger.Trace("TRADE MESSAGE - From {0} | Type : {1} | Message : {2}", packet.Player.Username, DuelType.Trade, packet.Message);
             Application.Current.Dispatcher.Invoke(() => GetMessage?.Invoke(packet.Player.Username, packet.Message));
         }
-
         public void OnTradeProposition(StandardServerTradeProposition packet)
         {
             logger.Trace("TRADE PROPOSITION - Cards {0}", packet.Cards.ToArray());
             Application.Current.Dispatcher.Invoke(() => UpdateCardsToOffer?.Invoke(packet.Cards));
 
         }
-
         public void OnTradeExit(StandardServerTradeExit packet)
         {
             logger.Trace("TRADE Exit }");
             Application.Current.Dispatcher.Invoke(() => TradeExit?.Invoke());
         }        
+
+        public void OnLoadAvatars(StandardServerLoadAvatars packet)
+        {
+            logger.Trace("LOAD AVATARS - Ids : {0}", packet.Avatars);
+            Application.Current.Dispatcher.Invoke(() => LoadAvatars?.Invoke(packet.Avatars));
+        }
+
+
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {

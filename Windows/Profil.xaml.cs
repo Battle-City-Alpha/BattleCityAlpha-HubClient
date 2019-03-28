@@ -1,4 +1,5 @@
-﻿using BCA.Network.Packets.Standard.FromServer;
+﻿using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
@@ -36,7 +37,7 @@ namespace hub_client.Windows
             _admin.UpdateProfil += _admin_UpdateProfil;
         }
 
-        private void _admin_UpdateProfil(int avatarId, string username, int cardNumber, int level, int exp, int rankedwin, int rankedlose, int elo, int rank, int unrankedwin, int unrankedlose, int giveup, int ragequit)
+        private void _admin_UpdateProfil(int avatarId, string username, int cardNumber, int level, int exp, int rankedwin, int rankedlose, int elo, PlayerRank rank, int unrankedwin, int unrankedlose, int giveup, int ragequit)
         {
             AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
             tb_username.Text = username;

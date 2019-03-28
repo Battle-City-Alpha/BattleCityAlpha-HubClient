@@ -27,7 +27,6 @@ namespace hub_client.Helpers
                 Message = txt
             };
         }
-
         public StandardClientChatMessage InformationMessage(string txt)
         {
             return new StandardClientChatMessage
@@ -45,7 +44,6 @@ namespace hub_client.Helpers
                 Message = txt
             };
         }
-
         public StandardClientChatMessage SetGreet(string txt)
         {
             return new StandardClientChatMessage
@@ -62,7 +60,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             string reason;
             if (args.Length < 2)
@@ -75,7 +76,6 @@ namespace hub_client.Helpers
                 Reason = reason
             };
         }
-
         public StandardClientBan Ban(string txt)
         {
             string[] args = txt.Split(' ');
@@ -83,7 +83,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             int time = -1;
             Int32.TryParse(args[1], out time);
@@ -102,7 +105,6 @@ namespace hub_client.Helpers
                 Reason = reason
             };
         }
-
         public StandardClientMute Mute(string txt)
         {
             string[] args = txt.Split(' ');
@@ -110,7 +112,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             int time = -1;
             Int32.TryParse(args[1], out time);
@@ -188,7 +193,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             int id = -1;
             Int32.TryParse(args[1], out id);
@@ -207,7 +215,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             int id = -1;
             Int32.TryParse(args[1], out id);
@@ -264,7 +275,10 @@ namespace hub_client.Helpers
             string target = args[0];
             PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
             if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
                 return null;
+            }
 
             int rang = -1;
             Int32.TryParse(args[1], out rang);

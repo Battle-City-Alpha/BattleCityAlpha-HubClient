@@ -83,7 +83,6 @@ namespace hub_client.Windows
                 _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
-
         private void _admin_AddHubPlayer(PlayerInfo infos)
         {
             Players.Add(infos);
@@ -172,15 +171,16 @@ namespace hub_client.Windows
             {
                 case Key.Enter:
                     NetworkData data = ParseMessage(tbChat.GetText());
-                    if (data != null)
+                    if (data != null && data.Packet != null)
+                    {
                         _admin.Client.Send(data);
-                    logger.Info("Chat send : {0}.", data);
+                        logger.Info("Chat send : {0}.", data);
+                    }
                     tbChat.Clear();
                     break;
             }
             e.Handled = true;
         }
-
         private NetworkData ParseMessage(string txt)
         {
             try
@@ -288,6 +288,7 @@ namespace hub_client.Windows
 
         private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            _admin.Client.Send(PacketType.LoadAvatar, new StandardClientLoadAvatars());
             FormExecution.OpenTools();
         }
 

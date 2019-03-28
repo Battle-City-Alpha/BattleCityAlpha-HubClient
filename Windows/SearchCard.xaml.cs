@@ -104,26 +104,7 @@ namespace hub_client.Windows
 
             CardInfos card = filter_cards[lb_cards.Items.IndexOf(e.AddedItems[0])];
 
-            tb_cardname.Text = card.Name;
-            CardType[] typeArray = card.GetCardTypes();
-            string level;
-            if (typeArray.Contains(CardType.Pendule))
-                level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
-            else
-            {
-                level = "★";
-                for (int i = 1; i < card.Level; i++)
-                    level += "★";
-                if (level.Length > 6)
-                    level = level.Insert(6, Environment.NewLine);
-            }
-            tb_cardlevel.Text = level;
-            tb_cardatkdef.Text = string.Format("{0}/{1}", card.Atk, card.Def);
-            tb_cardattribute.Text = card.GetAttribute();
-            tb_cardtype.Text = card.GetCardType();
-            tb_carddesc.Text = card.Description;
-
-            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", card.Id + ".jpg" });
+            DisplayCardInfo.SetCard(card);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

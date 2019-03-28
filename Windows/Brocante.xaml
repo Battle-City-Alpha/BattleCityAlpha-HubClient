@@ -1,0 +1,42 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls" x:Class="hub_client.Windows.Brocante"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Brocante" Height="481.28" Width="658.554">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Brocante.png" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="212*"/>
+            <RowDefinition Height="229*"/>
+            <RowDefinition Height="77*"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="brocanteList" Grid.Row="0" Grid.Column="0" Margin="5" Background="#BFFFFFFF">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Vendeur :" DisplayMemberBinding="{Binding Seller}"/>
+                    <GridViewColumn Header="Carte :" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Prix :" DisplayMemberBinding="{Binding Price}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Controls:BCA_DisplayCardInfo Grid.Row="1" />
+        <Grid Grid.Row="2" Margin="0,0,0,1.8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_ColorButton x:Name="btnSell" Grid.Column="0" Height="Auto" ButtonText="Vendre" Margin="10"/>
+            <Controls:BCA_ColorButton x:Name="btnSearch" Grid.Column="1" Height="Auto" ButtonText="Chercher" Margin="10"/>
+            <Controls:BCA_ColorButton x:Name="btnBuy" Grid.Column="2" Height="Auto" ButtonText="Acheter" Margin="10"/>
+        </Grid>
+    </Grid>
+</Window>

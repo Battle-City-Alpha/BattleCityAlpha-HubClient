@@ -1,6 +1,9 @@
-﻿using hub_client.Assets;
+﻿using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
+using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,20 +30,26 @@ namespace hub_client.Windows
         private ClientConfig client_config = FormExecution.ClientConfig;
         AssetsManager PicsManager = new AssetsManager();
 
-        public Tools()
+        private ToolsAdministrator _admin;
+
+        public Tools(ToolsAdministrator admin)
         {
             InitializeComponent();
 
             LoadStyle();
 
+            _admin = admin;
+            _admin.LoadAvatars += _admin_LoadAvatars;
+
             cb_connectionmsg.IsChecked = client_config.Connexion_Message;
             cb_greet.IsChecked = client_config.Greet;
             cb_traderequest.IsChecked = client_config.Request;
             cb_duelrequest.IsChecked = client_config.Trade;
+        }
 
-            cb_avatar.Items.Add("1");
-            cb_avatar.Items.Add("12");
-            cb_avatar.Items.Add("24");
+        private void _admin_LoadAvatars(int[] avatars)
+        {
+            cb_avatar.ItemsSource = avatars;
         }
 
         private void LoadStyle()
@@ -81,6 +90,13 @@ namespace hub_client.Windows
         {
             int avatarId = Convert.ToInt32(cb_avatar.SelectedItem);
             AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
+        }
+
+        private void btn_save_avatar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = Convert.ToInt32(cb_avatar.SelectedItem.ToString()) };
+            FormExecution.Client.Send(PacketType.ChangeAvatar, packet);
+            Close();
         }
     }
 }

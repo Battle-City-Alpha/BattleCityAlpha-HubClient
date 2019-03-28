@@ -128,6 +128,7 @@
     <Compile Include="Network\NetworkData.cs" />
     <Compile Include="Stuff\BoosterInfo.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
@@ -137,12 +138,16 @@
     <Compile Include="WindowsAdministrator\PurchaseAdministrator.cs" />
     <Compile Include="WindowsAdministrator\RegisterAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
     <Compile Include="Windows\Arena.xaml.cs">
       <DependentUpon>Arena.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Blacklist.xaml.cs">
       <DependentUpon>Blacklist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Brocante.xaml.cs">
+      <DependentUpon>Brocante.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Chat.xaml.cs">
       <DependentUpon>Chat.xaml</DependentUpon>
@@ -157,6 +162,9 @@
     </Compile>
     <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
       <DependentUpon>BCA_Button.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_DisplayCardInfo.xaml.cs">
+      <DependentUpon>BCA_DisplayCardInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_RichTextBox.xaml.cs">
       <DependentUpon>BCA_RichTextBox.xaml</DependentUpon>
@@ -218,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Brocante.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Chat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -227,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_DisplayCardInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -544,7 +560,9 @@
     </None>
     <Resource Include="Assets\CRMS.jpg" />
     <Resource Include="Assets\Cards Infos\setname.txt" />
-    <Resource Include="Assets\Background\SearchCard.jpg" />
+    <None Include="Assets\Background\SearchCard.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\Background\Panel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -552,6 +570,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\Trade.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\Brocante.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

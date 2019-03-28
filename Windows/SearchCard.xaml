@@ -8,7 +8,7 @@
         Title="Recherche de Cartes" Height="528.858" Width="868.918" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         Loaded="Window_Loaded">
     <Window.Background>
-        <ImageBrush ImageSource="/hub-client;component/Assets/Background/SearchCard.jpg"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/SearchCard.jpg"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -74,8 +74,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Border CornerRadius="15" Margin="10" Grid.Column="0">
                 <Border.Background>
@@ -83,48 +82,7 @@
                 </Border.Background>
                 <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
             </Border>
-            <Border CornerRadius="15" Margin="10" Grid.Column="1">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.5"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="8*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="25*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Margin="0">
-                        <TextBlock x:Name="tb_cardname" Text="???" FontFamily="Dosis" FontSize="18"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2">
-                        <TextBlock x:Name="tb_cardtype" Text="???" FontFamily="Dosis" FontSize="18"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2">
-                        <TextBlock x:Name="tb_cardattribute" Text="???" FontFamily="Dosis" FontSize="18"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2">
-                        <TextBlock x:Name="tb_cardlevel" Text="???" FontFamily="Dosis" FontSize="18"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="3">
-                        <TextBlock x:Name="tb_cardatkdef" Text="???" FontFamily="Dosis" FontSize="18"/>
-                    </StackPanel>
-                    <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2">
-                        <TextBlock x:Name="tb_carddesc" Text="???" FontFamily="Dosis" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                    </ScrollViewer>
-                </Grid>
-            </Border>
-            <Border CornerRadius="15" Margin="10" Grid.Column="2">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.5"/>
-                </Border.Background>
-                <Image x:Name="img_card" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="5"/>
-            </Border>
+            <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" />
         </Grid>
     </Grid>
 </Window>

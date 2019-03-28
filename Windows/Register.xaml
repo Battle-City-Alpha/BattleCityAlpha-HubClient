@@ -68,6 +68,6 @@
             </TextBox.Background>
         </TextBox>
 
-        <Controls:BCA_Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>
+        <Controls:BCA_Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>        
     </Grid>
 </Window>

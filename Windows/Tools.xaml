@@ -85,7 +85,7 @@
                         </Border.Background>
                         <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
                     </Border>
-                    <Controls:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder"/>
+                    <Controls:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_avatar_MouseLeftButtonDown"/>
                 </Grid>
             </TabItem>
         </TabControl>
