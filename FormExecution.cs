@@ -48,6 +48,7 @@ namespace hub_client
         private static Arena _arena;
         private static Shop _shop;
         private static Purchase _purchase;
+        private static Brocante _brocante;
         #endregion
 
         public static void Init()
@@ -196,21 +197,18 @@ namespace hub_client
             _register = new Register(Client.RegisterAdmin);
             _register.Show();
         }
-
         public static void OpenArena()
         {
             logger.Trace("Open arena");
             _arena = new Arena(Client.ArenaAdmin);
             _arena.Show();
         }
-
         public static void OpenShop()
         {
             logger.Trace("Open Shop");
             _shop = new Shop(Client.ShopAdmin);
             _shop.Show();
         }
-
         public static void OpenPurchase(string title)
         {
             logger.Trace("Open Purchase");
@@ -218,12 +216,21 @@ namespace hub_client
             _purchase.Title = title;
             _purchase.Show();
         }
-
         public static void OpenTools()
         {
             logger.Trace("Open Tools");
             Tools tools = new Tools(Client.ToolsAdmin);
             tools.Show();
+        }
+        public static void OpenBrocante()
+        {
+            logger.Trace("Open Brocante");
+
+            if (_brocante != null && _brocante.IsVisible)
+                _brocante.Activate();
+
+            _brocante = new Brocante(Client.BrocanteAdmin);
+            _brocante.Show();
         }
     }
 }

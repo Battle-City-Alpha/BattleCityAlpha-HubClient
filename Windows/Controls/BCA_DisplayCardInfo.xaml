@@ -7,7 +7,7 @@
              mc:Ignorable="d" >
     <Border CornerRadius="15" Margin="10" Grid.Column="1">
         <Border.Background>
-            <SolidColorBrush Color="White" Opacity="0.5"/>
+            <SolidColorBrush Color="White" Opacity="0.7"/>
         </Border.Background>
         <Grid>
             <Grid.ColumnDefinitions>

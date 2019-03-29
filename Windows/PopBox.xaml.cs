@@ -26,7 +26,9 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             popText.Text = txt;
+
             Loaded += PopBox_Loaded;
+
             Title = title;
         }
 
@@ -45,6 +47,11 @@ namespace hub_client.Windows
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Loaded -= PopBox_Loaded;
         }
     }
 }

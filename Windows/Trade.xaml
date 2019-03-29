@@ -19,33 +19,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" CornerRadius="15" Margin="5,5,4.8,4.2">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <ListView x:Name="lvPlayer1" Margin="5" Background="{x:Null}" FontSize="16" FontFamily="Dosis" Grid.Row="0" SelectionChanged="lvPlayer1_SelectionChanged">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeader_Click">Nom</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Quantity}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Quantity" Click="GridViewColumnHeader_Click">Quantité</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Border>
-            <Controls:BCA_TextBox x:Name="tb_search1" Grid.Row="1" Margin="5"/>
+        <Grid>
+            <Controls:BCA_DisplayCollection x:Name="CollectionJ1" Grid.Row="0" />
         </Grid>
         <Grid Grid.Row="0" Grid.Column="1" >
             <Grid.RowDefinitions>
@@ -61,32 +36,7 @@
             <Controls:BCA_ColorButton x:Name="btnProposition" VerticalAlignment="Stretch"  Grid.Row="1" Margin="60,5" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Proposer" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
         </Grid>
         <Grid Grid.Row="0" Grid.Column="2" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" CornerRadius="15" Margin="5,5,4.8,4.2">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <ListView x:Name="lvPlayer2" Margin="5" Background="{x:Null}" FontSize="16" FontFamily="Dosis" Grid.Row="0" Foreground="Black" SelectionChanged="lvPlayer2_SelectionChanged">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeader2_Click">Nom</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Quantity}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Quantity" Click="GridViewColumnHeader2_Click" HorizontalAlignment="Left">Quantité</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Border>
-            <Controls:BCA_TextBox x:Name="tb_search2" Grid.Row="1" Margin="5"/>
+            <Controls:BCA_DisplayCollection x:Name="CollectionJ2" Grid.Row="0" />
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

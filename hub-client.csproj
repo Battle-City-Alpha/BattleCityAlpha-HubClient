@@ -137,6 +137,7 @@
     <Compile Include="WindowsAdministrator\ProfilAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PurchaseAdministrator.cs" />
     <Compile Include="WindowsAdministrator\RegisterAdminstrator.cs" />
+    <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
@@ -165,6 +166,9 @@
     </Compile>
     <Compile Include="Windows\Controls\BCA_DisplayCardInfo.xaml.cs">
       <DependentUpon>BCA_DisplayCardInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_DisplayCollection.xaml.cs">
+      <DependentUpon>BCA_DisplayCollection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_RichTextBox.xaml.cs">
       <DependentUpon>BCA_RichTextBox.xaml</DependentUpon>
@@ -209,6 +213,9 @@
     <Compile Include="Windows\SearchCard.xaml.cs">
       <DependentUpon>SearchCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SelectCard.xaml.cs">
+      <DependentUpon>SelectCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
@@ -243,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_DisplayCardInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_DisplayCollection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SearchCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelectCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

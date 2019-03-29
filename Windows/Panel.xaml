@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Panel" Height="531.171" Width="1050.37" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+        Title="Panel" Height="531.171" Width="1050.37" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Panel.png"/>
     </Window.Background>

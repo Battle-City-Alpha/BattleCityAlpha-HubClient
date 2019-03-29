@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Recherche de Cartes" Height="528.858" Width="868.918" Icon="/hub-client;component/Assets/Icon/BCA.ico"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/SearchCard.jpg"/>
     </Window.Background>

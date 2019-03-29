@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Purchase" Height="448.8" Width="513.6">
+        Title="Purchase" Height="448.8" Width="513.6" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Shop.png" Stretch="UniformToFill"/>
     </Window.Background>

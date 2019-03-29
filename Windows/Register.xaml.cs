@@ -63,5 +63,10 @@ namespace hub_client.Windows
             else
                 _admin.Client.OpenPopBox("Les mots de passe ne sont pas identiques.", "Problème");
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.RegistrationComplete -= _admin_RegistrationComplete;
+        }
     }
 }

@@ -52,5 +52,10 @@ namespace hub_client.Windows
             CardInfos infos = cards[lb_cards.SelectedIndex];
             img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", infos.Id.ToString() + ".jpg" });
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.PurchaseItem -= _admin_PurchaseItem;
+        }
     }
 }

@@ -65,5 +65,10 @@ namespace hub_client.Windows
             }
             e.Handled = true;
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.MessageRecieved -= _admin_MessageRecieved;
+        }
     }
 }

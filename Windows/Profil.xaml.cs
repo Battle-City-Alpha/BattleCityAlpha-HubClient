@@ -53,5 +53,10 @@ namespace hub_client.Windows
             tb_ragequit.Text = ragequit.ToString();
             tb_giveup.Text = giveup.ToString();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.UpdateProfil -= _admin_UpdateProfil;
+        }
     }
 }

@@ -271,8 +271,8 @@ namespace hub_client.Windows
 
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // FormExecution.OpenArena();
-            _admin.Client.OpenPopBox("Fonctionnalité à venir !", "Message technique");
+            FormExecution.OpenArena();
+            //_admin.Client.OpenPopBox("Fonctionnalité à venir !", "Message technique");
         }
 
         private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -327,6 +327,19 @@ namespace hub_client.Windows
                 _admin.Client.BlacklistManager.Save();
                 _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.ChatMessage -= _admin_ChatMessage;
+            Loaded -= Chat_Loaded;
+            _admin.LoginComplete -= _admin_LoginComplete;
+            _admin.AddHubPlayer -= _admin_AddHubPlayer;
+            _admin.RemoveHubPlayer -= _admin_RemoveHubPlayer;
+            _admin.ClearChat -= _admin_ClearChat;
+            tbUserlist.tbChat.TextChanged -= TbChat_TextChanged;
+
+            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
     }
 }

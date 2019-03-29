@@ -1,0 +1,26 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.SelectCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Sélectionner une carte" Height="499.208" Width="835.609" Icon="/hub-client;component/Assets/Icon/BCA.ico" >
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Brocante.png"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Controls:BCA_DisplayCollection x:Name="Collection" Grid.Row="0" />
+        <Controls:BCA_ColorButton Grid.Row="1" Grid.ColumnSpan="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10"/>
+
+        <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.RowSpan="1"/>
+    </Grid>
+</Window>

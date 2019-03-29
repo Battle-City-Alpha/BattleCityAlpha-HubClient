@@ -31,6 +31,7 @@ namespace hub_client.Windows
         public ChoicePopBox(PlayerInfo player, DuelType type)
         {
             InitializeComponent();
+
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, type);
             if (type == DuelType.Trade)
             {
@@ -38,7 +39,9 @@ namespace hub_client.Windows
                 txt = String.Format("Vous avez été invité en échange par {0}.", player.Username);
             }
             popText.Text = txt;
+
             Loaded += PopBox_Loaded;
+
             Title = "Requête de duel";
             packet = new StandardClientDuelRequestAnswer { Player = player, Type = type };
         }
@@ -53,6 +56,7 @@ namespace hub_client.Windows
         private void PopBox_Loaded(object sender, RoutedEventArgs e)
         {
             LoadStyle();
+            Loaded -= PopBox_Loaded;
         }
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

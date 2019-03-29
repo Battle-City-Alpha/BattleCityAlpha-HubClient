@@ -75,6 +75,12 @@ namespace hub_client.Network
         #region ToolsForm Events
         public event Action<int[]> LoadAvatars;
         #endregion
+        #region BrocanteForm Events
+        public event Action<List<BrocanteCard>> LoadBrocante;
+        #endregion
+        #region SelectCardForm Events
+        public event Action<Dictionary<int, PlayerCard>> LoadSelectCard;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -89,6 +95,7 @@ namespace hub_client.Network
         public TradeAdministrator TradeAdmin;
         public BrocanteAdministrator BrocanteAdmin;
         public ToolsAdministrator ToolsAdmin;
+        public SelectCardAdministrator SelectCardAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -116,6 +123,7 @@ namespace hub_client.Network
             TradeAdmin = new TradeAdministrator(this);
             BrocanteAdmin = new BrocanteAdministrator(this);
             ToolsAdmin = new ToolsAdministrator(this);
+            SelectCardAdmin = new SelectCardAdministrator(this);
         }
 
         private void InitManager()
@@ -272,6 +280,12 @@ namespace hub_client.Network
                     break;
                 case PacketType.LoadAvatar:
                     OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
+                    break;
+                case PacketType.LoadBrocante:
+                    OnLoadBrocante(JsonConvert.DeserializeObject<StandardServerLoadBrocante>(packet));
+                    break;
+                case PacketType.AskSelectCard:
+                    OnLoadSelectCard(JsonConvert.DeserializeObject<StandardServerLoadSelectCard>(packet));
                     break;
             }
         }
@@ -440,6 +454,15 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.NotEnoughMoney:
                     msg = "Tu n'as pas assez de points !";
+                    break;
+                case CommandErrorType.AvatarNotOwned:
+                    msg = "Tu ne possèdes pas cet avatar !";
+                    break;
+                case CommandErrorType.CardNotOwned:
+                    msg = "Tu ne possèdes pas cette carte !";
+                    break;
+                case CommandErrorType.PriceUpTo0:
+                    msg = "Le prix doit être strictement positif.";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -620,6 +643,17 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD AVATARS - Ids : {0}", packet.Avatars);
             Application.Current.Dispatcher.Invoke(() => LoadAvatars?.Invoke(packet.Avatars));
+        }
+
+        public void OnLoadBrocante(StandardServerLoadBrocante packet)
+        {
+            logger.Trace("LOAD BROCANTE");
+            Application.Current.Dispatcher.Invoke(() => LoadBrocante?.Invoke(packet.Cards));
+        }
+        public void OnLoadSelectCard(StandardServerLoadSelectCard packet)
+        {
+            logger.Trace("LOAD SELECT CARD");
+            Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));
         }
 
 

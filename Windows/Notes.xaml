@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Notes" Height="511.829" Width="485.122" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+        Title="Notes" Height="511.829" Width="485.122" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg"/>
     </Window.Background>

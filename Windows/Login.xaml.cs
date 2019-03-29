@@ -90,5 +90,11 @@ namespace hub_client.Windows
                     HID = HID
                 });
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.LoginComplete -= _admin_LoginComplete;
+            Loaded -= Login_Loaded;
+        }
     }
 }

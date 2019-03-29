@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Battle City Alpha - Connexion" Height="215.301" Width="470.804" ResizeMode="NoResize" WindowStyle="ToolWindow"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Login.png" Stretch="UniformToFill"/>
     </Window.Background>

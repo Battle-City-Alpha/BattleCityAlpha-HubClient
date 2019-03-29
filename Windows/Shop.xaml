@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Boutique" Height="579.439" Width="965.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded">
+        Title="Battle City Alpha - Boutique" Height="579.439" Width="965.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Shop.png" Stretch="UniformToFill"/>
     </Window.Background>

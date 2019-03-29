@@ -98,5 +98,10 @@ namespace hub_client.Windows
             FormExecution.Client.Send(PacketType.ChangeAvatar, packet);
             Close();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.LoadAvatars -= _admin_LoadAvatars;
+        }
     }
 }

@@ -214,8 +214,13 @@ namespace hub_client.Windows
 
         private void btn_brocante_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Brocante form = new Brocante();
-            form.Show();
+            FormExecution.OpenBrocante();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.UpdateBoosterInfo -= UpdateBoosterInfo;
+            _admin.UpdateBattlePoints -= _admin_UpdateBattlePoints;
         }
     }
 }

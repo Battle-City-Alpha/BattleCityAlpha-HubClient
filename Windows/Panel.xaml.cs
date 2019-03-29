@@ -35,13 +35,13 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             _admin = admin;
+
             _admin.UpdatePlayersList += _admin_UpdatePlayersList;
             _admin.UpdateProfile += _admin_UpdateProfile;
+            tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
 
             _admin.Client.Send(PacketType.PanelUserlist, new StandardClientOpenPanel { });
             LoadStyle();
-
-            tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
@@ -121,6 +121,13 @@ namespace hub_client.Windows
         {
             profileselected = profiles[lbUserlist.SelectedIndex];
             _admin.Client.Send(PacketType.PanelUpdate, new StandardClientPanelProfileUpdate { Player = profileselected, Observation = new TextRange(rtbObs.Document.ContentStart, rtbObs.Document.ContentEnd).Text});
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _admin.UpdatePlayersList -= _admin_UpdatePlayersList;
+            _admin.UpdateProfile -= _admin_UpdateProfile;
+            tbUserlist.tbChat.TextChanged -= TbChat_TextChanged;
         }
     }
 }

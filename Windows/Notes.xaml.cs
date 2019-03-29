@@ -29,8 +29,8 @@ namespace hub_client.Windows
         public Notes(NotesAdministrator admin)
         {
             InitializeComponent();
-            Loaded += Notes_Loaded;
             _admin = admin;
+            Loaded += Notes_Loaded;
             path = System.IO.Path.Combine(FormExecution.path, "notes.bca");
         }
 
@@ -61,6 +61,11 @@ namespace hub_client.Windows
         private void btnClear_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             notesBox.Clear();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Loaded -= Notes_Loaded;
         }
     }
 }

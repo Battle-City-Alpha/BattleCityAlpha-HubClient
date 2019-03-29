@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="PrivateMessage" Height="402.229" Width="347.522" Icon="/hub-client;component/Assets/Icon/BCA.ico">
+        Title="PrivateMessage" Height="402.229" Width="347.522" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg"/>
     </Window.Background>

@@ -26,17 +26,12 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Trade : Window
     {
-        private GridViewColumnHeader listViewSortCol = null;
-        private SortAdorner listViewSortAdorner = null;
-        int selected_index = -1;
-
         bool validate = false;
 
         private TradeAdministrator _admin;
 
         private int _id;
         private PlayerInfo[] _players = new PlayerInfo[2];
-        Dictionary<int, BCA.Common.PlayerCard>[] _collections;
         List<PlayerCard> _cardsToOffer = new List<PlayerCard>();
 
         public Trade(TradeAdministrator admin)
@@ -44,7 +39,7 @@ namespace hub_client.Windows
             InitializeComponent();
             _admin = admin;
 
-            this.Closed += Trade_Closed;
+            Closed += Trade_Closed;
 
 
             _admin.InitTrade += _admin_InitTrade;
@@ -52,8 +47,8 @@ namespace hub_client.Windows
             _admin.UpdateCardsToOffer += _admin_UpdateCardsToOffer;
             _admin.TradeExit += _admin_TradeExit;
 
-            tb_search1.tbChat.TextChanged += TbChat_TextChanged1;
-            tb_search2.tbChat.TextChanged += TbChat_TextChanged2;
+            CollectionJ1.GetListview().SelectionChanged += lvPlayer1_SelectionChanged;
+            CollectionJ2.GetListview().SelectionChanged += lvPlayer2_SelectionChanged;
         }
 
         private void _admin_TradeExit()
@@ -64,50 +59,29 @@ namespace hub_client.Windows
         private void Trade_Closed(object sender, EventArgs e)
         {
             _admin.Client.Send(PacketType.TradeExit, new StandardClientTradeExit { Id = _id });
+
+            Closed -= Trade_Closed;
+
+
+            _admin.InitTrade -= _admin_InitTrade;
+            _admin.GetMessage -= _admin_GetMessage;
+            _admin.UpdateCardsToOffer -= _admin_UpdateCardsToOffer;
+            _admin.TradeExit -= _admin_TradeExit;
+
+            CollectionJ1.GetListview().SelectionChanged -= lvPlayer1_SelectionChanged;
+            CollectionJ2.GetListview().SelectionChanged -= lvPlayer2_SelectionChanged;
         }
 
         private void _admin_UpdateCardsToOffer(List<PlayerCard> cards)
         {
-            lvPlayer1.Items.Clear();
+            CollectionJ1.Clear();
             foreach (PlayerCard card in _cardsToOffer)
-                lvPlayer1.Items.Add(card);
-            lvPlayer2.Items.Clear();
+                CollectionJ1.Add(card);
+            CollectionJ2.Clear();
             foreach (PlayerCard card in cards)
-                lvPlayer2.Items.Add(card);
+                CollectionJ2.Add(card);
 
             btnValidate.IsEnabled = true;
-        }
-
-        private void TbChat_TextChanged2(object sender, TextChangedEventArgs e)
-        {
-            lvPlayer2.Items.Clear();
-            foreach (var var in _collections[1])
-                if (!string.IsNullOrEmpty(tb_search2.GetText()) && var.Value.Name.ToLower().Contains(tb_search2.GetText().ToLower()))
-                    lvPlayer2.Items.Add(var.Value);
-            if (tb_search2.GetText() == "")
-            {
-                foreach (var args in _collections[1])
-                {
-                    args.Value.Name = CardManager.GetCard(args.Key).Name;
-                    lvPlayer2.Items.Add(args.Value);
-                }
-            }
-        }
-
-        private void TbChat_TextChanged1(object sender, TextChangedEventArgs e)
-        {
-            lvPlayer1.Items.Clear();
-            foreach (var var in _collections[0])
-                if (!string.IsNullOrEmpty(tb_search1.GetText()) && var.Value.Name.ToLower().Contains(tb_search1.GetText().ToLower()))
-                    lvPlayer1.Items.Add(var.Value);
-            if (tb_search1.GetText() == "")
-            {
-                foreach (var args in _collections[0])
-                {
-                    args.Value.Name = CardManager.GetCard(args.Key).Name;
-                    lvPlayer1.Items.Add(args.Value);
-                }
-            }
         }
 
         private void _admin_GetMessage(string username, string message)
@@ -120,145 +94,32 @@ namespace hub_client.Windows
             _id = id;
             _players = players;
             this.Title = _players[0].Username + " & " + _players[1].Username;
-            _collections = Collections;
-            UpdateCollection();
-        }
 
-        private void UpdateCollection()
-        {
-            lvPlayer1.Items.Clear();
-            lvPlayer2.Items.Clear();
-
-            foreach (var args in _collections[0])
-            {
-                args.Value.Name = CardManager.GetCard(args.Key).Name;
-                lvPlayer1.Items.Add(args.Value);
-            }
-
-            foreach (var args in _collections[1])
-            {
-                args.Value.Name = CardManager.GetCard(args.Key).Name;
-                lvPlayer2.Items.Add(args.Value);
-            }
-        }
-
-        private void ChangeCollection(PlayerCard card, bool add, ListView lv)
-        { 
-            int index = lv.Items.IndexOf(card);
-            if (index != -1)
-            {
-                lv.Items.RemoveAt(index);
-                lv.Items.Insert(index, card);
-            }
-        }
-
-        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
-        {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
-            string sortBy = column.Tag.ToString();
-            if (listViewSortCol != null)
-            {
-                AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                lvPlayer1.Items.SortDescriptions.Clear();
-            }
-
-            ListSortDirection newDir = ListSortDirection.Ascending;
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
-                newDir = ListSortDirection.Descending;
-
-            listViewSortCol = column;
-            listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
-            AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            lvPlayer1.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
-        }
-
-        private void GridViewColumnHeader2_Click(object sender, RoutedEventArgs e)
-        {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
-            string sortBy = column.Tag.ToString();
-            if (listViewSortCol != null)
-            {
-                AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                lvPlayer2.Items.SortDescriptions.Clear();
-            }
-
-            ListSortDirection newDir = ListSortDirection.Ascending;
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
-                newDir = ListSortDirection.Descending;
-
-            listViewSortCol = column;
-            listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
-            AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            lvPlayer2.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
-        }
-
-        public class SortAdorner : Adorner
-        {
-            private static Geometry ascGeometry =
-                    Geometry.Parse("M 0 4 L 3.5 0 L 7 4 Z");
-
-            private static Geometry descGeometry =
-                    Geometry.Parse("M 0 0 L 3.5 4 L 7 0 Z");
-
-            public ListSortDirection Direction { get; private set; }
-
-            public SortAdorner(UIElement element, ListSortDirection dir)
-                    : base(element)
-            {
-                this.Direction = dir;
-            }
-
-            protected override void OnRender(DrawingContext drawingContext)
-            {
-                base.OnRender(drawingContext);
-
-                if (AdornedElement.RenderSize.Width < 20)
-                    return;
-
-                TranslateTransform transform = new TranslateTransform
-                        (
-                                AdornedElement.RenderSize.Width - 15,
-                                (AdornedElement.RenderSize.Height - 5) / 2
-                        );
-                drawingContext.PushTransform(transform);
-
-                Geometry geometry = ascGeometry;
-                if (this.Direction == ListSortDirection.Descending)
-                    geometry = descGeometry;
-                drawingContext.DrawGeometry(Brushes.Black, null, geometry);
-
-                drawingContext.Pop();
-            }
-        }
+            CollectionJ1.UpdateCollection(Collections[0]);
+            CollectionJ2.UpdateCollection(Collections[1]);
+        }      
 
         private void lvPlayer1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lvPlayer1.SelectedItem == null) return;
-            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)lvPlayer1.SelectedItem).Id + ".jpg" });
-            selected_index = lvPlayer1.SelectedIndex;
+            if (CollectionJ1.SelectedItem() == null) return;
+            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)CollectionJ1.SelectedItem()).Id + ".jpg" });
         }
-
         private void lvPlayer2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lvPlayer2.SelectedItem == null) return;
-            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)lvPlayer2.SelectedItem).Id + ".jpg" });
+            if (CollectionJ2.SelectedItem() == null) return;
+            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)CollectionJ2.SelectedItem()).Id + ".jpg" });
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (lvPlayer1.SelectedIndex == -1) return;
+            if (CollectionJ1.SelectedIndex() == -1) return;
 
-            PlayerCard card = ((PlayerCard)lvPlayer1.SelectedItem);
-            if (_collections[0][card.Id].Quantity == 0)
+            PlayerCard card = ((PlayerCard)CollectionJ1.SelectedItem());
+            if (!CollectionJ1.RemoveCard(card))
                 return;
-
-            _collections[0][card.Id].Quantity--;
-            ChangeCollection(card, false, lvPlayer1);
-
 
             lb_choice.Items.Add(card.Name + "("+card.Id+")");
             _cardsToOffer.Add(card);
-            lvPlayer1.SelectedIndex = selected_index;
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -279,11 +140,9 @@ namespace hub_client.Windows
             if (lb_choice.SelectedIndex == -1) return;
 
             string id = item.Split('(')[1].Replace(")", string.Empty);
-            _collections[0][Convert.ToInt32(id)].Quantity++;
+            PlayerCard card = CollectionJ1.AddCard(Convert.ToInt32(id));
             lb_choice.Items.RemoveAt(lb_choice.SelectedIndex);
-            ChangeCollection(_collections[0][Convert.ToInt32(id)], true, lvPlayer1);
-            lvPlayer1.SelectedIndex = selected_index;
-            _cardsToOffer.Remove(_collections[0][Convert.ToInt32(id)]);
+            _cardsToOffer.Remove(card);
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
