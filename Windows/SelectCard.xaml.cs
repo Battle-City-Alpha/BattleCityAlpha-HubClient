@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,8 @@ namespace hub_client.Windows
     {
         SelectCardAdministrator _admin;
         int selected_index = -1;
+
+        public event Action<PlayerCard, int, int> SelectedCard;
 
         public SelectCard(SelectCardAdministrator admin)
         {
@@ -53,6 +56,19 @@ namespace hub_client.Windows
             if (Collection.SelectedItem() == null) return;
             DisplayCardInfo.SetCard(CardManager.GetCard(((PlayerCard)Collection.SelectedItem()).Id));
             selected_index = Collection.SelectedIndex();
+        }
+
+        private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Collection.SelectedItem() == null || tb_price.Text == string.Empty || Convert.ToInt32(tb_price.Text) <= 0 || tb_quantity.Text == string.Empty || Convert.ToInt32(tb_quantity.Text) <= 0) return;
+            SelectedCard?.Invoke((PlayerCard)Collection.SelectedItem(), Convert.ToInt32(tb_price.Text), Convert.ToInt32(tb_quantity.Text));
+            Close();
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

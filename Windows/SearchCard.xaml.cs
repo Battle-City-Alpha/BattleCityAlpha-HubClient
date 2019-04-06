@@ -1,4 +1,6 @@
-﻿using hub_client.Cards;
+﻿using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Cards;
 using hub_client.Configuration;
 using hub_client.Enums;
 using hub_client.Windows.Controls;
@@ -129,6 +131,18 @@ namespace hub_client.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_found_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (lb_cards.SelectedItem == null)
+                return;
+
+            CardInfos card = filter_cards[lb_cards.Items.IndexOf(lb_cards.SelectedItem)];
+            FormExecution.Client.Send(PacketType.SearchCard, new StandardClientSearchCard
+            {
+                Id = card.Id
+            });
         }
     }
 }

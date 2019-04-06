@@ -27,7 +27,7 @@
             <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène" MouseLeftButtonDown="btnArene_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animation" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animations" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown"/>
             <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options" MouseLeftButtonDown="btnTools_MouseLeftButtonDown"/>
         </Grid>
         <Grid Grid.Row="1" Margin="25,0">

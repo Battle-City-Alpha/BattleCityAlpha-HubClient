@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.BCA_PurchaseShopItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border CornerRadius="15" Margin="10" Grid.Column="1">
+        <Border.Background>
+            <SolidColorBrush Color="White" Opacity="0.7"/>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="border_img" CornerRadius="500" Margin="50,10" Grid.Row="0" >
+                    <Border.Background>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Shop/vip.png"/>
+                    </Border.Background>
+                </Border>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="tb_item" Text="Item" FontSize="24" FontFamily="Dosis" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="tb_price" Text="Prix" FontSize="24" FontFamily="Dosis" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>                    
+                </Grid>
+            </Grid>
+            <local:BCA_ColorButton x:Name="btn_purchase" Grid.Row="1" Padding="10,5" ButtonText="Acheter" Color1="#FF202CB3" Color2="#FF1666B1"/>
+        </Grid>
+    </Border>
+</UserControl>

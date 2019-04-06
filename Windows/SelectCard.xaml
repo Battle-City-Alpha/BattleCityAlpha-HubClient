@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Sélectionner une carte" Height="499.208" Width="835.609" Icon="/hub-client;component/Assets/Icon/BCA.ico" >
+        Title="Sélectionner une carte" Height="499.208" Width="1063.297" Icon="/hub-client;component/Assets/Icon/BCA.ico" >
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Brocante.png"/>
     </Window.Background>
@@ -15,11 +15,29 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="12*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Controls:BCA_DisplayCollection x:Name="Collection" Grid.Row="0" />
-        <Controls:BCA_ColorButton Grid.Row="1" Grid.ColumnSpan="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10"/>
+        <Border CornerRadius="15" Margin="5" Grid.Column="0" Grid.Row="1">
+            <Border.Background>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
+            </Border.Background>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Prix :" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tb_price" FontFamily="Dosis" FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="tb_quantity" FontFamily="Dosis" FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBlock Text="Quantité :" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            </Grid>
+        </Border>
+        <Controls:BCA_ColorButton Grid.Row="1" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
 
         <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.RowSpan="1"/>
     </Grid>

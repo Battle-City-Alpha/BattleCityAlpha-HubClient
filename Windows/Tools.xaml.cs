@@ -45,17 +45,20 @@ namespace hub_client.Windows
             cb_greet.IsChecked = client_config.Greet;
             cb_traderequest.IsChecked = client_config.Request;
             cb_duelrequest.IsChecked = client_config.Trade;
+
+            control_avatar.cb_avatar.SelectionChanged += cb_avatar_SelectionChanged;
+            control_avatar.btn_save_avatar.MouseLeftButtonDown += btn_save_avatar_MouseLeftButtonDown;
         }
 
         private void _admin_LoadAvatars(int[] avatars)
         {
-            cb_avatar.ItemsSource = avatars;
+            control_avatar.cb_avatar.ItemsSource = avatars;
         }
 
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_color, btn_img, btn_save, btn_save_avatar });
+            Buttons.AddRange(new[] { btn_color, btn_img, btn_save, control_avatar.btn_save_avatar });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -88,13 +91,13 @@ namespace hub_client.Windows
 
         private void cb_avatar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int avatarId = Convert.ToInt32(cb_avatar.SelectedItem);
-            AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
+            int avatarId = Convert.ToInt32(control_avatar.cb_avatar.SelectedItem);
+            control_avatar.AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
         }
 
         private void btn_save_avatar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = Convert.ToInt32(cb_avatar.SelectedItem.ToString()) };
+            StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = Convert.ToInt32(control_avatar.cb_avatar.SelectedItem.ToString()) };
             FormExecution.Client.Send(PacketType.ChangeAvatar, packet);
             Close();
         }

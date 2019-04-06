@@ -158,6 +158,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Windows\Controls\BCA_AvatarChoice.xaml.cs">
+      <DependentUpon>BCA_AvatarChoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\BCA_BlurLabel.xaml.cs">
       <DependentUpon>BCA_BlurLabel.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,9 @@
     </Compile>
     <Compile Include="Windows\Controls\BCA_DisplayCollection.xaml.cs">
       <DependentUpon>BCA_DisplayCollection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_PurchaseShopItem.xaml.cs">
+      <DependentUpon>BCA_PurchaseShopItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_RichTextBox.xaml.cs">
       <DependentUpon>BCA_RichTextBox.xaml</DependentUpon>
@@ -183,6 +189,9 @@
       <DependentUpon>BCA_TextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
+    <Compile Include="Windows\InputText.xaml.cs">
+      <DependentUpon>InputText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -197,6 +206,9 @@
     </Compile>
     <Compile Include="Windows\ChoicePopBox.xaml.cs">
       <DependentUpon>ChoicePopBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PrestigeShop.xaml.cs">
+      <DependentUpon>PrestigeShop.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PrivateMessage.xaml.cs">
       <DependentUpon>PrivateMessage.xaml</DependentUpon>
@@ -241,6 +253,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Controls\BCA_AvatarChoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Controls\BCA_BlurLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,6 +273,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Controls\BCA_PurchaseShopItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Controls\BCA_RichTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -270,6 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InputText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ChoicePopBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PrestigeShop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -588,6 +616,27 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\Brocante.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\PrestigeShop.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\avatar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\change_username.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\greet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\pp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\team.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\vip.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

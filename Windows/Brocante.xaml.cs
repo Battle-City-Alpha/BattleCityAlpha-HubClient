@@ -72,7 +72,19 @@ namespace hub_client.Windows
         {
             _admin.Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
             SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
-            form.Show();
+            form.SelectedCard += Form_SelectedCard;
+            form.ShowDialog();
+            form.SelectedCard -= Form_SelectedCard;
+        }
+
+        private void Form_SelectedCard(PlayerCard card, int price, int quantity)
+        {
+            _admin.Client.Send(PacketType.SellBrocanteCard, new StandardClientSellBrocanteCard
+            {
+                CardId = card.Id,
+                Price = price,
+                Quantity = quantity
+            });
         }
 
         private void btnBuy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -82,11 +94,6 @@ namespace hub_client.Windows
             {
                 BcId = card.BCId
             });
-        }
-
-        private void btnSearch_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

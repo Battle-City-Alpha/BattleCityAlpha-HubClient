@@ -53,7 +53,91 @@ namespace hub_client.Windows
             cbBooster.Items.Add("Deck de structure");
             cbBooster.Items.Add("Battle Pack");
 
+            tb_searchBooster.tbChat.TextChanged += TbChat_TextChanged;
+
             LoadStyle();
+        }
+
+        private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<string> BoosterSelect = new List<string>();
+            foreach (string name in BoosterManager.BoosterEditionList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.BoosterPackList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.PackDuellisteList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.ArsenalMysterieuxList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.DeckDeDemarrageList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.DeckStructureList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.GoldPremiumList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.BattlePackList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            foreach (string name in BoosterManager.TournoiList)
+                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                    BoosterSelect.Add(name);
+            lb_booster.Items.Clear();
+            foreach (string name in BoosterSelect)
+                lb_booster.Items.Add(name);
+            if (tb_searchBooster.GetText() == "")
+            {
+                lb_booster.Items.Clear();
+                switch (cbBooster.Text)
+                {
+                    case "Booster":
+                        foreach (string item in BoosterManager.BoosterEditionList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Booster Pack":
+                        foreach (string item in BoosterManager.BoosterPackList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Pack Du Duelliste":
+                        foreach (string item in BoosterManager.PackDuellisteList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Arsenal Mystérieux":
+                        foreach (string item in BoosterManager.ArsenalMysterieuxList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Deck De Démarrage":
+                        foreach (string item in BoosterManager.DeckDeDemarrageList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Deck De Structure":
+                        foreach (string item in BoosterManager.DeckStructureList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Gold Premium":
+                        foreach (string item in BoosterManager.GoldPremiumList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Battle Pack":
+                        foreach (string item in BoosterManager.BattlePackList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Tournoi Pack":
+                        foreach (string item in BoosterManager.TournoiList)
+                            lb_booster.Items.Add(item);
+                        break;
+                    case "Booster Spéciaux":
+                        foreach (string item in BoosterManager.BoosterSpecial)
+                            lb_booster.Items.Add(item);
+                        break;
+                }
+            }
         }
 
         private void _admin_UpdateBattlePoints(int points)
@@ -205,16 +289,19 @@ namespace hub_client.Windows
             _admin.Client.Send(PacketType.PurchaseItem, new StandardClientPurchase { Tag = BoosterChoosen.PurchaseTag, NumberPacket = numberPacket });
             FormExecution.OpenPurchase(BoosterChoosen.Name);
         }
-
         private void btn_searchcard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SearchCard form = new SearchCard();
             form.Show();
         }
-
         private void btn_brocante_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenBrocante();
+        }
+        private void btn_prestigeshop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PrestigeShop shop = new PrestigeShop();
+            shop.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -222,5 +309,6 @@ namespace hub_client.Windows
             _admin.UpdateBoosterInfo -= UpdateBoosterInfo;
             _admin.UpdateBattlePoints -= _admin_UpdateBattlePoints;
         }
+
     }
 }

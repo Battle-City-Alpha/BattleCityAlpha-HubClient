@@ -32,6 +32,7 @@ namespace hub_client.Network
         public event Action<PlayerInfo, DuelType> ChoicePopBox;
         public event Action<string> LaunchYGOPro;
         public event Action LaunchTrade;
+        public event Action CloseBrocante;
         #region ChatForm Events
         public event Action<Color, string, bool, bool> ChatMessageRecieved;
         public event Action<PlayerInfo> AddHubPlayer;
@@ -156,7 +157,6 @@ namespace hub_client.Network
             Thread.Sleep(1500);
             Shutdown?.Invoke();
         }
-
 
         public PlayerInfo GetPlayerInfo(string username)
         {
@@ -287,6 +287,12 @@ namespace hub_client.Network
                 case PacketType.AskSelectCard:
                     OnLoadSelectCard(JsonConvert.DeserializeObject<StandardServerLoadSelectCard>(packet));
                     break;
+                case PacketType.SearchCard:
+                    OnSearchCard(JsonConvert.DeserializeObject<StandardServerSearchCard>(packet));
+                    break;
+                case PacketType.CloseBrocante:
+                    OnCloseBrocante(JsonConvert.DeserializeObject<StandardServerCloseBrocante>(packet));
+                    break;
             }
         }
 
@@ -372,7 +378,6 @@ namespace hub_client.Network
 
             logger.Trace("REGISTER - Success : {0}, Reason : {1}", packet.Success, packet.Reason);
         }
-
         private void OnLogin(StandardServerLogin packet)
         {
             if (!packet.Success)
@@ -649,14 +654,27 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD BROCANTE");
             Application.Current.Dispatcher.Invoke(() => LoadBrocante?.Invoke(packet.Cards));
+            Application.Current.Dispatcher.Invoke(() => UpdateBattlePoints?.Invoke(packet.BattlePoints));
         }
         public void OnLoadSelectCard(StandardServerLoadSelectCard packet)
         {
             logger.Trace("LOAD SELECT CARD");
             Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));
         }
+        public void OnCloseBrocante(StandardServerCloseBrocante packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => CloseBrocante?.Invoke());
 
+            logger.Trace("CLOSE BROCANTE");
+        }
 
+        public void OnSearchCard(StandardServerSearchCard packet)
+        {
+            string boosters = "La carte est disponible dans les boosters : " + string.Join("/", packet.Boosters.ToArray());
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters,"Recherche de carte", true));
+
+            logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());
+        }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {

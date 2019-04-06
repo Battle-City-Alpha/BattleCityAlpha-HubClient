@@ -85,6 +85,7 @@ namespace hub_client
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
             Client.LaunchYGOPro += Client_LaunchYGOPro;
             Client.LaunchTrade += Client_LaunchTrade;
+            Client.CloseBrocante += Client_CloseBrocante;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -93,6 +94,14 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_CloseBrocante()
+        {
+            logger.Trace("Close Brocante");
+
+            if (_brocante != null && _brocante.IsVisible)
+                _brocante.Close();
         }
 
         private static void Client_LaunchTrade()

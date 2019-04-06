@@ -31,7 +31,7 @@
                 </StackPanel>
                 <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown"/>
                 <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Brocante" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown"/>
-                <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1"/>
+                <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_prestigeshop_MouseLeftButtonDown"/>
             </Grid>
         </Border>
         <Grid Grid.Row="1">
@@ -41,16 +41,18 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
                     <RowDefinition Height="207*"/>
                     <RowDefinition Height="22*"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="15" Margin="10,5">
+                <Border CornerRadius="15" Margin="10,5" Grid.Row="1">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.5"/>
                     </Border.Background>
                     <ListBox x:Name="lb_booster" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_booster_SelectionChanged"/>
                 </Border>
-                <ComboBox x:Name="cbBooster" Grid.Row="1" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18" FontFamily="Dosis" SelectedIndex="0"/>
+                <ComboBox x:Name="cbBooster" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18" FontFamily="Dosis" SelectedIndex="0" Background="{x:Null}" BorderBrush="{x:Null}"/>                
+                <Controls:BCA_TextBox x:Name="tb_searchBooster" Grid.Row="2" Margin="10,5"/>
             </Grid>
             <Grid Grid.Column="1" Margin="6.2,0,0.2,-0.4">
                 <Grid.ColumnDefinitions>

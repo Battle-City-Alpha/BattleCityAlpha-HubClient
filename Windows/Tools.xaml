@@ -54,39 +54,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Battle City Alpha - Gestion des avatars">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" VerticalAlignment="Center" Grid.ColumnSpan="3" Padding="20">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.9"/>
-                        </Border.Background>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Choix de l'avatar : " FontSize="24" FontFamily="Dosis" Margin="10"/>
-                            <ComboBox Name="cb_avatar" FontSize="24" FontFamily="Dosis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Numéro de l'avatar" Grid.Column="1" SelectionChanged="cb_avatar_SelectionChanged"/>
-                        </Grid>
-                    </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Width="96" Height="96">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-                        </Border.Background>
-                        <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
-                    </Border>
-                    <Controls:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_avatar_MouseLeftButtonDown"/>
-                </Grid>
+                <Controls:BCA_AvatarChoice x:Name="control_avatar" />
             </TabItem>
         </TabControl>
 
