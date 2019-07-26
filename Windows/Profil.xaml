@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Profil" Height="338.229" Width="606.722" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
+        Title="Profil" Height="338.229" Width="606.722" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed" ResizeMode="NoResize">
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg" Opacity="0.8"/>
     </Window.Background>
@@ -23,7 +23,7 @@
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>
-                <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
+                <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3" MouseLeftButtonDown="AvatarImg_MouseLeftButtonDown" Cursor="Hand"/>
 
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15" Margin="10">

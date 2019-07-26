@@ -35,28 +35,6 @@ namespace hub_client.Windows
 
             LoadStyle();
 
-            RoomItem item = new RoomItem
-            {
-                Id = 1,
-                Players = "Tic-Tac-Toc vs ",
-                Type = BCA.Common.Enums.DuelType.Single
-            };
-            RoomItem item2 = new RoomItem
-            {
-                Id = 2,
-                Players = "Tic-Tac-Toc vs ",
-                Type = BCA.Common.Enums.DuelType.Match
-            };
-            RoomItem item3 = new RoomItem
-            {
-                Id = 3,
-                Players = "Tic-Tac-Toc vs ",
-                Type = BCA.Common.Enums.DuelType.Tag
-            };
-            unrankedList.AddItem(item);
-            unrankedList.AddItem(item2);
-            unrankedList.AddItem(item3);
-
             _admin.UpdateRoom += UpdateRoom;
         }
 

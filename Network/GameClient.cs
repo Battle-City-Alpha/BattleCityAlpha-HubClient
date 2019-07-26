@@ -72,6 +72,7 @@ namespace hub_client.Network
         public event Action<string, string> GetMessage;
         public event Action<List<PlayerCard>> UpdateCardsToOffer;
         public event Action TradeExit;
+        public event Action TradeEnd;
         #endregion
         #region ToolsForm Events
         public event Action<int[]> LoadAvatars;
@@ -97,6 +98,7 @@ namespace hub_client.Network
         public BrocanteAdministrator BrocanteAdmin;
         public ToolsAdministrator ToolsAdmin;
         public SelectCardAdministrator SelectCardAdmin;
+        public AvatarsHandleAdministrator AvatarsHandleAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -125,6 +127,7 @@ namespace hub_client.Network
             BrocanteAdmin = new BrocanteAdministrator(this);
             ToolsAdmin = new ToolsAdministrator(this);
             SelectCardAdmin = new SelectCardAdministrator(this);
+            AvatarsHandleAdmin = new AvatarsHandleAdministrator(this);
         }
 
         private void InitManager()
@@ -176,7 +179,6 @@ namespace hub_client.Network
                 Send(stream.ToArray());
             }
         }
-
         public void Send(NetworkData data)
         {
             Send(data.Type, data.Packet);
@@ -277,6 +279,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.TradeExit:
                     OnTradeExit(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
+                    break;
+                case PacketType.TradeEnd:
+                    OnTradeEnd(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
                     break;
                 case PacketType.LoadAvatar:
                     OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
@@ -393,6 +398,12 @@ namespace hub_client.Network
                     case LoginFailReason.UsernameDoesntExist:
                         OpenPopBox("Le nom d'utilisateur n'existe pas.", "Problème");
                         break;
+                    case LoginFailReason.DisabledAccount:
+                        OpenPopBox("Votre compte est désactivé.", "Problème");
+                        break;
+                    case LoginFailReason.UserAlreadyConnected:
+                        OpenPopBox("Quelqu'un est déja connecté sur votre compte.", "Problème");
+                        break;
                 }
             }
             else
@@ -483,7 +494,7 @@ namespace hub_client.Network
         public void OnKick(StandardServerKick packet)
         {
             OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur");
-            logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker,  packet.Reason);
+            logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker, packet.Reason);
             Shutdown?.Invoke();
         }
         public void OnBan(StandardServerBan packet)
@@ -519,8 +530,8 @@ namespace hub_client.Network
             PlayerManager.UpdateCollection(packet.Collection);
 
             string arg = "-j";
-            
-            switch(packet.Reason)
+
+            switch (packet.Reason)
             {
                 case AskCollectionReason.Deck_Edit:
                     arg = "-d";
@@ -625,7 +636,7 @@ namespace hub_client.Network
                 Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { PlayerManager.GetInfos(FormExecution.Username), packet.Player }, packet.Collections));
             }
             else
-                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false,false));
+                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false, false));
         }
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {
@@ -642,7 +653,12 @@ namespace hub_client.Network
         {
             logger.Trace("TRADE Exit }");
             Application.Current.Dispatcher.Invoke(() => TradeExit?.Invoke());
-        }        
+        }
+        public void OnTradeEnd(StandardServerTradeExit packet)
+        {
+            logger.Trace("TRADE END }");
+            Application.Current.Dispatcher.Invoke(() => TradeEnd?.Invoke());
+        }
 
         public void OnLoadAvatars(StandardServerLoadAvatars packet)
         {
@@ -671,14 +687,14 @@ namespace hub_client.Network
         public void OnSearchCard(StandardServerSearchCard packet)
         {
             string boosters = "La carte est disponible dans les boosters : " + string.Join("/", packet.Boosters.ToArray());
-            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters,"Recherche de carte", true));
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte", true));
 
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {
-            switch (rank)
+            /*switch (rank)
             {
                 case PlayerRank.Owner:
                     return "♛" + username;
@@ -692,13 +708,12 @@ namespace hub_client.Network
                     return "♣" + username;
                 case PlayerRank.Contributor:
                     return "♟" + username;
-                default:
-                    if (isVip)
-                        return "✮" + username;
-                    else
-                        return username;
-            }
+                default: */
+            if (isVip)
+                return "✮" + username;
+            else
+                return username;
         }
-
     }
+
 }

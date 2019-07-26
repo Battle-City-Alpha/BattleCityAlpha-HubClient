@@ -56,7 +56,7 @@ namespace hub_client.Windows
                 _admin.Client.Send(PacketType.Register, new StandardClientRegister
                 {
                     Username = username,
-                    Password = CryptoManager.Encryption(password, encryptKey),
+                    Password = CryptoManager.Encryption(password.Trim(), encryptKey),
                     Email = email,
                     HID = HID
                 });

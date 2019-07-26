@@ -27,12 +27,13 @@ namespace hub_client.Windows
     public partial class Trade : Window
     {
         bool validate = false;
+        bool endTrade = false;
 
         private TradeAdministrator _admin;
 
         private int _id;
         private PlayerInfo[] _players = new PlayerInfo[2];
-        List<PlayerCard> _cardsToOffer = new List<PlayerCard>();
+        Dictionary<int, PlayerCard> _cardsToOffer = new Dictionary<int, PlayerCard>();
 
         public Trade(TradeAdministrator admin)
         {
@@ -46,19 +47,25 @@ namespace hub_client.Windows
             _admin.GetMessage += _admin_GetMessage;
             _admin.UpdateCardsToOffer += _admin_UpdateCardsToOffer;
             _admin.TradeExit += _admin_TradeExit;
+            _admin.TradeEnd += _admin_TradeEnd;
 
             CollectionJ1.GetListview().SelectionChanged += lvPlayer1_SelectionChanged;
             CollectionJ2.GetListview().SelectionChanged += lvPlayer2_SelectionChanged;
         }
 
+        private void _admin_TradeEnd()
+        {
+            endTrade = true;
+            Close();
+        }
         private void _admin_TradeExit()
         {
             Close();
         }
-
         private void Trade_Closed(object sender, EventArgs e)
         {
-            _admin.Client.Send(PacketType.TradeExit, new StandardClientTradeExit { Id = _id });
+            if (!endTrade)
+                _admin.Client.Send(PacketType.TradeExit, new StandardClientTradeExit { Id = _id });
 
             Closed -= Trade_Closed;
 
@@ -67,6 +74,7 @@ namespace hub_client.Windows
             _admin.GetMessage -= _admin_GetMessage;
             _admin.UpdateCardsToOffer -= _admin_UpdateCardsToOffer;
             _admin.TradeExit -= _admin_TradeExit;
+            _admin.TradeEnd -= _admin_TradeEnd;
 
             CollectionJ1.GetListview().SelectionChanged -= lvPlayer1_SelectionChanged;
             CollectionJ2.GetListview().SelectionChanged -= lvPlayer2_SelectionChanged;
@@ -75,8 +83,8 @@ namespace hub_client.Windows
         private void _admin_UpdateCardsToOffer(List<PlayerCard> cards)
         {
             CollectionJ1.Clear();
-            foreach (PlayerCard card in _cardsToOffer)
-                CollectionJ1.Add(card);
+            foreach (var card in _cardsToOffer)
+                CollectionJ1.Add(card.Value);
             CollectionJ2.Clear();
             foreach (PlayerCard card in cards)
                 CollectionJ2.Add(card);
@@ -119,7 +127,10 @@ namespace hub_client.Windows
                 return;
 
             lb_choice.Items.Add(card.Name + "("+card.Id+")");
-            _cardsToOffer.Add(card);
+
+            if (!_cardsToOffer.ContainsKey(card.Id))
+                _cardsToOffer.Add(card.Id, card);
+            _cardsToOffer[card.Id].Quantity++;
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -140,9 +151,21 @@ namespace hub_client.Windows
             if (lb_choice.SelectedIndex == -1) return;
 
             string id = item.Split('(')[1].Replace(")", string.Empty);
+
+            if (!_cardsToOffer.ContainsKey(Convert.ToInt32(id)))
+                return;
+            else
+            {
+                if (_cardsToOffer[Convert.ToInt32(id)].Quantity > 1)
+                    _cardsToOffer[Convert.ToInt32(id)].Quantity--;
+                else
+                    _cardsToOffer.Remove(Convert.ToInt32(id));
+            }
+
+
+
             PlayerCard card = CollectionJ1.AddCard(Convert.ToInt32(id));
             lb_choice.Items.RemoveAt(lb_choice.SelectedIndex);
-            _cardsToOffer.Remove(card);
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
@@ -154,7 +177,7 @@ namespace hub_client.Windows
                 btnProposition.IsEnabled = false;
                 btnValidate.IsEnabled = false;
                 validate = true;
-                _admin.Client.Send(PacketType.TradeProposition, new StandardClientTradeProposition { Id = _id, Cards = _cardsToOffer });
+                _admin.Client.Send(PacketType.TradeProposition, new StandardClientTradeProposition { Id = _id, Cards = GlobalTools.GetDictionnaryValues(_cardsToOffer)});
             }
             else
             {

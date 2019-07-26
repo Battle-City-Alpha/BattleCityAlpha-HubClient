@@ -58,5 +58,10 @@ namespace hub_client.Windows
         {
             _admin.UpdateProfil -= _admin_UpdateProfil;
         }
+
+        private void AvatarImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.OpenAvatarsForm();
+        }
     }
 }

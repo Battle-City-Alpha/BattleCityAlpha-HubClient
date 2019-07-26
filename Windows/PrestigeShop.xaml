@@ -23,7 +23,7 @@
         <Controls:BCA_PurchaseShopItem x:Name="Username_Item" Grid.Column="0" Grid.Row="1"/>
         <Controls:BCA_PurchaseShopItem x:Name="Greet_Item" Grid.Column="1" Grid.Row="0"/>
         <Controls:BCA_PurchaseShopItem x:Name="Avatar_Item" Grid.Column="1" Grid.Row="1"/>
-        <Controls:BCA_PurchaseShopItem x:Name="Team_Item" Grid.Column="2" Grid.Row="0"/>
+        <Controls:BCA_PurchaseShopItem x:Name="DoubleBP_Item" Grid.Column="2" Grid.Row="0"/>
         <Controls:BCA_PurchaseShopItem x:Name="PP_Item" Grid.Column="2" Grid.Row="1"/>
     </Grid>
 </Window>

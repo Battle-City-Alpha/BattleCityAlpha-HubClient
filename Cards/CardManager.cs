@@ -1,4 +1,5 @@
 ﻿using Mono.Data.Sqlite;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,8 @@ namespace hub_client.Cards
 {
     public static class CardManager
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private static Dictionary<int, CardInfos> CardData = new Dictionary<int, CardInfos>();
         public static Dictionary<int, string> SetCodes = new Dictionary<int, string>();
         public static Dictionary<char, List<string>> SetCodesString = new Dictionary<char, List<string>>();
@@ -46,6 +49,7 @@ namespace hub_client.Cards
             }
             catch (Exception ex)
             {
+                logger.Error("LOADCDB :" + ex.ToString());
                 connection.Close();
                 return false;
             }

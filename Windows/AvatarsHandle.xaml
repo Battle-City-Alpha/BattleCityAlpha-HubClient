@@ -1,0 +1,13 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls" x:Class="hub_client.Windows.AvatarsHandle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Gestion des avatars" Height="382.957" Width="664.898" Closed="Window_Closed">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Tools.png"/>
+    </Window.Background>
+    <Controls:BCA_AvatarChoice x:Name="control_avatar" />
+</Window>

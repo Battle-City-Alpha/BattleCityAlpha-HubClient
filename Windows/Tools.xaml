@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Tools" Height="433.353" Width="663.659" Closed="Window_Closed">
+        Title="Tools" Height="433.353" Width="663.659">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Tools.png"/>
     </Window.Background>
@@ -52,9 +52,6 @@
                     <Controls:BCA_ColorButton x:Name="btn_color" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,26.2,10.4,26.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs" MouseLeftButtonDown="btn_color_MouseLeftButtonDown" Grid.ColumnSpan="2"/>
                     <Controls:BCA_ColorButton x:Name="btn_save" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
                 </Grid>
-            </TabItem>
-            <TabItem Header="Battle City Alpha - Gestion des avatars">
-                <Controls:BCA_AvatarChoice x:Name="control_avatar" />
             </TabItem>
         </TabControl>
 

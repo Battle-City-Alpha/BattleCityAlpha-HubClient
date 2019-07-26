@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace hub_client.Assets
     public class AssetsManager
     {
         private string path;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AssetsManager()
         {
@@ -36,7 +38,15 @@ namespace hub_client.Assets
             string img_path = FormExecution.path;
             foreach (string item in directory)
                 img_path = Path.Combine(img_path, item);
-            return new BitmapImage(new Uri(img_path));
+            try
+            {
+                return new BitmapImage(new Uri(img_path));
+            }
+            catch (Exception ex)
+            {
+                logger.Warn("PICS LOADED:" + ex.ToString());
+                return new BitmapImage(new Uri(Path.Combine(FormExecution.path,"BattleCityAlpha","textures","unknown.jpg")));
+            }
         }
 
         public Brush GetBrush(string directory, string img)

@@ -105,6 +105,17 @@ namespace hub_client.Helpers
                 Reason = reason
             };
         }
+        public StandardClientUnban Unban(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            return new StandardClientUnban
+            {
+                Target = target
+            };
+        }
         public StandardClientMute Mute(string txt)
         {
             string[] args = txt.Split(' ');
@@ -132,6 +143,17 @@ namespace hub_client.Helpers
                 Target = infos,
                 Time = time,
                 Reason = reason
+            };
+        }
+        public StandardClientUnmute Unmute(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            string target = args[0];
+
+            return new StandardClientUnmute
+            {
+                Target = target
             };
         }
 

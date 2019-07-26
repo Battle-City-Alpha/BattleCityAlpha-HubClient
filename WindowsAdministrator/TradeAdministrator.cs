@@ -16,6 +16,7 @@ namespace hub_client.WindowsAdministrator
         public event Action<string, string> GetMessage;
         public event Action<List<PlayerCard>> UpdateCardsToOffer;
         public event Action TradeExit;
+        public event Action TradeEnd;
 
         public TradeAdministrator(GameClient client)
         {
@@ -25,7 +26,12 @@ namespace hub_client.WindowsAdministrator
             Client.GetMessage += Client_GetMessage;
             Client.UpdateCardsToOffer += Client_UpdateCardsToOffer;
             Client.TradeExit += Client_TradeExit;
-            
+            Client.TradeEnd += Client_TradeEnd;
+        }
+
+        private void Client_TradeEnd()
+        {
+            TradeEnd?.Invoke();
         }
 
         private void Client_TradeExit()

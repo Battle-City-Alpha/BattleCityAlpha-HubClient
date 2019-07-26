@@ -66,7 +66,9 @@ namespace hub_client.Windows
                 view.GroupDescriptions.Clear();
                 view.GroupDescriptions.Add(groupDescription);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                logger.Error("UPDATE LIST :" + ex.ToString());
+            }
         }
 
         private void _admin_ClearChat(string username, string reason)
@@ -89,7 +91,7 @@ namespace hub_client.Windows
             UpdateList();
             if (FormExecution.ClientConfig.Connexion_Message)
                 _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est connecté.", infos.Username), false, false);
-            logger.Trace("{0} removed from userlist.", infos);
+            logger.Trace("{0} added to userlist.", infos);
         }
 
         private void _admin_LoginComplete()
@@ -203,8 +205,12 @@ namespace hub_client.Windows
                             return new NetworkData(PacketType.Kick, _cmdParser.Kick(txt.Substring(cmd.Length + 1)));
                         case "BAN":
                             return new NetworkData(PacketType.Ban, _cmdParser.Ban(txt.Substring(cmd.Length + 1)));
+                        case "UNBAN":
+                            return new NetworkData(PacketType.Unban, _cmdParser.Unban(txt.Substring(cmd.Length + 1)));
                         case "MUTE":
                             return new NetworkData(PacketType.Mute, _cmdParser.Mute(txt.Substring(cmd.Length + 1)));
+                        case "UNMUTE":
+                            return new NetworkData(PacketType.Unmute, _cmdParser.Unmute(txt.Substring(cmd.Length + 1)));
                         case "CLEAR":
                             return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Substring(cmd.Length + 1)));
                         case "MPALL":
@@ -215,6 +221,8 @@ namespace hub_client.Windows
                             return null;
                         case "BANLIST":
                             return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
+                        case "HELP":
+                            return new NetworkData(PacketType.Help, new StandardClientAskHelp { });
                         case "GIVEBATTLEPOINTS":
                             return new NetworkData(PacketType.GivePoints, _cmdParser.GiveBattlePoints(txt.Substring(cmd.Length + 1)));
                         case "GIVEPRESTIGEPOINTS":
@@ -287,8 +295,7 @@ namespace hub_client.Windows
         }
 
         private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _admin.Client.Send(PacketType.LoadAvatar, new StandardClientLoadAvatars());
+        {            
             FormExecution.OpenTools();
         }
 

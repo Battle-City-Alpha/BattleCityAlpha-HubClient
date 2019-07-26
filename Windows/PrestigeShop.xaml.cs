@@ -35,14 +35,14 @@ namespace hub_client.Windows
             VIP_Item.Initialize("Membre VIP", "500", "vip");
             Username_Item.Initialize("Changer de pseudo", "300", "change_username");
             Greet_Item.Initialize("Greet illimité", "200", "greet");
-            Team_Item.Initialize("Créer une team", "500", "team");
+            DoubleBP_Item.Initialize("Doublez vos BPs (3J)", "500", "team");
             Avatar_Item.Initialize("Obtenir un avatar", "300", "avatar");
             PP_Item.Initialize("Obtenir des PPs", "", "pp");
 
             VIP_Item.btn_purchase.MouseLeftButtonDown += VIP_Item_MouseLeftButtonDown;
             Username_Item.btn_purchase.MouseLeftButtonDown += Username_Item_MouseLeftButtonDown;
             Greet_Item.btn_purchase.MouseLeftButtonDown += Greet_Item_MouseLeftButtonDown;
-            Team_Item.btn_purchase.MouseLeftButtonDown += Team_Item_MouseLeftButtonDown;
+            DoubleBP_Item.btn_purchase.MouseLeftButtonDown += Team_Item_MouseLeftButtonDown;
             Avatar_Item.btn_purchase.MouseLeftButtonDown += Avatar_Item_MouseLeftButtonDown;
             PP_Item.btn_purchase.MouseLeftButtonDown += PP_Item_MouseLeftButtonDown;
         }
