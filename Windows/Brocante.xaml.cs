@@ -49,7 +49,7 @@ namespace hub_client.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _admin.Client.Send(PacketType.LoadBrocante, new StandardClientAskBrocante());
+            _admin.AskBrocante();
         }
 
         private void brocanteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,13 +64,13 @@ namespace hub_client.Windows
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _admin.Client.Send(PacketType.CloseBrocante, new StandardClientCloseBrocante());
+            _admin.CloseBrocante();
             _admin.LoadBrocante -= _admin_LoadBrocante;
         }
 
         private void btnSell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _admin.Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
+            _admin.AskSelectCard();
             SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
             form.SelectedCard += Form_SelectedCard;
             form.ShowDialog();
@@ -79,21 +79,13 @@ namespace hub_client.Windows
 
         private void Form_SelectedCard(PlayerCard card, int price, int quantity)
         {
-            _admin.Client.Send(PacketType.SellBrocanteCard, new StandardClientSellBrocanteCard
-            {
-                CardId = card.Id,
-                Price = price,
-                Quantity = quantity
-            });
+            _admin.SellBrocanteCard(card, price, quantity);
         }
 
         private void btnBuy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             BrocanteCard card = (brocanteList.SelectedItem as BrocanteCard);
-            _admin.Client.Send(PacketType.BuyBrocanteCard, new StandardClientBuyBrocanteCard
-            {
-                BcId = card.BCId
-            });
+            _admin.BuyBrocanteCard(card);
         }
     }
 }

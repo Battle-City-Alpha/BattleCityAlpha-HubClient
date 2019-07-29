@@ -40,7 +40,7 @@ namespace hub_client.Windows
             _admin.UpdateProfile += _admin_UpdateProfile;
             tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
 
-            _admin.Client.Send(PacketType.PanelUserlist, new StandardClientOpenPanel { });
+            _admin.SendPanelUserlist();
             LoadStyle();
         }
 
@@ -96,31 +96,31 @@ namespace hub_client.Windows
         private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (tb_KickReason.GetText() != "" && profileselected != null)
-                _admin.Client.Send(PacketType.Kick, new StandardClientKick { Reason = tb_KickReason.GetText(), Target = profileselected });
+                _admin.PanelKick(tb_KickReason.GetText(), profileselected);
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             if (tb_MuteReason.GetText() != "" && profileselected != null && tb_MuteHours.Text != "")
-                _admin.Client.Send(PacketType.Mute, new StandardClientMute { Reason = tb_MuteReason.GetText(), Target = profileselected, Time = Convert.ToInt32(tb_MuteHours.Text) });
+                _admin.PanelMute(tb_MuteReason.GetText(), profileselected, Convert.ToInt32(tb_MuteHours.Text) );
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
             if (tb_BanReason.GetText() != "" && profileselected != null && tb_BanHours.Text != "")
-                _admin.Client.Send(PacketType.Mute, new StandardClientMute { Reason = tb_BanReason.GetText(), Target = profileselected, Time = Convert.ToInt32(tb_BanHours.Text) });
+                _admin.PanelBan(tb_MuteReason.GetText(), profileselected, Convert.ToInt32(tb_MuteHours.Text));
         }
 
         private void lbUserlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             profileselected = profiles[lbUserlist.SelectedIndex];
-            _admin.Client.Send(PacketType.PanelAskProfile, new StandardClientAskPanelProfile { Player = profileselected });
+            _admin.PanelAskProfile(profileselected);
         }
 
         private void btn_save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             profileselected = profiles[lbUserlist.SelectedIndex];
-            _admin.Client.Send(PacketType.PanelUpdate, new StandardClientPanelProfileUpdate { Player = profileselected, Observation = new TextRange(rtbObs.Document.ContentStart, rtbObs.Document.ContentEnd).Text});
+            _admin.PanelUpdate(profileselected, new TextRange(rtbObs.Document.ContentStart, rtbObs.Document.ContentEnd).Text);
         }
 
         private void Window_Closed(object sender, EventArgs e)

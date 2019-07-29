@@ -27,8 +27,6 @@ namespace hub_client.Windows
         ChatAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
-        private ChatCommandParser _cmdParser;
-
         private List<PlayerInfo> Players;
 
         public Chat(ChatAdministrator admin)
@@ -36,7 +34,6 @@ namespace hub_client.Windows
             InitializeComponent();
 
             _admin = admin;
-            _cmdParser = new ChatCommandParser();
 
             _admin.ChatMessage += _admin_ChatMessage;
             this.Loaded += Chat_Loaded;
@@ -172,89 +169,13 @@ namespace hub_client.Windows
             switch (e.Key)
             {
                 case Key.Enter:
-                    NetworkData data = ParseMessage(tbChat.GetText());
-                    if (data != null && data.Packet != null)
-                    {
-                        _admin.Client.Send(data);
-                        logger.Info("Chat send : {0}.", data);
-                    }
+                    _admin.SendMessage(tbChat.GetText());
                     tbChat.Clear();
                     break;
             }
             e.Handled = true;
         }
-        private NetworkData ParseMessage(string txt)
-        {
-            try
-            {
-                if (txt[0] == '/')
-                {
-                    txt = txt.Substring(1);
-                    string cmd = txt.Split(' ')[0].ToString().ToUpper();
-                    switch (cmd)
-                    {
-                        case "ANIM":
-                            return new NetworkData(PacketType.ChatMessage, _cmdParser.AnimationMessage(txt.Substring(cmd.Length + 1)));
-                        case "INFO":
-                            return new NetworkData(PacketType.ChatMessage, _cmdParser.InformationMessage(txt.Substring(cmd.Length + 1)));
-                        case "SETMOTD":
-                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetMessageOfTheDay(txt.Substring(cmd.Length + 1)));
-                        case "SETGREET":
-                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
-                        case "KICK":
-                            return new NetworkData(PacketType.Kick, _cmdParser.Kick(txt.Substring(cmd.Length + 1)));
-                        case "BAN":
-                            return new NetworkData(PacketType.Ban, _cmdParser.Ban(txt.Substring(cmd.Length + 1)));
-                        case "UNBAN":
-                            return new NetworkData(PacketType.Unban, _cmdParser.Unban(txt.Substring(cmd.Length + 1)));
-                        case "MUTE":
-                            return new NetworkData(PacketType.Mute, _cmdParser.Mute(txt.Substring(cmd.Length + 1)));
-                        case "UNMUTE":
-                            return new NetworkData(PacketType.Unmute, _cmdParser.Unmute(txt.Substring(cmd.Length + 1)));
-                        case "CLEAR":
-                            return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Substring(cmd.Length + 1)));
-                        case "MPALL":
-                            return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
-                        case "PANEL":
-                            Panel panel = new Panel(_admin.Client.PanelAdmin);
-                            panel.Show();
-                            return null;
-                        case "BANLIST":
-                            return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
-                        case "HELP":
-                            return new NetworkData(PacketType.Help, new StandardClientAskHelp { });
-                        case "GIVEBATTLEPOINTS":
-                            return new NetworkData(PacketType.GivePoints, _cmdParser.GiveBattlePoints(txt.Substring(cmd.Length + 1)));
-                        case "GIVEPRESTIGEPOINTS":
-                            return new NetworkData(PacketType.GivePoints, _cmdParser.GivePrestigePoints(txt.Substring(cmd.Length + 1)));
-                        case "GIVECARD":
-                            return new NetworkData(PacketType.GiveCard, _cmdParser.GiveCard(txt.Substring(cmd.Length + 1)));
-                        case "GIVEAVATAR":
-                            return new NetworkData(PacketType.GiveAvatar, _cmdParser.GiveAvatar(txt.Substring(cmd.Length + 1)));
-                        case "ENABLED":
-                            return new NetworkData(PacketType.EnabledAccount, _cmdParser.EnabledAccount(txt.Substring(cmd.Length + 1)));
-                        case "DISABLED":
-                            return new NetworkData(PacketType.DisabledAccount, _cmdParser.DisabledAccount(txt.Substring(cmd.Length + 1)));
-                        case "PROMOTE":
-                            return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
-                        case "BLACKLIST":
-                            Blacklist blacklist = new Blacklist(_admin.Client.BlacklistManager);
-                            blacklist.Show();
-                            return null;
-                        default:
-                            _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
-                            return null;
-                    }
-                }
-                return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
-            }
-            catch (Exception ex)
-            {
-                _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Une erreur s'est produite.", false, false);
-                logger.Error("Chat input error : {0}", ex.ToString());
-                return null;
-            }
-        }
+        
 
         private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -267,14 +188,12 @@ namespace hub_client.Windows
         {
             Profil profil = new Profil(_admin.Client.ProfilAdmin);
             profil.Show();
-            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { Username = _admin.Client.GetPlayerInfo(FormExecution.Username) });
-            _admin.Client.Send(data);
+            _admin.SendProfileAsking();
         }
 
         private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            NetworkData data = new NetworkData(PacketType.UpdateCollection, new StandardClientAskCollection());
-            _admin.Client.Send(data);
+            _admin.SendDeck();
         }
 
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -320,7 +239,7 @@ namespace hub_client.Windows
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
             if (target != null)
-                    FormExecution.Client.Send(PacketType.TradeRequest, new StandardClientTradeRequest { Player = target });
+                _admin.SendTradeRequest(target);
         }
 
         private void setblacklist_Click(object sender, RoutedEventArgs e)
@@ -329,9 +248,7 @@ namespace hub_client.Windows
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
             if (target != null)
             {
-                _admin.Client.BlacklistManager.AddPlayer(target);
-                _admin.Client.BlacklistManager.AddPlayer(target);
-                _admin.Client.BlacklistManager.Save();
+                _admin.AddBlacklistPlayer(target);
                 _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
             }
         }

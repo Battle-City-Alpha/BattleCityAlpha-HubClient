@@ -1,4 +1,6 @@
 ﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,35 @@ namespace hub_client.WindowsAdministrator
         private void Client_LoadBrocante(List<BrocanteCard> cards)
         {
             LoadBrocante?.Invoke(cards);
+        }
+
+        public void AskBrocante()
+        {
+            Client.Send(PacketType.LoadBrocante, new StandardClientAskBrocante());
+        }
+        public void CloseBrocante()
+        {
+            Client.Send(PacketType.CloseBrocante, new StandardClientCloseBrocante());
+        }
+        public void AskSelectCard()
+        {
+            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
+        }
+        public void SellBrocanteCard(PlayerCard card, int price, int quantity)
+        {
+            Client.Send(PacketType.SellBrocanteCard, new StandardClientSellBrocanteCard
+            {
+                CardId = card.Id,
+                Price = price,
+                Quantity = quantity
+            });
+        }
+        public void BuyBrocanteCard(BrocanteCard card)
+        {
+            Client.Send(PacketType.BuyBrocanteCard, new StandardClientBuyBrocanteCard
+            {
+                BcId = card.BCId
+            });
         }
     }
 }

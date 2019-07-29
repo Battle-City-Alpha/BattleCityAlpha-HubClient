@@ -65,7 +65,7 @@ namespace hub_client.Windows
         private void Trade_Closed(object sender, EventArgs e)
         {
             if (!endTrade)
-                _admin.Client.Send(PacketType.TradeExit, new StandardClientTradeExit { Id = _id });
+                _admin.SendTradeExit(_id);
 
             Closed -= Trade_Closed;
 
@@ -138,7 +138,7 @@ namespace hub_client.Windows
             switch (e.Key)
             {
                 case Key.Enter:
-                    _admin.Client.Send(PacketType.TradeMessage, new StandardClientTradeMessage { Id = _id, Message = tbChat.GetText() });
+                    _admin.SendTradeMessage(_id, tbChat.GetText());
                     tbChat.Clear();
                     break;
             }
@@ -177,13 +177,13 @@ namespace hub_client.Windows
                 btnProposition.IsEnabled = false;
                 btnValidate.IsEnabled = false;
                 validate = true;
-                _admin.Client.Send(PacketType.TradeProposition, new StandardClientTradeProposition { Id = _id, Cards = GlobalTools.GetDictionnaryValues(_cardsToOffer)});
+                _admin.SendTradeProposition(_id, GlobalTools.GetDictionnaryValues(_cardsToOffer));
             }
             else
             {
                 btnProposition.IsEnabled = false;
                 btnValidate.IsEnabled = false;
-                _admin.Client.Send(PacketType.TradeAnswer, new StandardClientTradeAnswer { Id = _id, Result = true });
+                _admin.SendTradeAnswer(_id, true);
             }
         }
     }

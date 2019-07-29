@@ -230,7 +230,7 @@ namespace hub_client.Windows
         private void LoadPurchase(string Item)
         {
             BoosterChoosen = BoosterManager.InitializeBooster(Item);
-            _admin.Client.Send(PacketType.AskBooster, new StandardClientAskBooster { PurchaseTag = BoosterChoosen.PurchaseTag });
+            _admin.AskBooster(BoosterChoosen.PurchaseTag);
             tb_numberpack.Text = "1";
             tb_date.Text = BoosterChoosen.Date + ".";
             if (BoosterChoosen.Type == PurchaseType.Demarrage)
@@ -286,7 +286,7 @@ namespace hub_client.Windows
         private void btn_purchase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int numberPacket = Convert.ToInt32(tb_numberpack.Text);
-            _admin.Client.Send(PacketType.PurchaseItem, new StandardClientPurchase { Tag = BoosterChoosen.PurchaseTag, NumberPacket = numberPacket });
+            _admin.Purchase(BoosterChoosen.PurchaseTag, numberPacket );
             FormExecution.OpenPurchase(BoosterChoosen.Name);
         }
         private void btn_searchcard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

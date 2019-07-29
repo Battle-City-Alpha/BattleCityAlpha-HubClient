@@ -1,4 +1,6 @@
 ﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
 using System.Collections.Generic;
@@ -52,6 +54,23 @@ namespace hub_client.WindowsAdministrator
         private void Client_InitTrade(int arg1, PlayerInfo[] arg2, Dictionary<int, PlayerCard>[] arg3)
         {
             InitTrade?.Invoke(arg1, arg2, arg3);
+        }
+
+        public void SendTradeAnswer(int id, bool result)
+        {
+            Client.Send(PacketType.TradeAnswer, new StandardClientTradeAnswer { Id = id, Result = result });
+        }
+        public void SendTradeProposition(int id, List<PlayerCard> cards)
+        {
+            Client.Send(PacketType.TradeProposition, new StandardClientTradeProposition { Id = id, Cards = cards });
+        }
+        public void SendTradeExit(int id)
+        {
+            Client.Send(PacketType.TradeExit, new StandardClientTradeExit { Id = id });
+        }
+        public void SendTradeMessage(int id, string msg)
+        {
+            Client.Send(PacketType.TradeMessage, new StandardClientTradeMessage { Id = id, Message = msg });
         }
     }
 }

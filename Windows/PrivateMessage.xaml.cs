@@ -57,9 +57,7 @@ namespace hub_client.Windows
                 case Key.Enter:
                     if (tbChat.GetText() == string.Empty)
                         return;
-                    NetworkData data = new NetworkData(BCA.Network.Packets.Enums.PacketType.PrivateMessage, new StandardClientPrivateMessage { Target = _target, Message = tbChat.GetText() });
-                    _admin.Client.Send(data);
-                    logger.Info("Private message sent : {0}.", data);
+                    _admin.SendMessage(_target, tbChat.GetText());
                     tbChat.Clear();
                     break;
             }

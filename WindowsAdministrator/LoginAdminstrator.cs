@@ -1,4 +1,7 @@
-﻿using hub_client.Network;
+﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +25,16 @@ namespace hub_client.WindowsAdministrator
         private void LoginAdminstrator_LoginComplete()
         {
             LoginComplete?.Invoke();
+        }
+
+        public void SendAuthentification(string username, string password, string encryptKey, string HID)
+        {
+            Client.Send(PacketType.Login, new StandardClientLogin
+            {
+                Username = username,
+                Password = CryptoManager.Encryption(password, encryptKey),
+                HID = HID
+            });
         }
     }
 }

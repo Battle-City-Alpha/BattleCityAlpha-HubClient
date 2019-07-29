@@ -1,4 +1,6 @@
-﻿using hub_client.Network;
+﻿using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,15 @@ namespace hub_client.WindowsAdministrator
         private void Client_UpdateBoosterInfo(int cardgot, int totalcard, int price, int cardperpack, int bp)
         {
             UpdateBoosterInfo?.Invoke(cardgot, totalcard, price, cardperpack, bp);
+        }
+
+        public void AskBooster(string tag)
+        {
+            Client.Send(PacketType.AskBooster, new StandardClientAskBooster { PurchaseTag = tag });
+        }
+        public void Purchase(string tag, int numberPacket)
+        {
+            Client.Send(PacketType.PurchaseItem, new StandardClientPurchase { Tag = tag, NumberPacket = numberPacket });
         }
     }
 }

@@ -82,13 +82,7 @@ namespace hub_client.Windows
             FormExecution.Username = username;
 
             string encryptKey = File.ReadAllText("rsa_publickey.xml");
-            
-                _admin.Client.Send(PacketType.Login, new StandardClientLogin
-                {
-                    Username = username,
-                    Password = CryptoManager.Encryption(password, encryptKey),
-                    HID = HID
-                });
+            _admin.SendAuthentification(username, password, encryptKey, HID);
         }
 
         private void Window_Closed(object sender, EventArgs e)

@@ -1,5 +1,10 @@
 ﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Helpers;
 using hub_client.Network;
+using hub_client.Windows;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +16,11 @@ namespace hub_client.WindowsAdministrator
 {
     public class ChatAdministrator
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public GameClient Client;
+
+        private ChatCommandParser _cmdParser;
 
         public event Action LoginComplete;
         public event Action<Color, string, bool, bool> ChatMessage;
@@ -28,6 +37,8 @@ namespace hub_client.WindowsAdministrator
             Client.RemoveHubPlayer += Client_RemoveHubPlayer;
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
+
+            _cmdParser = new ChatCommandParser();
         }
 
         private void Client_Banlist(string[] players)
@@ -62,6 +73,107 @@ namespace hub_client.WindowsAdministrator
         private void Client_ChatMessageRecieved(Color color, string msg, bool italic, bool bold)
         {
             ChatMessage?.Invoke(color, msg, italic, bold);
+        }
+
+        public void SendMessage(string msg)
+        {
+            NetworkData data = ParseMessage(msg);
+            if (data != null && data.Packet != null)
+            {
+                Client.Send(data);
+                logger.Info("Chat send : {0}.", data);
+            }
+        }
+        public void SendProfileAsking()
+        {
+            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { Username = Client.GetPlayerInfo(FormExecution.Username) });
+            Client.Send(data);
+        }
+        public void SendDeck()
+        {
+            NetworkData data = new NetworkData(PacketType.UpdateCollection, new StandardClientAskCollection());
+            Client.Send(data);
+        }
+        public void SendTradeRequest(PlayerInfo target)
+        {
+            Client.Send(PacketType.TradeRequest, new StandardClientTradeRequest { Player = target });
+        }
+        public void AddBlacklistPlayer(PlayerInfo target)
+        {
+            Client.BlacklistManager.AddPlayer(target);
+            Client.BlacklistManager.Save();
+        }
+        private NetworkData ParseMessage(string txt)
+        {
+            try
+            {
+                if (txt[0] == '/')
+                {
+                    txt = txt.Substring(1);
+                    string cmd = txt.Split(' ')[0].ToString().ToUpper();
+                    switch (cmd)
+                    {
+                        case "ANIM":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.AnimationMessage(txt.Substring(cmd.Length + 1)));
+                        case "INFO":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.InformationMessage(txt.Substring(cmd.Length + 1)));
+                        case "SETMOTD":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetMessageOfTheDay(txt.Substring(cmd.Length + 1)));
+                        case "SETGREET":
+                            return new NetworkData(PacketType.ChatMessage, _cmdParser.SetGreet(txt.Substring(cmd.Length + 1)));
+                        case "KICK":
+                            return new NetworkData(PacketType.Kick, _cmdParser.Kick(txt.Substring(cmd.Length + 1)));
+                        case "BAN":
+                            return new NetworkData(PacketType.Ban, _cmdParser.Ban(txt.Substring(cmd.Length + 1)));
+                        case "UNBAN":
+                            return new NetworkData(PacketType.Unban, _cmdParser.Unban(txt.Substring(cmd.Length + 1)));
+                        case "MUTE":
+                            return new NetworkData(PacketType.Mute, _cmdParser.Mute(txt.Substring(cmd.Length + 1)));
+                        case "UNMUTE":
+                            return new NetworkData(PacketType.Unmute, _cmdParser.Unmute(txt.Substring(cmd.Length + 1)));
+                        case "CLEAR":
+                            return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Substring(cmd.Length + 1)));
+                        case "MPALL":
+                            return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
+                        case "PANEL":
+                            Panel panel = new Panel(Client.PanelAdmin);
+                            panel.Show();
+                            return null;
+                        case "BANLIST":
+                            return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
+                        case "HELP":
+                            return new NetworkData(PacketType.Help, new StandardClientAskHelp { });
+                        case "GIVEBATTLEPOINTS":
+                            return new NetworkData(PacketType.GivePoints, _cmdParser.GiveBattlePoints(txt.Substring(cmd.Length + 1)));
+                        case "GIVEPRESTIGEPOINTS":
+                            return new NetworkData(PacketType.GivePoints, _cmdParser.GivePrestigePoints(txt.Substring(cmd.Length + 1)));
+                        case "GIVECARD":
+                            return new NetworkData(PacketType.GiveCard, _cmdParser.GiveCard(txt.Substring(cmd.Length + 1)));
+                        case "GIVEAVATAR":
+                            return new NetworkData(PacketType.GiveAvatar, _cmdParser.GiveAvatar(txt.Substring(cmd.Length + 1)));
+                        case "ENABLED":
+                            return new NetworkData(PacketType.EnabledAccount, _cmdParser.EnabledAccount(txt.Substring(cmd.Length + 1)));
+                        case "DISABLED":
+                            return new NetworkData(PacketType.DisabledAccount, _cmdParser.DisabledAccount(txt.Substring(cmd.Length + 1)));
+                        case "PROMOTE":
+                            return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
+                        case "BLACKLIST":
+                            Blacklist blacklist = new Blacklist(Client.BlacklistManager);
+                            blacklist.Show();
+                            return null;
+                        default:
+                            ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                            return null;
+                    }
+                }
+                return new NetworkData(PacketType.ChatMessage, _cmdParser.StandardMessage(txt));
+            }
+            catch (Exception ex)
+            {
+                ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Une erreur s'est produite.", false, false);
+                logger.Error("Chat input error : {0}", ex.ToString());
+                return null;
+            }
         }
     }
 }
