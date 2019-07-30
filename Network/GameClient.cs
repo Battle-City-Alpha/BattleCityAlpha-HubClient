@@ -700,9 +700,9 @@ namespace hub_client.Network
                     return "♛" + username;
                 case PlayerRank.Bot:
                     return "☎" + username;
-                case PlayerRank.Moderator:
+                case PlayerRank.Moderateurs:
                     return "♝" + username;
-                case PlayerRank.Animator:
+                case PlayerRank.Animateurs:
                     return "♞" + username;
                 case PlayerRank.Developper:
                     return "♣" + username;

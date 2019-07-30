@@ -9,6 +9,7 @@ using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,6 +29,7 @@ namespace hub_client.Windows
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
         private List<PlayerInfo> Players;
+        private List<PlayerInfo> PlayersFound;
 
         public Chat(ChatAdministrator admin)
         {
@@ -42,30 +44,29 @@ namespace hub_client.Windows
             _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
             _admin.ClearChat += _admin_ClearChat;
 
+            tbUserList.TextChanged += SearchUser;
+
             Players = new List<PlayerInfo>();
-            lvUserlist.Items.Clear();
+            PlayersFound = new List<PlayerInfo>();
             lvUserlist.ItemsSource = Players;
 
-            tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
         }
 
-        private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchUser(object sender, TextChangedEventArgs e)
         {
-            //TODO Find player.
-        }
-
-        private void UpdateList()
-        {
-            try
+            PlayersFound.Clear();
+            if (tbUserList.Text != "")
             {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
-                view.GroupDescriptions.Clear();
-                view.GroupDescriptions.Add(groupDescription);
+                foreach (PlayerInfo info in Players)
+                    if (info.Username.ToLower().Contains(tbUserList.Text.ToLower()))
+                        PlayersFound.Add(info);
+
+                lvUserlist.ItemsSource = PlayersFound;
             }
-            catch (Exception ex) {
-                logger.Error("UPDATE LIST :" + ex.ToString());
-            }
+            else
+                lvUserlist.ItemsSource = Players;
+
+            lvUserlist.Items.Refresh();
         }
 
         private void _admin_ClearChat(string username, string reason)
@@ -77,15 +78,16 @@ namespace hub_client.Windows
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
         {
             Players.Remove(infos);
-            UpdateList();
+            lvUserlist.Items.Refresh();
+
             if (FormExecution.ClientConfig.Connexion_Message)
                 _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
         private void _admin_AddHubPlayer(PlayerInfo infos)
         {
-            Players.Add(infos);
-            UpdateList();
+            AddPlayer(infos);
+
             if (FormExecution.ClientConfig.Connexion_Message)
                 _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
@@ -261,9 +263,28 @@ namespace hub_client.Windows
             _admin.AddHubPlayer -= _admin_AddHubPlayer;
             _admin.RemoveHubPlayer -= _admin_RemoveHubPlayer;
             _admin.ClearChat -= _admin_ClearChat;
-            tbUserlist.tbChat.TextChanged -= TbChat_TextChanged;
+            tbUserList.TextChanged -= SearchUser;
 
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+        }
+
+        private void AddPlayer(PlayerInfo infos)
+        {
+                for (int i = 0; i < Players.Count; i++)
+                    if (Players[i].Rank <= infos.Rank)
+                    {
+                        Players.Insert(i, infos);
+                        break;
+                    }
+            if (!Players.Contains(infos))
+                Players.Add(infos);
+
+            lvUserlist.Items.Refresh();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
+            view.GroupDescriptions.Clear();
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 }
