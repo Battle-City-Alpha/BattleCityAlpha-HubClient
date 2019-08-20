@@ -1,5 +1,9 @@
 ﻿using BCA.Common;
+using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +15,9 @@ namespace hub_client.WindowsAdministrator
     public class ArenaAdministrator
     {
         public GameClient Client;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public event Action<Room> UpdateRoom;
+        public event Action<Room, bool> UpdateRoom;
         
         public ArenaAdministrator(GameClient client)
         {
@@ -20,9 +25,29 @@ namespace hub_client.WindowsAdministrator
             Client.UpdateRoom += Client_UpdateRoom;
         }
 
-        private void Client_UpdateRoom(Room obj)
+        private void Client_UpdateRoom(Room obj, bool remove)
         {
-            UpdateRoom?.Invoke(obj);
+            UpdateRoom?.Invoke(obj, remove);
         }
+
+        public void SendJoinRoom(int id, RoomType type)
+        {
+            Client.Send(PacketType.DuelJoin, new StandardClientDuelJoin
+            {
+                Id = id,
+                RoomType = type
+            });
+
+            logger.Trace("Try join duel - " + id.ToString());
+        }
+
+        /*public void SendDuelSeek(RoomType type)
+        {
+            Client.Send(PacketType.DuelSeeker, new StandardClientDuelSeeker
+            {
+                Type = type
+            });
+            logger.Trace("Duel Seeker - " + type.ToString());
+        }*/
     }
 }

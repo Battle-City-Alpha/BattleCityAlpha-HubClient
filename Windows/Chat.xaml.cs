@@ -231,9 +231,9 @@ namespace hub_client.Windows
         private void duelrequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            string target = lvUserlist.SelectedItem.ToString();
-            //if (target != null)
-            // TODO DuelRequest
+            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
+            if (target != null)
+                FormExecution.OpenDuelRequest(target.UserId);
         }
 
         private void traderequest_Click(object sender, RoutedEventArgs e)

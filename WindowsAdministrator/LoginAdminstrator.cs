@@ -35,6 +35,8 @@ namespace hub_client.WindowsAdministrator
                 Password = CryptoManager.Encryption(password, encryptKey),
                 HID = HID
             });
+
+            Client.InitPlayer(username);
         }
     }
 }

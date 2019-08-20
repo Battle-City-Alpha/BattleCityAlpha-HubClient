@@ -36,6 +36,7 @@ namespace hub_client
         public static AppDesignConfig AppDesignConfig;
         public static AssetsManager AssetsManager;
         public static ClientConfig ClientConfig;
+        public static YgoproConfig YgoproConfig;
 
         public static GameClient Client { get; private set; }
 
@@ -75,6 +76,8 @@ namespace hub_client
             BoosterManager.LoadList();
             AppDesignConfig = new AppDesignConfig(); //To debug config
 
+            YgoproConfig = new YgoproConfig();
+
             SaveConfig(AppConfigPath, AppDesignConfigPath);
 
             Client = new GameClient();
@@ -110,9 +113,9 @@ namespace hub_client
             trade.Show();
         }
 
-        private static void Client_ChoicePopBox(PlayerInfo player, DuelType type)
+        private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, bool isTrade)
         {
-            ChoicePopBox box = new ChoicePopBox(player, type);
+            ChoicePopBox box = new ChoicePopBox(player, config, isTrade);
             box.Owner = _chat;
             box.Topmost = true;
             box.ShowDialog();
@@ -240,6 +243,13 @@ namespace hub_client
 
             _brocante = new Brocante(Client.BrocanteAdmin);
             _brocante.Show();
+        }
+        public static void OpenDuelRequest(int id)
+        {
+            logger.Trace("Open Duel Request Form");
+
+            DuelRequest request = new DuelRequest(Client.DuelRequestAdmin, id);
+            request.Show();
         }
     }
 }

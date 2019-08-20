@@ -13,7 +13,7 @@ namespace hub_client.Windows.Controls.Controls_Stuff
     {
         public int Id { get; set; }
         public string Players { get; set; }
-        public DuelType Type { get; set; }
+        public RoomType Type { get; set; }
         public BitmapImage Image { get { return FormExecution.AssetsManager.GetImage("Duel", Type.ToString()); } }
     }
 }

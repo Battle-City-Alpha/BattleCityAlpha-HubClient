@@ -28,12 +28,12 @@ namespace hub_client.Windows
         StandardClientDuelRequestAnswer packet;
         bool trade = false;
 
-        public ChoicePopBox(PlayerInfo player, DuelType type)
+        public ChoicePopBox(PlayerInfo player, RoomConfig config, bool istrade)
         {
             InitializeComponent();
 
-            string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, type);
-            if (type == DuelType.Trade)
+            string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, config.Type);
+            if (istrade)
             {
                 trade = true;
                 txt = String.Format("Vous avez été invité en échange par {0}.", player.Username);
@@ -43,7 +43,7 @@ namespace hub_client.Windows
             Loaded += PopBox_Loaded;
 
             Title = "Requête de duel";
-            packet = new StandardClientDuelRequestAnswer { Player = player, Type = type };
+            packet = new StandardClientDuelRequestAnswer { Player = player, Config = config };
         }
 
         public void LoadStyle()

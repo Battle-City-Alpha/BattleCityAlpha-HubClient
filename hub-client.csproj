@@ -129,6 +129,7 @@
     <Compile Include="WindowsAdministrator\AvatarsHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PanelAdministrator.cs" />
@@ -191,6 +192,9 @@
       <DependentUpon>BCA_TextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
+    <Compile Include="Windows\DuelRequest.xaml.cs">
+      <DependentUpon>DuelRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\InputText.xaml.cs">
       <DependentUpon>InputText.xaml</DependentUpon>
     </Compile>
@@ -296,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DuelRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -643,6 +651,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Shop\vip.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\DuelRequest.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

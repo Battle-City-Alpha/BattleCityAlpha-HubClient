@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.Windows.Controls.Controls_Stuff;
@@ -36,12 +37,21 @@ namespace hub_client.Windows
             LoadStyle();
 
             _admin.UpdateRoom += UpdateRoom;
+
+            singleList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick; 
+        }
+
+        private void Room_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            RoomItem room = ((ListBox)sender).SelectedItem as RoomItem;
+            if (room != null)
+                _admin.SendJoinRoom(room.Id, room.Type);
         }
 
         private void LoadStyle()
         {
             List<BCA_ColorButton> RankedButtons = new List<BCA_ColorButton>();
-            RankedButtons.AddRange(new[] { btn_playranked, btn_ranking });
+            RankedButtons.AddRange(new[] { btn_playranked, btn_ranking, btn_host });
 
             foreach (BCA_ColorButton btn in RankedButtons)
             {
@@ -49,31 +59,50 @@ namespace hub_client.Windows
                 btn.Color2 = style.Color2ArenaRankedButton;
                 btn.Update();
             }
-
-            btn_single.Color1 = style.Color1ArenaUnrankedSingleButton;
-            btn_single.Color2 = style.Color2ArenaUnrankedSingleButton;
-            btn_single.Update();
-
-            btn_match.Color1 = style.Color1ArenaUnrankedMatchButton;
-            btn_match.Color2 = style.Color2ArenaUnrankedMatchButton;
-            btn_match.Update();
-
-            btn_tag.Color1 = style.Color1ArenaUnrankedTagButton;
-            btn_tag.Color2 = style.Color2ArenaUnrankedTagButton;
-            btn_tag.Update();
         }
 
-        public void UpdateRoom(Room room)
+        public void UpdateRoom(Room room, bool remove)
         {
-            if (room.IsRanked())
-                rankedList.UpdateRoom(room);
+            if (!remove)
+            {
+                switch(room.Config.Type)
+                {
+                    case RoomType.Single:
+                        singleList.UpdateRoom(room);
+                        break;
+                    case RoomType.Match:
+                        matchList.UpdateRoom(room);
+                        break;
+                    case RoomType.Tag:
+                        tagList.UpdateRoom(room);
+                        break;
+                }
+            }
             else
-                unrankedList.UpdateRoom(room);
+            {
+                switch (room.Config.Type)
+                {
+                    case RoomType.Single:
+                        singleList.RemoveRoom(room);
+                        break;
+                    case RoomType.Match:
+                        matchList.RemoveRoom(room);
+                        break;
+                    case RoomType.Tag:
+                        tagList.RemoveRoom(room);
+                        break;
+                }
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             _admin.UpdateRoom -= UpdateRoom;
+        }
+
+        private void Btn_host_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenDuelRequest(-1);
         }
     }
 }

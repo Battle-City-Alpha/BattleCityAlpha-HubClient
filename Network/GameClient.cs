@@ -29,7 +29,7 @@ namespace hub_client.Network
         private string _password;
 
         public event Action<string, string, bool> PopMessageBox;
-        public event Action<PlayerInfo, DuelType> ChoicePopBox;
+        public event Action<PlayerInfo, RoomConfig, bool> ChoicePopBox;
         public event Action<string> LaunchYGOPro;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
@@ -54,7 +54,7 @@ namespace hub_client.Network
         public event Action<StandardServerProfilInfo> ProfilUpdate;
         #endregion
         #region "Arena Events"
-        public event Action<Room> UpdateRoom;
+        public event Action<Room, bool> UpdateRoom;
         #endregion
         #region Shop Events
         public event Action<int, int, int, int, int> UpdateBoosterInfo;
@@ -99,6 +99,7 @@ namespace hub_client.Network
         public ToolsAdministrator ToolsAdmin;
         public SelectCardAdministrator SelectCardAdmin;
         public AvatarsHandleAdministrator AvatarsHandleAdmin;
+        public DuelRequestAdministrator DuelRequestAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -128,6 +129,7 @@ namespace hub_client.Network
             ToolsAdmin = new ToolsAdministrator(this);
             SelectCardAdmin = new SelectCardAdministrator(this);
             AvatarsHandleAdmin = new AvatarsHandleAdministrator(this);
+            DuelRequestAdmin = new DuelRequestAdministrator(this);
         }
 
         private void InitManager()
@@ -147,10 +149,9 @@ namespace hub_client.Network
             return _username;
         }
 
-        public void InitPlayer(string username, string password)
+        public void InitPlayer(string username)
         {
             _username = username;
-            _password = password;
         }
 
         private void Client_Disconnected(Exception ex)
@@ -232,12 +233,6 @@ namespace hub_client.Network
                 case PacketType.UpdateCollection:
                     OnUpdateCollection(JsonConvert.DeserializeObject<StandardServerUpdateCollection>(packet));
                     break;
-                case PacketType.DuelRequest:
-                    OnDuelRequest(JsonConvert.DeserializeObject<StandardServerDuelRequest>(packet));
-                    break;
-                case PacketType.UpdateRoom:
-                    OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
-                    break;
                 case PacketType.AskBooster:
                     OnAskBooster(JsonConvert.DeserializeObject<StandardServerAskBooster>(packet));
                     break;
@@ -297,6 +292,18 @@ namespace hub_client.Network
                     break;
                 case PacketType.CloseBrocante:
                     OnCloseBrocante(JsonConvert.DeserializeObject<StandardServerCloseBrocante>(packet));
+                    break;
+                case PacketType.DuelRequest:
+                    OnDuelRequest(JsonConvert.DeserializeObject<StandardServerDuelRequest>(packet));
+                    break;
+                case PacketType.UpdateRoom:
+                    OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
+                    break;
+                /*case PacketType.DuelSeeker:
+                    OnDuelSeeker(JsonConvert.DeserializeObject<StandardServerDuelSeeker>(packet));
+                    break;*/
+                case PacketType.DuelStart:
+                    OnDuelStart(JsonConvert.DeserializeObject<StandardServerDuelStart>(packet));
                     break;
             }
         }
@@ -480,6 +487,9 @@ namespace hub_client.Network
                 case CommandErrorType.PriceUpTo0:
                     msg = "Le prix doit être strictement positif.";
                     break;
+                case CommandErrorType.AlreadyInDuel:
+                    msg = "Vous êtes déja en duel.";
+                    break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
                     break;
@@ -544,23 +554,6 @@ namespace hub_client.Network
             logger.Trace("UPDATE COLLECTION -  Collection : {0} | Reason : {1}", packet.Collection, packet.Reason);
         }
 
-        public void OnDuelRequest(StandardServerDuelRequest packet)
-        {
-            if (BlacklistManager.CheckBlacklist(packet.Player))
-                return;
-
-            if (FormExecution.ClientConfig.Request)
-                return;
-            logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Type);
-            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Type));
-        }
-
-        public void OnUpdateRoom(StandardServerUpdateRoom packet)
-        {
-            Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room));
-            logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Type, packet.Room.Players);
-        }
-
         public void OnAskBooster(StandardServerAskBooster packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdateBoosterInfo?.Invoke(packet.CardGot, packet.TotalCard, packet.Price, packet.CardPerPack, packet.BattlePoints));
@@ -623,13 +616,13 @@ namespace hub_client.Network
             if (FormExecution.ClientConfig.Trade)
                 return;
 
-            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, DuelType.Trade));
-            logger.Trace("Trade REQUEST - From {0} | Type : {1}", packet.Player.Username, DuelType.Trade);
+            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), true));
+            logger.Trace("Trade REQUEST - From {0}", packet.Player.Username);
         }
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
         {
             Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
-            logger.Trace("Trade REQUEST ANSWER - From {0} | Type : {1} | Result : {2}", packet.Player.Username, DuelType.Trade, packet.Result);
+            logger.Trace("Trade REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
             if (packet.Result)
             {
                 Application.Current.Dispatcher.Invoke(() => LaunchTrade?.Invoke());
@@ -640,7 +633,7 @@ namespace hub_client.Network
         }
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {
-            logger.Trace("TRADE MESSAGE - From {0} | Type : {1} | Message : {2}", packet.Player.Username, DuelType.Trade, packet.Message);
+            logger.Trace("TRADE MESSAGE - From {0} | Message : {1}", packet.Player.Username, packet.Message);
             Application.Current.Dispatcher.Invoke(() => GetMessage?.Invoke(packet.Player.Username, packet.Message));
         }
         public void OnTradeProposition(StandardServerTradeProposition packet)
@@ -690,6 +683,42 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte", true));
 
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());
+        }
+
+        /*public void OnDuelSeeker(StandardServerDuelStart packet)
+        {
+            string arg = "-j";
+
+            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
+
+            LaunchYGOPro?.Invoke(arg);
+
+            logger.Trace("DUEL SEEKER - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
+        }*/
+        public void OnDuelStart(StandardServerDuelStart packet)
+        {
+            string arg = "-j";
+
+            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
+
+            LaunchYGOPro?.Invoke(arg);
+
+            logger.Trace("DUEL START - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
+        }
+        public void OnDuelRequest(StandardServerDuelRequest packet)
+        {
+            if (BlacklistManager.CheckBlacklist(packet.Player))
+                return;
+
+            if (FormExecution.ClientConfig.Request)
+                return;
+            logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, false));
+        }
+        public void OnUpdateRoom(StandardServerUpdateRoom packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room, packet.Remove));
+            logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
