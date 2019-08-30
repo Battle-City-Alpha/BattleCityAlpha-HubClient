@@ -16,7 +16,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
-        public event Action<int, string, int, int, int, int, int, int, PlayerRank, int, int, int, int> UpdateProfil;
+        public event Action<StandardServerProfilInfo> UpdateProfil;
 
         public ProfilAdministrator(GameClient client)
         {
@@ -26,7 +26,7 @@ namespace hub_client.WindowsAdministrator
 
         private void Client_ProfilUpdate(StandardServerProfilInfo infos)
         {
-            Application.Current.Dispatcher.Invoke(() => UpdateProfil?.Invoke(infos.AvatarId, infos.Username, infos.CardNumber, infos.Level, infos.Exp, infos.RankedWin, infos.RankedLose, infos.ELO, infos.Rank, infos.UnrankedWin, infos.UnrankedLose, infos.GiveUp, infos.RageQuit));
+            Application.Current.Dispatcher.Invoke(() => UpdateProfil?.Invoke(infos));
         }
 
         public void OpenAvatarsForm()

@@ -186,7 +186,7 @@ namespace hub_client
 #if DEBUG
             Client.Connect(IPAddress.Parse("127.0.0.1"), 9100);
 #else
-            Client.Connect(IPAddress.Parse("46.105.240.229"), 9100);
+            Client.Connect(IPAddress.Parse("185.212.226.12"), 9100);
 #endif
             Client.Connected += Client_Connected;
             Task.Run(() => UpdateNetwork());

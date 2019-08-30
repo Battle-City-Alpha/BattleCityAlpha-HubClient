@@ -37,21 +37,25 @@ namespace hub_client.Windows
             _admin.UpdateProfil += _admin_UpdateProfil;
         }
 
-        private void _admin_UpdateProfil(int avatarId, string username, int cardNumber, int level, int exp, int rankedwin, int rankedlose, int elo, PlayerRank rank, int unrankedwin, int unrankedlose, int giveup, int ragequit)
+        private void _admin_UpdateProfil(StandardServerProfilInfo infos)
         {
-            AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
-            tb_username.Text = username;
-            tb_cardnumber.Text = cardNumber.ToString();
-            tb_level.Text = level.ToString();
-            tb_experience.Text = exp.ToString();
-            tb_rankedwin.Text = rankedwin.ToString();
-            tb_rankedlose.Text = rankedlose.ToString();
-            tb_elo.Text = elo.ToString();
-            tb_rank.Text = rank.ToString();
-            tb_unrankedwin.Text = unrankedwin.ToString();
-            tb_unrankedlose.Text = unrankedlose.ToString();
-            tb_ragequit.Text = ragequit.ToString();
-            tb_giveup.Text = giveup.ToString();
+            AvatarImg.Source = PicsManager.GetImage("Avatars", infos.AvatarId.ToString("D2"));
+            tb_username.Text = infos.Username;
+            tb_cardnumber.Text = infos.CardNumber.ToString();
+            tb_level.Text = infos.Level.ToString();
+            tb_experience.Text = infos.Exp.ToString();
+
+            tb_rankedwin.Text = infos.RankedWin.ToString();
+            tb_rankedlose.Text = infos.RankedLose.ToString();
+            tb_rankeddraw.Text = infos.RankedDraw.ToString();
+            tb_elo.Text = infos.ELO.ToString();
+            tb_rank.Text = infos.Rank.ToString();
+
+            tb_single.Text = infos.SingleWin.ToString() + "|" + infos.SingleLose.ToString() + "|" + infos.SingleDraw.ToString();
+            tb_match.Text = infos.MatchWin.ToString() + "|" + infos.MatchLose.ToString() + "|" + infos.MatchDraw.ToString();
+            tb_tag.Text = infos.TagWin.ToString() + "|" + infos.TagLose.ToString() + "|" + infos.TagDraw.ToString();
+            tb_ragequit.Text = infos.RageQuit.ToString();
+            tb_giveup.Text = infos.GiveUp.ToString();
         }
 
         private void Window_Closed(object sender, EventArgs e)
