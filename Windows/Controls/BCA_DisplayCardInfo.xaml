@@ -20,29 +20,37 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Margin="0">
-                    <TextBlock x:Name="tb_cardname" Text="???" FontFamily="Dosis" FontSize="18"/>
+                    <TextBlock x:Name="tb_cardname" Text="???" FontFamily="Dosis" FontSize="18" Padding="10" FontWeight="Bold"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2">
-                    <TextBlock x:Name="tb_cardtype" Text="???" FontFamily="Dosis" FontSize="18"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="1" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="tb_cardtype" Text="???" FontFamily="Dosis" FontSize="18" Padding="10"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2">
-                    <TextBlock x:Name="tb_cardattribute" Text="???" FontFamily="Dosis" FontSize="18"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2">
-                    <TextBlock x:Name="tb_cardlevel" Text="???" FontFamily="Dosis" FontSize="18"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="3">
-                    <TextBlock x:Name="tb_cardatkdef" Text="???" FontFamily="Dosis" FontSize="18"/>
-                </StackPanel>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0">
+                        <TextBlock x:Name="tb_cardattribute" Text="???" FontFamily="Dosis" FontSize="18" Padding="10"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1">
+                        <TextBlock x:Name="tb_cardatkdef" Text="???" FontFamily="Dosis" FontSize="18" Padding="10"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Column="2">
+                        <TextBlock x:Name="tb_cardlevel" Text="???" FontFamily="Dosis" FontSize="18" Padding="10"/>
+                    </StackPanel>
+                </Grid>
                 <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2">
-                    <TextBlock x:Name="tb_carddesc" Text="???" FontFamily="Dosis" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                    <TextBlock x:Name="tb_carddesc" Text="???" FontFamily="Dosis" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10"/>
                 </ScrollViewer>
             </Grid>
             <Image x:Name="img_card" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="5" Grid.Column="1"/>

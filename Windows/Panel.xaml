@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Panel" Height="531.171" Width="1050.37" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
+        Title="Panel" Height="593.571" Width="1095.97" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Panel.png"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_panel.png"/>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
                 </Border.Background>
                 <ListBox x:Name="lbUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectionChanged="lbUserlist_SelectionChanged"/>
             </Border>
-            <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1"/>
+            <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1" VerticalAlignment="Center"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -110,7 +110,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_KickReason" FontFamily="Dosis" FontSize="22" Margin="5"/>
+                    <Controls:BCA_TextBox x:Name="tb_KickReason" FontFamily="Dosis" FontSize="22" Margin="5" VerticalAlignment="Center"/>
                 </Border>
                 <Controls:BCA_ColorButton x:Name="btn_kick" Grid.Column="2" Margin="5" ButtonText="Ejecter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
             </Grid>
@@ -124,7 +124,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_MuteReason" FontFamily="Dosis" FontSize="22" Margin="5"/>
+                    <Controls:BCA_TextBox x:Name="tb_MuteReason" FontFamily="Dosis" FontSize="22" Margin="5" VerticalAlignment="Center"/>
                 </Border>
 
                 <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
@@ -137,7 +137,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Temps :" FontFamily="Dosis" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_MuteHours" FontFamily="Dosis" FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox"/>
+                        <TextBox x:Name="tb_MuteHours" FontFamily="Dosis" FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
                 <Controls:BCA_ColorButton x:Name="btn_mute" Grid.Column="2" Margin="5" ButtonText="Muter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_1"/>
@@ -152,7 +152,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_BanReason" FontFamily="Dosis" FontSize="22" Margin="5"/>
+                    <Controls:BCA_TextBox x:Name="tb_BanReason" FontFamily="Dosis" FontSize="22" Margin="5" VerticalAlignment="Center"/>
                 </Border>
                 <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
                     <Border.Background>
@@ -164,7 +164,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Temps :" FontFamily="Dosis" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_BanHours" FontFamily="Dosis" FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox"/>
+                        <TextBox x:Name="tb_BanHours" FontFamily="Dosis" FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
                 <Controls:BCA_ColorButton x:Name="btn_ban" Grid.Column="2" Margin="5" ButtonText="Bannir" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_2"/>

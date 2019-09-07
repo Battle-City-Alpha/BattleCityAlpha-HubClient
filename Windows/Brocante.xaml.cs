@@ -2,7 +2,9 @@
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Stuff;
+using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
@@ -33,6 +35,27 @@ namespace hub_client.Windows
             _admin = admin;
 
             _admin.LoadBrocante += _admin_LoadBrocante;
+
+            LoadStyle();
+        }
+
+        private void LoadStyle()
+        {
+            List<BCA_ColorButton> RankedButtons = new List<BCA_ColorButton>();
+            RankedButtons.AddRange(new[] { btnSell, btnMyCards });
+
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            foreach (BCA_ColorButton btn in RankedButtons)
+            {
+                btn.Color1 = style.Color1BrocanteButton;
+                btn.Color2 = style.Color2BrocanteButton;
+                btn.Update();
+            }
+
+            btnBuy.Color1 = style.Color1CenterBrocanteButton;
+            btnBuy.Color2 = style.Color2CenterBrocanteButton;
+            btnBuy.Update();
         }
 
         private void _admin_LoadBrocante(List<BrocanteCard> cards)

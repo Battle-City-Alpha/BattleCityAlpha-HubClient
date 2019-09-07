@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Sélectionner une carte" Height="499.208" Width="1063.297" Icon="/hub-client;component/Assets/Icon/BCA.ico" >
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Brocante.png"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_brocante.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,7 +37,7 @@
 
             </Grid>
         </Border>
-        <Controls:BCA_ColorButton Grid.Row="1" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
+        <Controls:BCA_ColorButton x:Name="btnSelect" Grid.Row="1" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
 
         <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.RowSpan="1"/>
     </Grid>

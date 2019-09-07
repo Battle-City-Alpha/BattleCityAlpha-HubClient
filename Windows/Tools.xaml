@@ -7,16 +7,19 @@
         mc:Ignorable="d"
         Title="Tools" Height="433.353" Width="663.659">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Tools.png"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
-        <TabControl x:Name="tabControl" Background="{x:Null}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="347*"/>
+            <ColumnDefinition Width="311*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="tabControl" Background="{x:Null}" Grid.ColumnSpan="2" Margin="0,0,-0.4,0">
             <TabItem Header="Battle City Alpha - Jeu">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="124*"/>
-                        <ColumnDefinition Width="203*"/>
-                        <ColumnDefinition Width="326*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -24,33 +27,46 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="5,26,5.4,26.4" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2" CornerRadius="15" Margin="4.6,26,5,26.4" VerticalAlignment="Center">
+                    <Border Grid.Row="0" Grid.Column="2" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Margin="4.6,26.6,5,26.8" VerticalAlignment="Center">
+                    <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,26.6,5.4,26.8" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
                         <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
-                    <Controls:BCA_ColorButton x:Name="btn_img" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="9.6,26.2,10,26.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les images" MouseLeftButtonDown="btn_img_MouseLeftButtonDown"/>
-                    <Controls:BCA_ColorButton x:Name="btn_color" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,26.2,10.4,26.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs" MouseLeftButtonDown="btn_color_MouseLeftButtonDown" Grid.ColumnSpan="2"/>
-                    <Controls:BCA_ColorButton x:Name="btn_save" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                    <Border Grid.Row="2" Grid.Column="0" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <CheckBox x:Name="cb_autoscroll" Grid.Row="0" Grid.Column="0" Margin="10" Content="Activer l'autoscroll" FontSize="18" FontFamily="Dosis" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_ColorButton x:Name="btn_img" Grid.Column="0" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les images" MouseLeftButtonDown="btn_img_MouseLeftButtonDown"/>
+                        <Controls:BCA_ColorButton x:Name="btn_color" Grid.Column="1" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Gérer les couleurs" MouseLeftButtonDown="btn_color_MouseLeftButtonDown"/>
+                        <Controls:BCA_ColorButton x:Name="btn_save" Grid.Column="2" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -21,7 +21,7 @@
                     <GradientStop x:Name="GradientStop2" Color="#FF5F0B08" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <Label x:Name="text" Content="Some Text" Foreground="White" FontSize="22" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="text" Content="Some Text" Foreground="White" FontSize="22" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10"/>
             <Border.Triggers>
                 <EventTrigger RoutedEvent="Border.MouseEnter">
                     <BeginStoryboard>

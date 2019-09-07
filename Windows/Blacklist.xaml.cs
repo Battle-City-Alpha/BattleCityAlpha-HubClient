@@ -1,5 +1,7 @@
 ﻿using BCA.Common;
+using hub_client.Configuration;
 using hub_client.Helpers;
+using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,8 @@ namespace hub_client.Windows
 
             foreach (PlayerInfo player in Manager.Blacklist)
                 lbBlacklist.Items.Add(player.Username);
+
+            LoadStyle();
         }
 
         private void btnRetire_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -39,6 +43,20 @@ namespace hub_client.Windows
             lbBlacklist.Items.Remove(info.Username);
             Manager.Blacklist.Remove(info);
             Manager.Save();
+        }
+        private void LoadStyle()
+        {
+            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            Buttons.AddRange(new[] { btnRetire });
+
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            foreach (BCA_ColorButton btn in Buttons)
+            {
+                btn.Color1 = style.Color1ToolsButton;
+                btn.Color2 = style.Color2ToolsButton;
+                btn.Update();
+            }
         }
     }
 }

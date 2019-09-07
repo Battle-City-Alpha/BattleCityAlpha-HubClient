@@ -106,21 +106,13 @@ namespace hub_client.Windows
 
         private void LoadStyle()
         {
-            List<BCA_ColorButton> HeadButtons = new List<BCA_ColorButton>();
-            HeadButtons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools });
-            List<BCA_ColorButton> BottomButtons = new List<BCA_ColorButton>();
-            BottomButtons.AddRange(new[] { btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord });
+            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord });
 
-            foreach(BCA_ColorButton btn in HeadButtons)
+            foreach(BCA_ColorButton btn in Buttons)
             {
                 btn.Color1 = style.Color1HomeHeadButton;
                 btn.Color2 = style.Color2HomeHeadButton;
-                btn.Update();
-            }
-            foreach (BCA_ColorButton btn in BottomButtons)
-            {
-                btn.Color1 = style.Color1HomeBottomButton;
-                btn.Color2 = style.Color2HomeBottomButton;
                 btn.Update();
             }
         }

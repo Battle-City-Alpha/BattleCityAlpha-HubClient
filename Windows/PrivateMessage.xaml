@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="PrivateMessage" Height="402.229" Width="347.522" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg"/>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_pm.png"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -15,6 +15,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Controls:BCA_Chat x:Name="rtbChat" Grid.Row="0" Margin="10"/>
-        <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,3" KeyUp="BCA_TextBox_KeyUp"/>
+        <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,3" KeyUp="BCA_TextBox_KeyUp" VerticalAlignment="Center"/>
     </Grid>
 </Window>

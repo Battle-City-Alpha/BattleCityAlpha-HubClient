@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="InputText" Height="120" Width="322.683">
+        Title="InputText" Height="144.8" Width="325.083">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

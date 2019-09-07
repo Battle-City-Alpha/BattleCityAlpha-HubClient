@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Arena" Height="568" Width="1100" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Arena.png"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_arena.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,19 +21,19 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
+            <Border CornerRadius="15" VerticalAlignment="Center" Grid.Column="0" Margin="40,0">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
-                <TextBlock Text="Single" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
+                <TextBlock Text="Single" FontFamily="Dosis" FontSize="40" Foreground="White" VerticalAlignment="Center" Padding="5" HorizontalAlignment="Center"/>
             </Border>
-            <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+            <Border CornerRadius="15" Margin="40,0" VerticalAlignment="Center" Grid.Column="1">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
                 <TextBlock Text="Match" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
             </Border>
-            <Border CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+            <Border CornerRadius="15" Margin="40,0" VerticalAlignment="Center" Grid.Column="2">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
@@ -60,9 +60,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="5" Width="Auto" Height="Auto" ButtonText="Jouer (classé)" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505"/>
-                <Controls:BCA_ColorButton x:Name="btn_host" Margin="5" Width="Auto" Height="Auto" ButtonText="Héberger (non classé)" Grid.Column="1" Color1="#FFF40202" Color2="#FFC20505" MouseLeftButtonDown="Btn_host_MouseLeftButtonDown"/>
-                <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505"/>
+                <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Jouer (classé)" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
+                <Controls:BCA_ColorButton x:Name="btn_host" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Héberger (non classé)" Grid.Column="1" Color1="#FFF40202" Color2="#FFC20505" MouseLeftButtonDown="Btn_host_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
     </Grid>

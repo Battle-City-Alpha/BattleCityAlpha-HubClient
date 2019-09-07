@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace hub_client.Windows
             Collection.GetListview().SelectionChanged += SelectCard_SelectionChanged;
 
             Closed += SelectCard_Closed;
+
+            LoadStyle();
         }
 
         private void SelectCard_Closed(object sender, EventArgs e)
@@ -69,6 +72,15 @@ namespace hub_client.Windows
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        public void LoadStyle()
+        {
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            btnSelect.Color1 = style.Color1BrocanteButton;
+            btnSelect.Color2 = style.Color2BrocanteButton;
+            btnSelect.Update();
         }
     }
 }

@@ -55,8 +55,8 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in RankedButtons)
             {
-                btn.Color1 = style.Color1ArenaRankedButton;
-                btn.Color2 = style.Color2ArenaRankedButton;
+                btn.Color1 = style.Color1ArenaButton;
+                btn.Color2 = style.Color2ArenaButton;
                 btn.Update();
             }
         }

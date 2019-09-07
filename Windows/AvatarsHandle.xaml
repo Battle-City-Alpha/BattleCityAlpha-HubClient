@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Gestion des avatars" Height="382.957" Width="664.898" Closed="Window_Closed">
+        Title="Gestion des avatars" Height="402.789" Width="547.275" Closed="Window_Closed" ResizeMode="NoResize">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Tools.png"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Controls:BCA_AvatarChoice x:Name="control_avatar" />
 </Window>

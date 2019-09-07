@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Trade" Height="661.493" Width="1064.561">
+        Title="Trade" Height="793.893" Width="1078.961">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Trade.jpg"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_trade.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -53,14 +53,15 @@
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="125*"/>
+                <ColumnDefinition Width="18*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="155*"/>
                 <RowDefinition Height="38*"/>
             </Grid.RowDefinitions>
-            <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,10,9.8,11.2"/>
-            <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,1.8,9.8,3.6" KeyUp="tbChat_KeyUp"/>
+            <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,10,10.2,11.2" Grid.ColumnSpan="2"/>
+            <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,7.8,10.2,10.4" KeyUp="tbChat_KeyUp" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 </Window>

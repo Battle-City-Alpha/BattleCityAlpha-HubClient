@@ -2,6 +2,7 @@
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Network;
 using hub_client.WindowsAdministrator;
 using System;
@@ -51,6 +52,8 @@ namespace hub_client.Windows
 
             CollectionJ1.GetListview().SelectionChanged += lvPlayer1_SelectionChanged;
             CollectionJ2.GetListview().SelectionChanged += lvPlayer2_SelectionChanged;
+
+            LoadStyle();
         }
 
         private void _admin_TradeEnd()
@@ -185,6 +188,19 @@ namespace hub_client.Windows
                 btnValidate.IsEnabled = false;
                 _admin.SendTradeAnswer(_id, true);
             }
+        }
+
+        public void LoadStyle()
+        {
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            btnProposition.Color1 = style.Color1TradeButton;
+            btnProposition.Color2 = style.Color2TradeButton;
+            btnProposition.Update();
+
+            btnValidate.Color1 = style.Color1TradeButton;
+            btnValidate.Color2 = style.Color2TradeButton;
+            btnValidate.Update();
         }
     }
 }

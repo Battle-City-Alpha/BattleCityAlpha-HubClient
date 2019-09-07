@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="Purchase" Height="448.8" Width="513.6" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Shop.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_shop.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border CornerRadius="15" Margin="10,5" Grid.Column="0">
+        <Border CornerRadius="15" Margin="10,10" Grid.Column="0">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.5"/>
             </Border.Background>

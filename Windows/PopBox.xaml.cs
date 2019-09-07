@@ -34,8 +34,8 @@ namespace hub_client.Windows
 
         public void LoadStyle()
         {
-            btnAgree.Color1 = style.Color1HomeHeadButton;
-            btnAgree.Color2 = style.Color2HomeHeadButton;
+            btnAgree.Color1 = style.Color1PopBoxButton;
+            btnAgree.Color2 = style.Color2PopBoxButton;
             btnAgree.Update();
         }
         

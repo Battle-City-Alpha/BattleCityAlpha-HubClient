@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Requête de duel" Height="443.665" Width="421.432" Loaded="Window_Loaded">
+        Title="Requête de duel" Height="500.065" Width="441.832" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/duelrequest.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_duelrequest.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
-        <Border CornerRadius="15" Margin="10" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="98*"/>
+            <ColumnDefinition Width="94*"/>
+            <ColumnDefinition Width="223*"/>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="15" Margin="10,10,10.2,10.4" Grid.Row="0" Grid.ColumnSpan="3">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.5"/>
             </Border.Background>
@@ -35,10 +40,10 @@
                     <ComboBox x:Name="cb_banlist" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="10,0"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Cartes/Main :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="tb_handcard" Grid.Row="2" Grid.Column="1" FontFamily="Dosis" FontSize="24" Margin="10" PreviewTextInput="NumberValidationTextBox"/>
+                    <TextBox x:Name="tb_handcard" Grid.Row="2" Grid.Column="1" FontFamily="Dosis" FontSize="24" Margin="10" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="LP début de duel :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="tb_lpstartduel" Grid.Row="3" Grid.Column="1" FontFamily="Dosis" FontSize="24" Margin="10" PreviewTextInput="NumberValidationTextBox"/>
+                    <TextBox x:Name="tb_lpstartduel" Grid.Row="3" Grid.Column="1" FontFamily="Dosis" FontSize="24" Margin="10" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Link :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <CheckBox Grid.Row="4" Grid.Column="4" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center">

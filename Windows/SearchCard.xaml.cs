@@ -81,7 +81,7 @@ namespace hub_client.Windows
                 if (infos.Race != ((int)(CardRace)cb_cardrace.SelectedItem))
                     return false;
             if (cb_setnames.SelectedIndex != 0)
-                if (infos.GetSetName().Contains(cb_setnames.SelectedItem.ToString()))
+                if (!infos.GetSetName().Contains(cb_setnames.SelectedItem.ToString()))
                     return false;
             if (tb_level.Text != string.Empty)
                 if (infos.Level != Convert.ToInt32(tb_level.Text))
@@ -93,7 +93,7 @@ namespace hub_client.Windows
                 if (infos.Def != Convert.ToInt32(tb_defence.Text))
                     return false;
             if (tb_name.Text != string.Empty)
-                if (!infos.Name.Contains(tb_name.Text))
+                if (!infos.Name.ToUpper().Contains(tb_name.Text.ToUpper()))
                     return false;
 
             return true;

@@ -11,21 +11,9 @@ namespace hub_client.Configuration
     {
         public Color Color1HomeHeadButton = (Color)ColorConverter.ConvertFromString("#FF26164F");
         public Color Color2HomeHeadButton = (Color)ColorConverter.ConvertFromString("#FF221A29");
-        public Color Color1HomeBottomButton = (Color)ColorConverter.ConvertFromString("#FF280E69");
-        public Color Color2HomeBottomButton = (Color)ColorConverter.ConvertFromString("#FF410951");
-        public Color Color1HomePlaceButton = (Color)ColorConverter.ConvertFromString("#FFEA1313");
-        public Color Color2HomePlaceButton = (Color)ColorConverter.ConvertFromString("#FF5F0B08");
-        public Color Color1HomeAnimationButton = (Color)ColorConverter.ConvertFromString("#FF149A2D");
-        public Color Color2HomeAnimationButton = (Color)ColorConverter.ConvertFromString("#FF005613");
 
-        public Color Color1ArenaRankedButton = (Color)ColorConverter.ConvertFromString("#FFF40202");
-        public Color Color2ArenaRankedButton = (Color)ColorConverter.ConvertFromString("#FFC20505");
-        public Color Color1ArenaUnrankedSingleButton = (Color)ColorConverter.ConvertFromString("#FF06977A");
-        public Color Color2ArenaUnrankedSingleButton = (Color)ColorConverter.ConvertFromString("#FF105D5F");
-        public Color Color1ArenaUnrankedMatchButton = (Color)ColorConverter.ConvertFromString("#FF3948EE");
-        public Color Color2ArenaUnrankedMatchButton = (Color)ColorConverter.ConvertFromString("#FF011F9C");
-        public Color Color1ArenaUnrankedTagButton = (Color)ColorConverter.ConvertFromString("#FF5D0DCD");
-        public Color Color2ArenaUnrankedTagButton = (Color)ColorConverter.ConvertFromString("#FF560473");
+        public Color Color1ArenaButton = (Color)ColorConverter.ConvertFromString("#FFF40202");
+        public Color Color2ArenaButton = (Color)ColorConverter.ConvertFromString("#FFC20505");
 
         public Color Color1PanelButton = (Color)ColorConverter.ConvertFromString("#FF0068BC");
         public Color Color2PanelButton = (Color)ColorConverter.ConvertFromString("#FF01062E");
@@ -33,11 +21,28 @@ namespace hub_client.Configuration
         public Color Color1ShopButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
         public Color Color2ShopButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
 
+        public Color Color1CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#401F34");
+        public Color Color2CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#873868");
+        public Color Color1BrocanteButton = (Color)ColorConverter.ConvertFromString("#B9AB06");
+        public Color Color2BrocanteButton = (Color)ColorConverter.ConvertFromString("#F1E007");
+
         public Color Color1SearchCardButton = (Color)ColorConverter.ConvertFromString("#FFCD0000");
         public Color Color2SearchCardButton = (Color)ColorConverter.ConvertFromString("#FF880D0D");
 
-        public Color Color1ToolsButton = (Color)ColorConverter.ConvertFromString("#FF001EBF");
-        public Color Color2ToolsButton = (Color)ColorConverter.ConvertFromString("#FF070B3A");
+        public Color Color1ToolsButton = (Color)ColorConverter.ConvertFromString("#EC814B");
+        public Color Color2ToolsButton = (Color)ColorConverter.ConvertFromString("#934833");
+
+        public Color Color1LoginButton = (Color)ColorConverter.ConvertFromString("#FF26164F");
+        public Color Color2LoginButton = (Color)ColorConverter.ConvertFromString("#FF221A29");
+
+        public Color Color1PopBoxButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
+        public Color Color2PopBoxButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
+
+        public Color Color1DuelRequestButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
+        public Color Color2DuelRequestButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
+
+        public Color Color1TradeButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
+        public Color Color2TradeButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
 
         public Color StandardMessageColor = Colors.Black;
         public Color AnimationMessageColor = Colors.OrangeRed;

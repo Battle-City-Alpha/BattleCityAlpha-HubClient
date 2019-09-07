@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hub_client.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,8 @@ namespace hub_client.Windows
         public InputText()
         {
             InitializeComponent();
+
+            LoadStyle();
         }
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -33,6 +36,15 @@ namespace hub_client.Windows
 
             SelectedText?.Invoke(tb_text.GetText());
             Close();
+        }
+
+        public void LoadStyle()
+        {
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            btnAgree.Color1 = style.Color1PopBoxButton;
+            btnAgree.Color2 = style.Color2PopBoxButton;
+            btnAgree.Update();
         }
     }
 }

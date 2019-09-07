@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Brocante" Height="481.28" Width="658.554"
+        Title="Brocante" Height="621.68" Width="836.154"
         Loaded="Window_Loaded" Closing="Window_Closing" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         >
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Brocante.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_brocante.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,9 +35,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Controls:BCA_ColorButton x:Name="btnSell" Grid.Column="0" Height="Auto" ButtonText="Vendre" Margin="10" MouseLeftButtonDown="btnSell_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnBuy" Grid.Column="2" Height="Auto" ButtonText="Acheter" Margin="10" MouseLeftButtonDown="btnBuy_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnSell" Grid.Column="0" Height="Auto" ButtonText="Vendre" Margin="40,0" MouseLeftButtonDown="btnSell_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnBuy" Grid.Column="1" Height="Auto" ButtonText="Acheter" Margin="40,0" MouseLeftButtonDown="btnBuy_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnMyCards" Grid.Column="2" Height="Auto" ButtonText="Mes cartes" Margin="40,0" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

@@ -32,8 +32,8 @@ namespace hub_client.Windows
         }
         private void LoadStyle()
         { 
-            btnSend.Color1 = style.Color1ShopButton;
-            btnSend.Color2 = style.Color2ShopButton;
+            btnSend.Color1 = style.Color1DuelRequestButton;
+            btnSend.Color2 = style.Color2DuelRequestButton;
             btnSend.Update();
         }
 

@@ -31,20 +31,26 @@ namespace hub_client.Windows.Controls
         {
             tb_cardname.Text = card.Name;
             CardType[] typeArray = card.GetCardTypes();
-            string level;
-            if (typeArray.Contains(CardType.Pendule))
-                level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
+            string level = "";
+            string atkdef = "";
+            string attribute = "";
+            if (typeArray.Contains(CardType.Magie) || typeArray.Contains(CardType.Piège))
+            {
+                
+            }
             else
             {
-                level = "★";
-                for (int i = 1; i < card.Level; i++)
-                    level += "★";
-                if (level.Length > 6)
-                    level = level.Insert(6, Environment.NewLine);
+                if (typeArray.Contains(CardType.Pendule))
+                    level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
+                else
+                    level = card.Level + "★";
+
+                atkdef = string.Format("{0}/{1}", card.Atk, card.Def);
+                attribute = string.Format("{0}|{1}", card.GetRace(), card.GetAttribute());
             }
             tb_cardlevel.Text = level;
-            tb_cardatkdef.Text = string.Format("{0}/{1}", card.Atk, card.Def);
-            tb_cardattribute.Text = card.GetAttribute();
+            tb_cardatkdef.Text = atkdef;
+            tb_cardattribute.Text = attribute;
             tb_cardtype.Text = card.GetCardType();
             tb_carddesc.Text = card.Description;
 

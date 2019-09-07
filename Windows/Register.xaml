@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="ToolWindow" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Login.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_register.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -18,8 +18,8 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
             <Border.Background>
@@ -68,6 +68,6 @@
             </TextBox.Background>
         </TextBox>
 
-        <Controls:BCA_Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>        
+        <Controls:BCA_Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown" Margin="0,0,10,0"/>        
     </Grid>
 </Window>

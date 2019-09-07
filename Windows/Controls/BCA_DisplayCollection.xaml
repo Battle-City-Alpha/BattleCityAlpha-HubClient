@@ -32,6 +32,6 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Controls:BCA_TextBox x:Name="tb_search" Grid.Row="1" Margin="5"/>
+        <Controls:BCA_TextBox x:Name="tb_search" Grid.Row="1" Margin="5" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

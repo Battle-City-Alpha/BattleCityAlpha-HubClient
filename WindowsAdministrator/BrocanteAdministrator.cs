@@ -51,6 +51,8 @@ namespace hub_client.WindowsAdministrator
         }
         public void BuyBrocanteCard(BrocanteCard card)
         {
+            if (card == null)
+                return;
             Client.Send(PacketType.BuyBrocanteCard, new StandardClientBuyBrocanteCard
             {
                 BcId = card.BCId

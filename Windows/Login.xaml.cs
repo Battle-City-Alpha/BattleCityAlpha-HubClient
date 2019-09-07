@@ -1,6 +1,8 @@
 ﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Configuration;
+using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
@@ -35,6 +37,21 @@ namespace hub_client.Windows
             Loaded += Login_Loaded;
         }
 
+        private void LoadStyle()
+        {
+            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            Buttons.AddRange(new[] { btnPasswordForgotten, btnRegister, btnConnexion });
+
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+
+            foreach (BCA_ColorButton btn in Buttons)
+            {
+                btn.Color1 = style.Color1LoginButton;
+                btn.Color2 = style.Color2LoginButton;
+                btn.Update();
+            }
+        }
+
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
             cbRememberMe.IsChecked = FormExecution.AppConfig.RememberMe;
@@ -43,22 +60,14 @@ namespace hub_client.Windows
                 tbUsername.Text = FormExecution.AppConfig.Username;
                 pbPassword.Password = FormExecution.AppConfig.Password;
             }
+
+            webBrowserPatchNotes.Source = new Uri("https://battlecityalpha.xyz/BCA/MAJ/News.txt");
+            LoadStyle();
         }
 
         private void _admin_LoginComplete()
         {
             Close();
-        }
-
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            btnRegister.BorderThickness = new Thickness(2);
-            FormExecution.OpenRegisterForm();
-        }
-
-        private void btnRegister_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            btnRegister.BorderThickness = new Thickness(1);
         }
 
         private void BCA_Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -72,7 +81,7 @@ namespace hub_client.Windows
             {
                 FormExecution.AppConfig.Username = tbUsername.Text;
                 FormExecution.AppConfig.Password = pbPassword.Password;
-                FormExecution.AppConfig.RememberMe = cbRememberMe.IsChecked.Value;
+                FormExecution.AppConfig.RememberMe = true;
                 FormExecution.AppConfig.Save();
             }
             string username = tbUsername.Text;
@@ -89,6 +98,34 @@ namespace hub_client.Windows
         {
             _admin.LoginComplete -= _admin_LoginComplete;
             Loaded -= Login_Loaded;
+        }
+
+        private void CbRememberMe_Checked(object sender, RoutedEventArgs e)
+        {
+            if (tbUsername.Text != "")
+                FormExecution.AppConfig.Username = tbUsername.Text;
+            if (pbPassword.Password != "")
+                FormExecution.AppConfig.Password = pbPassword.Password;
+            FormExecution.AppConfig.RememberMe = true;
+            FormExecution.AppConfig.Save();
+        }
+
+        private void CbRememberMe_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FormExecution.AppConfig.Username = "";
+            FormExecution.AppConfig.Password = "";
+            FormExecution.AppConfig.RememberMe = false;
+            FormExecution.AppConfig.Save();
+        }
+
+        private void BtnRegister_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenRegisterForm();
+        }
+
+        private void BtnPasswordForgotten_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://battlecityalpha.xyz/passwordtools/resetpassword.php");
         }
     }
 }

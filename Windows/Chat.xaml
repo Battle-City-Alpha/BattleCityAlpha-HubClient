@@ -8,7 +8,7 @@
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/Chat.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_chat.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -24,16 +24,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène" MouseLeftButtonDown="btnArene_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animations" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown"/>
-            <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options" MouseLeftButtonDown="btnTools_MouseLeftButtonDown"/>
+            <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène" MouseLeftButtonDown="btnArene_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animations" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options" MouseLeftButtonDown="btnTools_MouseLeftButtonDown" VerticalAlignment="Center"/>
         </Grid>
-        <Grid Grid.Row="1" Margin="25,0">
+        <Grid Grid.Row="1" Margin="15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -108,9 +108,9 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="162*"/>
-                <ColumnDefinition Width="212*"/>
-                <ColumnDefinition Width="147*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" Margin="5,0,5,-0.2" >
                 <Grid.ColumnDefinitions>
@@ -120,7 +120,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Controls:BCA_ColorButton x:Name="btnProfil" Width="Auto" Height="Auto" Margin="5" Grid.Column="0" ButtonText="Profil" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnProfil_MouseLeftButtonDown">
+                <Controls:BCA_ColorButton x:Name="btnProfil" Width="Auto" Height="Auto" Margin="5" Grid.Column="0" ButtonText="Profil" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnProfil_MouseLeftButtonDown" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -130,7 +130,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Controls:BCA_ColorButton x:Name="btnFAQ" Width="Auto" Height="Auto" Margin="5" Grid.Column="1" ButtonText="FAQ" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnFAQ_MouseLeftButtonDown">
+                <Controls:BCA_ColorButton x:Name="btnFAQ" Width="Auto" Height="Auto" Margin="5" Grid.Column="1" ButtonText="FAQ" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnFAQ_MouseLeftButtonDown" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -140,7 +140,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Controls:BCA_ColorButton x:Name="btnReplay" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="Replay" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnCGU_MouseLeftButtonDown">
+                <Controls:BCA_ColorButton x:Name="btnReplay" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="Replay" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnCGU_MouseLeftButtonDown" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -150,7 +150,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Controls:BCA_ColorButton x:Name="btnNote" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" RenderTransformOrigin="0.5,0.5" ButtonTextSize="22" Color1="#FF280E69" Color2="#FF410951">
+                <Controls:BCA_ColorButton x:Name="btnNote" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" RenderTransformOrigin="0.5,0.5" ButtonTextSize="22" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -161,7 +161,7 @@
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
 
-                <Image Width="Auto" Height="Auto" Grid.Column="3" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="pack://siteoforigin:,,,/Assets/Logo/Notes.png">
+                <Image Width="35" Height="35" Grid.Column="3" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="pack://siteoforigin:,,,/Assets/Logo/Notes.png" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -190,8 +190,8 @@
                             </BeginStoryboard>
                         </EventTrigger>
                     </Image.Triggers>
-                </Image>                
-                <Controls:BCA_ColorButton x:Name="btnDiscord" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951">
+                </Image>
+                <Controls:BCA_ColorButton x:Name="btnDiscord" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -201,7 +201,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Image Width="Auto" Height="Auto" Grid.Column="4" Source="pack://siteoforigin:,,,/Assets/Logo/Discord.png" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeftButtonUp="Image_MouseLeftButtonUp">
+                <Image Width="35" Height="35" Grid.Column="4" Source="pack://siteoforigin:,,,/Assets/Logo/Discord.png" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeftButtonUp="Image_MouseLeftButtonUp" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

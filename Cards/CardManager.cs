@@ -70,8 +70,8 @@ namespace hub_client.Cards
                     CardManager.GetCard(Int32.Parse(row[0])).SetCardText(row);
             }
 
-            if (File.Exists("setname.txt"))
-                LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText("setname.txt")));
+            if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf")))
+                LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf"))));
             SetCodesStringInit();
 
             return true;
