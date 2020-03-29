@@ -21,8 +21,8 @@ namespace hub_client.Configuration
         public Color Color1ShopButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
         public Color Color2ShopButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
 
-        public Color Color1CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#401F34");
-        public Color Color2CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#873868");
+        public Color Color1CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#B7397E");
+        public Color Color2CenterBrocanteButton = (Color)ColorConverter.ConvertFromString("#7E2757");
         public Color Color1BrocanteButton = (Color)ColorConverter.ConvertFromString("#B9AB06");
         public Color Color2BrocanteButton = (Color)ColorConverter.ConvertFromString("#F1E007");
 
@@ -35,14 +35,14 @@ namespace hub_client.Configuration
         public Color Color1LoginButton = (Color)ColorConverter.ConvertFromString("#FF26164F");
         public Color Color2LoginButton = (Color)ColorConverter.ConvertFromString("#FF221A29");
 
-        public Color Color1PopBoxButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
-        public Color Color2PopBoxButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
+        public Color Color1PopBoxButton = (Color)ColorConverter.ConvertFromString("#59ACFF");
+        public Color Color2PopBoxButton = (Color)ColorConverter.ConvertFromString("#003D79");
 
-        public Color Color1DuelRequestButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
-        public Color Color2DuelRequestButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
+        public Color Color1DuelRequestButton = (Color)ColorConverter.ConvertFromString("#F72115");
+        public Color Color2DuelRequestButton = (Color)ColorConverter.ConvertFromString("#A80F06");
 
-        public Color Color1TradeButton = (Color)ColorConverter.ConvertFromString("#FF202CB3");
-        public Color Color2TradeButton = (Color)ColorConverter.ConvertFromString("#FF1666B1");
+        public Color Color1TradeButton = (Color)ColorConverter.ConvertFromString("#59ACFF");
+        public Color Color2TradeButton = (Color)ColorConverter.ConvertFromString("#003D79");
 
         public Color StandardMessageColor = Colors.Black;
         public Color AnimationMessageColor = Colors.OrangeRed;

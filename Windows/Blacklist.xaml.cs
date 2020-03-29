@@ -38,11 +38,18 @@ namespace hub_client.Windows
 
         private void btnRetire_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PlayerInfo info = Manager.Blacklist[lbBlacklist.SelectedIndex];
-            lbBlacklist.SelectedItem = null;
-            lbBlacklist.Items.Remove(info.Username);
-            Manager.Blacklist.Remove(info);
-            Manager.Save();
+            try
+            {
+                PlayerInfo info = Manager.Blacklist[lbBlacklist.SelectedIndex];
+                lbBlacklist.SelectedItem = null;
+                lbBlacklist.Items.Remove(info.Username);
+                Manager.Blacklist.Remove(info);
+                Manager.Save();
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
         private void LoadStyle()
         {

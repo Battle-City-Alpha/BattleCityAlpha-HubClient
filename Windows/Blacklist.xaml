@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Blacklist" Height="461.707" Width="257.561" Icon="/hub-client;component/Assets/Icon/BCA.ico" ResizeMode="NoResize">
+        Title="Blacklist" Height="510.907" Width="267.161" Icon="/hub-client;component/Assets/Icon/BCA.ico" ResizeMode="NoResize">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="7*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,6 +23,6 @@
             </Border.Background>
             <ListBox x:Name="lbBlacklist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18"/>
         </Border>
-        <Controls:BCA_ColorButton x:Name="btnRetire" Grid.Row="1" Height="Auto" ButtonText="Retirer" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="btnRetire_MouseLeftButtonDown"/>
+        <Controls:BCA_ColorButton x:Name="btnRetire" Grid.Row="1" Height="Auto" ButtonText="Retirer" ButtonTextSize="22" MouseLeftButtonDown="btnRetire_MouseLeftButtonDown" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
     </Grid>
 </Window>

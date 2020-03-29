@@ -107,7 +107,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord });
+            Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnForum });
 
             foreach(BCA_ColorButton btn in Buttons)
             {
@@ -215,7 +215,7 @@ namespace hub_client.Windows
         private void pm_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }
@@ -223,7 +223,7 @@ namespace hub_client.Windows
         private void duelrequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
             if (target != null)
                 FormExecution.OpenDuelRequest(target.UserId);
         }
@@ -277,6 +277,36 @@ namespace hub_client.Windows
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(groupDescription);
+        }
+
+        private void BtnRules_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-20.html");
+            logger.Trace("Rules clicked.");
+        }
+
+        private void BtnForum_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/");
+            logger.Trace("Forum clicked.");
+        }
+
+        private void SendBP_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Regarder_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+            if (target != null)
+                _admin.SendSpectateRequest(target);
+        }
+
+        private void GiveCard_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

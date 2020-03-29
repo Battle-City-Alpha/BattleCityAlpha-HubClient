@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Information" Height="258.292" Width="403.902" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+        Title="Battle City Alpha - Information" Height="339.359" Width="453.235" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" Stretch="UniformToFill"/>
     </Window.Background>
@@ -20,6 +20,6 @@
             </Border.Background>
             <TextBlock x:Name="popText" Margin="5" FontFamily="Dosis" FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
         </Border>
-        <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Height="Auto" Width="120" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
+        <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Height="Auto" Width="120" Margin="0,10" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
     </Grid>
 </Window>

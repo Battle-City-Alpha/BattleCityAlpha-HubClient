@@ -39,6 +39,7 @@ namespace hub_client.Windows
             LoadStyle();
             if (File.Exists(path))
                 notesBox.SetText(File.ReadAllText(System.IO.Path.Combine(FormExecution.path, path)));
+            notesBox.chat.IsReadOnly = false;
         }
 
         private void LoadStyle()

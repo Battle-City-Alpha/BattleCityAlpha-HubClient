@@ -98,6 +98,10 @@ namespace hub_client.WindowsAdministrator
         {
             Client.Send(PacketType.TradeRequest, new StandardClientTradeRequest { Player = target });
         }
+        public void SendSpectateRequest(PlayerInfo target)
+        {
+            Client.Send(PacketType.SpectatePlayer, new StandardClientSpectate { Target = target });
+        }
         public void AddBlacklistPlayer(PlayerInfo target)
         {
             Client.BlacklistManager.AddPlayer(target);

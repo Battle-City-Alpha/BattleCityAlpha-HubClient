@@ -352,7 +352,7 @@ namespace hub_client.Network
                     break;
             }
 
-            ChatMessageRecieved?.Invoke(c, msg, bold, italic);
+            Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, msg, bold, italic));
             logger.Trace("CHAT MESSAGE - Type : {0} | Player : {1} | Message : {2}", packet.Type, packet.Player, packet.Message);
         }
 
@@ -497,7 +497,7 @@ namespace hub_client.Network
             if (packet.MessageBox)
                 OpenPopBox(msg, "Erreur");
             else
-                ChatMessageRecieved?.Invoke(c, msg, italic, bold);
+                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, msg, italic, bold));
             logger.Trace("COMMAND ERROR MESSAGE MESSAGE - Type : {0} |  Message : {1}", packet.Type, msg);
         }
 
@@ -505,13 +505,13 @@ namespace hub_client.Network
         {
             OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur");
             logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker, packet.Reason);
-            Shutdown?.Invoke();
+            Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnBan(StandardServerBan packet)
         {
             OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur");
             logger.Trace("BANNED - By : {0} | Time : {1} | Reason : {2}", packet.Banner, packet.Time, packet.Reason);
-            Shutdown?.Invoke();
+            Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnMute(StandardServerMute packet)
         {
@@ -525,13 +525,13 @@ namespace hub_client.Network
                 return;
 
             packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
-            PrivateMessageReceived?.Invoke(packet.Player, packet.Message);
+            Application.Current.Dispatcher.Invoke(() => PrivateMessageReceived?.Invoke(packet.Player, packet.Message));
             logger.Trace("PRIVATE MESSAGE RECEIVED - From : {0} | Message : {1}", packet.Player, packet.Message);
         }
 
         public void OnProfilUpdate(StandardServerProfilInfo packet)
         {
-            ProfilUpdate?.Invoke(packet);
+            Application.Current.Dispatcher.Invoke(() => ProfilUpdate?.Invoke(packet));
             logger.Trace("PROFIL INFO - Target : {0} |  Infos : {1}", packet.Username, packet);
         }
 
