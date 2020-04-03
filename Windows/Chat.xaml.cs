@@ -31,6 +31,8 @@ namespace hub_client.Windows
         private List<PlayerInfo> Players;
         private List<PlayerInfo> PlayersFound;
 
+        InputText form = new InputText();
+
         public Chat(ChatAdministrator admin)
         {
             InitializeComponent();
@@ -293,7 +295,21 @@ namespace hub_client.Windows
 
         private void SendBP_Click(object sender, RoutedEventArgs e)
         {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
 
+            if (target != null)
+            {
+                InputText form = new InputText();
+                form.Title = "Don de BP à " + target.Username;
+                form.SelectedText += (obj) => BpInputForm_SelectedText(obj, target);
+                form.ShowDialog();
+            }
+        }
+
+        private void BpInputForm_SelectedText(string obj, PlayerInfo target)
+        {
+            _admin.SendDonationBP(obj, target);
         }
 
         private void Regarder_Click(object sender, RoutedEventArgs e)

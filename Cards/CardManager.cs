@@ -1,4 +1,4 @@
-﻿using Mono.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using NLog;
 using System;
 using System.Collections.Generic;

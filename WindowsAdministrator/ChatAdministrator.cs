@@ -107,6 +107,22 @@ namespace hub_client.WindowsAdministrator
             Client.BlacklistManager.AddPlayer(target);
             Client.BlacklistManager.Save();
         }
+        public void SendDonationBP(string amount, PlayerInfo target)
+        {
+            int pts;
+            if (int.TryParse(amount, out pts))
+            {
+                Client.Send(PacketType.DonPoints, new StandardClientDonPoints
+                {
+                    Target = target,
+                    Amount = pts
+                });
+            }
+            else
+                ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
+        }
+
+
         private NetworkData ParseMessage(string txt)
         {
             try
