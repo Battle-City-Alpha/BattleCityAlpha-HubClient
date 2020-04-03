@@ -305,6 +305,9 @@ namespace hub_client.Network
                 case PacketType.DuelStart:
                     OnDuelStart(JsonConvert.DeserializeObject<StandardServerDuelStart>(packet));
                     break;
+                case PacketType.SpectatePlayer:
+                    OnDuelSpectate(JsonConvert.DeserializeObject<StandardServerDuelSpectate>(packet));
+                    break;
             }
         }
 
@@ -476,19 +479,22 @@ namespace hub_client.Network
                     msg = "••• L'utilisateur ciblé n'existe pas.";
                     break;
                 case CommandErrorType.NotEnoughMoney:
-                    msg = "Tu n'as pas assez de points !";
+                    msg = "••• Tu n'as pas assez de points !";
                     break;
                 case CommandErrorType.AvatarNotOwned:
-                    msg = "Tu ne possèdes pas cet avatar !";
+                    msg = "••• Tu ne possèdes pas cet avatar !";
                     break;
                 case CommandErrorType.CardNotOwned:
-                    msg = "Tu ne possèdes pas cette carte !";
+                    msg = "••• Tu ne possèdes pas cette carte !";
                     break;
                 case CommandErrorType.PriceUpTo0:
-                    msg = "Le prix doit être strictement positif.";
+                    msg = "••• Le prix doit être strictement positif.";
                     break;
                 case CommandErrorType.AlreadyInDuel:
-                    msg = "Vous êtes déja en duel.";
+                    msg = "••• Vous êtes déja en duel.";
+                    break;
+                case CommandErrorType.PlayerNotInDuel:
+                    msg = "••• Ce joueur n'est actuellement pas en duel.";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -704,6 +710,16 @@ namespace hub_client.Network
             LaunchYGOPro?.Invoke(arg);
 
             logger.Trace("DUEL START - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
+        }
+        public void OnDuelSpectate(StandardServerDuelSpectate packet)
+        {
+            string arg = "-j";
+
+            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
+
+            LaunchYGOPro?.Invoke(arg);
+
+            logger.Trace("DUEL SPECTATE - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
         public void OnDuelRequest(StandardServerDuelRequest packet)
         {
