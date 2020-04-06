@@ -4,6 +4,7 @@ using BCA.Network;
 using BCA.Network.Packets;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromServer;
+using hub_client.Cards;
 using hub_client.Helpers;
 using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
@@ -257,6 +258,9 @@ namespace hub_client.Network
                 case PacketType.GiveCard:
                     OnGiveCard(JsonConvert.DeserializeObject<StandardServerGetCard>(packet));
                     break;
+                case PacketType.CardDonation:
+                    OnCardDonation(JsonConvert.DeserializeObject<StandardServerCardDonation>(packet));
+                    break;
                 case PacketType.GiveAvatar:
                     OnGiveAvatar(JsonConvert.DeserializeObject<StandardServerGetAvatar>(packet));
                     break;
@@ -490,6 +494,9 @@ namespace hub_client.Network
                 case CommandErrorType.PriceUpTo0:
                     msg = "••• Le prix doit être strictement positif.";
                     break;
+                case CommandErrorType.QuantityUpTo0:
+                    msg = "••• La quantité doit être strictement positif.";
+                    break;
                 case CommandErrorType.AlreadyInDuel:
                     msg = "••• Vous êtes déja en duel.";
                     break;
@@ -605,13 +612,18 @@ namespace hub_client.Network
         }
         public void OnGiveCard(StandardServerGetCard packet)
         {
-            OpenPopBox("Vous avez reçu la carte : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de carte");
+            OpenPopBox("Vous avez reçu la carte : " + CardManager.GetCard(packet.Id).Name + " de la part de " + packet.Player.Username, "Réception de carte");
             logger.Trace("GET CARD - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
         }
         public void OnGiveAvatar(StandardServerGetAvatar packet)
         {
             OpenPopBox("Vous avez reçu l'avatar : " + packet.Id + " de la part de " + packet.Player.Username, "Réception d'avatar");
             logger.Trace("GET CARD - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+        public void OnCardDonation(StandardServerCardDonation packet)
+        {
+            OpenPopBox("Vous avez reçu la carte : " + CardManager.GetCard(packet.Id).Name + " de la part de " + packet.Player.Username + " (Quantité:" + packet.Quantity + ")", "Réception d'une carte");
+            logger.Trace("GET CARD - From : {0} | Id : {1} | Quantity : {2}", packet.Player.Username, packet.Id, packet.Quantity);
         }
 
         public void OnTradeRequest(StandardServerTradeRequest packet)

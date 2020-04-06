@@ -43,6 +43,12 @@ namespace hub_client.Windows
             LoadStyle();
         }
 
+        public void ActivateDonationCardMode()
+        {
+            this.tb_price.IsEnabled = false;
+            this.tb_price.Text = "1";
+        }
+
         private void SelectCard_Closed(object sender, EventArgs e)
         {
             _admin.LoadSelectCard -= _admin_LoadSelectCard;

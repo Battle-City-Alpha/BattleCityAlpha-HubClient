@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,20 +30,21 @@ namespace hub_client.Configuration
         public bool EnableMusic = true;
         public int MusicVolume = 50;
         public bool HideSetname = true;
-        
-        public YgoproConfig()
-        {
 
+        public void Save()
+        {
+            File.WriteAllText(Path.Combine(FormExecution.path, "ygopro_config.json"), JsonConvert.SerializeObject(this));
+            GenerateConfig();
         }
 
         public void updateconfig(string roominfo, string username)
         {
             Roominfo = roominfo;
             Username = username;
-            Save();
+            GenerateConfig();
         }
 
-        public void Save()
+        private void GenerateConfig()
         {
             if ((File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"))))
                 File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"));

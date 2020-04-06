@@ -121,6 +121,19 @@ namespace hub_client.WindowsAdministrator
             else
                 ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
         }
+        public void AskSelectCard()
+        {
+            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
+        }
+        public void SendCardDonation(PlayerCard card, int quantity, PlayerInfo target)
+        {
+            Client.Send(PacketType.CardDonation, new StandardClientCardDonation
+            {
+                Target = target,
+                Quantity = quantity,
+                Card = card                
+            });
+        }
 
 
         private NetworkData ParseMessage(string txt)

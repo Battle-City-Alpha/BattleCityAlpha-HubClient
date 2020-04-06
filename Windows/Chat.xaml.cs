@@ -9,6 +9,7 @@ using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -103,6 +104,17 @@ namespace hub_client.Windows
         private void Chat_Loaded(object sender, RoutedEventArgs e)
         {
             LoadStyle();
+
+            cb_defaultdeck.Items.Clear();
+            List<string> Deck = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "deck")));
+            foreach (string deck in Deck)
+            {
+                string[] name = deck.Split('\\');
+                string[] nomFinal = name[name.Length - 1].Split('.');
+                cb_defaultdeck.Items.Add(nomFinal[0]);
+            }
+            cb_defaultdeck.Text = FormExecution.YgoproConfig.DefaultDeck;
+
             logger.Trace("Style loaded.");
         }
 
@@ -306,7 +318,6 @@ namespace hub_client.Windows
                 form.ShowDialog();
             }
         }
-
         private void BpInputForm_SelectedText(string obj, PlayerInfo target)
         {
             _admin.SendDonationBP(obj, target);
@@ -322,7 +333,28 @@ namespace hub_client.Windows
 
         private void GiveCard_Click(object sender, RoutedEventArgs e)
         {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
 
+            if (target != null)
+            {
+                _admin.AskSelectCard();
+                SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
+                form.ActivateDonationCardMode();
+                form.SelectedCard += (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
+                form.ShowDialog();
+                form.SelectedCard -= (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
+            }
+        }
+        private void SendGiveCard(PlayerCard card, int price, int quantity, PlayerInfo target)
+        {
+            _admin.SendCardDonation(card, quantity, target);
+        }
+
+        private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FormExecution.YgoproConfig.DefaultDeck = (string)cb_defaultdeck.SelectedItem;
+            FormExecution.YgoproConfig.Save();
         }
     }
 }

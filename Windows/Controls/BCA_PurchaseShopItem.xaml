@@ -21,9 +21,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border x:Name="border_img" CornerRadius="500" Margin="50,10" Grid.Row="0" >
-                    <Border.Background>
-                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Shop/vip.png"/>
-                    </Border.Background>
                 </Border>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>

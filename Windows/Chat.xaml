@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico"
-        Closed="Window_Closed">
+        Closed="Window_Closed" FontFamily="Dosis">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_chat.jpg" Stretch="UniformToFill"/>
     </Window.Background>
@@ -111,9 +111,12 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1" Margin="5,0,5,-0.2" HorizontalAlignment="Center" >
+            <ComboBox Name="cb_defaultdeck" Margin="25, 10, 0 ,10" SelectionChanged="cb_defaultdeck_SelectionChanged" FontSize="22" VerticalAlignment="Center"/>
+            <Grid Grid.Column="1" Margin="5,0,20,-0.2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -245,7 +248,7 @@
                         </TransformGroup>
                     </Controls:BCA_ColorButton.RenderTransform>
                 </Controls:BCA_ColorButton>
-                <Controls:BCA_ColorButton x:Name="btnForum" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" ButtonText="Forum" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="BtnForum_MouseLeftButtonDown"  VerticalAlignment="Center">
+                <Controls:BCA_ColorButton x:Name="btnForum" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" ButtonText="Forum" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="BtnForum_MouseLeftButtonDown" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
