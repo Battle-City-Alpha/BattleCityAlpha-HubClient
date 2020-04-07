@@ -8,7 +8,11 @@
         mc:Ignorable="d"
         Title="Tools" Height="583.053" Width="786.059" >
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>

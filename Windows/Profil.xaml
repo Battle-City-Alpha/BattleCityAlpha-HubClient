@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Profil" Height="385.429" Width="642.722" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed" ResizeMode="NoResize">
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_profil.jpg" Opacity="0.9"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_profil.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Trade" Height="793.893" Width="1078.961">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_trade.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_trade.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

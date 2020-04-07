@@ -8,7 +8,11 @@
         Title="Battle City Alpha - Connexion" Height="540.231" Width="627.954" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_login.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_login.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

@@ -8,7 +8,11 @@
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_chat.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_chat.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid Margin="5">
         <Grid.RowDefinitions>

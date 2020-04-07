@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Boutique de prestige" Height="662.783" Width="917.13" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="/hub-client;component/Assets/Background/bg_prestigeshop.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_prestigeshop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

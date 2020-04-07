@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="ToolWindow" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_register.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_register.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

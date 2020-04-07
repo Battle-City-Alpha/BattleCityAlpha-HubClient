@@ -8,7 +8,11 @@
         Title="Recherche de Cartes" Height="528.858" Width="868.918" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_searchcard.jpg"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_searchcard.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

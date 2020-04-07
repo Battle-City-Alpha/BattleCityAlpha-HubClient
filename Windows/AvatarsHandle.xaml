@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Gestion des avatars" Height="402.789" Width="547.275" Closed="Window_Closed" ResizeMode="NoResize">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Controls:BCA_AvatarChoice x:Name="control_avatar" />
 </Window>

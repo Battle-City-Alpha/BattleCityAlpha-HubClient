@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Information" Height="339.359" Width="453.235" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
