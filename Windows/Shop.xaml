@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Boutique" Height="579.439" Width="965.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Background>
-        <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_shop.jpg" Stretch="UniformToFill"/>
+        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_shop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>

@@ -4,6 +4,7 @@ using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,6 +63,32 @@ namespace hub_client.Windows
             cb_fontFamily.SelectedItem = style.Font;
 
             tb_fontsize.Text = style.FontSize.ToString();
+
+            cb_pics.Items.Clear();
+            List<string> pics = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "Assets", "Background")));
+            foreach (string p in pics)
+            {
+                string[] name = p.Split('\\');
+                cb_pics.Items.Add(name[name.Length - 1]);
+            }
+            cb_pics.SelectedIndex = 0;
+            cb_pics.SelectionChanged += Cb_pics_SelectionChanged;
+        }
+
+        private void Cb_pics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            showroom_pics.Source = CreateImage(FormExecution.AssetsManager.GetSource("Background", cb_pics.SelectedItem.ToString()));
+        }
+
+        private BitmapImage CreateImage(string filepath)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.UriSource = new Uri(filepath);
+            image.EndInit();
+            return image;
         }
 
         private void LoadStyle()
@@ -77,6 +104,7 @@ namespace hub_client.Windows
             }
 
             this.FontFamily = style.Font;
+            this.FontSize = style.FontSize;
         }
 
         private void btn_save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -98,16 +126,6 @@ namespace hub_client.Windows
             Close();
         }
 
-        private void btn_color_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Process.Start(Path.Combine(FormExecution.path, "style.json"));
-        }
-
-        private void btn_img_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Process.Start("explorer.exe", Path.Combine(FormExecution.path, "Assets", "Background"));
-        }
-
         private void cb_colorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cpicker.SelectedColor = style.GetGameColor((string)cb_colorList.SelectedItem);
@@ -122,6 +140,19 @@ namespace hub_client.Windows
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void showroom_pics_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog getpic = new OpenFileDialog();
+            getpic.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+            if (getpic.ShowDialog() == true)
+            {
+                File.Delete(Path.Combine(FormExecution.path, "Assets", "Background", cb_pics.SelectedItem.ToString()));
+                File.Copy(getpic.FileName, Path.Combine(FormExecution.path, "Assets", "Background", cb_pics.SelectedItem.ToString()));
+            }
+
+            showroom_pics.Source = CreateImage(FormExecution.AssetsManager.GetSource("Background", cb_pics.SelectedItem.ToString()));
         }
     }
 }

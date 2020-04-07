@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Tools" Height="433.353" Width="663.659" >
+        Title="Tools" Height="583.053" Width="786.059" >
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" Stretch="UniformToFill"/>
     </Window.Background>
@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TabControl x:Name="tabControl" Background="{x:Null}">
@@ -34,40 +34,98 @@
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" FontSize="18" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" FontSize="18" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" FontSize="18" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" FontSize="18" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="0" CornerRadius="15" Margin="5,25" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <CheckBox x:Name="cb_autoscroll" Grid.Row="0" Grid.Column="0" Margin="10" Content="Activer l'autoscroll" FontSize="18" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="cb_autoscroll" Grid.Row="0" Grid.Column="0" Margin="10" Content="Activer l'autoscroll" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="Battle City Alpha - Design">
+            <TabItem Header="Battle City Alpha - Design couleurs">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="10">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Choix de la couleur :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <ComboBox Name="cb_colorList" Grid.Column="1" VerticalAlignment="Center" Margin="10,0" SelectionChanged="cb_colorList_SelectionChanged"/>
+                            <xctk:ColorPicker Name="cpicker" Grid.Column="2" DisplayColorAndName="True" VerticalAlignment="Center" Margin="10,0" SelectedColorChanged="cpicker_SelectedColorChanged"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="10">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Choix de la police :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <ComboBox Name="cb_fontFamily" Grid.Column="1" VerticalAlignment="Center" Margin="10,0" />
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="10">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Taille de la police :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox x:Name="tb_fontsize" Grid.Column="1" Margin="10" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Battle City Alpha - Design image">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -81,11 +139,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="Choix de la couleur :" Grid.Column="0" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Center"/>
-                            <ComboBox Name="cb_colorList" Grid.Column="1" VerticalAlignment="Center" Margin="10,0" SelectionChanged="cb_colorList_SelectionChanged"/>
-                            <xctk:ColorPicker Name="cpicker" Grid.Column="2" DisplayColorAndName="True" VerticalAlignment="Center" Margin="10,0" SelectedColorChanged="cpicker_SelectedColorChanged"/>
+                            <Label Content="Choix de l'image à modifier :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <ComboBox Name="cb_pics" Grid.Column="1" VerticalAlignment="Center" Margin="20"/>
                         </Grid>
                     </Border>
 
@@ -93,33 +149,9 @@
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Choix de la police :" Grid.Column="0" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Center"/>
-                            <ComboBox Name="cb_fontFamily" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
-                        </Grid>
-                    </Border>
-
-                    <Border Grid.Row="2" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.9"/>
-                        </Border.Background>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Taille de la police :" Grid.Column="0" VerticalAlignment="Center" FontSize="22" HorizontalAlignment="Center"/>
-                            <TextBox x:Name="tb_fontsize" Grid.Column="1" Margin="10" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
-                        </Grid>
+                        <Image x:Name="showroom_pics" Source="pack://siteoforigin:,,,/Assets/Background/bg_arena.png" Margin="10" MouseLeftButtonDown="showroom_pics_MouseLeftButtonDown" Cursor="Hand"/>
                     </Border>
                 </Grid>
-
             </TabItem>
         </TabControl>
 
