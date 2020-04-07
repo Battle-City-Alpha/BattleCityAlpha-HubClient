@@ -84,9 +84,11 @@ namespace hub_client.Windows
         {
             AppDesignConfig style = FormExecution.AppDesignConfig;
 
-            btnSelect.Color1 = style.Color1BrocanteButton;
-            btnSelect.Color2 = style.Color2BrocanteButton;
+            btnSelect.Color1 = style.GetGameColor("Color1BrocanteButton");
+            btnSelect.Color2 = style.GetGameColor("Color2BrocanteButton");
             btnSelect.Update();
+
+            this.FontFamily = style.Font;
         }
     }
 }

@@ -42,11 +42,13 @@ namespace hub_client.Windows
             Title = "Privé : " + _target.Username;
 
             _admin.MessageRecieved += _admin_MessageRecieved;
+
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
         private void _admin_MessageRecieved(string message)
         {
-            Dispatcher.InvokeAsync(delegate { rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.StandardMessageColor, message, false, false); });
+            Dispatcher.InvokeAsync(delegate { rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), message, false, false); });
             Dispatcher.InvokeAsync(delegate { Show(); });
         }
 
@@ -58,7 +60,7 @@ namespace hub_client.Windows
                     if (tbChat.GetText() == string.Empty)
                         return;
                     _admin.SendMessage(_target, tbChat.GetText());
-                    rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.StandardMessageColor, FormExecution.Username + ":" + tbChat.GetText(), false, false);
+                    rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), FormExecution.Username + ":" + tbChat.GetText(), false, false);
                     tbChat.Clear();
                     break;
             }

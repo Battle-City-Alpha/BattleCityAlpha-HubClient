@@ -27,8 +27,8 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="tb_item" Text="Item" FontSize="24" FontFamily="Dosis" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="tb_price" Text="Prix" FontSize="24" FontFamily="Dosis" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>                    
+                    <TextBlock x:Name="tb_item" Text="Item" FontSize="24" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="tb_price" Text="Prix" FontSize="24" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>                    
                 </Grid>
             </Grid>
             <local:BCA_ColorButton x:Name="btn_purchase" Grid.Row="1" Padding="10,5" ButtonText="Acheter" Color1="#FF202CB3" Color2="#FF1666B1"/>

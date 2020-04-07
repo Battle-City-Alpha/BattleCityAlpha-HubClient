@@ -52,10 +52,12 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1SearchCardButton;
-                btn.Color2 = style.Color2SearchCardButton;
+                btn.Color1 = style.GetGameColor("Color1SearchCardButton");
+                btn.Color2 = style.GetGameColor("Color2SearchCardButton");
                 btn.Update();
             }
+
+            this.FontFamily = style.Font;
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

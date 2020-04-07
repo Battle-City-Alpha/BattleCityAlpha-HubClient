@@ -47,7 +47,7 @@ namespace hub_client.WindowsAdministrator
             foreach (string player in players)
                 bl += player + ",";
 
-            ChatMessage?.Invoke(FormExecution.AppDesignConfig.StaffMessageColor, bl, false, false);
+            ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor"), bl, false, false);
         }
 
         private void Client_ClearChat(string username, string reason)
@@ -119,7 +119,7 @@ namespace hub_client.WindowsAdministrator
                 });
             }
             else
-                ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
+                ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
         }
         public void AskSelectCard()
         {
@@ -195,7 +195,7 @@ namespace hub_client.WindowsAdministrator
                             blacklist.Show();
                             return null;
                         default:
-                            ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Cette commande n'existe pas.", false, false);
+                            ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
                             return null;
                     }
                 }
@@ -203,7 +203,7 @@ namespace hub_client.WindowsAdministrator
             }
             catch (Exception ex)
             {
-                ChatMessage?.Invoke(FormExecution.AppDesignConfig.LauncherMessageColor, "••• Une erreur s'est produite.", false, false);
+                ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Une erreur s'est produite.", false, false);
                 logger.Error("Chat input error : {0}", ex.ToString());
                 return null;
             }

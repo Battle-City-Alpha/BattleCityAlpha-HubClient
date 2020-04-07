@@ -18,7 +18,7 @@
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.5"/>
             </Border.Background>
-            <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
+            <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
         </Border>
         <Image Grid.Column="1" x:Name="img_card" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10"/>
     </Grid>

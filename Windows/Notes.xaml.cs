@@ -44,13 +44,15 @@ namespace hub_client.Windows
 
         private void LoadStyle()
         {
-            btnClear.Color1 = style.Color1HomeHeadButton;
-            btnClear.Color2 = style.Color2HomeHeadButton;
-            btnSave.Color1 = style.Color1HomeHeadButton;
-            btnSave.Color2 = style.Color2HomeHeadButton;
+            btnClear.Color1 = style.GetGameColor("Color1HomeHeadButton");
+            btnClear.Color2 = style.GetGameColor("Color2HomeHeadButton");
+            btnSave.Color1 = style.GetGameColor("Color1HomeHeadButton");
+            btnSave.Color2 = style.GetGameColor("Color2HomeHeadButton");
 
             btnClear.Update();
             btnSave.Update();
+
+            this.FontFamily = style.Font;
         }
 
         private void btnSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

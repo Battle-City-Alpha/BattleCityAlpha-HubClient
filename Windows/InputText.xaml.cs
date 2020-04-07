@@ -42,9 +42,11 @@ namespace hub_client.Windows
         {
             AppDesignConfig style = FormExecution.AppDesignConfig;
 
-            btnAgree.Color1 = style.Color1PopBoxButton;
-            btnAgree.Color2 = style.Color2PopBoxButton;
+            btnAgree.Color1 = style.GetGameColor("Color1PopBoxButton");
+            btnAgree.Color2 = style.GetGameColor("Color2PopBoxButton");
             btnAgree.Update();
+
+            this.FontFamily = style.Font;
         }
     }
 }

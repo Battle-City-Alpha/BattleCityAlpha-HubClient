@@ -152,10 +152,12 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1ShopButton;
-                btn.Color2 = style.Color2ShopButton;
+                btn.Color1 = style.GetGameColor("Color1ShopButton");
+                btn.Color2 = style.GetGameColor("Color2ShopButton");
                 btn.Update();
             }
+
+            this.FontFamily = style.Font;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

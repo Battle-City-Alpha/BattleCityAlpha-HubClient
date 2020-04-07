@@ -29,6 +29,10 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
             _rooms = new Dictionary<int, RoomItem>();
         }
+        public void RefreshStyle()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
 
         public void AddItem(RoomItem item)
         {

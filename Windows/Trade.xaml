@@ -47,7 +47,7 @@
                 <Border.Background>
                     <SolidColorBrush Color="White" Opacity="0.9"/>
                 </Border.Background>
-                <ListBox x:Name="lb_choice" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" MouseDoubleClick="lb_choice_MouseDoubleClick"/>
+                <ListBox x:Name="lb_choice" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" MouseDoubleClick="lb_choice_MouseDoubleClick"/>
             </Border>
             <Controls:BCA_ColorButton x:Name="btnValidate" Grid.Column="1" VerticalAlignment="Center" Margin="10" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Valider" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_1"/>
         </Grid>

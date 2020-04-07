@@ -56,5 +56,10 @@ namespace hub_client.Windows.Controls
         {
             border.BorderThickness = new Thickness(2);
         }
+
+        public void RefreshStyle()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
     }
 }

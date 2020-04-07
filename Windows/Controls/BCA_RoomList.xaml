@@ -19,8 +19,8 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" FontFamily="Dosis" Foreground="Black" Grid.Row="0" FontSize="24"/>
-                    <TextBlock Text="{Binding Path=Players}" HorizontalAlignment="Center" FontFamily="Dosis" Foreground="Black" Grid.Row="1" FontSize="24"/>
+                    <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24"/>
+                    <TextBlock Text="{Binding Path=Players}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="1" FontSize="24"/>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -48,6 +48,6 @@
         <Border.Background>
             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.9"/>
         </Border.Background>
-        <ListBox FontFamily="Dosis" x:Name="Itemslist" Foreground="Black" Background="{x:Null}" Margin="7" BorderThickness="0" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemTemplate="{DynamicResource RoomItemTemplate}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}"/>
+        <ListBox x:Name="Itemslist" Foreground="Black" Background="{x:Null}" Margin="7" BorderThickness="0" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemTemplate="{DynamicResource RoomItemTemplate}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}"/>
     </Border>
 </UserControl>

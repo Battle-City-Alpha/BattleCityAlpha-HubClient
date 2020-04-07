@@ -46,10 +46,12 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1LoginButton;
-                btn.Color2 = style.Color2LoginButton;
+                btn.Color1 = style.GetGameColor("Color1LoginButton");
+                btn.Color2 = style.GetGameColor("Color2LoginButton");
                 btn.Update();
             }
+
+            this.FontFamily = style.Font;
         }
 
         private void Login_Loaded(object sender, RoutedEventArgs e)

@@ -30,10 +30,10 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Prix :" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox x:Name="tb_price" FontFamily="Dosis" FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
-                <TextBox x:Name="tb_quantity" FontFamily="Dosis" FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
-                <TextBlock Text="Quantité :" FontFamily="Dosis" FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="Prix :"  FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tb_price"  FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="tb_quantity"  FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBlock Text="Quantité :"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             </Grid>
         </Border>

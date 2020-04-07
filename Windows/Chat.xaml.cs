@@ -75,7 +75,7 @@ namespace hub_client.Windows
         private void _admin_ClearChat(string username, string reason)
         {
             chat.Clear();
-            _admin_ChatMessage(style.InformationMessageColor, String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
+            _admin_ChatMessage(style.GetGameColor("InformationMessageColor"), String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
         }
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
@@ -84,7 +84,7 @@ namespace hub_client.Windows
             lvUserlist.Items.Refresh();
 
             if (FormExecution.ClientConfig.Connexion_Message)
-                _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est déconnecté.", infos.Username), false, false);
+                _admin_ChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
         private void _admin_AddHubPlayer(PlayerInfo infos)
@@ -92,7 +92,7 @@ namespace hub_client.Windows
             AddPlayer(infos);
 
             if (FormExecution.ClientConfig.Connexion_Message)
-                _admin_ChatMessage(style.LauncherMessageColor, String.Format("{0} s'est connecté.", infos.Username), false, false);
+                _admin_ChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
 
@@ -118,17 +118,26 @@ namespace hub_client.Windows
             logger.Trace("Style loaded.");
         }
 
-        private void LoadStyle()
+        public void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
             Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnForum });
 
             foreach(BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1HomeHeadButton;
-                btn.Color2 = style.Color2HomeHeadButton;
+                btn.Color1 = style.GetGameColor("Color1HomeHeadButton");
+                btn.Color2 = style.GetGameColor("Color2HomeHeadButton");
                 btn.Update();
             }
+
+            this.FontFamily = style.Font;
+            this.chat.chat.FontSize = style.FontSize;
+
+            Resources.Clear();
+
+            Style s = new Style(typeof(Control));
+            s.Setters.Add(new Setter(Control.FontFamilyProperty, style.Font));
+            Resources.Add(typeof(Control), style);
         }
 
         private void _admin_ChatMessage(Color c, string msg, bool italic, bool bold)
@@ -257,7 +266,7 @@ namespace hub_client.Windows
             if (target != null)
             {
                 _admin.AddBlacklistPlayer(target);
-                _admin_ChatMessage(FormExecution.AppDesignConfig.LauncherMessageColor, String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
+                _admin_ChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
             }
         }
 

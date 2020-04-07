@@ -31,7 +31,9 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             _admin = admin;
-            _admin.PurchaseItem += _admin_PurchaseItem;            
+            _admin.PurchaseItem += _admin_PurchaseItem;
+
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
         private void _admin_PurchaseItem(int[] list)

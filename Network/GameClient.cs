@@ -330,31 +330,31 @@ namespace hub_client.Network
             switch (type)
             {
                 case ChatMessageType.Standard:
-                    c = FormExecution.AppDesignConfig.StandardMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor");
                     msg = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
                     break;
                 case ChatMessageType.Animation:
-                    c = FormExecution.AppDesignConfig.AnimationMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("AnimationMessageColor");
                     msg = "[Animation - " + packet.Player.Username + "]:" + packet.Message;
                     break;
                 case ChatMessageType.Information:
-                    c = FormExecution.AppDesignConfig.InformationMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
                     msg = "[Information - " + packet.Player.Username + "]:" + packet.Message;
                     bold = true;
                     break;
                 case ChatMessageType.Greet:
                     if (!FormExecution.ClientConfig.Greet)
                         return;
-                    c = FormExecution.AppDesignConfig.GreetMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("GreetMessageColor");
                     msg = "[Greet - " + packet.Player.Username + "]:" + packet.Message;
                     break;
                 case ChatMessageType.Staff:
-                    c = FormExecution.AppDesignConfig.StaffMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor");
                     msg = "[Staff - " + packet.Player.Username + "]:" + packet.Message;
                     italic = true;
                     break;
                 default:
-                    c = FormExecution.AppDesignConfig.LauncherMessageColor;
+                    c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
                     msg = "••• Une erreur s'est produite.";
                     break;
             }
@@ -454,7 +454,7 @@ namespace hub_client.Network
         {
             CommandErrorType type = packet.Type;
 
-            Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
             string msg;
             bool italic = false;
             bool bold = false;
@@ -639,7 +639,7 @@ namespace hub_client.Network
         }
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
         {
-            Color c = FormExecution.AppDesignConfig.LauncherMessageColor;
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
             logger.Trace("Trade REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
             if (packet.Result)
             {

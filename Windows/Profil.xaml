@@ -35,7 +35,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontFamily="Dosis" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center"/>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -46,12 +46,12 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Cartes" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-                        <TextBlock x:Name="tb_cardnumber" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-                        <TextBlock Text="Niveau" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
-                        <TextBlock x:Name="tb_level" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-                        <TextBlock Text="Expérience" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
-                        <TextBlock x:Name="tb_experience" Text="????" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                        <TextBlock Text="Cartes" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock x:Name="tb_cardnumber" Text="????" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="Niveau"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock x:Name="tb_level" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
+                        <TextBlock x:Name="tb_experience" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
                     </Grid>
                 </Grid>
             </Border>
@@ -74,46 +74,46 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Classées" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
+                    <TextBlock Text="Classées"  FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Victoires :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_rankedwin" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Victoires :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rankedwin" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Défaites :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_rankedlose" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Défaites :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rankedlose" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Nuls :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_rankeddraw" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Nuls :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rankeddraw" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="ELO :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_elo" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="ELO :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_elo" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Rang :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_rank" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Rang :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_rank" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                 </Grid>
             </Border>
@@ -130,46 +130,46 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Non Classées" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
+                    <TextBlock Text="Non Classées"  FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline"/>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Single :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_single" Text="1234|1234|1234" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Single :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_single" Text="1234|1234|1234"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Match :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_match" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Match :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_match" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tag :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_tag" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Tag :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_tag" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Rage Quit :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_ragequit" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Rage Quit :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_ragequit" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                     <Grid Grid.Row="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Abandon :" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                        <TextBlock x:Name="tb_giveup" Text="0" FontFamily="Dosis" FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        <TextBlock Text="Abandon :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                        <TextBlock x:Name="tb_giveup" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                     </Grid>
                 </Grid>
             </Border>

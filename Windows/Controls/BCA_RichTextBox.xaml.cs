@@ -25,11 +25,14 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
             Clear();
         }
+        public void RefreshStyle()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
 
         public void OnColoredMessage(Color color, string text, bool IsBold, bool IsItalic)
         {
             Paragraph pr = new Paragraph(new Run("["+DateTime.Now.ToString("HH:mm")+"]"+text));
-            pr.FontFamily = new FontFamily("Dosis");
             if (IsBold)
                 pr.FontWeight = FontWeights.Bold;
             if (IsItalic)

@@ -34,5 +34,9 @@ namespace hub_client.Windows.Controls
         {
             tbChat.Clear();
         }
+        public void RefreshStyle()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
     }
 }

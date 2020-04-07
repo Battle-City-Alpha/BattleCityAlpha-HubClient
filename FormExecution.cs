@@ -32,6 +32,11 @@ namespace hub_client
         public static string HID = HardwareIdManager.GetId();
         public static string Username;
 
+
+        public static string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");
+        public static string AppDesignConfigPath = Path.Combine(path, "style.json");
+        public static string ClientConfigPath = Path.Combine(path, "client_config.json");
+        public static string YgoProConfigPath = Path.Combine(path, "ygopro_config.json");
         public static AppConfig AppConfig;
         public static AppDesignConfig AppDesignConfig;
         public static AssetsManager AssetsManager;
@@ -54,10 +59,6 @@ namespace hub_client
 
         public static void Init()
         {
-            string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");
-            string AppDesignConfigPath = Path.Combine(path, "style.json");
-            string ClientConfigPath = Path.Combine(path, "client_config.json");
-            string YgoProConfigPath = Path.Combine(path, "ygopro_config.json");
             AssetsManager = new AssetsManager();
             CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
 
@@ -75,14 +76,14 @@ namespace hub_client
                 ClientConfig = new ClientConfig();
 
             BoosterManager.LoadList();
-            AppDesignConfig = new AppDesignConfig(); //To debug config
+            //AppDesignConfig = new AppDesignConfig(); //To debug config
 
             if (File.Exists(YgoProConfigPath))
                 YgoproConfig = JsonConvert.DeserializeObject<YgoproConfig>(File.ReadAllText(YgoProConfigPath));
             else
                 YgoproConfig = new YgoproConfig();
 
-            SaveConfig(AppConfigPath, AppDesignConfigPath, YgoProConfigPath);
+            SaveConfig();
 
             Client = new GameClient();
 
@@ -175,15 +176,18 @@ namespace hub_client
                 box.Show();
         }
 
-        public static void SaveConfig(string ConfigPath, string DesignConfigPath, string YgoProConfigPath)
+        public static void SaveConfig()
         {
-            if (!Directory.Exists(ConfigPath))
+            if (!Directory.Exists(AppConfigPath))
                 Directory.CreateDirectory(Path.Combine(AppDataPath, "BattleCityAlphaLauncher"));
-            File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(AppConfig));
+            File.WriteAllText(AppConfigPath, JsonConvert.SerializeObject(AppConfig));
 
-            File.WriteAllText(DesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
+            File.WriteAllText(AppDesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
+            AppDesignConfig.UpdateResourcesDictionary();
 
             File.WriteAllText(YgoProConfigPath, JsonConvert.SerializeObject(YgoproConfig, Formatting.Indented));
+
+            File.WriteAllText(ClientConfigPath, JsonConvert.SerializeObject(ClientConfig, Formatting.Indented));
 
             logger.Trace("Config Saved.");
         }
@@ -258,6 +262,11 @@ namespace hub_client
 
             DuelRequest request = new DuelRequest(Client.DuelRequestAdmin, id);
             request.Show();
+        }
+
+        public static void RefreshChatStyle()
+        {
+            _chat.LoadStyle();
         }
     }
 }

@@ -36,13 +36,13 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Choix :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Choix :"  FontSize="24" VerticalAlignment="Center"/>
                     <ComboBox x:Name="cb_cardtype" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attribut :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attribut :"  FontSize="24" VerticalAlignment="Center"/>
                     <ComboBox x:Name="cb_cardattribute" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Type :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Type :"  FontSize="24" VerticalAlignment="Center"/>
                     <ComboBox x:Name="cb_cardrace" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Archétype :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Archétype :"  FontSize="24" VerticalAlignment="Center"/>
                     <ComboBox x:Name="cb_setnames" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" />
                 </Grid>
                 <Grid Grid.Column="1" Margin="5">
@@ -56,14 +56,14 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Niveau :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox x:Name="tb_level" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attaque :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox x:Name="tb_attack" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Défense :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox x:Name="tb_defence" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Nom :" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBox x:Name="tb_name" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Dosis" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Niveau :"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tb_level" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attaque :"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tb_attack" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Défense :"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tb_defence" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Nom :"  FontSize="24" VerticalAlignment="Center"/>
+                    <TextBox x:Name="tb_name" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  FontSize="24" VerticalAlignment="Center"/>
                 </Grid>
                 <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Center">
                     <Controls:BCA_ColorButton x:Name="btn_search" Width="Auto" Height="Auto" Grid.Column="2" ButtonText="Chercher" VerticalAlignment="Center" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown" Color1="#FFCD0000" Color2="#FF880D0D" />
@@ -80,7 +80,7 @@
                 <Border.Background>
                     <SolidColorBrush Color="White" Opacity="0.5"/>
                 </Border.Background>
-                <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
+                <ListBox x:Name="lb_cards" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_cards_SelectionChanged"/>
             </Border>
             <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" />
         </Grid>

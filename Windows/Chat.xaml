@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico"
-        Closed="Window_Closed" FontFamily="Dosis">
+        Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Background/bg_chat.jpg" Stretch="UniformToFill"/>
     </Window.Background>
@@ -44,7 +44,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <ListView x:Name="lvUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18" BorderThickness="0">
+                    <ListView x:Name="lvUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" Foreground="Black" FontSize="18" BorderThickness="0">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
@@ -91,11 +91,11 @@
                     </ListView>
                 </Border>
 
-                <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Margin="10,0,10,5">
+                <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Margin="10,0,10,5" VerticalAlignment="Center">
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
-                    <TextBox x:Name="tbUserList" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" FontFamily="Dosis" BorderBrush="{x:Null}" BorderThickness="0">
+                    <TextBox x:Name="tbUserList" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" BorderBrush="{x:Null}" BorderThickness="0">
 
                     </TextBox>
                 </Border>
@@ -106,7 +106,7 @@
                     <RowDefinition Height="38*"/>
                 </Grid.RowDefinitions>
                 <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,5"/>
-                <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,0,10,5" KeyUp="tbChat_KeyUp"/>
+                <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,0,10,5" KeyUp="tbChat_KeyUp" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">

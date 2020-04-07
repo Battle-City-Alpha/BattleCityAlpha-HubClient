@@ -35,6 +35,8 @@ namespace hub_client.Windows
             _admin = admin;
 
             _admin.UpdateProfil += _admin_UpdateProfil;
+
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)

@@ -52,6 +52,11 @@ namespace hub_client.Windows.Controls
         {
             InitializeComponent();
         }
+        public void RefreshStyle()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
+
 
         public void Initialize(string item, string price, string img_source)
         {

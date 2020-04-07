@@ -48,13 +48,15 @@ namespace hub_client.Windows
 
         public void LoadStyle()
         {
-            btnAgree.Color1 = style.Color1PopBoxButton;
-            btnAgree.Color2 = style.Color2PopBoxButton;
+            btnAgree.Color1 = style.GetGameColor("Color1PopBoxButton");
+            btnAgree.Color2 = style.GetGameColor("Color2PopBoxButton");
             btnAgree.Update();
 
-            btnAgainst.Color1 = style.Color1PopBoxButton;
-            btnAgainst.Color2 = style.Color2PopBoxButton;
+            btnAgainst.Color1 = style.GetGameColor("Color1PopBoxButton");
+            btnAgainst.Color2 = style.GetGameColor("Color2PopBoxButton");
             btnAgainst.Update();
+
+            this.FontFamily = style.Font;
         }
 
         private void PopBox_Loaded(object sender, RoutedEventArgs e)

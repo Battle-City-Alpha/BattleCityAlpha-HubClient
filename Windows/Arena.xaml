@@ -25,19 +25,19 @@
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
-                <TextBlock Text="Single" FontFamily="Dosis" FontSize="40" Foreground="White" VerticalAlignment="Center" Padding="5" HorizontalAlignment="Center"/>
+                <TextBlock Text="Single"  FontSize="40" Foreground="White" VerticalAlignment="Center" Padding="5" HorizontalAlignment="Center"/>
             </Border>
             <Border CornerRadius="15" Margin="40,0" VerticalAlignment="Center" Grid.Column="1">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
-                <TextBlock Text="Match" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
+                <TextBlock Text="Match"  FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
             </Border>
             <Border CornerRadius="15" Margin="40,0" VerticalAlignment="Center" Grid.Column="2">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </Border.Background>
-                <TextBlock Text="Tag" FontFamily="Dosis" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
+                <TextBlock Text="Tag"  FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"/>
             </Border>
         </Grid>
         <Grid Grid.Row="1" Margin="0,4.8,-0.4,0.6">

@@ -25,44 +25,44 @@
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Border.Background>
-            <Label FontFamily="Dosis" FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            <Label  FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
         </Border>
         <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Border.Background>
-            <Label FontFamily="Dosis" FontSize="15" Content="Mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            <Label  FontSize="15" Content="Mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
         </Border>
         <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Border.Background>
-            <Label FontFamily="Dosis" FontSize="15" Content="Confirmation mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            <Label  FontSize="15" Content="Confirmation mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
         </Border>
         <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
             <Border.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Border.Background>
-            <Label FontFamily="Dosis" FontSize="15" Content="Email:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            <Label  FontSize="15" Content="Email:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
         </Border>
 
 
-        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="0" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="0" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
             <TextBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </TextBox.Background>
         </TextBox>
-        <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+        <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
             <PasswordBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </PasswordBox.Background>
         </PasswordBox>
-        <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+        <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
             <PasswordBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </PasswordBox.Background>
         </PasswordBox>
-        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1" FontFamily="Dosis" Foreground="White" VerticalContentAlignment="Center">
+        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
             <TextBox.Background>
                 <SolidColorBrush Color="Black" Opacity="0.5"/>
             </TextBox.Background>

@@ -15,7 +15,7 @@
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.9"/>
             </Border.Background>
-            <ListView x:Name="lv" Margin="5" Background="{x:Null}" FontSize="16" FontFamily="Dosis" Grid.Row="0">
+            <ListView x:Name="lv" Margin="5" Background="{x:Null}" FontSize="16" Grid.Row="0">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">

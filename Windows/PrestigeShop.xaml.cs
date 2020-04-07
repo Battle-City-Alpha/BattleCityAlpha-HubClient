@@ -1,5 +1,6 @@
 ﻿using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +29,13 @@ namespace hub_client.Windows
             InitializeComponent();
 
             InitItem();
+            LoadStyle();
+        }
+
+        private void LoadStyle()
+        {
+            AppDesignConfig style = FormExecution.AppDesignConfig;
+            this.FontFamily = style.Font;
         }
 
         private void InitItem()

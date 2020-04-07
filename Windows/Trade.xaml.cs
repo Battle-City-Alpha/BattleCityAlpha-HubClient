@@ -97,7 +97,7 @@ namespace hub_client.Windows
 
         private void _admin_GetMessage(string username, string message)
         {
-            Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(FormExecution.AppDesignConfig.StandardMessageColor, "["+username+"]:"+message, false, false); });
+            Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "["+username+"]:"+message, false, false); });
         }
 
         private void _admin_InitTrade(int id, PlayerInfo[] players, Dictionary<int, BCA.Common.PlayerCard>[] Collections)
@@ -194,13 +194,15 @@ namespace hub_client.Windows
         {
             AppDesignConfig style = FormExecution.AppDesignConfig;
 
-            btnProposition.Color1 = style.Color1TradeButton;
-            btnProposition.Color2 = style.Color2TradeButton;
+            btnProposition.Color1 = style.GetGameColor("Color1TradeButton");
+            btnProposition.Color2 = style.GetGameColor("Color2TradeButton");
             btnProposition.Update();
 
-            btnValidate.Color1 = style.Color1TradeButton;
-            btnValidate.Color2 = style.Color2TradeButton;
+            btnValidate.Color1 = style.GetGameColor("Color1TradeButton");
+            btnValidate.Color2 = style.GetGameColor("Color2TradeButton");
             btnValidate.Update();
+
+            this.FontFamily = style.Font;
         }
     }
 }

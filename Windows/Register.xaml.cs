@@ -35,6 +35,8 @@ namespace hub_client.Windows
             _admin = admin;
 
             _admin.RegistrationComplete += _admin_RegistrationComplete;
+
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
         private void _admin_RegistrationComplete()

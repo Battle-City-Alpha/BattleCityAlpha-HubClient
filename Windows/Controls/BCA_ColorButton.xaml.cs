@@ -113,5 +113,10 @@ namespace hub_client.Windows.Controls
         {
             ReleasedAnimation();
         }
+
+        public void RefreshStyl()
+        {
+            this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
     }
 }

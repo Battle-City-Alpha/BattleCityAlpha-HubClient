@@ -48,14 +48,15 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in RankedButtons)
             {
-                btn.Color1 = style.Color1BrocanteButton;
-                btn.Color2 = style.Color2BrocanteButton;
+                btn.Color1 = style.GetGameColor("Color1BrocanteButton");
+                btn.Color2 = style.GetGameColor("Color2BrocanteButton");
                 btn.Update();
             }
 
-            btnBuy.Color1 = style.Color1CenterBrocanteButton;
-            btnBuy.Color2 = style.Color2CenterBrocanteButton;
+            btnBuy.Color1 = style.GetGameColor("Color1CenterBrocanteButton");
+            btnBuy.Color2 = style.GetGameColor("Color2CenterBrocanteButton");
             btnBuy.Update();
+            this.FontFamily = style.Font;
         }
 
         private void _admin_LoadBrocante(List<BrocanteCard> cards)

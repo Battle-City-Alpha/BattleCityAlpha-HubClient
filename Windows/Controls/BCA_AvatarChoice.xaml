@@ -27,8 +27,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Choix de l'avatar : " FontSize="24" FontFamily="Dosis" Margin="10"/>
-                <ComboBox Name="cb_avatar" FontSize="24" FontFamily="Dosis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Numéro de l'avatar" Grid.Column="1"/>
+                <TextBlock Text="Choix de l'avatar : " FontSize="24"  Margin="10"/>
+                <ComboBox Name="cb_avatar" FontSize="24"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Numéro de l'avatar" Grid.Column="1"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Width="96" Height="96">

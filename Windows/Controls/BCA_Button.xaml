@@ -18,7 +18,7 @@
             <Border.Background>
                 <ImageBrush x:Name="borderBg" ImageSource="pack://siteoforigin:,,,/Assets/Background/Button.jpg" Stretch="UniformToFill"/>
             </Border.Background>
-            <local:BCA_BlurLabel x:Name="text" />
+            <local:BCA_BlurLabel x:Name="text"/>
             <Border.Triggers>
                 <EventTrigger RoutedEvent="Border.MouseEnter">
                     <BeginStoryboard>

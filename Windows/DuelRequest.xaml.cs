@@ -32,9 +32,11 @@ namespace hub_client.Windows
         }
         private void LoadStyle()
         { 
-            btnSend.Color1 = style.Color1DuelRequestButton;
-            btnSend.Color2 = style.Color2DuelRequestButton;
+            btnSend.Color1 = style.GetGameColor("Color1DuelRequestButton");
+            btnSend.Color2 = style.GetGameColor("Color2DuelRequestButton");
             btnSend.Update();
+
+            this.FontFamily = style.Font;
         }
 
         private void BtnSend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

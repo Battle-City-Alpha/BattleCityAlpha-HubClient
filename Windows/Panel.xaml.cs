@@ -81,10 +81,12 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1PanelButton;
-                btn.Color2 = style.Color2PanelButton;
+                btn.Color1 = style.GetGameColor("Color1PanelButton");
+                btn.Color2 = style.GetGameColor("Color2PanelButton");
                 btn.Update();
             }
+
+            this.FontFamily = style.Font;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

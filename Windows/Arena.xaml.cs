@@ -35,6 +35,7 @@ namespace hub_client.Windows
             Title = "Arène de duel";
 
             LoadStyle();
+            this.FontFamily = style.Font;
 
             _admin.UpdateRoom += UpdateRoom;
 
@@ -55,8 +56,8 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in RankedButtons)
             {
-                btn.Color1 = style.Color1ArenaButton;
-                btn.Color2 = style.Color2ArenaButton;
+                btn.Color1 = style.GetGameColor("Color1ArenaButton");
+                btn.Color2 = style.GetGameColor("Color2ArenaButton");
                 btn.Update();
             }
         }

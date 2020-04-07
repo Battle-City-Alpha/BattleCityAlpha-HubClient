@@ -21,7 +21,7 @@
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.9"/>
             </Border.Background>
-            <ListBox x:Name="lbBlacklist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" FontFamily="Dosis" Foreground="Black" FontSize="18"/>
+            <ListBox x:Name="lbBlacklist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18"/>
         </Border>
         <Controls:BCA_ColorButton x:Name="btnRetire" Grid.Row="1" Height="Auto" ButtonText="Retirer" ButtonTextSize="22" MouseLeftButtonDown="btnRetire_MouseLeftButtonDown" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
     </Grid>

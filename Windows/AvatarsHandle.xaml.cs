@@ -32,6 +32,7 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             LoadStyle();
+            this.FontFamily = style.Font;
 
             _admin = admin;
 
@@ -46,8 +47,8 @@ namespace hub_client.Windows
 
             foreach (BCA_ColorButton btn in Buttons)
             {
-                btn.Color1 = style.Color1ToolsButton;
-                btn.Color2 = style.Color2ToolsButton;
+                btn.Color1 = style.GetGameColor("Color1ToolsButton");
+                btn.Color2 = style.GetGameColor("Color2ToolsButton");
                 btn.Update();
             }
         }
