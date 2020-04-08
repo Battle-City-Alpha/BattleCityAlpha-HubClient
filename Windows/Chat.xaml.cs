@@ -113,7 +113,7 @@ namespace hub_client.Windows
                 string[] nomFinal = name[name.Length - 1].Split('.');
                 cb_defaultdeck.Items.Add(nomFinal[0]);
             }
-            cb_defaultdeck.Text = FormExecution.YgoproConfig.DefaultDeck;
+            cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
 
             logger.Trace("Style loaded.");
         }
@@ -362,8 +362,7 @@ namespace hub_client.Windows
 
         private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FormExecution.YgoproConfig.DefaultDeck = (string)cb_defaultdeck.SelectedItem;
-            FormExecution.YgoproConfig.Save();
+            YgoproConfig.UpdateDefaultDeck((string)cb_defaultdeck.SelectedItem);
         }
     }
 }

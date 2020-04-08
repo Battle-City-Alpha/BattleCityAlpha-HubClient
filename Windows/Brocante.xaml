@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Brocante" Height="621.68" Width="836.154"
+        Title="Brocante" Height="665.184" Width="836.154"
         Loaded="Window_Loaded" Closing="Window_Closing" Icon="/hub-client;component/Assets/Icon/BCA.ico"
         >
     <Window.Background>
@@ -20,22 +20,51 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="212*"/>
-            <RowDefinition Height="229*"/>
-            <RowDefinition Height="77*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="brocanteList" Grid.Row="0" Grid.Column="0" Margin="5" Background="#BFFFFFFF" SelectionChanged="brocanteList_SelectionChanged">
+        <ListView x:Name="brocanteList" Grid.Row="0" Grid.Column="0" Margin="10" Background="#BFFFFFFF" SelectionChanged="brocanteList_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Vendeur :" DisplayMemberBinding="{Binding SellerName}"/>
-                    <GridViewColumn Header="Carte :" DisplayMemberBinding="{Binding CardName}"/>
-                    <GridViewColumn Header="Prix :" DisplayMemberBinding="{Binding Price}"/>
-                    <GridViewColumn Header="Quantité :" DisplayMemberBinding="{Binding Quantity}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding SellerName}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Seller" Click="lvUsersColumnHeader_Click">Vendeur</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding CardName}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="CardName" Click="lvUsersColumnHeader_Click">Carte</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Price}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Price" Click="lvUsersColumnHeader_Click">Prix</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Quantity}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Quantity" Click="lvUsersColumnHeader_Click">Quantité</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Row="1" />
-        <Grid Grid.Row="2" Margin="0,0,0,1.8">
+        <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Row="2" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Controls:BCA_TextBox x:Name="tb_search_seller" Grid.Column="0" Padding="10,5"/>
+            <Controls:BCA_TextBox x:Name="tb_search_card" Grid.Column="1" Padding="10,5"/>
+            <Controls:BCA_TextBox x:Name="tb_search_max_price" Grid.Column="2" Padding="10,5"/>
+            <Controls:BCA_TextBox x:Name="tb__search_max_quantity" Grid.Column="3" Padding="10,5"/>
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,0,0,1.8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -43,7 +72,7 @@
             </Grid.ColumnDefinitions>
             <Controls:BCA_ColorButton x:Name="btnSell" Grid.Column="0" Height="Auto" ButtonText="Vendre" Margin="40,0" MouseLeftButtonDown="btnSell_MouseLeftButtonDown" VerticalAlignment="Center"/>
             <Controls:BCA_ColorButton x:Name="btnBuy" Grid.Column="1" Height="Auto" ButtonText="Acheter" Margin="40,0" MouseLeftButtonDown="btnBuy_MouseLeftButtonDown" VerticalAlignment="Center"/>
-            <Controls:BCA_ColorButton x:Name="btnMyCards" Grid.Column="2" Height="Auto" ButtonText="Mes cartes" Margin="40,0" VerticalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnMyCards" Grid.Column="2" Height="Auto" ButtonText="Mes cartes" Margin="40,0" VerticalAlignment="Center" MouseLeftButtonDown="btnMyCards_MouseLeftButtonDown"/>
         </Grid>
     </Grid>
 </Window>

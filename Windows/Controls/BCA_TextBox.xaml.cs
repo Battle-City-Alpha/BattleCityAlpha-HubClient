@@ -29,6 +29,10 @@ namespace hub_client.Windows.Controls
         {
             return tbChat.Text;
         }
+        public void SetText(string txt)
+        {
+            tbChat.Text = txt;
+        }
 
         public void Clear()
         {

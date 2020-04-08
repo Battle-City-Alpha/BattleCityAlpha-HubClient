@@ -26,6 +26,9 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public static string debug_ip = "127.0.0.1";
+        public static string release_ip = "185.212.226.12";
+
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -41,7 +44,6 @@ namespace hub_client
         public static AppDesignConfig AppDesignConfig;
         public static AssetsManager AssetsManager;
         public static ClientConfig ClientConfig;
-        public static YgoproConfig YgoproConfig;
 
         public static GameClient Client { get; private set; }
 
@@ -56,6 +58,15 @@ namespace hub_client
         private static Purchase _purchase;
         private static Brocante _brocante;
         #endregion
+
+        public static string GetIp()
+        {
+#if DEBUG
+            return debug_ip;
+#else
+            return release_ip;
+#endif
+        }
 
         public static void Init()
         {
@@ -77,11 +88,6 @@ namespace hub_client
 
             BoosterManager.LoadList();
             //AppDesignConfig = new AppDesignConfig(); //To debug config
-
-            if (File.Exists(YgoProConfigPath))
-                YgoproConfig = JsonConvert.DeserializeObject<YgoproConfig>(File.ReadAllText(YgoProConfigPath));
-            else
-                YgoproConfig = new YgoproConfig();
 
             SaveConfig();
 
@@ -185,8 +191,6 @@ namespace hub_client
             File.WriteAllText(AppDesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
             AppDesignConfig.UpdateResourcesDictionary();
 
-            File.WriteAllText(YgoProConfigPath, JsonConvert.SerializeObject(YgoproConfig, Formatting.Indented));
-
             File.WriteAllText(ClientConfigPath, JsonConvert.SerializeObject(ClientConfig, Formatting.Indented));
 
             logger.Trace("Config Saved.");
@@ -195,11 +199,8 @@ namespace hub_client
         public static void StartConnexion()
         {
             logger.Trace("Attempt of connexion...");
-#if DEBUG
-            Client.Connect(IPAddress.Parse("127.0.0.1"), 9100);
-#else
-            Client.Connect(IPAddress.Parse("185.212.226.12"), 9100);
-#endif
+
+            Client.Connect(IPAddress.Parse(GetIp()), 9100);
             Client.Connected += Client_Connected;
             Task.Run(() => UpdateNetwork());
         }

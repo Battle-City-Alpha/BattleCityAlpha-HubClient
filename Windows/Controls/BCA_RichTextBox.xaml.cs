@@ -40,7 +40,9 @@ namespace hub_client.Windows.Controls
             pr.Foreground = new SolidColorBrush(color);
             pr.Margin = new Thickness(0);
             chat.Document.Blocks.Add(pr);
-            ScrollToCarret();
+
+            if (FormExecution.ClientConfig.Autoscroll)
+                ScrollToCarret();
         }
 
         public void ScrollToCarret()

@@ -27,7 +27,6 @@ namespace hub_client.Network
         private Logger logger = LogManager.GetCurrentClassLogger();
 
         private string _username;
-        private string _password;
 
         public event Action<string, string, bool> PopMessageBox;
         public event Action<PlayerInfo, RoomConfig, bool> ChoicePopBox;
@@ -715,9 +714,7 @@ namespace hub_client.Network
         }*/
         public void OnDuelStart(StandardServerDuelStart packet)
         {
-            string arg = "-j";
-
-            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
+            string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
 
             LaunchYGOPro?.Invoke(arg);
 
@@ -725,9 +722,7 @@ namespace hub_client.Network
         }
         public void OnDuelSpectate(StandardServerDuelSpectate packet)
         {
-            string arg = "-j";
-
-            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
+            string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
 
             LaunchYGOPro?.Invoke(arg);
 

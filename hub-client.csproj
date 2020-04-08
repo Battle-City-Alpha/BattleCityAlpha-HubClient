@@ -738,7 +738,9 @@
     <None Include="Assets\Background\bg_chat.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="Assets\Background\bg_prestigeshop.jpg" />
+    <None Include="Assets\Background\bg_prestigeshop.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

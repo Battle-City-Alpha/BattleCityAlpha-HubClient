@@ -1,24 +1,15 @@
-﻿using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
-using hub_client.Assets;
+﻿using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -53,6 +44,7 @@ namespace hub_client.Windows
             cb_greet.IsChecked = client_config.Greet;
             cb_traderequest.IsChecked = client_config.Request;
             cb_duelrequest.IsChecked = client_config.Trade;
+            cb_autoscroll.IsChecked = client_config.Autoscroll;
 
             foreach (var color in style.GameColors)
                 cb_colorList.Items.Add(color.Key);
@@ -113,6 +105,7 @@ namespace hub_client.Windows
             client_config.Request = (bool)cb_duelrequest.IsChecked;
             client_config.Trade = (bool)cb_traderequest.IsChecked;
             client_config.Connexion_Message = (bool)cb_connectionmsg.IsChecked;
+            client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
             style.FontSize = Convert.ToInt32(tb_fontsize.Text);

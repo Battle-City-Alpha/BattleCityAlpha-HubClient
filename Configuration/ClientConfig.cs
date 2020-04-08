@@ -14,6 +14,7 @@ namespace hub_client.Configuration
         public bool Trade = false;
         public bool Request = false;
         public bool Connexion_Message = true;
+        public bool Autoscroll = true;
 
         public void Save()
         {
