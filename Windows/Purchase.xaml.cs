@@ -36,7 +36,7 @@ namespace hub_client.Windows
             this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
-        private void _admin_PurchaseItem(int[] list)
+        public void UpdateCards(int[] list)
         {
             cards = new CardInfos[list.Count()];
             for (int i = 0; i < list.Count(); i++)
@@ -47,6 +47,11 @@ namespace hub_client.Windows
                     infos.Name = "Carte inconnue. Id : " + list[i].ToString();
                 lb_cards.Items.Add(infos.Name);
             }
+        }
+
+        private void _admin_PurchaseItem(int[] list)
+        {
+            UpdateCards(list);
         }
 
         private void lb_cards_SelectionChanged(object sender, SelectionChangedEventArgs e)

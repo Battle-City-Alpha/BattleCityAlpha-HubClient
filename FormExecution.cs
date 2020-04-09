@@ -100,6 +100,7 @@ namespace hub_client
             Client.LaunchYGOPro += Client_LaunchYGOPro;
             Client.LaunchTrade += Client_LaunchTrade;
             Client.CloseBrocante += Client_CloseBrocante;
+            Client.LaunchBonusBox += Client_LaunchBonusBox;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -108,6 +109,17 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LaunchBonusBox(BonusType type, int numberconnexion, string gift, int[] cards)
+        {
+            BonusBox box = new BonusBox(type, numberconnexion, gift);
+            box.ShowDialog();
+            if (type == BonusType.Booster)
+            {
+                OpenPurchase(gift);
+                _purchase.UpdateCards(cards);
+            }
         }
 
         private static void Client_CloseBrocante()

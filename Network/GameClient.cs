@@ -33,6 +33,9 @@ namespace hub_client.Network
         public event Action<string> LaunchYGOPro;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
+        #region BonusBox Events
+        public event Action<BonusType, int, string, int[]> LaunchBonusBox;
+        #endregion
         #region ChatForm Events
         public event Action<Color, string, bool, bool> ChatMessageRecieved;
         public event Action<PlayerInfo> AddHubPlayer;
@@ -310,6 +313,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.SpectatePlayer:
                     OnDuelSpectate(JsonConvert.DeserializeObject<StandardServerDuelSpectate>(packet));
+                    break;
+                case PacketType.GetBonus:
+                    OnGetBonus(JsonConvert.DeserializeObject<StandardServerGetBonus>(packet));
                     break;
             }
         }
@@ -743,6 +749,12 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room, packet.Remove));
             logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
+
+        public void OnGetBonus(StandardServerGetBonus packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => LaunchBonusBox?.Invoke(packet.Type, packet.MonthlyConnectionNumber, packet.Gift, packet.Cards));
+            logger.Trace("GET BONUS - Bonus Type : {0} | Monthly connection : {1} | Gift : {2}", packet.Type, packet.MonthlyConnectionNumber, packet.Gift);
+           }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
         {

@@ -37,7 +37,6 @@ namespace hub_client.WindowsAdministrator
                 }
             });
         }
-
         public void SendHost(RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp)
         {
             Client.Send(PacketType.DuelHost, new StandardClientDuelHost

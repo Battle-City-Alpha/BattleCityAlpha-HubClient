@@ -223,6 +223,9 @@
     <Compile Include="Windows\Blacklist.xaml.cs">
       <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\BonusBox.xaml.cs">
+      <DependentUpon>BonusBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Brocante.xaml.cs">
       <DependentUpon>Brocante.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Blacklist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BonusBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -739,6 +746,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_prestigeshop.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Logo\Coin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Logo\CoinPP.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">
