@@ -4,15 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hub_client.Windows.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" Width="497.904" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" VerticalAlignment="Center" Grid.ColumnSpan="3" Padding="20">
@@ -31,11 +30,11 @@
                 <ComboBox Name="cb_avatar" FontSize="24"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Numéro de l'avatar" Grid.Column="1"/>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Width="96" Height="96">
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Width="256" Height="256" Margin="10">
             <Border.Background>
                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
             </Border.Background>
-            <Image x:Name="AvatarImg" Source="/hub-client;component/Assets/Avatars/00.PNG" Margin="3"/>
+            <Image x:Name="AvatarImg"  Margin="3" Source="pack://siteoforigin:,,,/Assets/Avatars/00.PNG" />
         </Border>
         <local:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder"/>
     </Grid>

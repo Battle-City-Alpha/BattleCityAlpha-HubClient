@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Gestion des avatars" Height="402.789" Width="547.275" Closed="Window_Closed" ResizeMode="NoResize">
+        Title="Gestion des avatars" Closed="Window_Closed" ResizeMode="NoResize" Height="581.2" Width="579.2">
     <Window.Background>
         <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
             <ImageBrush.ImageSource>
@@ -13,5 +13,5 @@
             </ImageBrush.ImageSource>
         </ImageBrush>
     </Window.Background>
-    <Controls:BCA_AvatarChoice x:Name="control_avatar" />
+    <Controls:BCA_AvatarChoice x:Name="control_avatar" Width="Auto" Margin="0,0,4,13.2"/>
 </Window>
