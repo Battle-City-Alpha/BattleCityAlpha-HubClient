@@ -271,6 +271,9 @@
     <Compile Include="Windows\DuelRequest.xaml.cs">
       <DependentUpon>DuelRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DuelResult.xaml.cs">
+      <DependentUpon>DuelResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\InputText.xaml.cs">
       <DependentUpon>InputText.xaml</DependentUpon>
     </Compile>
@@ -384,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DuelRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DuelResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -563,6 +570,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Avatars\00.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Duel\duel_result.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

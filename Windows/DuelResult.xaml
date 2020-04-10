@@ -1,0 +1,34 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.DuelResult"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="DuelResult" Height="340.293" Width="826.411" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True">
+    <Border CornerRadius="100" BorderThickness="3" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_duelrequest.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Border Grid.Column="0" Margin="10" CornerRadius="100">
+            <Border.Background>
+                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="pack://siteoforigin:,,,/Assets/Duel/duel_result.png" Stretch="UniformToFill" Margin="30, 0, 0 0"/>
+                <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="popText" Margin="5, 20"  FontSize="24" Text="Félicitations pour votre victoire !" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" TextAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btnAgree" Margin="10" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Retourner jouer!" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"  HorizontalAlignment="Center" VerticalAlignment="Center" ButtonTextSize="24"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

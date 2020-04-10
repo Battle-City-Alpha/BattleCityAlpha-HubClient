@@ -6,35 +6,37 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
         mc:Ignorable="d"
-        Title="Bonus de connexion !" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="178*"/>
-            <RowDefinition Height="51*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border CornerRadius="5" Grid.Row="0" Grid.Column="0" Margin="10">
-            <Border.Background>
-                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-            </Border.Background>
-            <TextBlock x:Name="popText" Margin="5"  FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
-        </Border>
-        <Border CornerRadius="5" Grid.Row="0" Grid.Column="1" Margin="10">
-            <Border.Background>
-                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-            </Border.Background>
-            <Image x:Name="showBonus" Source="pack://siteoforigin:,,,/Assets/Logo/Coin.png" Margin="20"/>
-        </Border>
-        <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Grid.ColumnSpan="2" Height="Auto" Width="120" Margin="0,10" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
-    </Grid>
+        Title="Bonus de connexion !" Height="450" Width="800"  AllowsTransparency="True" ResizeMode="NoResize" WindowStyle="None" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" Background="{x:Null}" Foreground="{x:Null}">
+    <Border CornerRadius="80, 0, 80, 0"  BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="178*"/>
+                <RowDefinition Height="51*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="80, 0, 80, 0" Grid.Row="0" Grid.Column="0" Margin="10">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <TextBlock x:Name="popText" Margin="5"  FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+            </Border>
+            <Border CornerRadius="0, 80, 0, 80" Grid.Row="0" Grid.Column="1" Margin="10">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Image x:Name="showBonus" Source="pack://siteoforigin:,,,/Assets/Logo/Coin.png" Margin="20"/>
+            </Border>
+            <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Grid.ColumnSpan="2" Height="Auto" Width="120" Margin="0,10" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
+        </Grid>
+    </Border>
 </Window>

@@ -101,6 +101,7 @@ namespace hub_client
             Client.LaunchTrade += Client_LaunchTrade;
             Client.CloseBrocante += Client_CloseBrocante;
             Client.LaunchBonusBox += Client_LaunchBonusBox;
+            Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -109,6 +110,12 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
+        {
+            DuelResult box = new DuelResult(bps, exps, win);
+            box.Show();
         }
 
         private static void Client_LaunchBonusBox(BonusType type, int numberconnexion, string gift, int[] cards)
