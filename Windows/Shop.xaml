@@ -5,155 +5,170 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Boutique" Height="579.439" Width="965.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded" Closed="Window_Closed">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_shop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="5*"/>
-        </Grid.RowDefinitions>
-        <Border CornerRadius="15" Margin="10" Grid.Row="0">
-            <Border.Background>
-                <SolidColorBrush Color="White" Opacity="0.5"/>
-            </Border.Background>
-            <Grid>
+        Title="Battle City Alpha - Boutique" Height="599.839" Width="1091.056" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" Loaded="Window_Loaded" Closed="Window_Closed"
+        ResizeMode="CanResize" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40, 0, 40, 40" x:Name="bg_border">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_shop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Border CornerRadius="15" Margin="20,10" Grid.Row="1">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Battle Points : " FontSize="24"  Margin="10"/>
+                        <TextBlock x:Name="tb_bps" Text="????" FontSize="24"  Margin="10"/>
+                    </StackPanel>
+                    <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Brocante" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_prestigeshop_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="2" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="86*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Battle Points : " FontSize="24"  Margin="10"/>
-                    <TextBlock x:Name="tb_bps" Text="????" FontSize="24"  Margin="10"/>
-                </StackPanel>
-                <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown" VerticalAlignment="Center"/>
-                <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Brocante" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown" VerticalAlignment="Center"/>
-                <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_prestigeshop_MouseLeftButtonDown" VerticalAlignment="Center"/>
-            </Grid>
-        </Border>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="37*"/>
-                <ColumnDefinition Width="86*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="22*"/>
-                    <RowDefinition Height="207*"/>
-                    <RowDefinition Height="22*"/>
-                </Grid.RowDefinitions>
-                <Border CornerRadius="15" Margin="10,5" Grid.Row="1">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.5"/>
-                    </Border.Background>
-                    <ListBox x:Name="lb_booster" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_booster_SelectionChanged"/>
-                </Border>
-                <ComboBox x:Name="cbBooster" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18"  SelectedIndex="0" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center"/>
-                <Controls:BCA_TextBox x:Name="tb_searchBooster" Grid.Row="2" Margin="10,5" VerticalAlignment="Center"/>
-            </Grid>
-            <Grid Grid.Column="1" Margin="6.2,0,0.2,-0.4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="142*"/>
-                    <ColumnDefinition Width="159*"/>
-                </Grid.ColumnDefinitions>
-                <Border CornerRadius="15" Margin="10" Grid.Column="0" >
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.5"/>
-                    </Border.Background>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="395*"/>
-                            <RowDefinition Height="44*"/>
-                        </Grid.RowDefinitions>
-                        <Image x:Name="img_booster" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10"/>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                            <TextBlock Padding="5" Text="Date : " FontSize="24" />
-                            <TextBlock x:Name="tb_date" Padding="5" Text="???" FontSize="24" />
-                        </StackPanel>
-                        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="132,209,0,0" VerticalAlignment="Top" Width="100"/>
-                    </Grid>
-                </Border>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="0" Margin="0,10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="7*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="22*"/>
+                        <RowDefinition Height="207*"/>
+                        <RowDefinition Height="22*"/>
                     </Grid.RowDefinitions>
-                    <Border CornerRadius="15" Margin="10" HorizontalAlignment="Stretch" Grid.Row="0">
+                    <Border CornerRadius="15" Margin="10,5" Grid.Row="1">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.5"/>
                         </Border.Background>
-                        <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <ListBox x:Name="lb_booster" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_booster_SelectionChanged"/>
+                    </Border>
+                    <ComboBox x:Name="cbBooster" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18"  SelectedIndex="0" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center"/>
+                    <Controls:BCA_TextBox x:Name="tb_searchBooster" Grid.Row="2" Margin="10,5" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Column="1" Margin="6.2,0,0.2,-0.4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="142*"/>
+                        <ColumnDefinition Width="159*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="15" Margin="10" Grid.Column="0" >
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.5"/>
+                        </Border.Background>
+                        <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="395*"/>
+                                <RowDefinition Height="44*"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0">
-                                <TextBlock Padding="5" Text="Prix" FontSize="24"  TextDecorations="Underline"/>
-                                <TextBlock Padding="5" Text=": " FontSize="24"  />
-                                <TextBlock Padding="5" x:Name="tb_price" Text="????" FontSize="24" />
+                            <Image x:Name="img_booster" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                                <TextBlock Padding="5" Text="Date : " FontSize="24" />
+                                <TextBlock x:Name="tb_date" Padding="5" Text="???" FontSize="24" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Margin="10,0">
-                                <TextBlock Padding="5" Text="Cartes/pack" FontSize="24"  HorizontalAlignment="Center" TextDecorations="Underline"/>
-                                <TextBlock Padding="5" Text=": " FontSize="24"  />
-                                <TextBlock Padding="5" x:Name="tb_numbercardpack" Text="????" FontSize="24"  HorizontalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0">
-                                <TextBlock Padding="5" Text="Cartes possédées" FontSize="24"  TextDecorations="Underline"/>
-                                <TextBlock Padding="5" Text=": " FontSize="24"  />
-                                <TextBlock Padding="5" x:Name="tb_cardgot" Text="????" FontSize="24" />
-                                <TextBlock Padding="5" Text="/" FontSize="24" />
-                                <TextBlock Padding="5" x:Name="tb_totalcard" Text="????" FontSize="24" />
-                            </StackPanel>
+                            <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="132,209,0,0" VerticalAlignment="Top" Width="100"/>
                         </Grid>
                     </Border>
-                    <Border CornerRadius="15" Margin="10" HorizontalAlignment="Stretch" Grid.Row="1">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.5"/>
-                        </Border.Background>
-                        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="tb_card1" Padding="5" Text="-????" FontSize="24"  Grid.Row="0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_card2" Padding="5" Text="-????" FontSize="24"  Grid.Row="1" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_card3" Padding="5" Text="-????" FontSize="24"  Grid.Row="2" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_card4" Padding="5" Text="-????"  FontSize="24"  Grid.Row="3" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
-                    <Border CornerRadius="15" Margin="10" Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Padding="5">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.5"/>
-                        </Border.Background>
-                        <Grid Margin="10,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="tb_numberpack"  FontSize="24" Grid.Column="0" Margin="3" PreviewTextInput="NumberValidationTextBox" TextChanged="tb_numberpack_TextChanged" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_realprice" Text="????"  FontSize="24" Padding="5" Grid.Column="1" VerticalAlignment="Center"/>
-                            <TextBlock Text="BPs"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center"/>
-                            <Controls:BCA_ColorButton x:Name="btn_purchase" Margin="1" Width="Auto" Height="Auto" ButtonText="Acheter" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_purchase_MouseLeftButtonDown"/>
-                        </Grid>
-                    </Border>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="7*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="15" Margin="10" HorizontalAlignment="Stretch" Grid.Row="0">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.5"/>
+                            </Border.Background>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock Padding="5" Text="Prix" FontSize="24"  TextDecorations="Underline"/>
+                                    <TextBlock Padding="5" Text=": " FontSize="24"  />
+                                    <TextBlock Padding="5" x:Name="tb_price" Text="????" FontSize="24" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Margin="10,0">
+                                    <TextBlock Padding="5" Text="Cartes/pack" FontSize="24"  HorizontalAlignment="Center" TextDecorations="Underline"/>
+                                    <TextBlock Padding="5" Text=": " FontSize="24"  />
+                                    <TextBlock Padding="5" x:Name="tb_numbercardpack" Text="????" FontSize="24"  HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0">
+                                    <TextBlock Padding="5" Text="Cartes possédées" FontSize="24"  TextDecorations="Underline"/>
+                                    <TextBlock Padding="5" Text=": " FontSize="24"  />
+                                    <TextBlock Padding="5" x:Name="tb_cardgot" Text="????" FontSize="24" />
+                                    <TextBlock Padding="5" Text="/" FontSize="24" />
+                                    <TextBlock Padding="5" x:Name="tb_totalcard" Text="????" FontSize="24" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border CornerRadius="15" Margin="10" HorizontalAlignment="Stretch" Grid.Row="1">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.5"/>
+                            </Border.Background>
+                            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="tb_card1" Padding="5" Text="-????" FontSize="24"  Grid.Row="0" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="tb_card2" Padding="5" Text="-????" FontSize="24"  Grid.Row="1" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="tb_card3" Padding="5" Text="-????" FontSize="24"  Grid.Row="2" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="tb_card4" Padding="5" Text="-????"  FontSize="24"  Grid.Row="3" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <Border CornerRadius="15" Margin="10" Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Padding="5">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.5"/>
+                            </Border.Background>
+                            <Grid Margin="10,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="tb_numberpack"  FontSize="24" Grid.Column="0" Margin="3" PreviewTextInput="NumberValidationTextBox" TextChanged="tb_numberpack_TextChanged" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="tb_realprice" Text="????"  FontSize="24" Padding="5" Grid.Column="1" VerticalAlignment="Center"/>
+                                <TextBlock Text="BPs"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center"/>
+                                <Controls:BCA_ColorButton x:Name="btn_purchase" Margin="1" Width="Auto" Height="Auto" ButtonText="Acheter" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_purchase_MouseLeftButtonDown"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

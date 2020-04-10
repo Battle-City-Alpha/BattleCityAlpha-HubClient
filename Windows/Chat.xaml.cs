@@ -53,6 +53,8 @@ namespace hub_client.Windows
             PlayersFound = new List<PlayerInfo>();
             lvUserlist.ItemsSource = Players;
 
+            this.MouseDown += Chat_MouseDown;
+
         }
 
         private void SearchUser(object sender, TextChangedEventArgs e)
@@ -363,6 +365,33 @@ namespace hub_client.Windows
         private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             YgoproConfig.UpdateDefaultDeck((string)cb_defaultdeck.SelectedItem);
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(40, 0, 40, 40);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Chat_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

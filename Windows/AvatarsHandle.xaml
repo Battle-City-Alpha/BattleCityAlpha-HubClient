@@ -5,13 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Gestion des avatars" Closed="Window_Closed" ResizeMode="NoResize" Height="581.2" Width="579.2">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Controls:BCA_AvatarChoice x:Name="control_avatar" Width="Auto" Margin="0,0,4,13.2"/>
+        Title="Gestion des avatars" Closed="Window_Closed" ResizeMode="NoResize" Height="581.2" Width="579.2" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+    <Border Padding="10,0" CornerRadius="50" BorderThickness="2" BorderBrush="Black" x:Name="bg_border">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,30,5" Grid.Row="0">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Controls:BCA_AvatarChoice Grid.Row="1" x:Name="control_avatar" Width="Auto" Margin="0"/>
+        </Grid>
+    </Border>
 </Window>

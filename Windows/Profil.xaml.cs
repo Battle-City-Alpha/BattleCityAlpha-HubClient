@@ -37,6 +37,8 @@ namespace hub_client.Windows
             _admin.UpdateProfil += _admin_UpdateProfil;
 
             this.FontFamily = FormExecution.AppDesignConfig.Font;
+
+            this.MouseDown += Window_MouseDown;
         }
 
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
@@ -68,6 +70,33 @@ namespace hub_client.Windows
         private void AvatarImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _admin.OpenAvatarsForm();
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(20);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

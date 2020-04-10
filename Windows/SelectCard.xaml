@@ -5,44 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Sélectionner une carte" Height="499.208" Width="1063.297" Icon="/hub-client;component/Assets/Icon/BCA.ico" >
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_brocante.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Controls:BCA_DisplayCollection x:Name="Collection" Grid.Row="0" />
-        <Border CornerRadius="15" Margin="5" Grid.Column="0" Grid.Row="1">
-            <Border.Background>
-                <SolidColorBrush Color="White" Opacity="0.5"/>
-            </Border.Background>
-            <Grid Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Prix :"  FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox x:Name="tb_price"  FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
-                <TextBox x:Name="tb_quantity"  FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
-                <TextBlock Text="Quantité :"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Title="Sélectionner une carte" Height="562.808" Width="1083.697" Icon="/hub-client;component/Assets/Icon/BCA.ico" 
+        ResizeMode="CanResize" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
 
-            </Grid>
-        </Border>
-        <Controls:BCA_ColorButton x:Name="btnSelect" Grid.Row="1" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="40, 0, 40, 40" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_brocante.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.ColumnSpan="2">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>            
+            <Controls:BCA_DisplayCollection x:Name="Collection" Grid.Row="1" Margin="5"/>
+            <Border CornerRadius="15" Margin="5" Grid.Column="0" Grid.Row="2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.5"/>
+                </Border.Background>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Prix :"  FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="tb_price"  FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                    <TextBox x:Name="tb_quantity"  FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                    <TextBlock Text="Quantité :"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.RowSpan="1"/>
-    </Grid>
+                </Grid>
+            </Border>
+            <Controls:BCA_ColorButton x:Name="btnSelect" Grid.Row="2" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown" HorizontalAlignment="Center"/>
+
+            <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.Row="1"/>
+        </Grid>
+    </Border>
 </Window>

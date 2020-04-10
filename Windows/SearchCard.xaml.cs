@@ -42,7 +42,9 @@ namespace hub_client.Windows
             foreach (var value in CardManager.SetCodes)
                 cb_setnames.Items.Add(value.Value);
 
-            LoadStyle();       
+            LoadStyle();
+
+            this.MouseDown += Window_MouseDown;
         }
 
         private void LoadStyle()
@@ -145,6 +147,33 @@ namespace hub_client.Windows
             {
                 Id = card.Id
             });
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(40, 0, 40, 40);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

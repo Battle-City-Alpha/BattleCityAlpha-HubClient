@@ -5,73 +5,83 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="ToolWindow" Closed="Window_Closed">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_register.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
-            <Border.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7"/>
-            </Border.Background>
-            <Label  FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-        </Border>
-        <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
-            <Border.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7"/>
-            </Border.Background>
-            <Label  FontSize="15" Content="Mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-        </Border>
-        <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
-            <Border.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7"/>
-            </Border.Background>
-            <Label  FontSize="15" Content="Confirmation mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-        </Border>
-        <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
-            <Border.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7"/>
-            </Border.Background>
-            <Label  FontSize="15" Content="Email:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-        </Border>
+        Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="None" Closed="Window_Closed"
+        AllowsTransparency="True" Background="{x:Null}">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="80,20,20,80">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_register.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.ColumnSpan="2" Margin="30,5">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label  FontSize="15" Content="Nom d'utilisateur:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            </Border>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label  FontSize="15" Content="Mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            </Border>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label  FontSize="15" Content="Confirmation mot de passe:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            </Border>
+            <Border CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </Border.Background>
+                <Label  FontSize="15" Content="Email:" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            </Border>
 
 
-        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="0" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
-            <TextBox.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
-            </TextBox.Background>
-        </TextBox>
-        <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
-            <PasswordBox.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
-            </PasswordBox.Background>
-        </PasswordBox>
-        <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
-            <PasswordBox.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
-            </PasswordBox.Background>
-        </PasswordBox>
-        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
-            <TextBox.Background>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
-            </TextBox.Background>
-        </TextBox>
+            <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+                <TextBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </TextBox.Background>
+            </TextBox>
+            <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+                <PasswordBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </PasswordBox.Background>
+            </PasswordBox>
+            <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+                <PasswordBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </PasswordBox.Background>
+            </PasswordBox>
+            <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="4" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+                <TextBox.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </TextBox.Background>
+            </TextBox>
 
-        <Controls:BCA_Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown" Margin="0,0,10,0"/>        
-    </Grid>
+            <Controls:BCA_Button Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" ButtonText="S'inscrire !" Width="200" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown" Margin="0,0,30,0"/>
+        </Grid>
+    </Border>
 </Window>

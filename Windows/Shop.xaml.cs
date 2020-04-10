@@ -56,6 +56,8 @@ namespace hub_client.Windows
             tb_searchBooster.tbChat.TextChanged += TbChat_TextChanged;
 
             LoadStyle();
+
+            this.MouseDown += Window_MouseDown;
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
@@ -310,6 +312,33 @@ namespace hub_client.Windows
         {
             _admin.UpdateBoosterInfo -= UpdateBoosterInfo;
             _admin.UpdateBattlePoints -= _admin_UpdateBattlePoints;
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(40, 0, 40, 40);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
 
     }

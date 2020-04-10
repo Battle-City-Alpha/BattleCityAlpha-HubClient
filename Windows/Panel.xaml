@@ -5,91 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Panel" Height="593.571" Width="1095.97" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_panel.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        Title="Panel" Height="594.911" Width="1193.782" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed"
+        WindowStyle="None" ResizeMode="CanResize" Background="{x:Null}" AllowsTransparency="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="40,0,40,20" Padding="10" x:Name="bg_border">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_panel.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="349*"/>
-                <RowDefinition Height="38*"/>
-            </Grid.RowDefinitions>
-            <Border CornerRadius="15" Margin="10,5">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <ListBox x:Name="lbUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectionChanged="lbUserlist_SelectionChanged"/>
-            </Border>
-            <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1" VerticalAlignment="Center"/>
-        </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" CornerRadius="15" Margin="5,5">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Comptes :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblAccounts" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border Grid.Row="1" CornerRadius="15" Margin="5,5">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="IP :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblIP" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <Border Grid.Row="2" CornerRadius="15" Margin="10,5">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.9"/>
-                </Border.Background>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Observations :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,5,0,0"/>
-                    <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black" Margin="5" CornerRadius="15">
-                        <RichTextBox x:Name="rtbObs"  FontSize="22" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}">
-                            <FlowDocument LineHeight="1"/>
-                        </RichTextBox>
-                    </Border>
-                </Grid>
-            </Border>
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" CornerRadius="15" Margin="10,5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>            
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="349*"/>
+                    <RowDefinition Height="38*"/>
+                </Grid.RowDefinitions>
+                <Border CornerRadius="15" Margin="10,5">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <ListBox x:Name="lbUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectionChanged="lbUserlist_SelectionChanged"/>
+                </Border>
+                <Controls:BCA_TextBox x:Name="tbUserlist" Margin="10,0,10,5" Grid.Row="1" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="15" Margin="5,5">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
@@ -98,81 +67,130 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Points :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="lblBattlePoints" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="Comptes :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="lblAccounts" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
-                <Controls:BCA_ColorButton x:Name="btn_save" Grid.Column="1" Margin="5" ButtonText="Sauvegarder" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
-            </Grid>
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border CornerRadius="15" Margin="10,5" Grid.ColumnSpan="2">
+                <Border Grid.Row="1" CornerRadius="15" Margin="5,5">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_KickReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="IP :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="lblIP" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </Border>
-                <Controls:BCA_ColorButton x:Name="btn_kick" Grid.Column="2" Margin="5" ButtonText="Ejecter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
-            </Grid>
-            <Grid Grid.Row="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border CornerRadius="15" Margin="10,5">
+                <Border Grid.Row="2" CornerRadius="15" Margin="10,5">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>
                     </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_MuteReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Observations :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,5,0,0"/>
+                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black" Margin="5" CornerRadius="15">
+                            <RichTextBox x:Name="rtbObs"  FontSize="22" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <FlowDocument LineHeight="1"/>
+                            </RichTextBox>
+                        </Border>
+                    </Grid>
                 </Border>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" CornerRadius="15" Margin="10,5">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Points :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="lblBattlePoints" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_save" Grid.Column="1" Margin="5" ButtonText="Sauvegarder" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="btn_save_MouseLeftButtonDown"/>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="15" Margin="10,5" Grid.ColumnSpan="2">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Controls:BCA_TextBox x:Name="tb_KickReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_kick" Grid.Column="2" Margin="5" ButtonText="Ejecter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="15" Margin="10,5">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Controls:BCA_TextBox x:Name="tb_MuteReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
+                    </Border>
 
-                <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.9"/>
-                    </Border.Background>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Temps :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_MuteHours"  FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-                <Controls:BCA_ColorButton x:Name="btn_mute" Grid.Column="2" Margin="5" ButtonText="Muter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_1"/>
-            </Grid>
-            <Grid Grid.Row="6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border CornerRadius="15" Margin="10,5">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.9"/>
-                    </Border.Background>
-                    <Controls:BCA_TextBox x:Name="tb_BanReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
-                </Border>
-                <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.9"/>
-                    </Border.Background>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Temps :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_BanHours"  FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-                <Controls:BCA_ColorButton x:Name="btn_ban" Grid.Column="2" Margin="5" ButtonText="Bannir" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_2"/>
+                    <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Temps :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tb_MuteHours"  FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_mute" Grid.Column="2" Margin="5" ButtonText="Muter" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_1"/>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="15" Margin="10,5">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Controls:BCA_TextBox x:Name="tb_BanReason"  FontSize="22" Margin="5" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border CornerRadius="15" Margin="10,5" Grid.Column="1">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Temps :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tb_BanHours"  FontSize="22" Grid.Column="1" Margin="5" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Controls:BCA_ColorButton x:Name="btn_ban" Grid.Column="2" Margin="5" ButtonText="Bannir" ButtonTextSize="24" Color1="#FF0068BC" Color2="#FF01062E" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown_2"/>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

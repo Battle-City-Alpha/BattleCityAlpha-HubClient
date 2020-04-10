@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="pack://siteoforigin:,,,/Assets/Duel/duel_result.png" Stretch="UniformToFill" Margin="30, 0, 0 0"/>
+                <Image Source="pack://siteoforigin:,,,/Assets/Duel/duel_result.png" Stretch="UniformToFill" Margin="50, 0, 0 0"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
                     <TextBlock x:Name="popText" Margin="5, 20"  FontSize="24" Text="Félicitations pour votre victoire !" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" TextAlignment="Center"/>
                     <Controls:BCA_ColorButton x:Name="btnAgree" Margin="10" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Retourner jouer!" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"  HorizontalAlignment="Center" VerticalAlignment="Center" ButtonTextSize="24"/>

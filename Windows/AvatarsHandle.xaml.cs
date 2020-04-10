@@ -39,6 +39,8 @@ namespace hub_client.Windows
             _admin.LoadAvatars += _admin_LoadAvatars;
             control_avatar.cb_avatar.SelectionChanged += cb_avatar_SelectionChanged;
             control_avatar.btn_save_avatar.MouseLeftButtonDown += btn_save_avatar_MouseLeftButtonDown;
+
+            this.MouseDown += Window_MouseDown;
         }
         private void LoadStyle()
         {
@@ -73,6 +75,33 @@ namespace hub_client.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
             _admin.LoadAvatars -= _admin_LoadAvatars;
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(40, 0, 40, 40);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

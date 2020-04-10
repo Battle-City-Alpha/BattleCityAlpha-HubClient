@@ -5,28 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Blacklist" Height="510.907" Width="267.161" Icon="/hub-client;component/Assets/Icon/BCA.ico" ResizeMode="NoResize">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border CornerRadius="15" Margin="10,5" Grid.Row="0" Grid.ColumnSpan="2">
-            <Border.Background>
-                <SolidColorBrush Color="White" Opacity="0.9"/>
-            </Border.Background>
-            <ListBox x:Name="lbBlacklist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18"/>
-        </Border>
-        <Controls:BCA_ColorButton x:Name="btnRetire" Grid.Row="1" Height="Auto" ButtonText="Retirer" ButtonTextSize="22" MouseLeftButtonDown="btnRetire_MouseLeftButtonDown" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
-    </Grid>
+        Title="Blacklist" Height="510.907" Width="267.161" Icon="/hub-client;component/Assets/Icon/BCA.ico" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+    <Border CornerRadius="30" BorderThickness="2" BorderBrush="Black" Padding="10" Name="bg_border">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_tools.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.Row="0">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Border CornerRadius="15" Margin="10,5" Grid.Row="1" Grid.ColumnSpan="2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                </Border.Background>
+                <ListBox x:Name="lbBlacklist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18"/>
+            </Border>
+            <Controls:BCA_ColorButton x:Name="btnRetire" Grid.Row="2" Height="Auto" ButtonText="Retirer" ButtonTextSize="22" MouseLeftButtonDown="btnRetire_MouseLeftButtonDown" VerticalAlignment="Bottom" Margin="0,5"/>
+        </Grid>
+    </Border>
 </Window>

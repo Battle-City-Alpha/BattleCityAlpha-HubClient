@@ -42,6 +42,8 @@ namespace hub_client.Windows
 
             _admin.SendPanelUserlist();
             LoadStyle();
+
+            this.MouseDown += Window_MouseDown;
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
@@ -130,6 +132,33 @@ namespace hub_client.Windows
             _admin.UpdatePlayersList -= _admin_UpdatePlayersList;
             _admin.UpdateProfile -= _admin_UpdateProfile;
             tbUserlist.tbChat.TextChanged -= TbChat_TextChanged;
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(40, 0, 40, 20);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

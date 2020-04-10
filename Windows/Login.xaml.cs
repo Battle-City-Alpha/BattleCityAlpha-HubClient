@@ -35,8 +35,10 @@ namespace hub_client.Windows
 
             _admin.LoginComplete += _admin_LoginComplete;
             Loaded += Login_Loaded;
-        }
 
+            this.MouseDown += Login_MouseDown;
+        }
+        
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
@@ -63,7 +65,8 @@ namespace hub_client.Windows
                 pbPassword.Password = FormExecution.AppConfig.Password;
             }
 
-            webBrowserPatchNotes.Source = new Uri("https://battlecityalpha.xyz/BCA/MAJ/News.txt");
+            webview_patchnotes.Source = new Uri("https://battlecityalpha.xyz/BCA/MAJ/News.txt");
+
             LoadStyle();
         }
 
@@ -128,6 +131,33 @@ namespace hub_client.Windows
         private void BtnPasswordForgotten_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://battlecityalpha.xyz/passwordtools/resetpassword.php");
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(110, 40, 110, 40);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Login_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

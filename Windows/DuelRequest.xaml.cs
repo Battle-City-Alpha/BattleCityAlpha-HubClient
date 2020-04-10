@@ -29,6 +29,8 @@ namespace hub_client.Windows
 
             cb_dueltype.ItemsSource = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();
             _id = id;
+
+            this.MouseDown += Window_MouseDown;
         }
         private void LoadStyle()
         { 
@@ -94,6 +96,20 @@ namespace hub_client.Windows
                 tb_lpstartduel.Text = "16000";
             else
                 tb_lpstartduel.Text = "8000";
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

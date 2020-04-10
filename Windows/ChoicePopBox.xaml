@@ -5,28 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Information" Height="326.96" Width="437.291" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" >
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="178*"/>
-            <RowDefinition Height="51*"/>
-        </Grid.RowDefinitions>
-        <Border CornerRadius="5" Grid.Row="0" Margin="5">
-            <Border.Background>
-                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-            </Border.Background>
-            <TextBlock x:Name="popText" Margin="5"  FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
-        </Border>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0,5">
-            <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Height="Auto" Width="Auto" ButtonText="Accepter !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown" Margin="20,0"/>
-            <Controls:BCA_ColorButton x:Name="btnAgainst" Grid.Row="1" Height="Auto" Width="Auto" ButtonText="Refuser !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgainst_MouseLeftButtonDown" Margin="20,0"/>
-        </StackPanel>
-    </Grid>
+        Title="Battle City Alpha - Information" Height="326.96" Width="437.291" ResizeMode="NoResize" WindowStyle="None" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Background="{x:Null}">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10, 10, 120, 120">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="178*"/>
+                <RowDefinition Height="51*"/>
+            </Grid.RowDefinitions>
+            <Border CornerRadius="5" Grid.Row="0" Margin="20">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <TextBlock x:Name="popText" Margin="5"  FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0,5">
+                <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Height="Auto" Width="Auto" ButtonText="Accepter !" ButtonTextSize="22" HorizontalAlignment="Right" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown" Margin="10,0"/>
+                <Controls:BCA_ColorButton x:Name="btnAgainst" Grid.Row="1" Height="Auto" Width="Auto" ButtonText="Refuser !" ButtonTextSize="22" HorizontalAlignment="Left" VerticalAlignment="Center" MouseLeftButtonDown="btnAgainst_MouseLeftButtonDown" Margin="10,0"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

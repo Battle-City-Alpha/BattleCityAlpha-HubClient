@@ -7,7 +7,7 @@
         xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
         mc:Ignorable="d"
         Title="Bonus de connexion !" Height="450" Width="800"  AllowsTransparency="True" ResizeMode="NoResize" WindowStyle="None" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" Background="{x:Null}" Foreground="{x:Null}">
-    <Border CornerRadius="80, 0, 80, 0"  BorderThickness="2" BorderBrush="Black">
+    <Border CornerRadius="80, 0, 80, 80"  BorderThickness="2" BorderBrush="Black">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
                 <ImageBrush.ImageSource>
@@ -24,13 +24,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border CornerRadius="80, 0, 80, 0" Grid.Row="0" Grid.Column="0" Margin="10">
+            <Border CornerRadius="80, 0, 80, 80" Grid.Row="0" Grid.Column="0" Margin="10">
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>
                 <TextBlock x:Name="popText" Margin="5"  FontSize="16" Text="Blablabla" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
             </Border>
-            <Border CornerRadius="0, 80, 0, 80" Grid.Row="0" Grid.Column="1" Margin="10">
+            <Border CornerRadius="0, 80, 80, 80" Grid.Row="0" Grid.Column="1" Margin="10">
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>

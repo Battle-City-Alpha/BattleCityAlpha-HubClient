@@ -37,6 +37,7 @@ namespace hub_client.Windows
             _admin.RegistrationComplete += _admin_RegistrationComplete;
 
             this.FontFamily = FormExecution.AppDesignConfig.Font;
+            this.MouseDown += Window_MouseDown;
         }
 
         private void _admin_RegistrationComplete()
@@ -69,6 +70,20 @@ namespace hub_client.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
             _admin.RegistrationComplete -= _admin_RegistrationComplete;
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

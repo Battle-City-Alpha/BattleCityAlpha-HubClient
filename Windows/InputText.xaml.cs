@@ -27,6 +27,8 @@ namespace hub_client.Windows
             InitializeComponent();
 
             LoadStyle();
+
+            this.MouseDown += Window_MouseDown;
         }
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -47,6 +49,20 @@ namespace hub_client.Windows
             btnAgree.Update();
 
             this.FontFamily = style.Font;
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

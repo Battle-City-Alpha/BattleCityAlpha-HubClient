@@ -32,6 +32,7 @@ namespace hub_client.Windows
             InitializeComponent();
 
             this.Loaded += Tools_Loaded;
+            this.MouseDown += Window_MouseDown;
 
             _admin = admin;
         }
@@ -146,6 +147,33 @@ namespace hub_client.Windows
             }
 
             showroom_pics.Source = CreateImage(FormExecution.AssetsManager.GetSource("Background", cb_pics.SelectedItem.ToString()));
+        }
+
+        private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.bg_border.CornerRadius = new CornerRadius(0, 0, 100, 100);
+            }
+            else if (WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.bg_border.CornerRadius = new CornerRadius(0);
+            }
+        }
+        private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }
