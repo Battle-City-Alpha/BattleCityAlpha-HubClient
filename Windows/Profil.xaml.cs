@@ -60,6 +60,8 @@ namespace hub_client.Windows
             tb_tag.Text = infos.TagWin.ToString() + "|" + infos.TagLose.ToString() + "|" + infos.TagDraw.ToString();
             tb_ragequit.Text = infos.RageQuit.ToString();
             tb_giveup.Text = infos.GiveUp.ToString();
+
+            tb_title.Text = infos.Title;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -97,6 +99,11 @@ namespace hub_client.Windows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void tb_title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.OpenTitlesForm();
         }
     }
 }

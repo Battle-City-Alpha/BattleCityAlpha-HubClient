@@ -167,6 +167,7 @@
     <Compile Include="WindowsAdministrator\RegisterAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
     <Compile Include="Windows\Arena.xaml.cs">
@@ -270,6 +271,9 @@
     </Compile>
     <Compile Include="Windows\Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TitlesHandle.xaml.cs">
+      <DependentUpon>TitlesHandle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Tools.xaml.cs">
       <DependentUpon>Tools.xaml</DependentUpon>
@@ -402,6 +406,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TitlesHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

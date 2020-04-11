@@ -35,5 +35,11 @@ namespace hub_client.WindowsAdministrator
             AvatarsHandle form = new AvatarsHandle(Client.AvatarsHandleAdmin);
             form.Show();
         }
+        public void OpenTitlesForm()
+        {
+            Client.Send(PacketType.AskTitle, new StandardClientAskTitles());
+            TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin);
+            form.Show();
+        }
     }
 }

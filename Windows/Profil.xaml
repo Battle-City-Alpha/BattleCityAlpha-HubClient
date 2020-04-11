@@ -49,7 +49,10 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                             <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="10"/>
-                            <TextBlock x:Name="tb_title" Text="Titre du joueur" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="10"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Titre :" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="10"/>
+                                <TextBlock x:Name="tb_title" Text="????" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="10" Cursor="Hand" MouseLeftButtonDown="tb_title_MouseLeftButtonDown"/>
+                            </StackPanel>
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -61,11 +64,11 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="Cartes" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-                            <TextBlock x:Name="tb_cardnumber" Text="????" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-                            <TextBlock Text="Niveau"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock Text="ELO" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="Bold"/>
+                            <TextBlock x:Name="tb_elo" Text="????" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                            <TextBlock Text="Niveau"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" FontWeight="Bold"/>
                             <TextBlock x:Name="tb_level" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-                            <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
+                            <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" FontWeight="Bold"/>
                             <TextBlock x:Name="tb_experience" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
                         </Grid>
                     </Grid>
@@ -119,8 +122,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="ELO :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                            <TextBlock x:Name="tb_elo" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock Text="Cartes :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                            <TextBlock x:Name="tb_cardnumber" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                         </Grid>
                         <Grid Grid.Row="5">
                             <Grid.ColumnDefinitions>

@@ -80,8 +80,11 @@ namespace hub_client.Network
         public event Action TradeExit;
         public event Action TradeEnd;
         #endregion
-        #region ToolsForm Events
+        #region AvatarsHandleForm Events
         public event Action<int[]> LoadAvatars;
+        #endregion
+        #region TitlesHandleForm Events
+        public event Action<Dictionary<int, string>> LoadTitles;
         #endregion
         #region BrocanteForm Events
         public event Action<List<BrocanteCard>> LoadBrocante;
@@ -106,6 +109,7 @@ namespace hub_client.Network
         public SelectCardAdministrator SelectCardAdmin;
         public AvatarsHandleAdministrator AvatarsHandleAdmin;
         public DuelRequestAdministrator DuelRequestAdmin;
+        public TitlesHandleAdministrator TitlesHandleAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -136,6 +140,7 @@ namespace hub_client.Network
             SelectCardAdmin = new SelectCardAdministrator(this);
             AvatarsHandleAdmin = new AvatarsHandleAdministrator(this);
             DuelRequestAdmin = new DuelRequestAdministrator(this);
+            TitlesHandleAdmin = new TitlesHandleAdministrator(this);
         }
 
         private void InitManager()
@@ -323,6 +328,12 @@ namespace hub_client.Network
                 case PacketType.DuelResult:
                     OnDuelResult(JsonConvert.DeserializeObject<StandardServerDuelResult>(packet));
                     break;
+                case PacketType.GiveTitle:
+                    OnGetTitle(JsonConvert.DeserializeObject<StandardServerGetTitle>(packet));
+                    break;
+                case PacketType.AskTitle:
+                    OnLoadTitles(JsonConvert.DeserializeObject<StandardServerLoadTitles>(packet));
+                    break;
             }
         }
 
@@ -498,6 +509,9 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.AvatarNotOwned:
                     msg = "••• Tu ne possèdes pas cet avatar !";
+                    break;
+                case CommandErrorType.TitleNotOwned:
+                    msg = "••• Tu ne possèdes pas ce titre !";
                     break;
                 case CommandErrorType.CardNotOwned:
                     msg = "••• Tu ne possèdes pas cette carte !";
@@ -766,6 +780,17 @@ namespace hub_client.Network
         {
             Application.Current.Dispatcher.Invoke(() => LaunchDuelResultBox?.Invoke(packet.PointsGain, packet.ExpGain, packet.Win));
             logger.Trace("DUEL RESULT - BPs Gain : {0} | EXPs Gain : {1} | Win : {2}", packet.PointsGain, packet.ExpGain, packet.Win);
+        }
+
+        public void OnGetTitle(StandardServerGetTitle packet)
+        {
+            OpenPopBox("Vous avez reçu le titre : " + packet.Title + " de la part de " + packet.Player.Username, "Réception d'un titre");
+            logger.Trace("GET TITLE - From : {0} | Id : {1}", packet.Player.Username, packet.Title);
+        }
+        public void OnLoadTitles(StandardServerLoadTitles packet)
+        {
+            logger.Trace("LOAD TITLES - Ids : {0}", packet.Titles.Keys);
+            Application.Current.Dispatcher.Invoke(() => LoadTitles?.Invoke(packet.Titles));
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)
