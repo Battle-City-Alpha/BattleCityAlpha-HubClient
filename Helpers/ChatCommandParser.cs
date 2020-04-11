@@ -313,5 +313,30 @@ namespace hub_client.Helpers
                 Rank = (PlayerRank)rang
             };
         }
+
+        public StandardClientAskMaintenance AskMaintenance(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            int time = -1;
+            Int32.TryParse(args[0], out time);
+            if (time == -1)
+                return null;
+
+            string reason;
+            if (args.Length < 2)
+                reason = "Aucune.";
+            else
+                reason = txt.Substring(args[0].Length + 1);
+            return new StandardClientAskMaintenance
+            {
+                Reason = reason,
+                TimeEstimation = time
+            };
+        }
+        public StandardClientStopMaintenance StopMaintenance()
+        {
+            return new StandardClientStopMaintenance { };
+        }
     }
 }

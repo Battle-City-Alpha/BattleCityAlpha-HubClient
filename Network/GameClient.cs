@@ -334,6 +334,9 @@ namespace hub_client.Network
                 case PacketType.AskTitle:
                     OnLoadTitles(JsonConvert.DeserializeObject<StandardServerLoadTitles>(packet));
                     break;
+                case PacketType.Maintenance:
+                    OnMaintenance(JsonConvert.DeserializeObject<StandardServerMaintenance>(packet));
+                    break;
             }
         }
 
@@ -440,6 +443,9 @@ namespace hub_client.Network
                     case LoginFailReason.UserAlreadyConnected:
                         OpenPopBox("Quelqu'un est déja connecté sur votre compte.", "Problème");
                         break;
+                    case LoginFailReason.Maintenance:
+                        OpenPopBox("Une maintenance est en cours." + Environment.NewLine + "Raison: " + packet.MaintenanceReason + Environment.NewLine + "Temps estimé: " + packet.MaintenanceTimeEstimation.ToString() + "h.", "Maintenance");
+                        break;
                 }
             }
             else
@@ -541,13 +547,13 @@ namespace hub_client.Network
 
         public void OnKick(StandardServerKick packet)
         {
-            OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur");
+            OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur", true);
             logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnBan(StandardServerBan packet)
         {
-            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur");
+            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur", true);
             logger.Trace("BANNED - By : {0} | Time : {1} | Reason : {2}", packet.Banner, packet.Time, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
@@ -791,6 +797,13 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD TITLES - Ids : {0}", packet.Titles.Keys);
             Application.Current.Dispatcher.Invoke(() => LoadTitles?.Invoke(packet.Titles));
+        }
+
+        public void OnMaintenance(StandardServerMaintenance packet)
+        {
+            OpenPopBox("Une maintenance va démarrer, vous allez être kické du serveur." + Environment.NewLine + "Raison: " + packet.Reason + Environment.NewLine + "Temps estimé: " + packet.TimeEstimation.ToString() + "h.", "Maintenance", true);
+            logger.Trace("MAINTENANCE - Reason : {0} | Time Estimation : {1}", packet.Reason, packet.TimeEstimation);
+            Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)

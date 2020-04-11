@@ -190,6 +190,10 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.DisabledAccount, _cmdParser.DisabledAccount(txt.Substring(cmd.Length + 1)));
                         case "PROMOTE":
                             return new NetworkData(PacketType.Ranker, _cmdParser.Ranker(txt.Substring(cmd.Length + 1)));
+                        case "MAINTENANCE":
+                            return new NetworkData(PacketType.Maintenance, _cmdParser.AskMaintenance(txt.Substring(cmd.Length + 1)));
+                        case "MAINTENANCESTOP":
+                            return new NetworkData(PacketType.StopMaintenance, _cmdParser.StopMaintenance());
                         case "BLACKLIST":
                             Blacklist blacklist = new Blacklist(Client.BlacklistManager);
                             blacklist.Show();
