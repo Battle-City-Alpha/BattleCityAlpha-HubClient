@@ -59,6 +59,9 @@ namespace hub_client.Configuration
 
             GameColors.Add("Color1TradeButton", (Color)ColorConverter.ConvertFromString("#59ACFF"));
             GameColors.Add("Color2TradeButton", (Color)ColorConverter.ConvertFromString("#003D79"));
+
+            GameColors.Add("Color1SoloModeButton", (Color)ColorConverter.ConvertFromString("#FF321A1C"));
+            GameColors.Add("Color2SolodeModeButton", (Color)ColorConverter.ConvertFromString("#FF6C3737"));
         }
         public void UpdateResourcesDictionary()
         {

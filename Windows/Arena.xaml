@@ -72,15 +72,17 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="0" Margin="40,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Jouer (classé)" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
-                    <Controls:BCA_ColorButton x:Name="btn_host" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Héberger (non classé)" Grid.Column="1" Color1="#FFF40202" Color2="#FFC20505" MouseLeftButtonDown="Btn_host_MouseLeftButtonDown" VerticalAlignment="Center"/>
-                    <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="40,5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="5" Width="Auto" Height="Auto" ButtonText="Jouer (classé)" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_host" Margin="5" Width="Auto" Height="Auto" ButtonText="Héberger (non classé)" Grid.Column="1" Color1="#FFF40202" Color2="#FFC20505" MouseLeftButtonDown="Btn_host_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_IA" Margin="5" Width="Auto" Height="Auto" ButtonText="Mode Solo" Grid.Column="3" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center" MouseLeftButtonDown="btn_IA_MouseLeftButtonDown"/>
                 </Grid>
             </Grid>
         </Grid>

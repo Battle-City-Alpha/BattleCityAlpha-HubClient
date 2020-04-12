@@ -134,5 +134,10 @@ namespace hub_client.Windows
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
+
+        private void btn_IA_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenSoloModeWindow();
+        }
     }
 }

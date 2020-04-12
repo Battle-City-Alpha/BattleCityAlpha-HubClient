@@ -291,6 +291,13 @@ namespace hub_client
             DuelRequest request = new DuelRequest(Client.DuelRequestAdmin, id);
             request.Show();
         }
+        public static void OpenSoloModeWindow()
+        {
+            logger.Trace("Open Solo mode");
+
+            SoloMode sm = new SoloMode();
+            sm.Show();
+        }
 
         public static void RefreshChatStyle()
         {
