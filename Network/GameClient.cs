@@ -92,6 +92,9 @@ namespace hub_client.Network
         #region SelectCardForm Events
         public event Action<Dictionary<int, PlayerCard>> LoadSelectCard;
         #endregion
+        #region OfflineMessagesBox Events
+        public event Action<OfflineMessage[]> LoadOfflineMessages;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -336,6 +339,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.Maintenance:
                     OnMaintenance(JsonConvert.DeserializeObject<StandardServerMaintenance>(packet));
+                    break;
+                case PacketType.OfflineMessages:
+                    OnOfflineMessages(JsonConvert.DeserializeObject<StandardServerOfflineMessages>(packet));
                     break;
             }
         }
@@ -804,6 +810,12 @@ namespace hub_client.Network
             OpenPopBox("Une maintenance va démarrer, vous allez être kické du serveur." + Environment.NewLine + "Raison: " + packet.Reason + Environment.NewLine + "Temps estimé: " + packet.TimeEstimation.ToString() + "h.", "Maintenance", true);
             logger.Trace("MAINTENANCE - Reason : {0} | Time Estimation : {1}", packet.Reason, packet.TimeEstimation);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
+        }
+
+        public void OnOfflineMessages(StandardServerOfflineMessages packet)
+        {
+            logger.Trace("LOAD OFFLINE MESSAGES - Messages : {0}", packet.Messages);
+            Application.Current.Dispatcher.Invoke(() => LoadOfflineMessages?.Invoke(packet.Messages));
         }
 
         public string ParseUsername(string username, PlayerRank rank, bool isVip)

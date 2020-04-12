@@ -1,0 +1,76 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.OfflineMessagesBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="OfflineMessages" Height="399.6" Width="779.2" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize" WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="10, 10, 10, 200" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_offlinemessages.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="40" Padding="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,60,0">
+                    <Border.Background>
+                        <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                    </Border.Background>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Image x:Name="img_up"  Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png" Width="75" MouseLeftButtonDown="img_up_MouseLeftButtonDown">
+                            <Image.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </Image.LayoutTransform>
+                        </Image>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                            <TextBlock x:Name="currentMessage" Margin="5"  FontSize="18" Text="???" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                            <TextBlock Margin="5"  FontSize="18" Text="/" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                            <TextBlock x:Name="totalMessages" Margin="5"  FontSize="18" Text="???" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </StackPanel>
+                        <Image x:Name="img_down" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png" Width="75" MouseLeftButtonDown="img_down_MouseLeftButtonDown">
+                            <Image.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </Image.LayoutTransform>
+                        </Image>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="6*"/>
+                    </Grid.RowDefinitions>
+                    <Border CornerRadius="20" BorderThickness="1" BorderBrush="Black" Padding="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,5">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                        </Border.Background>
+                        <TextBlock Margin="5" x:Name="boxTitle" FontSize="18" Text="Message(s) reçu(s) hors ligne" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                    </Border>
+                    <Controls:BCA_Chat x:Name="rtb_inbox" Grid.Row="1" Margin="10,5"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

@@ -142,7 +142,7 @@ namespace hub_client.Windows
             if (WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Normal;
-                this.bg_border.CornerRadius = new CornerRadius(110, 40, 110, 40);
+                this.bg_border.CornerRadius = new CornerRadius(110, 0, 110, 40);
             }
             else if (WindowState == WindowState.Normal)
             {

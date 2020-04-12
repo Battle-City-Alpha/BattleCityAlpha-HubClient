@@ -102,6 +102,7 @@ namespace hub_client
             Client.CloseBrocante += Client_CloseBrocante;
             Client.LaunchBonusBox += Client_LaunchBonusBox;
             Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
+            Client.LoadOfflineMessages += Client_LoadOfflineMessages;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -110,6 +111,13 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LoadOfflineMessages(OfflineMessage[] messages)
+        {
+            OfflineMessagesBox box = new OfflineMessagesBox();
+            box.LoadMessages(messages);
+            box.ShowDialog();
         }
 
         private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
