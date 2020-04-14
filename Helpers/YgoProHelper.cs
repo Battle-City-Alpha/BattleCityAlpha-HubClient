@@ -20,9 +20,9 @@ namespace hub_client.Helpers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 9999, true, "https://puu.sh/FxnII/10f3a11e50.png");
-        private static Customization _bot_border = new Customization(CustomizationType.Border, 5, true, "https://cdn.discordapp.com/attachments/435545676328468500/699629018248511538/Test8.png");
-        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, true, "https://puu.sh/Fxzry/1f84fc22a6.jpg");
+        private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 9999, false, "");
+        private static Customization _bot_border = new Customization(CustomizationType.Border, 5, false, "");
+        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, false, "");
         private static string _deck = "";
         private static bool _botGame = false;
         private const int _defaultPort = 1111;
@@ -95,7 +95,7 @@ namespace hub_client.Helpers
 
             Customization[] avatars = new Customization[2] { new Customization(CustomizationType.Avatar, 5000, true, "https://puu.sh/FxnII/10f3a11e50.png"), _bot_avatar };
             UpdateAvatar(avatars);
-            Customization[] borders = new Customization[2] { new Customization(CustomizationType.Border, 1, true, "https://cdn.discordapp.com/attachments/435545676328468500/699413524245381130/Test3.png"), _bot_border };
+            Customization[] borders = new Customization[2] { new Customization(CustomizationType.Border, 1, false, ""), _bot_border };
             UpdateBorders(borders);
             Customization[] sleeves = new Customization[2] { _bot_sleeve, _bot_sleeve };
             UpdateSleeves(sleeves);
@@ -123,7 +123,7 @@ namespace hub_client.Helpers
                     {
                         wc.DownloadFileAsync(
                             new System.Uri(avatar.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i.ToString() + ".png")
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
                             );
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
                     }
@@ -143,7 +143,7 @@ namespace hub_client.Helpers
                     {
                         wc.DownloadFileAsync(
                             new System.Uri(border.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + index.ToString() + ".png")
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
                             );
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
                     }
@@ -163,7 +163,7 @@ namespace hub_client.Helpers
                     {
                         wc.DownloadFileAsync(
                             new System.Uri(sleeve.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i.ToString() + ".jpg")
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".jpg")
                             );
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
                     }
