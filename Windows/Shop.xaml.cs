@@ -291,7 +291,7 @@ namespace hub_client.Windows
         {
             int numberPacket = Convert.ToInt32(tb_numberpack.Text);
             _admin.Purchase(BoosterChoosen.PurchaseTag, numberPacket );
-            FormExecution.OpenPurchase(BoosterChoosen.Name);
+            FormExecution.OpenPurchase(BoosterChoosen);
         }
         private void btn_searchcard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

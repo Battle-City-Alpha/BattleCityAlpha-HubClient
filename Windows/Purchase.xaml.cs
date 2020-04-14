@@ -1,9 +1,11 @@
 ﻿using hub_client.Cards;
+using hub_client.Enums;
 using hub_client.Helpers;
 using hub_client.Stuff;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +28,9 @@ namespace hub_client.Windows
         PurchaseAdministrator _admin;
         CardInfos[] cards;
         ToolTip tip = new ToolTip();
+        private BoosterInfo _infos;
 
-        public Purchase(PurchaseAdministrator admin)
+        public Purchase(PurchaseAdministrator admin, BoosterInfo infos)
         {
             InitializeComponent();
             _admin = admin;
@@ -35,6 +38,8 @@ namespace hub_client.Windows
 
             this.FontFamily = FormExecution.AppDesignConfig.Font;
             this.MouseDown += Window_MouseDown;
+
+            _infos = infos;
         }
 
         public void UpdateCards(int[] list)
@@ -48,11 +53,50 @@ namespace hub_client.Windows
                     infos.Name = "Carte inconnue. Id : " + list[i].ToString();
                 lb_cards.Items.Add(infos.Name);
             }
+
+            lb_cards.Items.SortDescriptions.Add(
+            new System.ComponentModel.SortDescription("",
+            System.ComponentModel.ListSortDirection.Ascending));
+        }
+
+        private void SaveDeck(bool isStructureOrStartingDeck)
+        {
+            List<int> main = new List<int>();
+            List<int> extra = new List<int>();
+
+            foreach (CardInfos card in cards)
+            {
+                if (card.GetCardTypes().Contains(CardType.Synchro) || card.GetCardTypes().Contains(CardType.Xyz) || card.GetCardTypes().Contains(CardType.Fusion) || card.GetCardTypes().Contains(CardType.Link))
+                {
+                    if (!extra.Contains(card.Id))
+                        extra.Add(card.Id);
+                }
+                else
+                {
+                    if (!main.Contains(card.Id))
+                        main.Add(card.Id);
+                }
+            }
+
+            string deck = "#created by purchase " + _infos.PurchaseTag;
+            deck += Environment.NewLine + "#main";
+            foreach (int id in main)
+                deck += Environment.NewLine + id.ToString();
+            deck += Environment.NewLine + "#extra";
+            foreach (int id in extra)
+                deck += Environment.NewLine + id.ToString();
+            deck += Environment.NewLine + "!side";
+
+            if (isStructureOrStartingDeck)
+                File.WriteAllText(System.IO.Path.Combine(FormExecution.path, "BattleCityAlpha", "deck", _infos.Name + ".ydk"), deck);
+            else
+                File.WriteAllText(System.IO.Path.Combine(FormExecution.path, "BattleCityAlpha", "deck", "new_cards.ydk"), deck);
         }
 
         private void _admin_PurchaseItem(int[] list)
         {
             UpdateCards(list);
+            SaveDeck((_infos.Type == PurchaseType.Demarrage || _infos.Type == PurchaseType.Structure));
         }
 
         private void lb_cards_SelectionChanged(object sender, SelectionChangedEventArgs e)

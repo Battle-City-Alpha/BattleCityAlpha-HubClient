@@ -3,8 +3,10 @@ using BCA.Common.Enums;
 using hub_client.Assets;
 using hub_client.Cards;
 using hub_client.Configuration;
+using hub_client.Enums;
 using hub_client.Helpers;
 using hub_client.Network;
+using hub_client.Stuff;
 using hub_client.Windows;
 using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
@@ -132,7 +134,7 @@ namespace hub_client
             box.ShowDialog();
             if (type == BonusType.Booster)
             {
-                OpenPurchase(gift);
+                OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster});
                 _purchase.UpdateCards(cards);
             }
         }
@@ -261,11 +263,11 @@ namespace hub_client
             _shop = new Shop(Client.ShopAdmin);
             _shop.Show();
         }
-        public static void OpenPurchase(string title)
+        public static void OpenPurchase(BoosterInfo booster)
         {
             logger.Trace("Open Purchase");
-            _purchase = new Purchase(Client.PurchaseAdmin);
-            _purchase.Title = title;
+            _purchase = new Purchase(Client.PurchaseAdmin, booster);
+            _purchase.Title = booster.Name;
             _purchase.Show();
         }
         public static void OpenTools()

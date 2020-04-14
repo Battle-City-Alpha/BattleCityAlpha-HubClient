@@ -21,14 +21,6 @@ namespace hub_client.WindowsAdministrator
 
         private void Client_PurchaseItem(int[] cards)
         {
-            string path = Path.Combine(FormExecution.path, "BattleCityAlpha", "deck", "new_cards.ydk");
-            if (File.Exists(path))
-                File.Delete(path);
-            string file = "#New Cards";
-            foreach (int id in cards)
-                file += Environment.NewLine + id.ToString();
-            File.WriteAllText(path, file);
-
             PurchaseItem?.Invoke(cards);
         }
     }
