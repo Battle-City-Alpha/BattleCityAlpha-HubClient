@@ -21,12 +21,16 @@ namespace hub_client.Helpers
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 9999, false, "");
+        private static Customization _bot_border = new Customization(CustomizationType.Border, 5, false, "");
+        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, false, "");
         private static string _deck = "";
         private static bool _botGame = false;
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
 
         private static int[] _avatarsLoaded;
+        private static int[] _bordersLoaded;
+        private static int[] _sleevesLoaded;
 
         private static string _commandline = "";
 
@@ -60,56 +64,6 @@ namespace hub_client.Helpers
             Game.StartInfo.Arguments = commandline;
             Game.Start();
         }
-
-        public static void LaunchGame(Room room, string commandline)
-        {
-            _commandline = commandline;
-            SetCustomization(room);
-        }
-        public static void LaunchGameAgainstBot(string deck)
-        {
-            _deck = deck;
-            _botGame = true;
-            Customization[] avatars = new Customization[2] { new Customization(CustomizationType.Avatar, 5000, true, "https://puu.sh/FxnII/10f3a11e50.png"), _bot_avatar };
-            UpdateAvatar(avatars);
-        }
-
-        private static void SetCustomization(Room room)
-        {
-            UpdateAvatar(room.Avatars);
-        }
-        private static void UpdateAvatar(Customization[] avatars)
-        {
-            _avatarsLoaded = new int[2] { 0, avatars.Count() };
-            for(int i = 0; i < avatars.Count(); i++)
-            {
-                Customization avatar = avatars[i];
-                if (!avatar.IsHost)
-                    CopyAvatarToTexturesFolder(avatar, i);
-                else
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFile(
-                            new System.Uri(avatar.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
-                            );
-                    }
-                    CopyAvatarToTexturesFolder(avatar, i);
-                }
-            }
-        }
-
-        private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
-        {
-            if (avatar.IsHost)
-                File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "Avatars", "a_" + index.ToString() + ".png"), true);
-            else
-                File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "Avatars", "a_" + index.ToString() + ".png"), true);
-            _avatarsLoaded[0]++;
-            CheckIfAvatarsLoaded();
-        }
-
         private static void LaunchWindbot(string deck, string host = _defaultHost, int port = _defaultPort, int version = 0x1340, string dialog = "fr-FR", string name = "Kaibot")
         {
             string info = String.Format("Name={0}  Deck={1} Dialog={2} Host={3} Port={4} Version={5}", name, deck, dialog, host, port, version);
@@ -125,9 +79,160 @@ namespace hub_client.Helpers
             p.Start();
         }
 
-        private static void CheckIfAvatarsLoaded()
+        public static void LaunchGame(Room room, string commandline)
         {
-            if (_avatarsLoaded[0] != _avatarsLoaded[1])
+            _commandline = commandline;
+            SetCustomization(room);
+        }
+        public static void LaunchGameAgainstBot(string deck)
+        {
+            _deck = deck;
+            _botGame = true;
+
+            _avatarsLoaded = new int[2] { 0, 2 };
+            _bordersLoaded = new int[2] { 0, 2 };
+            _sleevesLoaded = new int[2] { 0, 2 };
+
+            Customization[] avatars = new Customization[2] { new Customization(CustomizationType.Avatar, 5000, true, "https://puu.sh/FxnII/10f3a11e50.png"), _bot_avatar };
+            UpdateAvatar(avatars);
+            Customization[] borders = new Customization[2] { new Customization(CustomizationType.Border, 1, false, ""), _bot_border };
+            UpdateBorders(borders);
+            Customization[] sleeves = new Customization[2] { _bot_sleeve, _bot_sleeve };
+            UpdateSleeves(sleeves);
+        }
+
+        private static void SetCustomization(Room room)
+        {
+            _avatarsLoaded = new int[2] { 0, room.Avatars.Count() };
+            _bordersLoaded = new int[2] { 0, room.Borders.Count() };
+            _sleevesLoaded = new int[2] { 0, room.Sleeves.Count() };
+            UpdateAvatar(room.Avatars);
+            UpdateBorders(room.Borders);
+            UpdateSleeves(room.Sleeves);
+        }
+        private static void UpdateAvatar(Customization[] avatars)
+        {
+            for(int i = 0; i < avatars.Count(); i++)
+            {
+                Customization avatar = avatars[i];
+                if (!avatar.IsHost)
+                    CopyAvatarToTexturesFolder(avatar, i);
+                else
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
+                        wc.DownloadFileAsync(
+                            new System.Uri(avatar.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Avatars", "temp_" + i.ToString() + ".png")
+                            );
+                    }
+                    CopyAvatarToTexturesFolder(avatar, i);
+                }
+            }
+        }
+        private static void UpdateBorders(Customization[] borders)
+        {
+            for (int i = 0; i < borders.Count(); i++)
+            {
+                Customization border = borders[i];
+                if (!border.IsHost)
+                    CopyBorderToTexturesFolder(border, i);
+                else
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
+                        wc.DownloadFileAsync(
+                            new System.Uri(border.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Borders", "temp_" + i.ToString() + ".png")
+                            );
+                    }
+                    CopyBorderToTexturesFolder(border, i);
+                }
+            }
+        }
+        private static void UpdateSleeves(Customization[] sleeves)
+        {
+            for (int i = 0; i < sleeves.Count(); i++)
+            {
+                Customization sleeve = sleeves[i];
+                if (!sleeve.IsHost)
+                    CopySleeveToTexturesFolder(sleeve, i);
+                else
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender,e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
+                        wc.DownloadFileAsync(
+                            new System.Uri(sleeve.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp_" + i.ToString() + ".jpg")
+                            );
+                    }
+                }
+            }
+        }
+
+        private static void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization customitem, int i)
+        {
+            switch(customitem.CustomizationType)
+            {
+                case CustomizationType.Avatar:
+                    CopyAvatarToTexturesFolder(customitem, i);
+                    break;
+                case CustomizationType.Border:
+                    CopyBorderToTexturesFolder(customitem, i);
+                    break;
+                case CustomizationType.Sleeve:
+                    CopySleeveToTexturesFolder(customitem, i);
+                    break;
+            }
+        }
+
+        private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
+        {
+            if (avatar.IsHost)
+            {
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp_" + index.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + index.ToString() + ".png"), true);
+                File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp_" + index.ToString() + ".png"));
+            }
+            else
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + index.ToString() + ".png"), true);
+            _avatarsLoaded[0]++;
+            CheckIfTexturesAreLoaded();
+        }
+        private static void CopyBorderToTexturesFolder(Customization border, int index)
+        {
+            if (border.IsHost)
+            {
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Borders", "temp_" + index.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + index.ToString() + ".png"), true);
+                File.Delete(Path.Combine(FormExecution.path, "Assets", "Borders", "temp_" + index.ToString() + ".png"));
+            }
+            else
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Borders", border.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + index.ToString() + ".png"), true);
+
+            if (index % 2 != 0)
+                ScaleBorder(index);
+
+            _bordersLoaded[0]++;
+            CheckIfTexturesAreLoaded();
+        }
+        private static void CopySleeveToTexturesFolder(Customization sleeve, int index)
+        {
+            if (sleeve.IsHost)
+            {
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp_" + index.ToString() + ".jpg"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".jpg"), true);
+                File.Delete(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp_" + index.ToString() + ".jpg"));
+            }
+            else
+                File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id.ToString() + ".jpg"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".jpg"), true);
+            _sleevesLoaded[0]++;
+            CheckIfTexturesAreLoaded();
+        }
+
+        private static void CheckIfTexturesAreLoaded()
+        {
+            if ((_avatarsLoaded[0] != _avatarsLoaded[1]) || (_bordersLoaded[0] != _bordersLoaded[1]) || (_sleevesLoaded[0] != _sleevesLoaded[1]))
                 return;
 
             if (_botGame)
