@@ -1,10 +1,13 @@
-﻿using hub_client.Assets;
+﻿using BCA.Common;
+using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +17,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -27,6 +29,7 @@ namespace hub_client.Windows
         AssetsManager PicsManager = new AssetsManager();
 
         private AvatarsHandleAdministrator _admin;
+        private Customization[] _avatars;
 
         public AvatarsHandle(AvatarsHandleAdministrator admin)
         {
@@ -55,15 +58,39 @@ namespace hub_client.Windows
             }
         }
 
-        private void _admin_LoadAvatars(int[] avatars)
+        private void _admin_LoadAvatars(Customization[] avatars)
         {
-            control_avatar.cb_avatar.ItemsSource = avatars;
+            _avatars = avatars;
+            control_avatar.cb_avatar.Items.Clear();
+            foreach (Customization avatar in avatars)
+                control_avatar.cb_avatar.Items.Add(avatar.Id);
         }
 
         private void cb_avatar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int avatarId = Convert.ToInt32(control_avatar.cb_avatar.SelectedItem);
-            control_avatar.AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
+            int index = control_avatar.cb_avatar.SelectedIndex;
+            Customization avatar = _avatars[index];
+            if (!avatar.IsHost)
+            {
+                int avatarId = Convert.ToInt32(control_avatar.cb_avatar.SelectedItem);
+                control_avatar.AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
+            }
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
+                    wc.DownloadFileAsync(
+                        new System.Uri(avatar.URL),
+                        Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
+                        );
+                }
+            }
+        }
+
+        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            control_avatar.AvatarImg.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")));
         }
 
         private void btn_save_avatar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

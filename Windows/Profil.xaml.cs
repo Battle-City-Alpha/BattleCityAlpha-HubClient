@@ -5,8 +5,11 @@ using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +18,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -43,7 +45,20 @@ namespace hub_client.Windows
 
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
         {
-            AvatarImg.Source = PicsManager.GetImage("Avatars", infos.AvatarId.ToString("D2"));
+            if (!infos.Avatar.IsHost)
+                AvatarImg.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString("D2"));
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
+                    wc.DownloadFileAsync(
+                        new System.Uri(infos.Avatar.URL),
+                        Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
+                        );
+                }
+            }
+
             tb_username.Text = infos.Username;
             tb_cardnumber.Text = infos.CardNumber.ToString();
             tb_level.Text = infos.Level.ToString();
@@ -62,6 +77,13 @@ namespace hub_client.Windows
             tb_giveup.Text = infos.GiveUp.ToString();
 
             tb_title.Text = infos.Title;
+
+            this.Show();
+        }
+
+        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            AvatarImg.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")));
         }
 
         private void Window_Closed(object sender, EventArgs e)

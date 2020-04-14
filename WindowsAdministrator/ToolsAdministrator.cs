@@ -1,4 +1,5 @@
-﻿using hub_client.Network;
+﻿using BCA.Common;
+using hub_client.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
-        public event Action<int[]> LoadAvatars;
+        public event Action<Customization[]> LoadAvatars;
 
         public ToolsAdministrator(GameClient client)
         {
@@ -20,7 +21,7 @@ namespace hub_client.WindowsAdministrator
             Client.LoadAvatars += Client_LoadAvatars;
         }
 
-        private void Client_LoadAvatars(int[] avatars)
+        private void Client_LoadAvatars(Customization[] avatars)
         {
             LoadAvatars?.Invoke(avatars);
         }

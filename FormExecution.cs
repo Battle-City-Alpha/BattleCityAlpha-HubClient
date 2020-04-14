@@ -100,6 +100,7 @@ namespace hub_client
             Client.Shutdown += Client_Shutdown;
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
             Client.LaunchYGOPro += Client_LaunchYGOPro;
+            Client.LaunchYGOProWithoutRoom += Client_LaunchYGOProWithoutRoom;
             Client.LaunchTrade += Client_LaunchTrade;
             Client.CloseBrocante += Client_CloseBrocante;
             Client.LaunchBonusBox += Client_LaunchBonusBox;
@@ -113,6 +114,11 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LaunchYGOProWithoutRoom(string arg)
+        {
+            YgoProHelper.LaunchYgoPro(arg);
         }
 
         private static void Client_LoadOfflineMessages(OfflineMessage[] messages)
@@ -161,13 +167,9 @@ namespace hub_client
             box.ShowDialog();
         }
 
-        public static void Client_LaunchYGOPro(string arg)
+        public static void Client_LaunchYGOPro(Room room, string arg)
         {
-            Process Game = new Process();
-            Game.StartInfo.FileName = Path.Combine(FormExecution.path, "BattleCityAlpha", "BCA.exe");
-            Game.StartInfo.WorkingDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha");
-            Game.StartInfo.Arguments = arg;
-            Game.Start();
+            YgoProHelper.LaunchGame(room, arg);
         }
 
         private static void Client_PrivateMessageReceived(PlayerInfo user, string message)

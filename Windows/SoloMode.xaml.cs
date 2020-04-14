@@ -1,4 +1,7 @@
-﻿using hub_client.Configuration;
+﻿using BCA.Common;
+using BCA.Common.Enums;
+using hub_client.Configuration;
+using hub_client.Helpers;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -26,8 +29,6 @@ namespace hub_client.Windows
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
-        private const int _defaultPort = 1111;
-        private const string _defaultHost = "127.0.0.1";
         public SoloMode()
         {
             InitializeComponent();
@@ -88,24 +89,7 @@ namespace hub_client.Windows
 
         private void btn_duel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FormExecution.Client_LaunchYGOPro(String.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
-            Thread.Sleep(1000);
-            LaunchWindbot(cb_AI_decks.SelectedIndex == 0 ? "" : cb_AI_decks.Text);
-        }
-
-        private void LaunchWindbot(string deck, string host = _defaultHost, int port = _defaultPort, int version = 0x1340, string dialog = "fr-FR", string name = "Kaibot")
-        {
-            string info = String.Format("Name={0}  Deck={1} Dialog={2} Host={3} Port={4} Version={5}", name, deck, dialog, host, port, version);
-            
-            logger.Trace("Windbot start with : " + info);
-
-            Process p = new Process();
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.FileName = Path.Combine(FormExecution.path, "BattleCityAlpha", "Kaibot", "WindBot.exe");
-            p.StartInfo.WorkingDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "Kaibot");
-            p.StartInfo.Arguments = info;
-            p.Start();
+            YgoProHelper.LaunchGameAgainstBot(cb_AI_decks.SelectedIndex == 0 ? "" : cb_AI_decks.Text);
         }
     }
 }

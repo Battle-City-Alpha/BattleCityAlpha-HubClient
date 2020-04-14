@@ -150,6 +150,7 @@
     <Compile Include="Helpers\HardwareIdManager.cs" />
     <Compile Include="Helpers\PlayerManager.cs" />
     <Compile Include="Helpers\RoomManager.cs" />
+    <Compile Include="Helpers\YgoProHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Network\NetworkData.cs" />
     <Compile Include="Stuff\BoosterInfo.cs" />
@@ -546,7 +547,7 @@
     <None Include="Assets\Logo\CoinPP.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Avatars\00.png">
+    <None Include="Assets\Avatars\01.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Duel\duel_result.png">
@@ -580,6 +581,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_solomode.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Avatars\02.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Avatars\03.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Avatars\04.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Avatars\9999.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

@@ -30,7 +30,8 @@ namespace hub_client.Network
 
         public event Action<string, string, bool> PopMessageBox;
         public event Action<PlayerInfo, RoomConfig, bool> ChoicePopBox;
-        public event Action<string> LaunchYGOPro;
+        public event Action<Room, string> LaunchYGOPro;
+        public event Action<string> LaunchYGOProWithoutRoom;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
         public event Action<int, int, bool> LaunchDuelResultBox;
@@ -81,7 +82,7 @@ namespace hub_client.Network
         public event Action TradeEnd;
         #endregion
         #region AvatarsHandleForm Events
-        public event Action<int[]> LoadAvatars;
+        public event Action<Customization[]> LoadAvatars;
         #endregion
         #region TitlesHandleForm Events
         public event Action<Dictionary<int, string>> LoadTitles;
@@ -600,7 +601,7 @@ namespace hub_client.Network
                     arg = "-j";
                     break;
             }
-            LaunchYGOPro?.Invoke(arg);
+            LaunchYGOProWithoutRoom?.Invoke(arg);
             logger.Trace("UPDATE COLLECTION -  Collection : {0} | Reason : {1}", packet.Collection, packet.Reason);
         }
 
@@ -754,7 +755,7 @@ namespace hub_client.Network
         {
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
 
-            LaunchYGOPro?.Invoke(arg);
+            LaunchYGOPro?.Invoke(packet.Room, arg);
 
             logger.Trace("DUEL START - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
@@ -762,7 +763,7 @@ namespace hub_client.Network
         {
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
 
-            LaunchYGOPro?.Invoke(arg);
+            LaunchYGOPro?.Invoke(packet.Room, arg);
 
             logger.Trace("DUEL SPECTATE - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }

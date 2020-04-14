@@ -180,7 +180,7 @@ namespace hub_client.Windows
 
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FormExecution.Client_LaunchYGOPro("-r");
+            YgoProHelper.LaunchYgoPro("-r");
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -206,7 +206,6 @@ namespace hub_client.Windows
         private void btnProfil_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Profil profil = new Profil(_admin.Client.ProfilAdmin);
-            profil.Show();
             _admin.SendProfileAsking();
         }
 
