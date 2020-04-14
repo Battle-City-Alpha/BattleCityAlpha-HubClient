@@ -107,6 +107,7 @@ namespace hub_client.Helpers
             else
                 File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "Avatars", "a_" + index.ToString() + ".png"), true);
             _avatarsLoaded[0]++;
+            CheckIfAvatarsLoaded();
         }
 
         private static void LaunchWindbot(string deck, string host = _defaultHost, int port = _defaultPort, int version = 0x1340, string dialog = "fr-FR", string name = "Kaibot")
