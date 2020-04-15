@@ -5,6 +5,7 @@ using BCA.Network.Packets;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
@@ -29,9 +30,10 @@ namespace hub_client.Network
         private string _username;
 
         public event Action<string, string, bool> PopMessageBox;
-        public event Action<PlayerInfo, RoomConfig, bool> ChoicePopBox;
+        public event Action<PlayerInfo, RoomConfig, bool, string> ChoicePopBox;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
+        public event Action<Customization, Customization, Customization, int> LoadPlayerCustomizations;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
         public event Action<int, int, bool> LaunchDuelResultBox;
@@ -345,6 +347,9 @@ namespace hub_client.Network
                 case PacketType.OfflineMessages:
                     OnOfflineMessages(JsonConvert.DeserializeObject<StandardServerOfflineMessages>(packet));
                     break;
+                case PacketType.LoadPlayerCustomization:
+                    OnLoadPlayerCustomizationTextures(JsonConvert.DeserializeObject<StandardServerLoadPlayerCustomizationTextures>(packet));
+                    break;
             }
         }
 
@@ -538,10 +543,13 @@ namespace hub_client.Network
                     msg = "••• La quantité doit être strictement positif.";
                     break;
                 case CommandErrorType.AlreadyInDuel:
-                    msg = "••• Vous êtes déja en duel.";
+                    msg = "Vous êtes déja en duel.";
                     break;
                 case CommandErrorType.PlayerNotInDuel:
                     msg = "••• Ce joueur n'est actuellement pas en duel.";
+                    break;
+                case CommandErrorType.InvalidRoomPass:
+                    msg = "Le mot de passe que tu as entré n'est pas le bon !";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -674,7 +682,7 @@ namespace hub_client.Network
             if (FormExecution.ClientConfig.Trade)
                 return;
 
-            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), true));
+            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), true, ""));
             logger.Trace("Trade REQUEST - From {0}", packet.Player.Username);
         }
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
@@ -756,6 +764,7 @@ namespace hub_client.Network
         public void OnDuelStart(StandardServerDuelStart packet)
         {
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
+            YgoproConfig.UpdateNickname(FormExecution.Username);
 
             LaunchYGOPro?.Invoke(packet.Room, arg);
 
@@ -764,6 +773,7 @@ namespace hub_client.Network
         public void OnDuelSpectate(StandardServerDuelSpectate packet)
         {
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
+            YgoproConfig.UpdateNickname(FormExecution.Username);
 
             LaunchYGOPro?.Invoke(packet.Room, arg);
 
@@ -777,12 +787,18 @@ namespace hub_client.Network
             if (FormExecution.ClientConfig.Request)
                 return;
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
-            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, false));
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, false, packet.RoomPass));
         }
         public void OnUpdateRoom(StandardServerUpdateRoom packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room, packet.Remove));
             logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
+        }
+
+        public void OnLoadPlayerCustomizationTextures(StandardServerLoadPlayerCustomizationTextures packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => LoadPlayerCustomizations?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Pos));
+            logger.Trace("LOAD PLAYER CUSTOMIZATION TEXTURES");
         }
 
         public void OnGetBonus(StandardServerGetBonus packet)

@@ -30,12 +30,13 @@ namespace hub_client.WindowsAdministrator
             UpdateRoom?.Invoke(obj, remove);
         }
 
-        public void SendJoinRoom(int id, RoomType type)
+        public void SendJoinRoom(int id, RoomType type, string pass)
         {
             Client.Send(PacketType.DuelJoin, new StandardClientDuelJoin
             {
                 Id = id,
-                RoomType = type
+                RoomType = type,
+                RoomPass = pass
             });
 
             logger.Trace("Try join duel - " + id.ToString());

@@ -22,7 +22,7 @@ namespace hub_client.WindowsAdministrator
             Client = client;
         }
 
-        public void SendRequest(int id, RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp)
+        public void SendRequest(int id, string password, RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp, int masterrules)
         {
             Client.Send(PacketType.DuelRequest, new StandardClientDuelRequest
             {
@@ -33,11 +33,13 @@ namespace hub_client.WindowsAdministrator
                     Banlist = banlist,
                     Rules = rules,
                     CardByHand = cardsbyhand,
-                    StartDuelLP = startduellp
-                }
+                    StartDuelLP = startduellp,
+                    MasterRules = masterrules
+                },
+                RoomPass = password
             });
         }
-        public void SendHost(RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp)
+        public void SendHost(RoomType roomtype, string password, int banlist, RoomRules rules, int cardsbyhand, int startduellp, int masterrules)
         {
             Client.Send(PacketType.DuelHost, new StandardClientDuelHost
             {
@@ -47,8 +49,10 @@ namespace hub_client.WindowsAdministrator
                     Banlist = banlist,
                     Rules = rules,
                     CardByHand = cardsbyhand,
-                    StartDuelLP = startduellp
-                }
+                    StartDuelLP = startduellp,
+                    MasterRules = masterrules
+                },
+                RoomPass = password
             });
         }
     }

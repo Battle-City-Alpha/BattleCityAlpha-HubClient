@@ -410,7 +410,6 @@ namespace hub_client.Windows
             {
                 ChatColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + infos.ChatColorString)),
                 ELO = infos.ELO,
-                CurrentRoom = infos.CurrentRoom,
                 Level = infos.Level,
                 Rank = infos.Rank,
                 ChatColorString = infos.ChatColorString,

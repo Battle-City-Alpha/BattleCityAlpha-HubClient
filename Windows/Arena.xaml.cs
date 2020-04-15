@@ -48,7 +48,21 @@ namespace hub_client.Windows
         {
             RoomItem room = ((ListBox)sender).SelectedItem as RoomItem;
             if (room != null)
-                _admin.SendJoinRoom(room.Id, room.Type);
+            {
+                if (!room.NeedPassword)
+                    _admin.SendJoinRoom(room.Id, room.Type, "");
+                else {
+                    InputText form = new InputText();
+                    form.Title = "Mot de passe";
+                    form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);
+                    form.ShowDialog();
+                }
+            }
+        }
+
+        private void RoomPassInput_SelectedText(string pass, RoomItem room)
+        {
+            _admin.SendJoinRoom(room.Id, room.Type, pass);
         }
 
         private void LoadStyle()

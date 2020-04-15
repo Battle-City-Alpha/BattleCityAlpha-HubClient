@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
+using BCA.Network.Packets.Standard.FromServer;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,8 @@ namespace hub_client.Helpers
         private static Customization _bot_border = new Customization(CustomizationType.Border, 5, false, "");
         private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 2, false, "");
         private static string _deck = "";
-        private static bool _botGame = false;
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
-
-        private static int[] _avatarsLoaded;
-        private static int[] _bordersLoaded;
-        private static int[] _sleevesLoaded;
 
         private static string _commandline = "";
 
@@ -81,40 +77,25 @@ namespace hub_client.Helpers
 
         public static void LaunchGame(Room room, string commandline)
         {
-            _commandline = commandline;
-            SetCustomization(room);
+            LaunchYgoPro(commandline);
         }
         public static void LaunchGameAgainstBot(string deck)
         {
             _deck = deck;
-            _botGame = true;
 
-            _avatarsLoaded = new int[2] { 0, 2 };
-            _bordersLoaded = new int[2] { 0, 2 };
-            _sleevesLoaded = new int[2] { 0, 2 };
-
-            Customization[] avatars = new Customization[2] { new Customization(CustomizationType.Avatar, 5000, true, "https://puu.sh/FxnII/10f3a11e50.png"), _bot_avatar };
-            UpdateAvatar(avatars);
-            Customization[] borders = new Customization[2] { new Customization(CustomizationType.Border, 1, false, ""), _bot_border };
-            UpdateBorders(borders);
-            Customization[] sleeves = new Customization[2] { _bot_sleeve, _bot_sleeve };
-            UpdateSleeves(sleeves);
+            LaunchYgoPro(String.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
+            Thread.Sleep(5000);
+            LaunchWindbot(_deck);
         }
 
-        private static void SetCustomization(Room room)
+        public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, int pos)
         {
-            _avatarsLoaded = new int[2] { 0, room.Avatars.Count() };
-            _bordersLoaded = new int[2] { 0, room.Borders.Count() };
-            _sleevesLoaded = new int[2] { 0, room.Sleeves.Count() };
-            UpdateAvatar(room.Avatars);
-            UpdateBorders(room.Borders);
-            UpdateSleeves(room.Sleeves);
+            UpdateAvatar(avatar, pos);
+            UpdateBorder(border, pos);
+            UpdateSleeves(sleeve, pos);
         }
-        private static void UpdateAvatar(Customization[] avatars)
+        private static void UpdateAvatar(Customization avatar, int i)
         {
-            for(int i = 0; i < avatars.Count(); i++)
-            {
-                Customization avatar = avatars[i];
                 if (!avatar.IsHost)
                     CopyAvatarToTexturesFolder(avatar, i);
                 else
@@ -128,13 +109,9 @@ namespace hub_client.Helpers
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
                     }
                 }
-            }
         }
-        private static void UpdateBorders(Customization[] borders)
+        private static void UpdateBorder(Customization border, int i)
         {
-            for (int i = 0; i < borders.Count(); i++)
-            {
-                Customization border = borders[i];
                 if (!border.IsHost)
                     CopyBorderToTexturesFolder(border, i);
                 else
@@ -148,13 +125,9 @@ namespace hub_client.Helpers
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
                     }
                 }
-            }
         }
-        private static void UpdateSleeves(Customization[] sleeves)
+        private static void UpdateSleeves(Customization sleeve, int i)
         {
-            for (int i = 0; i < sleeves.Count(); i++)
-            {
-                Customization sleeve = sleeves[i];
                 if (!sleeve.IsHost)
                     CopySleeveToTexturesFolder(sleeve, i);
                 else
@@ -168,31 +141,16 @@ namespace hub_client.Helpers
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
                     }
                 }
-            }
         }
 
         private static void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization customitem, int i)
         {
-            switch(customitem.CustomizationType)
-            {
-                case CustomizationType.Avatar:
-                    _avatarsLoaded[0]++;
-                    break;
-                case CustomizationType.Border:
-                    _bordersLoaded[0]++;
-                    break;
-                case CustomizationType.Sleeve:
-                    _sleevesLoaded[0]++;
-                    break;
-            }
-            CheckIfTexturesAreLoaded();
+
         }
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
         {
             File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + index.ToString() + ".png"), true);
-            _avatarsLoaded[0]++;
-            CheckIfTexturesAreLoaded();
         }
         private static void CopyBorderToTexturesFolder(Customization border, int index)
         {
@@ -200,31 +158,10 @@ namespace hub_client.Helpers
 
             if (index % 2 != 0)
                 ScaleBorder(index);
-
-            _bordersLoaded[0]++;
-            CheckIfTexturesAreLoaded();
         }
         private static void CopySleeveToTexturesFolder(Customization sleeve, int index)
         {
             File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".png"), true);
-            _sleevesLoaded[0]++;
-            CheckIfTexturesAreLoaded();
-        }
-
-        private static void CheckIfTexturesAreLoaded()
-        {
-            if ((_avatarsLoaded[0] != _avatarsLoaded[1]) || (_bordersLoaded[0] != _bordersLoaded[1]) || (_sleevesLoaded[0] != _sleevesLoaded[1]))
-                return;
-
-            if (_botGame)
-            {
-                LaunchYgoPro(String.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
-                Thread.Sleep(5000);
-                LaunchWindbot(_deck);
-                _botGame = false;
-            }
-            else
-                LaunchYgoPro(_commandline);
         }
     }
 }

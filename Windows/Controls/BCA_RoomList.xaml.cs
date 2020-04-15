@@ -71,7 +71,8 @@ namespace hub_client.Windows.Controls
             {
                 Id = room.Id,
                 Players = players,
-                Type = room.Config.Type
+                Type = room.Config.Type,
+                NeedPassword = room.NeedPassword
             };
 
             if (item == null)

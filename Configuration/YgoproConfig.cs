@@ -19,6 +19,15 @@ namespace hub_client.Configuration
 
             File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
         }
+        public static void UpdateNickname(string nickname)
+        {
+            string[] lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"));
+
+            int index = Array.FindIndex(lines, x => x.StartsWith("nickname"));
+            lines[index] = "nickname = " + nickname;
+
+            File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
+        }
 
         public static string GetDefaultDeck()
         {

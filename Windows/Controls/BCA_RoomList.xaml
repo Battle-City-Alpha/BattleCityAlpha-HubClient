@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <DataTemplate x:Key="RoomItemTemplate">
             <Grid Height="80">
                 <Grid.ColumnDefinitions>
@@ -19,7 +20,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24"/>
+                        <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
                     <TextBlock Text="{Binding Path=Players}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="1" FontSize="24"/>
                 </Grid>
             </Grid>

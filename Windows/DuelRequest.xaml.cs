@@ -28,6 +28,11 @@ namespace hub_client.Windows
             _admin = admin;
 
             cb_dueltype.ItemsSource = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();
+
+            cb_masterrules.Items.Add("MR5 (Avril 2020)");
+            cb_masterrules.Items.Add("MR4 (Link)");
+            cb_masterrules.Items.Add("MR3 (Pendules)");
+
             _id = id;
 
             this.MouseDown += Window_MouseDown;
@@ -39,14 +44,17 @@ namespace hub_client.Windows
             btnSend.Update();
 
             this.FontFamily = style.Font;
+            this.FontSize = style.FontSize;
         }
 
         private void BtnSend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            int MR = 5 - cb_masterrules.SelectedIndex;
+            string password = chb_password.IsChecked == true ? tb_password.Text : String.Empty;
             if (_id != -1)
-                _admin.SendRequest(_id, (RoomType)cb_dueltype.SelectedIndex, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text));
+                _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
             else
-                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text));
+                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, password, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
 
             Close();
         }
@@ -66,6 +74,7 @@ namespace hub_client.Windows
             cb_dueltype.SelectedIndex = 0;
             tb_handcard.Text = "5";
             tb_lpstartduel.Text = "8000";
+            cb_masterrules.SelectedIndex = 0;
         }
 
         private void LoadBanlist()
@@ -110,6 +119,14 @@ namespace hub_client.Windows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void chb_password_Checked(object sender, RoutedEventArgs e)
+        {
+            if (chb_password.IsChecked == true)
+                tb_password.IsEnabled = true;
+            else
+                tb_password.IsEnabled = false;
         }
     }
 }

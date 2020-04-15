@@ -101,6 +101,7 @@ namespace hub_client
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
             Client.LaunchYGOPro += Client_LaunchYGOPro;
             Client.LaunchYGOProWithoutRoom += Client_LaunchYGOProWithoutRoom;
+            Client.LoadPlayerCustomizations += Client_LoadPlayerCustomizations;
             Client.LaunchTrade += Client_LaunchTrade;
             Client.CloseBrocante += Client_CloseBrocante;
             Client.LaunchBonusBox += Client_LaunchBonusBox;
@@ -114,6 +115,11 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LoadPlayerCustomizations(Customization avatar, Customization border, Customization sleeve, int pos)
+        {
+            YgoProHelper.LoadCustomization(avatar, border, sleeve, pos);
         }
 
         private static void Client_LaunchYGOProWithoutRoom(string arg)
@@ -159,9 +165,9 @@ namespace hub_client
             trade.Show();
         }
 
-        private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, bool isTrade)
+        private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, bool isTrade, string pass)
         {
-            ChoicePopBox box = new ChoicePopBox(player, config, isTrade);
+            ChoicePopBox box = new ChoicePopBox(player, config, isTrade, pass);
             box.Owner = _chat;
             box.Topmost = true;
             box.ShowDialog();
