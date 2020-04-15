@@ -22,7 +22,7 @@ namespace hub_client.Helpers
 
         private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 9999, false, "");
         private static Customization _bot_border = new Customization(CustomizationType.Border, 5, false, "");
-        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, false, "");
+        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 2, false, "");
         private static string _deck = "";
         private static bool _botGame = false;
         private const int _defaultPort = 1111;
@@ -163,7 +163,7 @@ namespace hub_client.Helpers
                     {
                         wc.DownloadFileAsync(
                             new System.Uri(sleeve.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".jpg")
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
                             );
                         wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
                     }
@@ -206,7 +206,7 @@ namespace hub_client.Helpers
         }
         private static void CopySleeveToTexturesFolder(Customization sleeve, int index)
         {
-            File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id.ToString() + ".jpg"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".jpg"), true);
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".png"), true);
             _sleevesLoaded[0]++;
             CheckIfTexturesAreLoaded();
         }
