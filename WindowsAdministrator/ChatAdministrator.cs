@@ -23,7 +23,8 @@ namespace hub_client.WindowsAdministrator
         private ChatCommandParser _cmdParser;
 
         public event Action LoginComplete;
-        public event Action<Color, string, bool, bool> ChatMessage;
+        public event Action<Color, string, bool, bool> SpecialChatMessage;
+        public event Action<Color, PlayerInfo, string> PlayerChatMessage;
         public event Action<PlayerInfo> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
         public event Action<string, string> ClearChat;
@@ -31,7 +32,8 @@ namespace hub_client.WindowsAdministrator
         public ChatAdministrator(GameClient client)
         {
             Client = client;
-            Client.ChatMessageRecieved += Client_ChatMessageRecieved;
+            Client.PlayerChatMessageRecieved += Client_PlayerChatMessageRecieved;
+            Client.SpecialChatMessageRecieved += Client_SpecialChatMessageRecieved;
             Client.LoginComplete += Client_LoginComplete;
             Client.AddHubPlayer += Client_AddHubPlayer;
             Client.RemoveHubPlayer += Client_RemoveHubPlayer;
@@ -41,13 +43,23 @@ namespace hub_client.WindowsAdministrator
             _cmdParser = new ChatCommandParser();
         }
 
+        private void Client_SpecialChatMessageRecieved(Color c, string text, bool isBold, bool isItalic)
+        {
+            SpecialChatMessage?.Invoke(c, text, isBold, isItalic);
+        }
+
+        private void Client_PlayerChatMessageRecieved(Color c, PlayerInfo p, string msg)
+        {
+            PlayerChatMessage?.Invoke(c, p, msg);
+        }
+
         private void Client_Banlist(string[] players)
         {
             string bl = "Banlist : ";
             foreach (string player in players)
                 bl += player + ",";
 
-            ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor"), bl, false, false);
+            SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor"), bl, false, false);
         }
 
         private void Client_ClearChat(string username, string reason)
@@ -68,11 +80,6 @@ namespace hub_client.WindowsAdministrator
         private void Client_LoginComplete()
         {
             LoginComplete?.Invoke();
-        }
-
-        private void Client_ChatMessageRecieved(Color color, string msg, bool italic, bool bold)
-        {
-            ChatMessage?.Invoke(color, msg, italic, bold);
         }
 
         public void SendMessage(string msg)
@@ -119,7 +126,7 @@ namespace hub_client.WindowsAdministrator
                 });
             }
             else
-                ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
+                SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
         }
         public void AskSelectCard()
         {
@@ -199,7 +206,7 @@ namespace hub_client.WindowsAdministrator
                             blacklist.Show();
                             return null;
                         default:
-                            ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
+                            SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
                             return null;
                     }
                 }
@@ -207,7 +214,7 @@ namespace hub_client.WindowsAdministrator
             }
             catch (Exception ex)
             {
-                ChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Une erreur s'est produite.", false, false);
+                SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Une erreur s'est produite.", false, false);
                 logger.Error("Chat input error : {0}", ex.ToString());
                 return null;
             }

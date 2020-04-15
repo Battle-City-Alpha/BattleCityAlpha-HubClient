@@ -41,7 +41,8 @@ namespace hub_client.Windows
 
             _admin = admin;
 
-            _admin.ChatMessage += _admin_ChatMessage;
+            _admin.SpecialChatMessage += _admin_SpecialChatMessage;
+            _admin.PlayerChatMessage += _admin_PlayerChatMessage;
             this.Loaded += Chat_Loaded;
             _admin.LoginComplete += _admin_LoginComplete;
             _admin.AddHubPlayer += _admin_AddHubPlayer;
@@ -56,6 +57,16 @@ namespace hub_client.Windows
 
             this.MouseDown += Chat_MouseDown;
 
+        }
+
+        private void _admin_PlayerChatMessage(Color c, PlayerInfo p, string msg)
+        {
+            Dispatcher.InvokeAsync(delegate { chat.OnPlayerColoredMessage(c, p, msg); });
+        }
+
+        private void _admin_SpecialChatMessage(Color c, string msg, bool italic, bool bold)
+        {
+            Dispatcher.InvokeAsync(delegate { chat.OnSpecialColoredMessage(c, msg, italic, bold); });
         }
 
         private void SearchUser(object sender, TextChangedEventArgs e)
@@ -78,7 +89,7 @@ namespace hub_client.Windows
         private void _admin_ClearChat(string username, string reason)
         {
             chat.Clear();
-            _admin_ChatMessage(style.GetGameColor("InformationMessageColor"), String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
+            _admin_SpecialChatMessage(style.GetGameColor("InformationMessageColor"), String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
         }
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
@@ -88,7 +99,7 @@ namespace hub_client.Windows
             lvUserlist.Items.Refresh();
 
             if (FormExecution.ClientConfig.Connexion_Message)
-                _admin_ChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
+                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} removed from userlist.", infos);
         }
         private void _admin_AddHubPlayer(PlayerInfo infos)
@@ -96,7 +107,7 @@ namespace hub_client.Windows
             AddPlayer(infos);
 
             if (FormExecution.ClientConfig.Connexion_Message)
-                _admin_ChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est connecté.", infos.Username), false, false);
+                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
 
@@ -142,11 +153,6 @@ namespace hub_client.Windows
             Style s = new Style(typeof(Control));
             s.Setters.Add(new Setter(Control.FontFamilyProperty, style.Font));
             Resources.Add(typeof(Control), style);
-        }
-
-        private void _admin_ChatMessage(Color c, string msg, bool italic, bool bold)
-        {
-            Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(c, msg, italic, bold); });
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -269,13 +275,14 @@ namespace hub_client.Windows
             if (target != null)
             {
                 _admin.AddBlacklistPlayer(target);
-                _admin_ChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
+                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            _admin.ChatMessage -= _admin_ChatMessage;
+            _admin.SpecialChatMessage -= _admin_SpecialChatMessage;
+            _admin.PlayerChatMessage -= _admin_PlayerChatMessage;
             Loaded -= Chat_Loaded;
             _admin.LoginComplete -= _admin_LoginComplete;
             _admin.AddHubPlayer -= _admin_AddHubPlayer;

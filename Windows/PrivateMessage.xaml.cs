@@ -48,9 +48,9 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
         }
 
-        private void _admin_MessageRecieved(string message)
+        private void _admin_MessageRecieved(PlayerInfo infos, string message)
         {
-            Dispatcher.InvokeAsync(delegate { rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), message, false, false); });
+            Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message); });
             Dispatcher.InvokeAsync(delegate { Show(); });
         }
 
@@ -62,7 +62,7 @@ namespace hub_client.Windows
                     if (tbChat.GetText() == string.Empty)
                         return;
                     _admin.SendMessage(_target, tbChat.GetText());
-                    rtbChat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), FormExecution.Username + ":" + tbChat.GetText(), false, false);
+                    rtbChat.OnSpecialColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), FormExecution.Username + ":" + tbChat.GetText(), false, false);
                     tbChat.Clear();
                     break;
             }

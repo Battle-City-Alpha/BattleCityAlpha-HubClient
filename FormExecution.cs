@@ -175,11 +175,11 @@ namespace hub_client
         private static void Client_PrivateMessageReceived(PlayerInfo user, string message)
         {
             if (PrivateForms.ContainsKey(user.Username))
-                PrivateForms[user.Username].PrivateMessageRecieved(message);
+                PrivateForms[user.Username].PrivateMessageRecieved(user, message);
             else
             {
                 OpenNewPrivateForm(user);
-                PrivateForms[user.Username].PrivateMessageRecieved(message);
+                PrivateForms[user.Username].PrivateMessageRecieved(user, message);
             }
         }
 

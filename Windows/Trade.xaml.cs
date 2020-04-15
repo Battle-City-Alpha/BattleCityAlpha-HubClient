@@ -96,9 +96,9 @@ namespace hub_client.Windows
             btnValidate.IsEnabled = true;
         }
 
-        private void _admin_GetMessage(string username, string message)
+        private void _admin_GetMessage(PlayerInfo user, string message)
         {
-            Dispatcher.InvokeAsync(delegate { chat.OnColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "["+username+"]:"+message, false, false); });
+            Dispatcher.InvokeAsync(delegate { chat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), user, message); });
         }
 
         private void _admin_InitTrade(int id, PlayerInfo[] players, Dictionary<int, BCA.Common.PlayerCard>[] Collections)

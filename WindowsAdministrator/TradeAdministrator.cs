@@ -15,7 +15,7 @@ namespace hub_client.WindowsAdministrator
         public GameClient Client;
 
         public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
-        public event Action<string, string> GetMessage;
+        public event Action<PlayerInfo, string> GetMessage;
         public event Action<List<PlayerCard>> UpdateCardsToOffer;
         public event Action TradeExit;
         public event Action TradeEnd;
@@ -46,9 +46,9 @@ namespace hub_client.WindowsAdministrator
             UpdateCardsToOffer?.Invoke(cards);
         }
 
-        private void Client_GetMessage(string username, string message)
+        private void Client_GetMessage(PlayerInfo infos, string message)
         {
-            GetMessage?.Invoke(username, message);
+            GetMessage?.Invoke(infos, message);
         }
 
         private void Client_InitTrade(int arg1, PlayerInfo[] arg2, Dictionary<int, PlayerCard>[] arg3)

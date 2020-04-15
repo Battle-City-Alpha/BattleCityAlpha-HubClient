@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,14 +32,44 @@ namespace hub_client.Windows.Controls
             this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
-        public void OnColoredMessage(Color color, string text, bool IsBold, bool IsItalic)
+        public void OnSpecialColoredMessage(Color color, string text, bool IsBold, bool IsItalic)
         {
-            Paragraph pr = new Paragraph(new Run("["+DateTime.Now.ToString("HH:mm")+"]"+text));
+            Paragraph pr = new Paragraph();
+            Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] ");
+            date.Foreground = new SolidColorBrush(color);
+            pr.Inlines.Add(date);
+
+            Run txt = new Run(text);
+            txt.Foreground = new SolidColorBrush(color);
             if (IsBold)
-                pr.FontWeight = FontWeights.Bold;
+                txt.FontWeight = FontWeights.Bold;
             if (IsItalic)
-                pr.FontStyle = FontStyles.Italic;
-            pr.Foreground = new SolidColorBrush(color);
+                txt.FontStyle = FontStyles.Italic;
+
+            pr.Inlines.Add(txt);
+
+            pr.Margin = new Thickness(0);
+            chat.Document.Blocks.Add(pr);
+
+            if (FormExecution.ClientConfig.Autoscroll)
+                ScrollToCarret();
+        }
+        public void OnPlayerColoredMessage(Color color, PlayerInfo player, string text)
+        {
+            Paragraph pr = new Paragraph();
+            Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] ");
+            date.Foreground = new SolidColorBrush(color);
+            pr.Inlines.Add(date);
+
+
+            Run pl = new Run("[" + ParseUsername(player.Username, player.Rank, player.VIP) + "]");
+            pl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + player.ChatColorString));
+            pr.Inlines.Add(pl);
+
+            Run txt = new Run(": " + text);
+            txt.Foreground = new SolidColorBrush(color);
+            pr.Inlines.Add(txt);
+
             pr.Margin = new Thickness(0);
             chat.Document.Blocks.Add(pr);
 
@@ -64,6 +96,28 @@ namespace hub_client.Windows.Controls
         public string GetText()
         {
             return new TextRange(chat.Document.ContentStart, chat.Document.ContentEnd).Text;
+        }
+        public string ParseUsername(string username, PlayerRank rank, bool isVip)
+        {
+            /*switch (rank)
+            {
+                case PlayerRank.Owner:
+                    return "♛" + username;
+                case PlayerRank.Bot:
+                    return "☎" + username;
+                case PlayerRank.Moderateurs:
+                    return "♝" + username;
+                case PlayerRank.Animateurs:
+                    return "♞" + username;
+                case PlayerRank.Developper:
+                    return "♣" + username;
+                case PlayerRank.Contributor:
+                    return "♟" + username;
+                default: */
+            if (isVip)
+                return "✮" + username;
+            else
+                return username;
         }
     }
 }

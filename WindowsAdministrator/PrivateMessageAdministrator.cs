@@ -15,16 +15,16 @@ namespace hub_client.WindowsAdministrator
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public GameClient Client;
 
-        public event Action<string> MessageRecieved;
+        public event Action<PlayerInfo, string> MessageRecieved;
 
         public PrivateMessageAdministrator(GameClient client)
         {
             Client = client;
         }
 
-        public void PrivateMessageRecieved(string msg)
+        public void PrivateMessageRecieved(PlayerInfo infos, string msg)
         {
-            MessageRecieved?.Invoke(msg);
+            MessageRecieved?.Invoke(infos, msg);
         }
 
         public void SendMessage(PlayerInfo target, string msg)

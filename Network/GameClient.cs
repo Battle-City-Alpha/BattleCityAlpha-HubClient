@@ -41,7 +41,8 @@ namespace hub_client.Network
         #region  Events
         #endregion
         #region ChatForm Events
-        public event Action<Color, string, bool, bool> ChatMessageRecieved;
+        public event Action<Color, string, bool, bool> SpecialChatMessageRecieved;
+        public event Action<Color, PlayerInfo, string> PlayerChatMessageRecieved;
         public event Action<PlayerInfo> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
         public event Action Shutdown;
@@ -76,7 +77,7 @@ namespace hub_client.Network
         #endregion
         #region TradeForm Events
         public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
-        public event Action<string, string> GetMessage;
+        public event Action<PlayerInfo, string> GetMessage;
         public event Action<List<PlayerCard>> UpdateCardsToOffer;
         public event Action TradeExit;
         public event Action TradeEnd;
@@ -355,7 +356,7 @@ namespace hub_client.Network
             ChatMessageType type = packet.Type;
 
             Color c;
-            string msg;
+            string msg = "";
             bool italic = false;
             bool bold = false;
 
@@ -363,7 +364,6 @@ namespace hub_client.Network
             {
                 case ChatMessageType.Standard:
                     c = FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor");
-                    msg = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
                     break;
                 case ChatMessageType.Animation:
                     c = FormExecution.AppDesignConfig.GetGameColor("AnimationMessageColor");
@@ -390,8 +390,10 @@ namespace hub_client.Network
                     msg = "••• Une erreur s'est produite.";
                     break;
             }
-
-            Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, msg, bold, italic));
+            if (type != ChatMessageType.Standard)
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, msg, bold, italic));
+            else
+                Application.Current.Dispatcher.Invoke(() => PlayerChatMessageRecieved?.Invoke(c, packet.Player, packet.Message));
             logger.Trace("CHAT MESSAGE - Type : {0} | Player : {1} | Message : {2}", packet.Type, packet.Player, packet.Message);
         }
 
@@ -548,7 +550,7 @@ namespace hub_client.Network
             if (packet.MessageBox)
                 OpenPopBox(msg, "Erreur");
             else
-                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, msg, italic, bold));
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, msg, italic, bold));
             logger.Trace("COMMAND ERROR MESSAGE MESSAGE - Type : {0} |  Message : {1}", packet.Type, msg);
         }
 
@@ -575,7 +577,7 @@ namespace hub_client.Network
             if (BlacklistManager.CheckBlacklist(packet.Player))
                 return;
 
-            packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
+            //packet.Message = ParseUsername(packet.Player.Username, packet.Player.Rank, packet.Player.VIP) + ":" + packet.Message;
             Application.Current.Dispatcher.Invoke(() => PrivateMessageReceived?.Invoke(packet.Player, packet.Message));
             logger.Trace("PRIVATE MESSAGE RECEIVED - From : {0} | Message : {1}", packet.Player, packet.Message);
         }
@@ -685,12 +687,12 @@ namespace hub_client.Network
                 Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { PlayerManager.GetInfos(FormExecution.Username), packet.Player }, packet.Collections));
             }
             else
-                Application.Current.Dispatcher.Invoke(() => ChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false, false));
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false, false));
         }
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {
             logger.Trace("TRADE MESSAGE - From {0} | Message : {1}", packet.Player.Username, packet.Message);
-            Application.Current.Dispatcher.Invoke(() => GetMessage?.Invoke(packet.Player.Username, packet.Message));
+            Application.Current.Dispatcher.Invoke(() => GetMessage?.Invoke(packet.Player, packet.Message));
         }
         public void OnTradeProposition(StandardServerTradeProposition packet)
         {
@@ -819,7 +821,7 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => LoadOfflineMessages?.Invoke(packet.Messages));
         }
 
-        public string ParseUsername(string username, PlayerRank rank, bool isVip)
+        public string ParseUsernameS(string username, PlayerRank rank, bool isVip)
         {
             /*switch (rank)
             {
