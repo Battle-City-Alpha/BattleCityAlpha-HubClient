@@ -154,6 +154,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Network\NetworkData.cs" />
     <Compile Include="Stuff\BoosterInfo.cs" />
+    <Compile Include="Stuff\PlayerItem.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
     <Compile Include="WindowsAdministrator\AvatarsHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />

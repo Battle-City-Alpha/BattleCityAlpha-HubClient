@@ -4,6 +4,7 @@ using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Network;
+using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using NLog;
@@ -29,8 +30,8 @@ namespace hub_client.Windows
         ChatAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
-        private List<PlayerInfo> Players;
-        private List<PlayerInfo> PlayersFound;
+        private List<PlayerItem> Players;
+        private List<PlayerItem> PlayersFound;
 
         InputText form = new InputText();
 
@@ -49,8 +50,8 @@ namespace hub_client.Windows
 
             tbUserList.TextChanged += SearchUser;
 
-            Players = new List<PlayerInfo>();
-            PlayersFound = new List<PlayerInfo>();
+            Players = new List<PlayerItem>();
+            PlayersFound = new List<PlayerItem>();
             lvUserlist.ItemsSource = Players;
 
             this.MouseDown += Chat_MouseDown;
@@ -62,7 +63,7 @@ namespace hub_client.Windows
             PlayersFound.Clear();
             if (tbUserList.Text != "")
             {
-                foreach (PlayerInfo info in Players)
+                foreach (PlayerItem info in Players)
                     if (info.Username.ToLower().Contains(tbUserList.Text.ToLower()))
                         PlayersFound.Add(info);
 
@@ -82,12 +83,13 @@ namespace hub_client.Windows
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
         {
-            Players.Remove(infos);
+            PlayerItem item = CreatePlayerItem(infos);
+            Players.Remove(item);
             lvUserlist.Items.Refresh();
 
             if (FormExecution.ClientConfig.Connexion_Message)
                 _admin_ChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
-            logger.Trace("{0} added to userlist.", infos);
+            logger.Trace("{0} removed from userlist.", infos);
         }
         private void _admin_AddHubPlayer(PlayerInfo infos)
         {
@@ -286,14 +288,16 @@ namespace hub_client.Windows
 
         private void AddPlayer(PlayerInfo infos)
         {
-                for (int i = 0; i < Players.Count; i++)
-                    if (Players[i].Rank <= infos.Rank)
-                    {
-                        Players.Insert(i, infos);
-                        break;
-                    }
-            if (!Players.Contains(infos))
-                Players.Add(infos);
+            PlayerItem item = CreatePlayerItem(infos);
+            for (int i = 0; i < Players.Count; i++)
+                if (Players[i].Rank <= item.Rank)
+                {
+                    Players.Insert(i, item);
+                    break;
+                }
+
+            if (!Players.Contains(item))
+                Players.Add(item);
 
             lvUserlist.Items.Refresh();
 
@@ -391,6 +395,23 @@ namespace hub_client.Windows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private PlayerItem CreatePlayerItem(PlayerInfo infos)
+        {
+            return new PlayerItem
+            {
+                ChatColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + infos.ChatColorString)),
+                ELO = infos.ELO,
+                CurrentRoom = infos.CurrentRoom,
+                Level = infos.Level,
+                Rank = infos.Rank,
+                ChatColorString = infos.ChatColorString,
+                State = infos.State,
+                UserId = infos.UserId,
+                Username = infos.Username,
+                VIP = infos.VIP
+            };
         }
     }
 }

@@ -76,7 +76,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <WrapPanel>
-                                        <TextBlock Text="{Binding Username}" />
+                                        <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}"/>
                                     </WrapPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
