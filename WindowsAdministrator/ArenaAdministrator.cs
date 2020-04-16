@@ -16,29 +16,41 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        public Dictionary<int, Room> Rooms;
+        public Dictionary<int, Room> WaitingRooms;
+        public Dictionary<int, Room> DuelingRooms;
 
-        public event Action<Room, bool> UpdateRoom;
+        public event Action<Room> UpdateRoom;
         
         public ArenaAdministrator(GameClient client)
         {
             Client = client;
             Client.UpdateRoom += Client_UpdateRoom;
-            Rooms = new Dictionary<int, Room>();
+
+            WaitingRooms = new Dictionary<int, Room>();
+            DuelingRooms = new Dictionary<int, Room>();
         }
 
-        private void Client_UpdateRoom(Room obj, bool remove)
+        private void Client_UpdateRoom(Room obj)
         {
-            UpdateRoom?.Invoke(obj, remove);
+            UpdateRoom?.Invoke(obj);
 
-            if (!remove)
-                Rooms[obj.Id] = obj;
-            else
+            switch(obj.State)
             {
-                if (Rooms.ContainsKey(obj.Id))
-                    Rooms.Remove(obj.Id);
-            }
-                    
+                case RoomState.Waiting:
+                    WaitingRooms[obj.Id] = obj;
+                    break;
+                case RoomState.Dueling:
+                    if (WaitingRooms.ContainsKey(obj.Id))
+                        WaitingRooms.Remove(obj.Id);
+                    DuelingRooms.Add(obj.Id, obj);
+                    break;
+                case RoomState.Finished:
+                    if (WaitingRooms.ContainsKey(obj.Id))
+                        WaitingRooms.Remove(obj.Id);
+                    if (DuelingRooms.ContainsKey(obj.Id))
+                        DuelingRooms.Remove(obj.Id);
+                    break;
+            }                    
         }
 
         public void SendJoinRoom(int id, RoomType type, string pass)

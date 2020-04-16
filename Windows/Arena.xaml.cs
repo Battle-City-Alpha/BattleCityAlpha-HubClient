@@ -32,13 +32,15 @@ namespace hub_client.Windows
         public DispatcherTimer RankedTimer;
         private int _rankedTimerCounter;
         private bool _isOverRankedBtn = false;
+
+        private bool _availableRooms = true;
         public Arena(ArenaAdministrator admin)
         {
             InitializeComponent();
             _admin = admin;
 
-            foreach (var room in _admin.Rooms)
-                UpdateRoom(room.Value, false);
+            foreach (var room in _admin.WaitingRooms)
+                UpdateRoom(room.Value);
 
             Title = "Arène de duel";
             this.FontFamily = style.Font;
@@ -95,37 +97,69 @@ namespace hub_client.Windows
             }
         }
 
-        public void UpdateRoom(Room room, bool remove)
+        private void UpdateRooms()
         {
-            if (!remove)
+            singleList.Clear();
+            matchList.Clear();
+            tagList.Clear();
+
+            Dictionary<int, Room> rooms = _admin.WaitingRooms;
+            if (!_availableRooms)
+                rooms = _admin.DuelingRooms;
+
+            foreach (var val in rooms)
+                UpdateRoom(val.Value);
+        }
+        public void UpdateRoom(Room room)
+        {
+            switch (room.State)
             {
-                switch(room.Config.Type)
-                {
-                    case RoomType.Single:
-                        singleList.UpdateRoom(room);
-                        break;
-                    case RoomType.Match:
-                        matchList.UpdateRoom(room);
-                        break;
-                    case RoomType.Tag:
-                        tagList.UpdateRoom(room);
-                        break;
-                }
+                case RoomState.Waiting:
+                    if (!_availableRooms)
+                        return;
+                    UpdateRoomInList(room);
+                    break;
+                case RoomState.Dueling:
+                    if (_availableRooms)
+                    {
+                        DeleteRoomInList(room);
+                        return;
+                    }
+                    UpdateRoomInList(room);
+                    break;
+                case RoomState.Finished:
+                    DeleteRoomInList(room);
+                    break;
             }
-            else
+        }
+        private void UpdateRoomInList(Room room)
+        {
+            switch (room.Config.Type)
             {
-                switch (room.Config.Type)
-                {
-                    case RoomType.Single:
-                        singleList.RemoveRoom(room);
-                        break;
-                    case RoomType.Match:
-                        matchList.RemoveRoom(room);
-                        break;
-                    case RoomType.Tag:
-                        tagList.RemoveRoom(room);
-                        break;
-                }
+                case RoomType.Single:
+                    singleList.UpdateRoom(room);
+                    break;
+                case RoomType.Match:
+                    matchList.UpdateRoom(room);
+                    break;
+                case RoomType.Tag:
+                    tagList.UpdateRoom(room);
+                    break;
+            }
+        }
+        private void DeleteRoomInList(Room room)
+        {
+            switch (room.Config.Type)
+            {
+                case RoomType.Single:
+                    singleList.RemoveRoom(room);
+                    break;
+                case RoomType.Match:
+                    matchList.RemoveRoom(room);
+                    break;
+                case RoomType.Tag:
+                    tagList.RemoveRoom(room);
+                    break;
             }
         }
 
@@ -213,6 +247,17 @@ namespace hub_client.Windows
             btn_playranked.text.Content = "Jouer (classé)";
             btn_playranked.MouseEnter -= Btn_playranked_MouseEnter;
             btn_playranked.MouseLeave -= Btn_playranked_MouseLeave;
+        }
+
+        private void btn_Switch_Rooms_Visible_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_availableRooms)
+                btn_Switch_Rooms_Visible.text.Content = "En cours";
+            else
+                btn_Switch_Rooms_Visible.text.Content = "Disponible";
+            _availableRooms = !_availableRooms;
+
+            UpdateRooms();
         }
     }
 }

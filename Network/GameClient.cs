@@ -66,7 +66,7 @@ namespace hub_client.Network
         public event Action<StandardServerProfilInfo> ProfilUpdate;
         #endregion
         #region "Arena Events"
-        public event Action<Room, bool> UpdateRoom;
+        public event Action<Room> UpdateRoom;
         #endregion
         #region Shop Events
         public event Action<int, int, int, int, int> UpdateBoosterInfo;
@@ -796,7 +796,7 @@ namespace hub_client.Network
         }
         public void OnUpdateRoom(StandardServerUpdateRoom packet)
         {
-            Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room, packet.Remove));
+            Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room));
             logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
         public void OnRoomNeedPassword(StandardServerNeedRoomPassword packet)

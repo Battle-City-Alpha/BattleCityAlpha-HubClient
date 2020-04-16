@@ -22,7 +22,7 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_RoomList : UserControl
     {
-        public Dictionary<int, RoomItem> _rooms;
+        private Dictionary<int, RoomItem> _rooms;
 
         public BCA_RoomList()
         {
@@ -32,6 +32,12 @@ namespace hub_client.Windows.Controls
         public void RefreshStyle()
         {
             this.FontFamily = FormExecution.AppDesignConfig.Font;
+        }
+
+        public void Clear()
+        {
+            Itemslist.Items.Clear();
+            _rooms.Clear();
         }
 
         public void AddItem(RoomItem item)
