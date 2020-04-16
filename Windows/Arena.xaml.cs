@@ -201,7 +201,6 @@ namespace hub_client.Windows
             btn_playranked.text.Content = _rankedTimerCounter.ToString();
             _isOverRankedBtn = false;
         }
-
         private void Btn_playranked_MouseEnter(object sender, MouseEventArgs e)
         {
             btn_playranked.text.Content = "Stop";

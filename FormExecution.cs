@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using hub_client.Assets;
 using hub_client.Cards;
 using hub_client.Configuration;
@@ -97,6 +98,7 @@ namespace hub_client
 
             Client.PopMessageBox += Client_PopMessageBox;
             Client.ChoicePopBox += Client_ChoicePopBox;
+            Client.RoomNeedPassword += Client_RoomNeedPassword;
             Client.Shutdown += Client_Shutdown;
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
             Client.LaunchYGOPro += Client_LaunchYGOPro;
@@ -115,6 +117,18 @@ namespace hub_client
             _login.Focus();
             _login.Show();
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_RoomNeedPassword(int id, RoomType type)
+        {
+            InputText form = new InputText();
+            form.Title = "Mot de passe";
+            form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
+            form.ShowDialog();
+        }
+        private static void RoomPassInput_SelectedText(string pass, int id, RoomType type)
+        {
+            Client.SendRoomNeedPassword(id, pass, type);
         }
 
         private static void Client_LoadPlayerCustomizations(Customization avatar, Customization border, Customization sleeve, int pos)

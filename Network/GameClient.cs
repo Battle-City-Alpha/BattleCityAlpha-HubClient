@@ -3,6 +3,7 @@ using BCA.Common.Enums;
 using BCA.Network;
 using BCA.Network.Packets;
 using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Cards;
 using hub_client.Configuration;
@@ -31,6 +32,7 @@ namespace hub_client.Network
 
         public event Action<string, string, bool> PopMessageBox;
         public event Action<PlayerInfo, RoomConfig, bool, string> ChoicePopBox;
+        public event Action<int, RoomType> RoomNeedPassword;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
         public event Action<Customization, Customization, Customization, int> LoadPlayerCustomizations;
@@ -320,14 +322,14 @@ namespace hub_client.Network
                 case PacketType.UpdateRoom:
                     OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
                     break;
-                /*case PacketType.DuelSeeker:
-                    OnDuelSeeker(JsonConvert.DeserializeObject<StandardServerDuelSeeker>(packet));
-                    break;*/
                 case PacketType.DuelStart:
                     OnDuelStart(JsonConvert.DeserializeObject<StandardServerDuelStart>(packet));
                     break;
                 case PacketType.SpectatePlayer:
                     OnDuelSpectate(JsonConvert.DeserializeObject<StandardServerDuelSpectate>(packet));
+                    break;
+                case PacketType.NeedRoomPassword:
+                    OnRoomNeedPassword(JsonConvert.DeserializeObject<StandardServerNeedRoomPassword>(packet));
                     break;
                 case PacketType.GetBonus:
                     OnGetBonus(JsonConvert.DeserializeObject<StandardServerGetBonus>(packet));
@@ -797,6 +799,11 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room, packet.Remove));
             logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
+        public void OnRoomNeedPassword(StandardServerNeedRoomPassword packet)
+        {
+            logger.Trace("ROOM NEED PASSWORD - Room {0} | Type : {1}", packet.RoomId, packet.RoomType);
+            Application.Current.Dispatcher.Invoke(() => RoomNeedPassword?.Invoke(packet.RoomId, packet.RoomType));
+        }
 
         public void OnLoadPlayerCustomizationTextures(StandardServerLoadPlayerCustomizationTextures packet)
         {
@@ -861,6 +868,16 @@ namespace hub_client.Network
                 return "✮" + username;
             else
                 return username;
+        }
+
+        public void SendRoomNeedPassword(int id, string pass, RoomType type)
+        {
+            Send(PacketType.NeedRoomPassword, new StandardClientRoomNeedPassword
+            {
+                RoomId = id,
+                Roompass = pass,
+                RoomType = type
+            });
         }
     }
 
