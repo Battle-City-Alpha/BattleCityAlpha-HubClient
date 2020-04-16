@@ -32,7 +32,7 @@ namespace hub_client.WindowsAdministrator
             UpdateRoom?.Invoke(obj, remove);
 
             if (!remove)
-                Rooms.Add(obj.Id, obj);
+                Rooms[obj.Id] = obj;
             else
             {
                 if (Rooms.ContainsKey(obj.Id))
