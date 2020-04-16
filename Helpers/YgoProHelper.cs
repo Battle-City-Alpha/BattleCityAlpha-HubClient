@@ -30,28 +30,6 @@ namespace hub_client.Helpers
 
         private static string _commandline = "";
 
-        public static void ScaleBorder(int bid)
-        {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new Uri(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "Borders", "b_" + bid.ToString() + ".png"));
-            image.EndInit();
-            TransformedBitmap transformBmp = new TransformedBitmap(); 
-            transformBmp.BeginInit();
-            transformBmp.Source = image;
-            transformBmp.Transform = new ScaleTransform(-1, 1);
-            transformBmp.EndInit();
-
-            using (var fileStream = new FileStream(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "Borders", "b_" + bid.ToString() + ".png"), FileMode.Create))
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(transformBmp));
-                encoder.Save(fileStream);
-            }
-        }
-
         public static void LaunchYgoPro(string commandline)
         {
             Process Game = new Process();
@@ -82,6 +60,9 @@ namespace hub_client.Helpers
         public static void LaunchGameAgainstBot(string deck)
         {
             _deck = deck;
+            UpdateAvatar(_bot_avatar, 1);
+            UpdateBorder(_bot_border, 1);
+            UpdateSleeve(_bot_sleeve, 1);
 
             LaunchYgoPro(String.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
             Thread.Sleep(5000);
@@ -92,7 +73,7 @@ namespace hub_client.Helpers
         {
             UpdateAvatar(avatar, pos);
             UpdateBorder(border, pos);
-            UpdateSleeves(sleeve, pos);
+            UpdateSleeve(sleeve, pos);
         }
         private static void UpdateAvatar(Customization avatar, int i)
         {
@@ -126,7 +107,7 @@ namespace hub_client.Helpers
                     }
                 }
         }
-        private static void UpdateSleeves(Customization sleeve, int i)
+        private static void UpdateSleeve(Customization sleeve, int i)
         {
                 if (!sleeve.IsHost)
                     CopySleeveToTexturesFolder(sleeve, i);
@@ -155,9 +136,6 @@ namespace hub_client.Helpers
         private static void CopyBorderToTexturesFolder(Customization border, int index)
         {
             File.Copy(Path.Combine(FormExecution.path, "Assets", "Borders", border.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + index.ToString() + ".png"), true);
-
-            if (index % 2 != 0)
-                ScaleBorder(index);
         }
         private static void CopySleeveToTexturesFolder(Customization sleeve, int index)
         {

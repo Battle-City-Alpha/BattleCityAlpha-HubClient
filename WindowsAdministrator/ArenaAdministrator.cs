@@ -16,6 +16,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        public Dictionary<int, Room> Rooms;
 
         public event Action<Room, bool> UpdateRoom;
         
@@ -23,11 +24,21 @@ namespace hub_client.WindowsAdministrator
         {
             Client = client;
             Client.UpdateRoom += Client_UpdateRoom;
+            Rooms = new Dictionary<int, Room>();
         }
 
         private void Client_UpdateRoom(Room obj, bool remove)
         {
             UpdateRoom?.Invoke(obj, remove);
+
+            if (!remove)
+                Rooms.Add(obj.Id, obj);
+            else
+            {
+                if (Rooms.ContainsKey(obj.Id))
+                    Rooms.Remove(obj.Id);
+            }
+                    
         }
 
         public void SendJoinRoom(int id, RoomType type, string pass)

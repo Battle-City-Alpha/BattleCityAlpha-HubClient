@@ -73,7 +73,7 @@ namespace hub_client.Windows
             if (!avatar.IsHost)
             {
                 int avatarId = Convert.ToInt32(control_avatar.cb_avatar.SelectedItem);
-                control_avatar.AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString("D2"));
+                control_avatar.AvatarImg.Source = PicsManager.GetImage("Avatars", avatarId.ToString());
             }
             else
             {

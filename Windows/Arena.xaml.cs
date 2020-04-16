@@ -32,16 +32,24 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             _admin = admin;
-            Title = "Arène de duel";
 
-            LoadStyle();
+            foreach (var room in _admin.Rooms)
+                UpdateRoom(room.Value, false);
+
+            Title = "Arène de duel";
             this.FontFamily = style.Font;
 
             _admin.UpdateRoom += UpdateRoom;
 
             singleList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
 
+            this.Loaded += Arena_Loaded;
             this.MouseDown += Window_MouseDown;
+        }
+
+        private void Arena_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadStyle();
         }
 
         private void Room_MouseDoubleClick(object sender, MouseButtonEventArgs e)

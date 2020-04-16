@@ -548,7 +548,7 @@
     <None Include="Assets\Logo\CoinPP.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Avatars\01.png">
+    <None Include="Assets\Avatars\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Duel\duel_result.png">
@@ -584,13 +584,13 @@
     <None Include="Assets\Background\bg_solomode.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Avatars\02.png">
+    <None Include="Assets\Avatars\2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Avatars\03.png">
+    <None Include="Assets\Avatars\3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Avatars\04.png">
+    <None Include="Assets\Avatars\4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Avatars\9999.png">

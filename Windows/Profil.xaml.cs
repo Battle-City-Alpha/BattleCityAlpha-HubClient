@@ -46,7 +46,7 @@ namespace hub_client.Windows
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
         {
             if (!infos.Avatar.IsHost)
-                AvatarImg.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString("D2"));
+                AvatarImg.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
             else
             {
                 using (WebClient wc = new WebClient())
