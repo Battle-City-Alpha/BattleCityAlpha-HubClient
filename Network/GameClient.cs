@@ -551,6 +551,9 @@ namespace hub_client.Network
                 case CommandErrorType.InvalidRoomPass:
                     msg = "Le mot de passe que tu as entré n'est pas le bon !";
                     break;
+                case CommandErrorType.OpponentDisconnected:
+                    msg = "Nous avions trouvé un adversaire mais il s'est déconnecté !";
+                    break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
                     break;
@@ -766,7 +769,7 @@ namespace hub_client.Network
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
             YgoproConfig.UpdateNickname(FormExecution.Username);
 
-            LaunchYGOPro?.Invoke(packet.Room, arg);
+            Application.Current.Dispatcher.Invoke(() => LaunchYGOPro?.Invoke(packet.Room, arg));
 
             logger.Trace("DUEL START - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }

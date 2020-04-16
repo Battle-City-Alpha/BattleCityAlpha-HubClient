@@ -53,6 +53,17 @@ namespace hub_client.WindowsAdministrator
             logger.Trace("Try join duel - " + id.ToString());
         }
 
+        public void SendPlayRanked()
+        {
+            Client.Send(PacketType.PlayRanked, new StandardClientPlayRanked { });
+            logger.Trace("Send Play Ranked");
+        }
+        public void SendStopPlayRanked()
+        {
+            Client.Send(PacketType.StopPlayRanked, new StandardClientStopPlayRanked { });
+            logger.Trace("Send Stop Play Ranked");
+        }
+
         /*public void SendDuelSeek(RoomType type)
         {
             Client.Send(PacketType.DuelSeeker, new StandardClientDuelSeeker

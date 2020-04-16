@@ -34,6 +34,8 @@ namespace hub_client.Windows
             InitializeComponent();
 
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, config.Type);
+            if (pass != string.Empty)
+                txt += Environment.NewLine + "Partie privée"; 
             Title = "Requête de duel";
             if (istrade)
             {

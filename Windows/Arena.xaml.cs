@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace hub_client.Windows
 {
@@ -28,6 +29,9 @@ namespace hub_client.Windows
         ArenaAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
+        public DispatcherTimer RankedTimer;
+        private int _rankedTimerCounter;
+        private bool _isOverRankedBtn = false;
         public Arena(ArenaAdministrator admin)
         {
             InitializeComponent();
@@ -45,6 +49,11 @@ namespace hub_client.Windows
 
             this.Loaded += Arena_Loaded;
             this.MouseDown += Window_MouseDown;
+
+            RankedTimer = new DispatcherTimer();
+            RankedTimer.Interval = TimeSpan.FromSeconds(1);
+            RankedTimer.Tick += RankedTimer_Tick;
+            RankedTimer.IsEnabled = false;
         }
 
         private void Arena_Loaded(object sender, RoutedEventArgs e)
@@ -160,6 +169,51 @@ namespace hub_client.Windows
         private void btn_IA_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenSoloModeWindow();
+        }
+
+        private void btn_playranked_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (RankedTimer.IsEnabled)
+            {
+                _admin.SendStopPlayRanked();
+                StopTimer();
+            }
+            else
+            {
+                _admin.SendPlayRanked();
+
+                _rankedTimerCounter = 0;
+                RankedTimer.IsEnabled = true;
+                btn_playranked.MouseEnter += Btn_playranked_MouseEnter;
+                btn_playranked.MouseLeave += Btn_playranked_MouseLeave;
+            }
+        }
+
+        private void RankedTimer_Tick(object sender, EventArgs e)
+        {
+            _rankedTimerCounter++;
+            if (!_isOverRankedBtn)
+                btn_playranked.text.Content = _rankedTimerCounter.ToString();
+        }
+
+        private void Btn_playranked_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btn_playranked.text.Content = _rankedTimerCounter.ToString();
+            _isOverRankedBtn = false;
+        }
+
+        private void Btn_playranked_MouseEnter(object sender, MouseEventArgs e)
+        {
+            btn_playranked.text.Content = "Stop";
+            _isOverRankedBtn = true;
+        }
+
+        public void StopTimer()
+        {
+            RankedTimer.IsEnabled = false;
+            btn_playranked.text.Content = "Jouer (classé)";
+            btn_playranked.MouseEnter -= Btn_playranked_MouseEnter;
+            btn_playranked.MouseLeave -= Btn_playranked_MouseLeave;
         }
     }
 }

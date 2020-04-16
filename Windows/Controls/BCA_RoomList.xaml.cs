@@ -72,7 +72,8 @@ namespace hub_client.Windows.Controls
                 Id = room.Id,
                 Players = players,
                 Type = room.Config.Type,
-                NeedPassword = room.NeedPassword
+                NeedPassword = room.NeedPassword,
+                IsRanked = room.IsRanked()
             };
 
             if (item == null)

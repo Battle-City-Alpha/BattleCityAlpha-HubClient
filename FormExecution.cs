@@ -175,6 +175,8 @@ namespace hub_client
 
         public static void Client_LaunchYGOPro(Room room, string arg)
         {
+            if (room.IsRanked() && _arena != null && _arena.RankedTimer.IsEnabled)
+                _arena.StopTimer();
             YgoProHelper.LaunchGame(room, arg);
         }
 
