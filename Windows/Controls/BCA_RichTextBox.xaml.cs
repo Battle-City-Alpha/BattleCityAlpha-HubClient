@@ -57,16 +57,16 @@ namespace hub_client.Windows.Controls
         public void OnPlayerColoredMessage(Color color, PlayerInfo player, string text)
         {
             Paragraph pr = new Paragraph();
-            Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] ");
+            Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] [");
             date.Foreground = new SolidColorBrush(color);
             pr.Inlines.Add(date);
 
 
-            Run pl = new Run("[" + ParseUsername(player.Username, player.Rank, player.VIP) + "]");
+            Run pl = new Run(ParseUsername(player.Username, player.Rank, player.VIP));
             pl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + player.ChatColorString));
             pr.Inlines.Add(pl);
 
-            Run txt = new Run(": " + text);
+            Run txt = new Run("]: " + text);
             txt.Foreground = new SolidColorBrush(color);
             pr.Inlines.Add(txt);
 
