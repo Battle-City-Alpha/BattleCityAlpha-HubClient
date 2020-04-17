@@ -142,6 +142,14 @@ namespace hub_client.Cards
                 setnames += CardManager.SetCodes[(int)setcode] + "/";
             return setnames.Remove(setnames.Length - 1);
         }
+        public LinkMarker[] GetLinkMarkers()
+        {
+            List<LinkMarker> Markers = new List<LinkMarker>();
+            foreach (LinkMarker marker in Enum.GetValues(typeof(LinkMarker)))
+                if ((Def & (int)marker) != 0)
+                    Markers.Add(marker);
+            return Markers.ToArray();
+        }
 
         public bool BelongSetname(int setcode)
         {
