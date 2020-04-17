@@ -89,6 +89,12 @@ namespace hub_client.Network
         #region AvatarsHandleForm Events
         public event Action<Customization[]> LoadAvatars;
         #endregion
+        #region BordersHandleForm Events
+        public event Action<Customization[]> LoadBorders;
+        #endregion
+        #region SleevesHandleForm Events
+        public event Action<Customization[]> LoadSleeves;
+        #endregion
         #region TitlesHandleForm Events
         public event Action<Dictionary<int, string>> LoadTitles;
         #endregion
@@ -119,6 +125,8 @@ namespace hub_client.Network
         public AvatarsHandleAdministrator AvatarsHandleAdmin;
         public DuelRequestAdministrator DuelRequestAdmin;
         public TitlesHandleAdministrator TitlesHandleAdmin;
+        public BordersHandleAdministrator BordersHandleAdmin;
+        public SleevesHandleAdministrator SleevesHandleAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -150,6 +158,8 @@ namespace hub_client.Network
             AvatarsHandleAdmin = new AvatarsHandleAdministrator(this);
             DuelRequestAdmin = new DuelRequestAdministrator(this);
             TitlesHandleAdmin = new TitlesHandleAdministrator(this);
+            BordersHandleAdmin = new BordersHandleAdministrator(this);
+            SleevesHandleAdmin = new SleevesHandleAdministrator(this);
         }
 
         private void InitManager()
@@ -304,6 +314,12 @@ namespace hub_client.Network
                 case PacketType.LoadAvatar:
                     OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
                     break;
+                case PacketType.LoadBorders:
+                    OnLoadBorders(JsonConvert.DeserializeObject<StandardServerLoadBorders>(packet));
+                    break;
+                case PacketType.LoadSleeves:
+                    OnLoadSleeves(JsonConvert.DeserializeObject<StandardServerLoadSleeves>(packet));
+                    break;
                 case PacketType.LoadBrocante:
                     OnLoadBrocante(JsonConvert.DeserializeObject<StandardServerLoadBrocante>(packet));
                     break;
@@ -339,6 +355,12 @@ namespace hub_client.Network
                     break;
                 case PacketType.GiveTitle:
                     OnGetTitle(JsonConvert.DeserializeObject<StandardServerGetTitle>(packet));
+                    break;
+                case PacketType.GiveBorder:
+                    OnGiveBorder(JsonConvert.DeserializeObject<StandardServerGetBorder>(packet));
+                    break;
+                case PacketType.GiveSleeve:
+                    OnGiveSleeve(JsonConvert.DeserializeObject<StandardServerGetSleeve>(packet));
                     break;
                 case PacketType.AskTitle:
                     OnLoadTitles(JsonConvert.DeserializeObject<StandardServerLoadTitles>(packet));
@@ -671,7 +693,17 @@ namespace hub_client.Network
         public void OnGiveAvatar(StandardServerGetAvatar packet)
         {
             OpenPopBox("Vous avez reçu l'avatar : " + packet.Id + " de la part de " + packet.Player.Username, "Réception d'avatar");
-            logger.Trace("GET CARD - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+            logger.Trace("GET AVATAR - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+        public void OnGiveBorder(StandardServerGetBorder packet)
+        {
+            OpenPopBox("Vous avez reçu la bordure : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de bordure");
+            logger.Trace("GET BORDER - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+        public void OnGiveSleeve(StandardServerGetSleeve packet)
+        {
+            OpenPopBox("Vous avez reçu la sleeve : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de sleeve");
+            logger.Trace("GET SLEEVE - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
         }
         public void OnCardDonation(StandardServerCardDonation packet)
         {
@@ -728,6 +760,16 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD AVATARS - Ids : {0}", packet.Avatars);
             Application.Current.Dispatcher.Invoke(() => LoadAvatars?.Invoke(packet.Avatars));
+        }
+        public void OnLoadBorders(StandardServerLoadBorders packet)
+        {
+            logger.Trace("LOAD BORDERS - Ids : {0}", packet.Borders);
+            Application.Current.Dispatcher.Invoke(() => LoadBorders?.Invoke(packet.Borders));
+        }
+        public void OnLoadSleeves(StandardServerLoadSleeves packet)
+        {
+            logger.Trace("LOAD SLEEVES - Ids : {0}", packet.Sleeves);
+            Application.Current.Dispatcher.Invoke(() => LoadSleeves?.Invoke(packet.Sleeves));
         }
 
         public void OnLoadBrocante(StandardServerLoadBrocante packet)

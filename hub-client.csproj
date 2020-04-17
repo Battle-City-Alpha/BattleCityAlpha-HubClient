@@ -157,6 +157,7 @@
     <Compile Include="Stuff\PlayerItem.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
     <Compile Include="WindowsAdministrator\AvatarsHandleAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\BordersHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="WindowsAdministrator\RegisterAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\SleevesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
@@ -183,6 +185,9 @@
     </Compile>
     <Compile Include="Windows\BonusBox.xaml.cs">
       <DependentUpon>BonusBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BordersHandle.xaml.cs">
+      <DependentUpon>BordersHandle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Brocante.xaml.cs">
       <DependentUpon>Brocante.xaml</DependentUpon>
@@ -277,6 +282,9 @@
     <Compile Include="Windows\Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SleevesHandle.xaml.cs">
+      <DependentUpon>SleevesHandle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\SoloMode.xaml.cs">
       <DependentUpon>SoloMode.xaml</DependentUpon>
     </Compile>
@@ -302,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\BonusBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BordersHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -418,6 +430,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SleevesHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

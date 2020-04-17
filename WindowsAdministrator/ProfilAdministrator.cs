@@ -41,5 +41,17 @@ namespace hub_client.WindowsAdministrator
             TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin);
             form.Show();
         }
+        public void OpenBordersForm()
+        {
+            Client.Send(PacketType.LoadBorders, new StandardClientLoadBorders());
+            BordersHandle form = new BordersHandle(Client.BordersHandleAdmin);
+            form.Show();
+        }
+        public void OpenSleevesForm()
+        {
+            Client.Send(PacketType.LoadSleeves, new StandardClientLoadSleeves());
+            SleevesHandle form = new SleevesHandle(Client.SleevesHandleAdmin);
+            form.Show();
+        }
     }
 }

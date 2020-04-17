@@ -1,4 +1,6 @@
-﻿using BCA.Network.Packets.Enums;
+﻿using BCA.Common;
+using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Assets;
 using hub_client.Configuration;
@@ -46,15 +48,43 @@ namespace hub_client.Windows
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
         {
             if (!infos.Avatar.IsHost)
-                AvatarImg.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
+                img_avatar.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
             else
             {
                 using (WebClient wc = new WebClient())
                 {
-                    wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Avatar);
                     wc.DownloadFileAsync(
                         new System.Uri(infos.Avatar.URL),
                         Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
+                        );
+                }
+            }
+
+            if (!infos.Border.IsHost)
+                img_border.Source = PicsManager.GetImage("Borders", infos.Border.Id.ToString());
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Border);
+                    wc.DownloadFileAsync(
+                        new System.Uri(infos.Border.URL),
+                        Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
+                        );
+                }
+            }
+
+            if (!infos.Sleeve.IsHost)
+                img_sleeve.Source = PicsManager.GetImage("Sleeves", infos.Sleeve.Id.ToString());
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Sleeve);
+                    wc.DownloadFileAsync(
+                        new System.Uri(infos.Sleeve.URL),
+                        Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")
                         );
                 }
             }
@@ -81,9 +111,20 @@ namespace hub_client.Windows
             this.Show();
         }
 
-        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization item)
         {
-            AvatarImg.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")));
+            switch (item.CustomizationType)
+            {
+                case CustomizationType.Avatar:
+                    img_avatar.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")));
+                    break;
+                case CustomizationType.Border:
+                    img_border.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")));
+                    break;
+                case CustomizationType.Sleeve:
+                    img_sleeve.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")));
+                    break;
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -94,6 +135,14 @@ namespace hub_client.Windows
         private void AvatarImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _admin.OpenAvatarsForm();
+        }
+        private void img_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.OpenBordersForm();
+        }
+        private void img_sleeve_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.OpenSleevesForm();
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

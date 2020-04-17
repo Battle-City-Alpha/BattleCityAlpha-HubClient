@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="DuelResult" Height="340.293" Width="826.411" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True">
+        Title="Résultat de duel" Height="340.293" Width="826.411" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True">
     <Border CornerRadius="100" BorderThickness="3" BorderBrush="Black">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">

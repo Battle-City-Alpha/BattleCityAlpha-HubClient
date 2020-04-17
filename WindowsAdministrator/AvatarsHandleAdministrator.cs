@@ -28,8 +28,8 @@ namespace hub_client.WindowsAdministrator
 
         public void ChangeAvatar(int id)
         {
-            StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = Convert.ToInt32(id) };
-            FormExecution.Client.Send(PacketType.ChangeAvatar, packet);
+            StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = id };
+            Client.Send(PacketType.ChangeAvatar, packet);
         }
     }
 }

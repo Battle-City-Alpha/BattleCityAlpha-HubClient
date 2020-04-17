@@ -191,6 +191,12 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.GiveCard, _cmdParser.GiveCard(txt.Substring(cmd.Length + 1)));
                         case "GIVEAVATAR":
                             return new NetworkData(PacketType.GiveAvatar, _cmdParser.GiveAvatar(txt.Substring(cmd.Length + 1)));
+                        case "GIVEBORDER":
+                            return new NetworkData(PacketType.GiveBorder, _cmdParser.GiveBorder(txt.Substring(cmd.Length + 1)));
+                        case "GIVESLEEVE":
+                            return new NetworkData(PacketType.GiveSleeve, _cmdParser.GiveSleeve(txt.Substring(cmd.Length + 1)));
+                        case "GIVETITLE":
+                            return new NetworkData(PacketType.GiveTitle, _cmdParser.GiveTitle(txt.Substring(cmd.Length + 1)));
                         case "ENABLED":
                             return new NetworkData(PacketType.EnabledAccount, _cmdParser.EnabledAccount(txt.Substring(cmd.Length + 1)));
                         case "DISABLED":

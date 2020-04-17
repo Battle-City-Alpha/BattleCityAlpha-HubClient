@@ -231,6 +231,72 @@ namespace hub_client.Helpers
                 Avatar = id
             };
         }
+        public StandardClientGiveTitle GiveTitle(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
+                return null;
+            }
+
+            int id = -1;
+            Int32.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGiveTitle
+            {
+                Target = target,
+                TitleID = id
+            };
+        }
+        public StandardClientGiveBorder GiveBorder(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
+                return null;
+            }
+
+            int id = -1;
+            Int32.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGiveBorder
+            {
+                Target = target,
+                Border = id
+            };
+        }
+        public StandardClientGiveSleeve GiveSleeve(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            PlayerInfo infos = FormExecution.Client.GetPlayerInfo(target);
+            if (infos == null)
+            {
+                FormExecution.Client?.OpenPopBox("Le joueur " + target + " n'est pas connecté.", "Erreur");
+                return null;
+            }
+
+            int id = -1;
+            Int32.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGiveSleeve
+            {
+                Target = target,
+                Sleeve = id
+            };
+        }
         public StandardClientGiveCard GiveCard(string txt)
         {
             string[] args = txt.Split(' ');
