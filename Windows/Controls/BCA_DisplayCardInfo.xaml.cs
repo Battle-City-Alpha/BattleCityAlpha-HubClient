@@ -40,12 +40,22 @@ namespace hub_client.Windows.Controls
             }
             else
             {
-                if (typeArray.Contains(CardType.Pendule))
-                    level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
-                else
-                    level = card.Level + "★";
+                if (!typeArray.Contains(CardType.Link))
+                {
+                    if (typeArray.Contains(CardType.Pendule))
+                        level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
+                    else
+                        level = card.Level + "★";
 
-                atkdef = string.Format("{0}/{1}", card.Atk, card.Def);
+                    atkdef = string.Format("{0}/{1}", card.Atk, card.Def);
+                }
+                else
+                {
+                    LinkMarker[] markers = card.GetLinkMarkers();
+                    atkdef = card.Atk + "/LINK-" + markers.Count();
+
+                    level = GetStringLinksMarkers(markers);
+                }
                 attribute = string.Format("{0}|{1}", card.GetRace(), card.GetAttribute());
             }
             tb_cardlevel.Text = level;
@@ -55,6 +65,42 @@ namespace hub_client.Windows.Controls
             tb_carddesc.Text = card.Description;
 
             img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", card.Id + ".jpg" });
+        }
+
+        private string GetStringLinksMarkers(IEnumerable<LinkMarker> types)
+        {
+            string toReturn = "";
+            foreach (var linkmarker in types)
+            {
+                switch (linkmarker)
+                {
+                    case LinkMarker.BottomLeft:
+                        toReturn += "[↙]";
+                        break;
+                    case LinkMarker.Bottom:
+                        toReturn += "[↓]";
+                        break;
+                    case LinkMarker.BottomRight:
+                        toReturn += "[↘]";
+                        break;
+                    case LinkMarker.Left:
+                        toReturn += "[←]";
+                        break;
+                    case LinkMarker.Right:
+                        toReturn += "[→]";
+                        break;
+                    case LinkMarker.TopLeft:
+                        toReturn += "[↖]";
+                        break;
+                    case LinkMarker.Top:
+                        toReturn += "[↑]";
+                        break;
+                    case LinkMarker.TopRight:
+                        toReturn += "[↗]";
+                        break;
+                }
+            }
+            return toReturn;
         }
     }
 }
