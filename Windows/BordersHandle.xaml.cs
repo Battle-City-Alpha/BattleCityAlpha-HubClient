@@ -84,6 +84,7 @@ namespace hub_client.Windows
             cb_borders.Items.Clear();
             foreach (Customization border in borders)
                 cb_borders.Items.Add(border.Id);
+            cb_borders.SelectedIndex = 0;
         }
 
         private void LoadStyle()

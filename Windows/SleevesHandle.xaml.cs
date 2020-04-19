@@ -84,6 +84,7 @@ namespace hub_client.Windows
             cb_sleeves.Items.Clear();
             foreach (Customization sleeve in _sleeves)
                 cb_sleeves.Items.Add(sleeve.Id);
+            cb_sleeves.SelectedIndex = 0;
         }
 
         private void LoadStyle()

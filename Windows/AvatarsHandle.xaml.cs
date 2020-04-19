@@ -64,6 +64,7 @@ namespace hub_client.Windows
             control_avatar.cb_avatar.Items.Clear();
             foreach (Customization avatar in avatars)
                 control_avatar.cb_avatar.Items.Add(avatar.Id);
+            control_avatar.cb_avatar.SelectedIndex = 0;
         }
 
         private void cb_avatar_SelectionChanged(object sender, SelectionChangedEventArgs e)

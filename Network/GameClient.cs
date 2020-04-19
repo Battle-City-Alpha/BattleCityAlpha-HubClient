@@ -107,6 +107,10 @@ namespace hub_client.Network
         #region OfflineMessagesBox Events
         public event Action<OfflineMessage[]> LoadOfflineMessages;
         #endregion
+        #region PrestigeShopForm Events
+        public event Action<int> UpdatePP;
+        public event Action<int> UpdateProgress;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -127,6 +131,7 @@ namespace hub_client.Network
         public TitlesHandleAdministrator TitlesHandleAdmin;
         public BordersHandleAdministrator BordersHandleAdmin;
         public SleevesHandleAdministrator SleevesHandleAdmin;
+        public PrestigeShopAdministrator PrestigeShopAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -160,6 +165,7 @@ namespace hub_client.Network
             TitlesHandleAdmin = new TitlesHandleAdministrator(this);
             BordersHandleAdmin = new BordersHandleAdministrator(this);
             SleevesHandleAdmin = new SleevesHandleAdministrator(this);
+            PrestigeShopAdmin = new PrestigeShopAdministrator(this);
         }
 
         private void InitManager()
@@ -374,6 +380,36 @@ namespace hub_client.Network
                 case PacketType.LoadPlayerCustomization:
                     OnLoadPlayerCustomizationTextures(JsonConvert.DeserializeObject<StandardServerLoadPlayerCustomizationTextures>(packet));
                     break;
+                case PacketType.ResetStats:
+                    OnResetStat(JsonConvert.DeserializeObject<StandardServerResetStat>(packet));
+                    break;
+                case PacketType.ChangeUsername:
+                    OnChangeUsername(JsonConvert.DeserializeObject<StandardServerChangeUsername>(packet));
+                    break;
+                case PacketType.UsernameColor:
+                    OnChangeChatColor(JsonConvert.DeserializeObject<StandardServerUsernameColor>(packet));
+                    break;
+                case PacketType.BuyVIP:
+                    OnBuyVIP(JsonConvert.DeserializeObject<StandardServerBuyVIP>(packet));
+                    break;
+                case PacketType.BuyDoubleBP:
+                    OnBuyDoubleBP(JsonConvert.DeserializeObject<StandardServerDoubleBP>(packet));
+                    break;
+                case PacketType.BuyOwnCustom:
+                    OnBuyOwnCustomization(JsonConvert.DeserializeObject<StandardServerBuyOwnCustomization>(packet));
+                    break;
+                case PacketType.BuyPrestigeCustom:
+                    OnBuyPrestigeCustomization(JsonConvert.DeserializeObject<StandardServerBuyPrestigeCustomization>(packet));
+                    break;
+                case PacketType.BuyGreet:
+                    OnBuyInfiniteGreet(JsonConvert.DeserializeObject<StandardServerGreetInfinite>(packet));
+                    break;
+                case PacketType.BuyMonthPack:
+                    OnBuyMonthPack(JsonConvert.DeserializeObject<StandardServerBuyMonthPack>(packet));
+                    break;
+                case PacketType.OpenPrestigeShop:
+                    OnOpenPrestigeShop(JsonConvert.DeserializeObject<StandardServerOpenPrestigeShop>(packet));
+                    break;
             }
         }
 
@@ -567,7 +603,7 @@ namespace hub_client.Network
                     msg = "••• La quantité doit être strictement positif.";
                     break;
                 case CommandErrorType.AlreadyInDuel:
-                    msg = "Vous êtes déja en duel.";
+                    msg = "Tu es déja en duel.";
                     break;
                 case CommandErrorType.PlayerNotInDuel:
                     msg = "••• Ce joueur n'est actuellement pas en duel.";
@@ -577,6 +613,12 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.OpponentDisconnected:
                     msg = "Nous avions trouvé un adversaire mais il s'est déconnecté !";
+                    break;
+                case CommandErrorType.URLTooLong:
+                    msg = "L'URL que tu as entré est trop longue (limite 500 caractères) !";
+                    break;
+                case CommandErrorType.NotEnoughPP:
+                    msg = "Tu ne possèdes pas assez de PPs !";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -889,7 +931,70 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => LoadOfflineMessages?.Invoke(packet.Messages));
         }
 
-        public string ParseUsernameS(string username, PlayerRank rank, bool isVip)
+        public void OnResetStat(StandardServerResetStat packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Tes stats viennent d'être réinitialisées !", "Réinitialisation des stats", false);
+            logger.Trace("RESET STAT RECIEVED");
+        }
+        public void OnChangeUsername(StandardServerChangeUsername packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            FormExecution.Username = packet.Username;
+            OpenPopBox("Ton pseudo a été changé ! Nouveau pseudo : " + packet.Username, "Changement de pseudo", false);
+            logger.Trace("CHANGE USERNAME - New username : {0}", packet.Username);
+        }
+        public void OnChangeChatColor(StandardServerUsernameColor packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Tu as désormais une nouvelle couleur dans le chat, va l'essayer !", "Changement de couleur de pseudo", false);
+            logger.Trace("CHANGE USERNAME COLOR");
+        }
+        public void OnBuyMonthPack(StandardServerBuyMonthPack packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens d'obtenir le pack du mois, contenant un avatar, une bordure, une sleeve et t'offrant un jour de multiplication par deux de tes gains de BPs en duel !", "Pack du mois !", false);
+            logger.Trace("BUY MONTH PACK");
+        }
+        public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un ta customisation personnalisée ! Va vite l'essayer dans ton profil !", "Customisation personnalisée !", false);
+            logger.Trace("BUY OWN CUSTOMIZATION");
+        }
+        public void OnBuyPrestigeCustomization(StandardServerBuyPrestigeCustomization packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une customisation de prestige ! Va vite l'essayer dans ton profil !", "Customisation de prestige !", false);
+            logger.Trace("BUY PRESTIGE CUSTOMIZATION");
+        }
+        public void OnBuyVIP(StandardServerBuyVIP packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !", "Nouveau VIP !", false);
+            logger.Trace("BUY VIP");
+        }
+        public void OnBuyDoubleBP(StandardServerDoubleBP packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !", "Double de BPs !", false);
+            logger.Trace("BUY DOUBLE BP");
+        }
+        public void OnBuyInfiniteGreet(StandardServerGreetInfinite packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu vas désormais pouvoir changer de greet à l'infini !", "Greet infini !", false);
+            logger.Trace("BUY INIFINITE GREET");
+        }
+
+        public void OnOpenPrestigeShop(StandardServerOpenPrestigeShop packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            Application.Current.Dispatcher.Invoke(() => UpdateProgress?.Invoke(packet.Progress));
+            logger.Trace("Open Prestige Shop");
+        }
+
+        public string ParseUsernames(string username, PlayerRank rank, bool isVip)
         {
             /*switch (rank)
             {

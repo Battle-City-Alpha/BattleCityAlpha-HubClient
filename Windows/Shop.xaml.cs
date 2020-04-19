@@ -304,8 +304,7 @@ namespace hub_client.Windows
         }
         private void btn_prestigeshop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PrestigeShop shop = new PrestigeShop();
-            shop.Show();
+            FormExecution.OpenPrestigeShop();
         }
 
         private void Window_Closed(object sender, EventArgs e)

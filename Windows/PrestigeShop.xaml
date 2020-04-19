@@ -5,29 +5,161 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Boutique de prestige" Height="662.783" Width="917.13" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen">
-    <Window.Background>
-        <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
-            <ImageBrush.ImageSource>
-                <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_prestigeshop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Controls:BCA_PurchaseShopItem x:Name="VIP_Item" Grid.Row="0" Grid.Column="0"/>
-        <Controls:BCA_PurchaseShopItem x:Name="Username_Item" Grid.Column="0" Grid.Row="1"/>
-        <Controls:BCA_PurchaseShopItem x:Name="Greet_Item" Grid.Column="1" Grid.Row="0"/>
-        <Controls:BCA_PurchaseShopItem x:Name="Avatar_Item" Grid.Column="1" Grid.Row="1"/>
-        <Controls:BCA_PurchaseShopItem x:Name="DoubleBP_Item" Grid.Column="2" Grid.Row="0"/>
-        <Controls:BCA_PurchaseShopItem x:Name="PP_Item" Grid.Column="2" Grid.Row="1"/>
-    </Grid>
+        Title="Boutique de prestige" Height="662.783" Width="972.33" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="NoResize">
+    <Border x:Name="bg_border" CornerRadius="50" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_prestigeshop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,45,5" Grid.Column="2">
+                    <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeBlack.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeBlack.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseBlack.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="10,0" Grid.ColumnSpan="2">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" >
+                        <Label Content="Couverture frais mensuels via donations : " FontSize="20" VerticalAlignment="Center" FontFamily="Dosis"/>
+                        <ProgressBar x:Name="progressBar_donation" Grid.Column="0" VerticalAlignment="Center" Height="30" Width="200" Margin="10,0" Value="20" Foreground="#FF2264FF" Background="{x:Null}" BorderBrush="Black" BorderThickness="2"/>
+                        <Label x:Name="label_progressbar" Content="99" FontSize="20"/>
+                        <Label Content="%" FontSize="20"/>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Controls:BCA_ColorButton x:Name="btn_get_PP" Padding="5,5,20,5" ButtonText="Obtenir des PPs" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="1"/>
+                    <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="0, 0, 0, 0">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.Background>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
+                            <Label Name="label_PP" Content="????" FontSize="20" VerticalAlignment="Center" FontFamily="Dosis"/>
+                            <Label Content="PP" FontSize="20"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Center" Margin="20,5, 20, 15" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="MonthPack_Item" Grid.Column="1" Grid.Row="0"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="VIP_Item" Grid.Row="0" Grid.Column="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="DoubleBP_Item" Grid.Column="1" Grid.Row="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="UsernameColor_Item" Grid.Column="2" Grid.Row="0"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="AvatarURL_Item" Grid.Column="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="BorderURL_Item" Grid.Column="1"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="SleeveURL_Item" Grid.Column="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="AvatarList_Item" Grid.Column="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="BorderList_Item" Grid.Column="1"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="SleeveList_Item" Grid.Column="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="TitleList_Item" Grid.Column="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="Greet_Item" Grid.Column="1"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="ChangeUsername_Item" Grid.Column="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="ResetStat_Item" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </Window>

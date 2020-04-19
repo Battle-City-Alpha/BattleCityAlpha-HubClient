@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Assets;
 using hub_client.Cards;
 using hub_client.Configuration;
@@ -286,6 +287,12 @@ namespace hub_client
             logger.Trace("Open Shop");
             _shop = new Shop(Client.ShopAdmin);
             _shop.Show();
+        }
+        public static void OpenPrestigeShop()
+        {
+            logger.Trace("Open Prestige Shop");
+            Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
+            PrestigeShop pshop = new PrestigeShop(Client.PrestigeShopAdmin);
         }
         public static void OpenPurchase(BoosterInfo booster)
         {
