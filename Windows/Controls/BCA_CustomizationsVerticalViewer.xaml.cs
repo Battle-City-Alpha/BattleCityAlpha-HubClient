@@ -1,0 +1,104 @@
+﻿using BCA.Common;
+using hub_client.Assets;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+
+namespace hub_client.Windows.Controls
+{
+    /// <summary>
+    /// Logique d'interaction pour BCA_CustomizationsVerticalViewer.xaml
+    /// </summary>
+    public partial class BCA_CustomizationsVerticalViewer : UserControl
+    {
+        private Customization[] _customs;
+        private int _index = 2;
+
+        AssetsManager PicsManager = new AssetsManager();
+        public BCA_CustomizationsVerticalViewer()
+        {
+            InitializeComponent();
+        }
+
+        public void LoadFirstCustoms(Customization[] customs)
+        {
+            _customs = customs;
+
+            LoadByIndex();
+        }
+        private void LoadByIndex()
+        {
+            if (_index > _customs.Length - 1)
+                _index--;
+            img_center.Source = LoadCustom(_customs[_index]);
+
+            if (_index - 1 < 0)
+                img_up.Source = null;
+            else
+                img_up.Source = LoadCustom(_customs[_index - 1]);
+
+            if (_index + 1 > _customs.Length - 1)
+                img_down.Source = null;
+            else
+                img_down.Source = LoadCustom(_customs[_index + 1]);
+        }
+
+        public void RightArrow()
+        {
+            if (_index + 1 > _customs.Length - 1)
+                return;
+            _index++;
+            LoadByIndex();
+        }
+        public void LeftArrow()
+        {
+            if (_index - 1 < 0)
+                return;
+            _index--;
+            LoadByIndex();
+        }
+        public int GetIndex()
+        {
+            return _index;
+        }
+
+        private BitmapImage LoadCustom(Customization custom)
+        {
+            if (!custom.IsHost)
+                return GetImage("Borders", custom.Id.ToString());
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFile(
+                        new System.Uri(custom.URL),
+                        Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
+                        );
+                }
+                return GetImage("Borders", "temp");
+            }
+        }
+        private BitmapImage GetImage(string directory, string img)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
+            image.EndInit();
+            return image;
+        }
+    }
+}

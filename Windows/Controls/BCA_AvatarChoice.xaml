@@ -34,7 +34,7 @@
             <Border.Background>
                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
             </Border.Background>
-            <Image x:Name="AvatarImg"  Margin="3" Source="pack://siteoforigin:,,,/Assets/Avatars/00.PNG" />
+            <Image x:Name="AvatarImg"  Margin="3" Stretch="Fill"  />
         </Border>
         <local:BCA_ColorButton x:Name="btn_save_avatar" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="10,25.8" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder"/>
     </Grid>

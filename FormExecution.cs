@@ -294,6 +294,23 @@ namespace hub_client
             Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
             PrestigeShop pshop = new PrestigeShop(Client.PrestigeShopAdmin);
         }
+        public static void OpenPrestigeCustomizationsViewer()
+        {
+            logger.Trace("Open Prestige Customizations viewer");
+            PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, true);
+            viewer.Show();
+        }
+        public static void OpenPrestigeCustomizationsVerticalViewer()
+        {
+            logger.Trace("Open Prestige Customizations vertical viewer");
+            PrestigeCustomizationViewerVertical viewer = new PrestigeCustomizationViewerVertical(Client.PrestigeCustomizationsViewerAdmin, true);
+            viewer.Show();
+        }
+        public static void OpenPrestigeTitleViewer()
+        {
+            TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin, true);
+            form.Show();
+        }
         public static void OpenPurchase(BoosterInfo booster)
         {
             logger.Trace("Open Purchase");

@@ -33,6 +33,11 @@ namespace hub_client.Windows
 
         AssetsManager PicsManager = new AssetsManager();
 
+        private bool IsMine()
+        {
+            return FormExecution.Username == this.tb_username.Text;
+        }
+
         public Profil(ProfilAdministrator admin)
         {
             InitializeComponent();
@@ -99,6 +104,7 @@ namespace hub_client.Windows
             tb_rankeddraw.Text = infos.RankedDraw.ToString();
             tb_elo.Text = infos.ELO.ToString();
             tb_rank.Text = infos.Rank.ToString();
+            tb_ranking.Text = infos.Ranking.ToString();
 
             tb_single.Text = infos.SingleWin.ToString() + "|" + infos.SingleLose.ToString() + "|" + infos.SingleDraw.ToString();
             tb_match.Text = infos.MatchWin.ToString() + "|" + infos.MatchLose.ToString() + "|" + infos.MatchDraw.ToString();
@@ -116,14 +122,32 @@ namespace hub_client.Windows
             switch (item.CustomizationType)
             {
                 case CustomizationType.Avatar:
-                    img_avatar.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")));
+                    img_avatar.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png"));
                     break;
                 case CustomizationType.Border:
-                    img_border.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")));
+                    img_border.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png"));
                     break;
                 case CustomizationType.Sleeve:
-                    img_sleeve.Source = new BitmapImage(new Uri(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")));
+                    img_sleeve.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png"));
                     break;
+            }
+        }
+
+        private BitmapImage GetImage(string path)
+        {
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new Uri(path);
+                image.EndInit();
+                return image;
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -134,14 +158,20 @@ namespace hub_client.Windows
 
         private void AvatarImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!this.IsMine())
+                return;
             _admin.OpenAvatarsForm();
         }
         private void img_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!this.IsMine())
+                return;
             _admin.OpenBordersForm();
         }
         private void img_sleeve_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!this.IsMine())
+                return;
             _admin.OpenSleevesForm();
         }
 

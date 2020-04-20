@@ -110,6 +110,7 @@ namespace hub_client.Network
         #region PrestigeShopForm Events
         public event Action<int> UpdatePP;
         public event Action<int> UpdateProgress;
+        public event Action<Customization[]> LoadPrestigeCustomizations;
         #endregion
 
         #region Administrator
@@ -132,6 +133,7 @@ namespace hub_client.Network
         public BordersHandleAdministrator BordersHandleAdmin;
         public SleevesHandleAdministrator SleevesHandleAdmin;
         public PrestigeShopAdministrator PrestigeShopAdmin;
+        public PrestigeCustomizationsViewerAdministrator PrestigeCustomizationsViewerAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -166,6 +168,7 @@ namespace hub_client.Network
             BordersHandleAdmin = new BordersHandleAdministrator(this);
             SleevesHandleAdmin = new SleevesHandleAdministrator(this);
             PrestigeShopAdmin = new PrestigeShopAdministrator(this);
+            PrestigeCustomizationsViewerAdmin = new PrestigeCustomizationsViewerAdministrator(this);
         }
 
         private void InitManager()
@@ -193,8 +196,8 @@ namespace hub_client.Network
         private void Client_Disconnected(Exception ex)
         {
             logger.Fatal(ex);
-            OpenPopBox("Vous avez été déconnecté du serveur.", "Problème");
-            Thread.Sleep(1500);
+            OpenPopBox("Vous avez été déconnecté du serveur.", "Problème", true);
+            //Thread.Sleep(1500);
             Shutdown?.Invoke();
         }
 
@@ -412,6 +415,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.GetCustomizationAchievement:
                     OnCustomizationAchievement(JsonConvert.DeserializeObject<StandardServerGetCustomizationAchievement>(packet));
+                    break;
+                case PacketType.AskPrestigeCustoms:
+                    OnLoadPrestigeCustomizations(JsonConvert.DeserializeObject<StandardServerLoadPrestigeCustomizations>(packet));
                     break;
             }
         }
@@ -1100,6 +1106,21 @@ namespace hub_client.Network
             txt += Environment.NewLine + "Va vite voir ce nouvel élément dans ton profil !";
             OpenPopBox(txt, "Quête terminée !");
             logger.Trace("GET CUSTOMIZATION ACHIEVEMENT  - Id : {0} | Type : {1} | Custom Type {2}", packet.Id, packet.AchievementType, packet.CustomType);
+        }
+
+        public void OnLoadPrestigeCustomizations(StandardServerLoadPrestigeCustomizations packet)
+        {
+            switch (packet.CType)
+            {
+                case CustomizationType.Avatar:
+                case CustomizationType.Sleeve:
+                case CustomizationType.Border:
+                case CustomizationType.Title:
+                    Application.Current.Dispatcher.Invoke(() => LoadPrestigeCustomizations?.Invoke(packet.Customizations));
+                    break;
+            }
+
+            logger.Trace("LOAD PRESTIGE CUSTOMIZATIONS - Type : {0}", packet.CType);
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

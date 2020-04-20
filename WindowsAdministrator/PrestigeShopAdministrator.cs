@@ -1,4 +1,5 @@
-﻿using BCA.Network.Packets.Enums;
+﻿using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
@@ -67,6 +68,24 @@ namespace hub_client.WindowsAdministrator
             {
                 ChatColor = color
             });
+        }
+        public void SendCustomCustomization(string url, CustomizationType ctype)
+        {
+            Client.Send(PacketType.BuyOwnCustom, new StandardClientBuyOwnCustomization
+            {
+                URL = url,
+                CustomType = ctype
+            });
+        }
+        public void SendAskPrestigeCustomizations(CustomizationType ctype)
+        {
+            Client.Send(PacketType.AskPrestigeCustoms, new StandardClientAskPrestigeCustomizations { Ctype = ctype });
+            if (ctype == CustomizationType.Avatar || ctype == CustomizationType.Sleeve)
+                FormExecution.OpenPrestigeCustomizationsViewer();
+            else if (ctype == CustomizationType.Title)
+                FormExecution.OpenPrestigeTitleViewer();
+            else if (ctype == CustomizationType.Border)
+                FormExecution.OpenPrestigeCustomizationsVerticalViewer();
         }
     }
 }

@@ -164,6 +164,7 @@
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PanelAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\PrestigeCustomizationsViewerAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PrestigeShopAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PrivateMessageAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ProfilAdministrator.cs" />
@@ -178,17 +179,11 @@
     <Compile Include="Windows\Arena.xaml.cs">
       <DependentUpon>Arena.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AvatarsHandle.xaml.cs">
-      <DependentUpon>AvatarsHandle.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Blacklist.xaml.cs">
       <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\BonusBox.xaml.cs">
       <DependentUpon>BonusBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\BordersHandle.xaml.cs">
-      <DependentUpon>BordersHandle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Brocante.xaml.cs">
       <DependentUpon>Brocante.xaml</DependentUpon>
@@ -213,6 +208,12 @@
     <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
       <DependentUpon>BCA_Button.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Controls\BCA_CustomizationsHorizontalViewer.xaml.cs">
+      <DependentUpon>BCA_CustomizationsHorizontalViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_CustomizationsVerticalViewer.xaml.cs">
+      <DependentUpon>BCA_CustomizationsVerticalViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\BCA_DisplayCardInfo.xaml.cs">
       <DependentUpon>BCA_DisplayCardInfo.xaml</DependentUpon>
     </Compile>
@@ -235,6 +236,9 @@
       <DependentUpon>BCA_TextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
+    <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
+      <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DuelRequest.xaml.cs">
       <DependentUpon>DuelRequest.xaml</DependentUpon>
     </Compile>
@@ -262,6 +266,12 @@
     <Compile Include="Windows\ChoicePopBox.xaml.cs">
       <DependentUpon>ChoicePopBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PrestigeCustomizationsViewerHorizontal.xaml.cs">
+      <DependentUpon>PrestigeCustomizationsViewerHorizontal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PrestigeCustomizationViewerVertical.xaml.cs">
+      <DependentUpon>PrestigeCustomizationViewerVertical.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\PrestigeShop.xaml.cs">
       <DependentUpon>PrestigeShop.xaml</DependentUpon>
     </Compile>
@@ -286,9 +296,6 @@
     <Compile Include="Windows\Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\SleevesHandle.xaml.cs">
-      <DependentUpon>SleevesHandle.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\SoloMode.xaml.cs">
       <DependentUpon>SoloMode.xaml</DependentUpon>
     </Compile>
@@ -305,19 +312,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AvatarsHandle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\Blacklist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\BonusBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\BordersHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,6 +341,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_CustomizationsHorizontalViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_CustomizationsVerticalViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -370,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CustomCustomizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -409,6 +420,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\PrestigeCustomizationsViewerHorizontal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PrestigeCustomizationViewerVertical.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\PrestigeShop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,10 +457,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Shop.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\SleevesHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

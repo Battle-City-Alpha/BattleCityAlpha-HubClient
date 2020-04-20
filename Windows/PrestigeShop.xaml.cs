@@ -1,4 +1,5 @@
-﻿using BCA.Network.Packets.Enums;
+﻿using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
@@ -26,7 +27,6 @@ namespace hub_client.Windows
     public partial class PrestigeShop : Window
     {
         PrestigeShopAdministrator _admin;
-        InputText form = new InputText();
         public PrestigeShop(PrestigeShopAdministrator admin)
         {
             InitializeComponent();
@@ -111,7 +111,7 @@ namespace hub_client.Windows
 
             AvatarList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeAvatar;
             BorderList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeBorder;
-            SleeveURL_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeSleeve;
+            SleeveList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeSleeve;
 
             TitleList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeTitle;
             Greet_Item.btn_purchase.MouseLeftButtonDown += BuyGreetItem;
@@ -141,31 +141,41 @@ namespace hub_client.Windows
         }
         private void BuyPrestigeTitle(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            _admin.SendAskPrestigeCustomizations(CustomizationType.Title);
         }
         private void BuyPrestigeSleeve(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            _admin.SendAskPrestigeCustomizations(CustomizationType.Sleeve);
         }
         private void BuyPrestigeBorder(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            _admin.SendAskPrestigeCustomizations(CustomizationType.Border);
         }
         private void BuyPrestigeAvatar(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            _admin.SendAskPrestigeCustomizations(CustomizationType.Avatar);
         }
         private void BuyCustomSleeve(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
-        }
+            CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Sleeve);
+            window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Sleeve);
+            window.ShowDialog();
+        }        
         private void BuyCustomBorder(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Border);
+            window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Border);
+            window.ShowDialog();
         }
         private void BuyCustomAvatar(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Avatar);
+            window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Avatar);
+            window.Show();
+        }
+        private void SendCustomCustomizationURL(string url, CustomizationType ctype)
+        {
+            _admin.SendCustomCustomization(url, ctype);
         }
         private void BuyUsernameColor(object sender, MouseButtonEventArgs e)
         {

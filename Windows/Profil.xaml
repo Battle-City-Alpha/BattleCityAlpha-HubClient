@@ -35,7 +35,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
-                    <Image x:Name="img_avatar" Source="pack://siteoforigin:,,,/Assets/Avatars/1.png" Margin="3" MouseLeftButtonDown="AvatarImg_MouseLeftButtonDown" Cursor="Hand"/>
+                    <Image x:Name="img_avatar" Source="pack://siteoforigin:,,,/Assets/Avatars/1.png" Margin="3" MouseLeftButtonDown="AvatarImg_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
 
                 </Border>
                 <Grid Grid.Column="1">
@@ -53,7 +53,14 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5, 10, 5, 5"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5, 10, 5, 5"/>
+                                    <TextBlock x:Name="tb_rank" Text="0"  FontSize="24" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Padding="5, 10, 10, 5" FontStyle="Italic" />
+                                </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <TextBlock Text="Titre :" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5"/>
                                     <TextBlock x:Name="tb_title" Text="????" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5" Cursor="Hand" MouseLeftButtonDown="tb_title_MouseLeftButtonDown"/>
@@ -82,7 +89,7 @@
                         <Border.Background>
                             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                         </Border.Background>
-                        <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" Stretch="Uniform" MouseLeftButtonDown="img_border_MouseLeftButtonDown"/>
+                        <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
                     </Border>
                 </Grid>
             </Grid>
@@ -143,8 +150,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Rang :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                            <TextBlock x:Name="tb_rank" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock Text="Classement :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                            <TextBlock x:Name="tb_ranking" Text="0"  Grid.Column="1" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
                         </Grid>
                     </Grid>
                 </Border>
@@ -204,11 +211,11 @@
                         </Grid>
                     </Grid>
                 </Border>
-                <Border BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border BorderBrush="Black" Margin="20,10" BorderThickness="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="142" Height="203">
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
-                    <Image x:Name="img_sleeve" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Stretch="Uniform" MouseLeftButtonDown="img_sleeve_MouseLeftButtonDown"/>
+                    <Image x:Name="img_sleeve" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Stretch="Fill" MouseLeftButtonDown="img_sleeve_MouseLeftButtonDown"/>
                 </Border>
             </Grid>
         </Grid>

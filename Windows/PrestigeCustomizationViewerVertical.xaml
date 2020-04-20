@@ -1,0 +1,65 @@
+﻿<Window x:Class="hub_client.Windows.PrestigeCustomizationViewerVertical"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
+        mc:Ignorable="d"
+         Title="Boutique de prestige" Height="574.153" Width="526.746" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="NoResize">
+    <Border x:Name="bg_border" CornerRadius="50" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_prestigeshop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,45,5" Grid.Column="2">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeBlack.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeBlack.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseBlack.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Border Grid.Row="1" CornerRadius="10" Margin="10" Grid.ColumnSpan="2">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.7"/>
+                </Border.Background>
+                <Controls:BCA_CustomizationsVerticalViewer x:Name="viewer_customs" />
+            </Border>
+            <Border Grid.Row="2" CornerRadius="10" Margin="10" HorizontalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.7"/>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                    <Image x:Name="img_up" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png" Width="75" MouseLeftButtonDown="img_up_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Controls:BCA_ColorButton x:Name="btn_choose" Padding="5" ButtonText="Choisir" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="1" MouseLeftButtonDown="btn_choose_MouseLeftButtonDown"/>
+                    <Image x:Name="img_down" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png" Width="75" MouseLeftButtonDown="img_down_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

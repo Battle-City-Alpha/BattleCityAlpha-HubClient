@@ -32,26 +32,34 @@ namespace hub_client.WindowsAdministrator
         public void OpenAvatarsForm()
         {
             Client.Send(PacketType.LoadAvatar, new StandardClientLoadAvatars());
-            AvatarsHandle form = new AvatarsHandle(Client.AvatarsHandleAdmin);
-            form.Show();
+            /*AvatarsHandle form = new AvatarsHandle(Client.AvatarsHandleAdmin);
+            form.Show();*/
+            PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
+            viewer.Show();
         }
         public void OpenTitlesForm()
         {
             Client.Send(PacketType.AskTitle, new StandardClientAskTitles());
-            TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin);
+            TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin, false);
             form.Show();
         }
         public void OpenBordersForm()
         {
             Client.Send(PacketType.LoadBorders, new StandardClientLoadBorders());
-            BordersHandle form = new BordersHandle(Client.BordersHandleAdmin);
-            form.Show();
+            /*BordersHandle form = new BordersHandle(Client.BordersHandleAdmin);
+            form.Show();*/
+
+            PrestigeCustomizationViewerVertical viewer = new PrestigeCustomizationViewerVertical(Client.PrestigeCustomizationsViewerAdmin, false);
+            viewer.Show();
         }
         public void OpenSleevesForm()
         {
             Client.Send(PacketType.LoadSleeves, new StandardClientLoadSleeves());
-            SleevesHandle form = new SleevesHandle(Client.SleevesHandleAdmin);
-            form.Show();
+            /*SleevesHandle form = new SleevesHandle(Client.SleevesHandleAdmin);
+            form.Show();*/
+
+            PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
+            viewer.Show();
         }
     }
 }

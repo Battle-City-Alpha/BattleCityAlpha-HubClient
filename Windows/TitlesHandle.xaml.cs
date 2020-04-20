@@ -23,9 +23,10 @@ namespace hub_client.Windows
     public partial class TitlesHandle : Window
     {
         private TitlesHandleAdministrator _admin;
+        private bool _prestigetitle;
 
         private AppDesignConfig style = FormExecution.AppDesignConfig;
-        public TitlesHandle(TitlesHandleAdministrator admin)
+        public TitlesHandle(TitlesHandleAdministrator admin, bool prestigetitle)
         {
             InitializeComponent();
             LoadStyle();
@@ -36,6 +37,8 @@ namespace hub_client.Windows
 
             _admin = admin;
             _admin.LoadTitles += _admin_LoadTitles;
+
+            _prestigetitle = prestigetitle;
         }
 
         private void TitlesHandle_Closed(object sender, EventArgs e)
@@ -91,7 +94,10 @@ namespace hub_client.Windows
 
         private void btn_save_title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _admin.ChangeTitle(cb_titles.SelectedItem.ToString());
+            if (!_prestigetitle)
+                _admin.ChangeTitle(cb_titles.SelectedItem.ToString());
+            else
+                _admin.BuyPrestigeTitle(cb_titles.SelectedItem.ToString());
             Close();
         }
     }
