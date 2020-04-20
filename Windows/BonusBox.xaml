@@ -34,7 +34,7 @@
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>
-                <Image x:Name="showBonus" Source="pack://siteoforigin:,,,/Assets/Logo/Coin.png" Margin="20"/>
+                <Image x:Name="showBonus" Source="pack://siteoforigin:,,,/Assets/Logo/BPLogo.png" Margin="20"/>
             </Border>
             <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Row="1" Grid.ColumnSpan="2" Height="Auto" Width="120" Margin="0,10" ButtonText="D'accord !" ButtonTextSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="btnAgree_MouseLeftButtonDown"/>
         </Grid>

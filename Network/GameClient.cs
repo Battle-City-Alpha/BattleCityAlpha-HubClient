@@ -410,6 +410,9 @@ namespace hub_client.Network
                 case PacketType.OpenPrestigeShop:
                     OnOpenPrestigeShop(JsonConvert.DeserializeObject<StandardServerOpenPrestigeShop>(packet));
                     break;
+                case PacketType.GetCustomizationAchievement:
+                    OnCustomizationAchievement(JsonConvert.DeserializeObject<StandardServerGetCustomizationAchievement>(packet));
+                    break;
             }
         }
 
@@ -992,6 +995,111 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
             Application.Current.Dispatcher.Invoke(() => UpdateProgress?.Invoke(packet.Progress));
             logger.Trace("Open Prestige Shop");
+        }
+
+        public void OnCustomizationAchievement(StandardServerGetCustomizationAchievement packet)
+        {
+            string txt = "Vous venez de débloquer une personnalisation via une quête !" + Environment.NewLine;
+            switch (packet.CustomType)
+            {
+                case CustomizationType.Avatar:
+                    txt += "L'avatar n°";
+                    break;
+                case CustomizationType.Border:
+                    txt += "La bordure n°";
+                    break;
+                case CustomizationType.Sleeve:
+                    txt += "La sleeve n°";
+                    break;
+                case CustomizationType.Title:
+                    txt += "Le titre n°";
+                    break;
+            }
+            txt += packet.Id;
+            switch (packet.AchievementType)
+            {
+                case CustomizationAchievementType.LevelUP:
+                    txt += " grâce à ta montée au niveau " + packet.Amount + " ! ";
+                    break;
+                case CustomizationAchievementType.BuyAllBooster:
+                    txt += " car tu possèdes la totalité des cartes du booster : " + packet.BoosterTag + " ! ";
+                    break;
+                case CustomizationAchievementType.ELODown:
+                    txt += " car ton ELO a chuté en dessous de " + packet.Amount + "...";
+                    break;
+                case CustomizationAchievementType.ELOUp:
+                    txt += " car ton ELO est supérieur à " + packet.Amount + " ! ";
+                    break;
+                case CustomizationAchievementType.MatchWin:
+                    txt += " car tu as remporté plus de " + packet.Amount + " matchs ! ";
+                    break;
+                case CustomizationAchievementType.RankedWin:
+                    txt += " car tu as remporté plus de " + packet.Amount + " matchs classés ! ";
+                    break;
+                case CustomizationAchievementType.SingleWin:
+                    txt += " car tu as remporté plus de " + packet.Amount + " singles ! ";
+                    break;
+                case CustomizationAchievementType.TagWin:
+                    txt += " car tu as remporté plus de " + packet.Amount + " tags ! ";
+                    break;
+                case CustomizationAchievementType.RankedLose:
+                    txt += " car tu as perdu plus de " + packet.Amount + " matchs classés ! ";
+                    break;
+                case CustomizationAchievementType.MatchLose:
+                    txt += " car tu as perdu plus de " + packet.Amount + " matchs ! ";
+                    break;
+                case CustomizationAchievementType.SingleLose:
+                    txt += " car tu as perdu plus de " + packet.Amount + " singles ! ";
+                    break;
+                case CustomizationAchievementType.TagLose:
+                    txt += " car tu as perdu plus de " + packet.Amount + " tags ! ";
+                    break;
+                case CustomizationAchievementType.UnlockCards:
+                    txt += " car tu possèdes plus de " + packet.Amount + " cartes !";
+                    break;
+                case CustomizationAchievementType.SURPRISE:
+                    txt += " car tu as accompli une quête secrète !";
+                    break;
+                case CustomizationAchievementType.Event:
+                    txt += " car aujourd'hui est un jour particulier !";
+                    break;
+                case CustomizationAchievementType.AvatarCount:
+                    txt += " car tu as débloqué " + packet.Amount + " avatars !";
+                    break;
+                case CustomizationAchievementType.TitleCount:
+                    txt += " car tu as débloqué " + packet.Amount + " titres !";
+                    break;
+                case CustomizationAchievementType.RageQuit:
+                    txt += " car tu as effectué " + packet.Amount + " rage quit !";
+                    break;
+                case CustomizationAchievementType.GiveUp:
+                    txt += " car tu as abandonné " + packet.Amount + " fois !";
+                    break;
+                case CustomizationAchievementType.PPAmount:
+                    txt += " car tu as désormais plus de " + packet.Amount + " PPs !";
+                    break;
+                case CustomizationAchievementType.BPAmount:
+                    txt += " car tu as désormais plus de " + packet.Amount + " BPs !";
+                    break;
+                case CustomizationAchievementType.GlobalDuelLose:
+                    txt += " car tu as perdu au total " + packet.Amount + " duels !";
+                    break;
+                case CustomizationAchievementType.GlobalDuelMade:
+                    txt += " car tu as fait au total " + packet.Amount + " duels !";
+                    break;
+                case CustomizationAchievementType.GlobalDuelWin:
+                    txt += " car tu as gagné au total " + packet.Amount + " duels !";
+                    break;
+                case CustomizationAchievementType.PlayerSeniority:
+                    txt += " car tu as créé ton compte il y a plus de " + packet.Amount + " jours !";
+                    break;
+                default:
+                    txt += " car ... aucune idée !";
+                    break;
+            }
+            txt += Environment.NewLine + "Va vite voir ce nouvel élément dans ton profil !";
+            OpenPopBox(txt, "Quête terminée !");
+            logger.Trace("GET CUSTOMIZATION ACHIEVEMENT  - Id : {0} | Type : {1} | Custom Type {2}", packet.Id, packet.AchievementType, packet.CustomType);
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

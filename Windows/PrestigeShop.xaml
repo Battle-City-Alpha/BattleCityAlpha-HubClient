@@ -46,7 +46,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="10,0" Grid.ColumnSpan="2">
+                <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="10" Grid.ColumnSpan="2">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.7"/>
                     </Border.Background>
@@ -64,13 +64,14 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Controls:BCA_ColorButton x:Name="btn_get_PP" Padding="5,5,20,5" ButtonText="Obtenir des PPs" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="1"/>
-                    <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="0, 0, 0, 0">
+                    <Border Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" Margin="0,10">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.7"/>
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
                             <Label Name="label_PP" Content="????" FontSize="20" VerticalAlignment="Center" FontFamily="Dosis"/>
-                            <Label Content="PP" FontSize="20"/>
+                            <!-- <Label Content="PP" FontSize="20"/> -->
+                            <Image Source="pack://siteoforigin:,,,/Assets/Logo/CoinPP.png" Margin="5"/>
                         </StackPanel>
                     </Border>
                 </Grid>

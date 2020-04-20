@@ -44,8 +44,9 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="Battle Points : " FontSize="24"  Margin="10"/>
-                        <TextBlock x:Name="tb_bps" Text="????" FontSize="24"  Margin="10"/>
+                        <TextBlock Text="Battle Points : " FontSize="24"  Margin="10" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="tb_bps" Text="????" FontSize="24"  Margin="10" VerticalAlignment="Center"/>
+                        <Image Source="pack://siteoforigin:,,,/Assets/Logo/BPLogo.png" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                     <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown" VerticalAlignment="Center"/>
                     <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Brocante" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown" VerticalAlignment="Center"/>

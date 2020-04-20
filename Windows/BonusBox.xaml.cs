@@ -32,10 +32,12 @@ namespace hub_client.Windows
             {
                 case BonusType.BP:
                     bonus += gift + " BPs !";
+                    showBonus.Margin = new Thickness(40);
                     break;
                 case BonusType.PP:
                     bonus += gift + " PPs !";
                     showBonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/CoinPP.png"));
+                    showBonus.Margin = new Thickness(40);
                     break;
                 case BonusType.Avatar:
                     bonus += "L'avatar n°" + gift + " !";

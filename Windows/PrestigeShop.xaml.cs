@@ -169,8 +169,15 @@ namespace hub_client.Windows
         }
         private void BuyUsernameColor(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            ColorPickerWindow window = new ColorPickerWindow();
+            window.SelectedColor += SendUsernameColor;
+            window.ShowDialog();
         }
+        private void SendUsernameColor(string color)
+        {
+            _admin.SendBuyUsernameColor(color.Substring(3));
+        }
+
         private void BuyDoubleBP(object sender, MouseButtonEventArgs e)
         {
             _admin.SendBuyDoubleBP();

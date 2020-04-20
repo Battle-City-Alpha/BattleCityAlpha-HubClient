@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Trade" Height="793.893" Width="1078.961"
-        ResizeMode="CanResize" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+        ResizeMode="CanResize" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"
