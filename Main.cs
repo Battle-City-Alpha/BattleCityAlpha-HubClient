@@ -2,9 +2,11 @@
 using hub_client.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,6 +64,52 @@ namespace hub_client
             FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo.Last());
             FormExecution.SaveConfig();
             CardManager.LoadCDB(Path.Combine(FormExecution.path, "BattleCityAlpha", "cards.cdb"), true, true);
+        }
+
+        private static bool CheckUpdate()
+        {
+            try
+            {
+
+                WebClient wc = new WebClient();
+                string query = "http://battlecityalpha.xyz/BCA/MAJ/MAJ.php?version=13040";
+                string text = wc.DownloadString(query);
+                if (!text.Contains("A_Jour") && text != "Maj#")
+                {
+                    FormExecution.Client_PopMessageBox("Une mise à jour est disponible !", "Mise à jour", true);
+                    int a = -1;
+                    string Update = "#";
+                    string[] data = text.Split(new[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string Maj in data)
+                    {
+                        a = a + 1;
+                        if (a == 0 || a == data.Length - 1)
+                            continue;
+
+                        Update += Maj + "#";
+
+                    }
+
+                    WebClient wc2 = new WebClient();
+                    string lastVersion = wc2.DownloadString("http://battlecityalpha.xyz/BCA/MAJ/LastVersion.config");
+                    WebClient wc3 = new WebClient();
+                    string News = wc2.DownloadString("http://battlecityalpha.xyz/BCA/MAJ/News.config");
+                    string arg = lastVersion + " " + Update + " " + Assembly.GetExecutingAssembly().Location;
+                    Process p = new Process();
+                    p.StartInfo.FileName = Path.Combine(FormExecution.path, "BCAUpdater.exe");
+                    p.StartInfo.WorkingDirectory = Path.Combine(FormExecution.path);
+                    p.StartInfo.Arguments = arg;
+                    p.StartInfo.Verb = "runas";
+                    p.Start();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                FormExecution.Client_PopMessageBox("Problème de connexion pour vérifier les mises à jour..", "Erreur mise à jour", true);
+                return false;
+            }
         }
     }
 }

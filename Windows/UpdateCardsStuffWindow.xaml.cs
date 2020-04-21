@@ -63,11 +63,11 @@ namespace hub_client.Windows
         }
         private void UnzipFromStream(Stream zipStream, string outFolder)
         {
+            progressBar_update.Value = -1;
             using (var zipInputStream = new ZipInputStream(zipStream))
             {
                 while (zipInputStream.GetNextEntry() is ZipEntry zipEntry)
                 {
-                    progressBar_update.Value++;
                     var entryFileName = zipEntry.Name;
                     // To remove the folder from the entry:
                     //var entryFileName = Path.GetFileName(entryFileName);
