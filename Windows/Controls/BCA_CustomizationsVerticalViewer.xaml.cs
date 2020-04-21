@@ -55,19 +55,33 @@ namespace hub_client.Windows.Controls
                 img_down.Source = LoadCustom(_customs[_index + 1]);
         }
 
-        public void RightArrow()
+        public void DownArrow()
         {
             if (_index + 1 > _customs.Length - 1)
                 return;
             _index++;
-            LoadByIndex();
+
+            img_up.Source = img_center.Source;
+            img_center.Source = img_down.Source;
+
+            if (_index + 1 > _customs.Length - 1)
+                img_down.Source = null;
+            else
+                img_down.Source = LoadCustom(_customs[_index + 1]);
         }
-        public void LeftArrow()
+        public void UpArrow()
         {
             if (_index - 1 < 0)
                 return;
             _index--;
-            LoadByIndex();
+
+            img_down.Source = img_center.Source;
+            img_center.Source = img_up.Source;
+
+            if (_index - 1 < 0)
+                img_up.Source = null;
+            else
+                img_up.Source = LoadCustom(_customs[_index - 1]);
         }
         public int GetIndex()
         {

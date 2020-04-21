@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Assets;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,8 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_CustomizationsViewer : UserControl
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private Customization[] _customs;
         private int _index = 2;
         string ctypetext = "";
@@ -113,14 +116,32 @@ namespace hub_client.Windows.Controls
             if (_index + 1 > _customs.Length - 1)
                 return;
             _index++;
-            LoadByIndex();
+
+            img_left.Source = img_center_left.Source;
+            img_center_left.Source = img_center.Source;
+            img_center.Source = img_center_right.Source;
+            img_center_right.Source = img_right.Source;
+
+            if (_index + 2 > _customs.Length - 1)
+                img_right.Source = null;
+            else
+                img_right.Source = LoadCustom(_customs[_index + 2]);
         }
         public void LeftArrow()
         {
             if (_index - 1 < 0)
                 return;
             _index--;
-            LoadByIndex();
+
+            img_right.Source = img_center_right.Source;
+            img_center_right.Source = img_center.Source;
+            img_center.Source = img_center_left.Source;
+            img_center_left.Source = img_left.Source;
+
+            if (_index - 2 < 0)
+                img_left.Source = null;
+            else
+                img_left.Source = LoadCustom(_customs[_index - 2]);
         }
         public int GetIndex()
         {
@@ -145,13 +166,21 @@ namespace hub_client.Windows.Controls
         }
         private BitmapImage GetImage(string directory, string img)
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
-            image.EndInit();
-            return image;
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
+                image.EndInit();
+                return image;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("IMAGE LOADING - {0}", ex);
+                return null;
+            }
         }
     }
 

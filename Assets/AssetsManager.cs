@@ -22,13 +22,20 @@ namespace hub_client.Assets
 
         public BitmapImage GetImage(string directory, string img)
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new Uri(Path.Combine(path, "Assets", directory, img + ".png"));
-            image.EndInit();
-            return image;
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new Uri(Path.Combine(path, "Assets", directory, img + ".png"));
+                image.EndInit();
+                return image;
+            }
+            catch(Exception ex) {
+                logger.Error("IMAGE LOADING - {0}", ex);
+                return null; 
+            }
         }
 
         public BitmapImage GetImage(string[] directory)

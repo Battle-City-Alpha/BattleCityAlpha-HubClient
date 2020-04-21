@@ -96,12 +96,12 @@ namespace hub_client.Windows
 
         private void img_up_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.viewer_customs.LeftArrow();
+            this.viewer_customs.UpArrow();
         }
 
         private void img_down_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.viewer_customs.RightArrow();
+            this.viewer_customs.DownArrow();
         }
 
         private void btn_choose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

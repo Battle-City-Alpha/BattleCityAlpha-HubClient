@@ -21,9 +21,9 @@ namespace hub_client.Helpers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 9999, false, "");
-        private static Customization _bot_border = new Customization(CustomizationType.Border, 5, false, "");
-        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 2, false, "");
+        private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 406, false, "");
+        private static Customization _bot_border = new Customization(CustomizationType.Border, 26, false, "");
+        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, false, "");
         private static string _deck = "";
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
