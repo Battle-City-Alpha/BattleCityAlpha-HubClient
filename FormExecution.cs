@@ -120,6 +120,15 @@ namespace hub_client
             logger.Trace("FormExecution initialisation.");
         }
 
+        public static void HideLogin()
+        {
+            _login.Hide();
+        }
+        public static void ShowLogin()
+        {
+            _login.Show();
+        }
+
         private static void Client_RoomNeedPassword(int id, RoomType type)
         {
             InputText form = new InputText();
@@ -291,8 +300,9 @@ namespace hub_client
         public static void OpenPrestigeShop()
         {
             logger.Trace("Open Prestige Shop");
-            Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
             PrestigeShop pshop = new PrestigeShop(Client.PrestigeShopAdmin);
+            Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
+            pshop.Show();
         }
         public static void OpenPrestigeCustomizationsViewer()
         {

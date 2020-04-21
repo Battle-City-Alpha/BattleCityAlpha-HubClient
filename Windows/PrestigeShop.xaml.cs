@@ -46,7 +46,6 @@ namespace hub_client.Windows
         private void _admin_UpdateProgress(int progress)
         {
             progressBar_donation.Value = progress;
-            this.Show();
         }
         private void _admin_UpdatePrestigePoints(int pp)
         {

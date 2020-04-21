@@ -46,6 +46,8 @@ namespace hub_client
         }
         private void UpdateCardsStuff(string updatefile)
         {
+            FormExecution.HideLogin();
+
             FormExecution.Client_PopMessageBox("Un mise à jour au niveau des cartes et des boosters est disponible !", "Mise à jour", true);
 
             string[] updates = updatefile.Split(' ');
@@ -64,6 +66,8 @@ namespace hub_client
             FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo.Last());
             FormExecution.SaveConfig();
             CardManager.LoadCDB(Path.Combine(FormExecution.path, "BattleCityAlpha", "cards.cdb"), true, true);
+
+            FormExecution.ShowLogin();
         }
 
         private static bool CheckUpdate()
