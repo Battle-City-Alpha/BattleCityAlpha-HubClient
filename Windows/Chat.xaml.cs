@@ -57,6 +57,8 @@ namespace hub_client.Windows
 
             this.MouseDown += Chat_MouseDown;
 
+            this.Title = "Battle City Alpha - " + Main.VERSION;
+
         }
 
         private void _admin_PlayerChatMessage(Color c, PlayerInfo p, string msg)

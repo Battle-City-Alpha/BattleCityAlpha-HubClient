@@ -227,7 +227,7 @@ namespace hub_client
             return false;
         }
 
-        private static void Client_PopMessageBox(string text, string title, bool showDialog)
+        public static void Client_PopMessageBox(string text, string title, bool showDialog)
         {
             PopBox box = new PopBox(text, title);
             if (showDialog)

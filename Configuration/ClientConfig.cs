@@ -16,6 +16,8 @@ namespace hub_client.Configuration
         public bool Connexion_Message = true;
         public bool Autoscroll = true;
 
+        public int CardsStuffVersion = 0;
+
         public void Save()
         {
             File.WriteAllText(FormExecution.ClientConfigPath, JsonConvert.SerializeObject(this, Formatting.Indented));
