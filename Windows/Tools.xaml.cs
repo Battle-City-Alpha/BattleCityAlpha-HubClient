@@ -87,7 +87,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_save});
+            Buttons.AddRange(new[] { btn_save, btn_datasretrieval});
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -174,6 +174,11 @@ namespace hub_client.Windows
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void btn_datasretrieval_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FormExecution.OpenDatasRetrievalWindow();
         }
     }
 }

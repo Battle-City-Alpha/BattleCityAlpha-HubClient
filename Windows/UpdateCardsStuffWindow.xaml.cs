@@ -53,6 +53,9 @@ namespace hub_client.Windows
                     UnzipFromStream(wc.OpenRead(GetUpdateFileLink(update)), FormExecution.path);
                 }
             }
+
+            progressBar_update.Value = 100;
+            progressBar_update.IsIndeterminate = false;
             FormExecution.Client_PopMessageBox("Mise à jour terminée !", "Mise à jour", true);
             Close();
         }
@@ -63,7 +66,7 @@ namespace hub_client.Windows
         }
         private void UnzipFromStream(Stream zipStream, string outFolder)
         {
-            progressBar_update.Value = -1;
+            progressBar_update.IsIndeterminate = true;
             using (var zipInputStream = new ZipInputStream(zipStream))
             {
                 while (zipInputStream.GetNextEntry() is ZipEntry zipEntry)

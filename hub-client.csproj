@@ -160,6 +160,7 @@
     <Compile Include="WindowsAdministrator\BordersHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\DataRetrievalAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
@@ -238,6 +239,9 @@
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
       <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataRetrievalWindow.xaml.cs">
+      <DependentUpon>DataRetrievalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DuelRequest.xaml.cs">
       <DependentUpon>DuelRequest.xaml</DependentUpon>
@@ -387,6 +391,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\DataRetrievalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\DuelRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -528,9 +536,6 @@
     <None Include="Assets\Background\bg_searchcard.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Background\bg_panel.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Assets\Shop\avatarURL.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -549,16 +554,7 @@
     <None Include="Assets\Shop\vip.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Background\bg_login.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Assets\Background\bg_register.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Background\bg_trade.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Background\bg_popbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_tools.jpg">
@@ -571,12 +567,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_shop.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Background\bg_pm.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Background\bg_arena.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_profil.jpg">
@@ -2095,6 +2085,27 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_update.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_dataretrieval.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_arena.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_login.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_panel.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_popbox.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_trade.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_pm.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

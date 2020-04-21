@@ -11,7 +11,7 @@
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
                 <ImageBrush.ImageSource>
-                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_popbox.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Border.Background>

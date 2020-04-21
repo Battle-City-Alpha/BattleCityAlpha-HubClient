@@ -171,6 +171,17 @@
                         </Border>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Battle City Alpha - Récupération de données V1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Controls:BCA_ColorButton x:Name="btn_datasretrieval" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
+                    </Grid>
+                </TabItem>
             </TabControl>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

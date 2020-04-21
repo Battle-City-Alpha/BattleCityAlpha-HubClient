@@ -1,0 +1,86 @@
+﻿<Window x:Class="hub_client.Windows.DataRetrievalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
+        mc:Ignorable="d"
+        Title="Battle City Alpha - Royaume des duels" Height="224.8" Width="418.4" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="40" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_dataretrieval.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,5,5">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5" VerticalAlignment="Center" Margin="10,0">
+                        <Border.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.7"/>
+                        </Border.Background>
+                        <Label  FontSize="15" Content="Nom d'utilisateur V1 :" Foreground="White" RenderTransformOrigin="0.5,0.5" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBox x:Name="tbUsername" Grid.Column="1" FontSize="15" Margin="5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Center">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.5"/>
+                        </TextBox.Background>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,3,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="5" Margin="10,0" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.7"/>
+                        </Border.Background>
+                        <Label  FontSize="15" Content="Mot de passe V1 :" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Controls:BCA_BlurLabel x:Name="lblPassword"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                    <PasswordBox x:Name="pbPassword" Grid.Column="1" Margin="5,3" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center" FontSize="15" VerticalAlignment="Center">
+                        <PasswordBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.5"/>
+                        </PasswordBox.Background>
+                    </PasswordBox>
+                </Grid>
+                <Controls:BCA_ColorButton x:Name="btnRetrieval" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" ButtonTextSize="15" ButtonText="Lancer la récuparation" Color1="#FF4F163F" Color2="#FF1F1429"/>
+                <ProgressBar x:Name="progressBar_update" Grid.Row="3" Grid.ColumnSpan="2" Margin="50, 10" Value="0" Foreground="#FF74136A" Background="{x:Null}" BorderBrush="Black" BorderThickness="2"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

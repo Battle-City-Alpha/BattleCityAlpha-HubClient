@@ -65,10 +65,9 @@ namespace hub_client.Configuration
 
             GameColors.Add("Color1PrestigeShopButton", (Color)ColorConverter.ConvertFromString("#FF202CB3"));
             GameColors.Add("Color2PrestigeShopButton", (Color)ColorConverter.ConvertFromString("#FF1666B1"));
-        }
-        public void UpdateResourcesDictionary()
-        {
 
+            GameColors.Add("Color1DataRetrievalButton", (Color)ColorConverter.ConvertFromString("#FF202CB3"));
+            GameColors.Add("Color2DataRetrievalButton", (Color)ColorConverter.ConvertFromString("#FF1666B1"));
         }
 
         public Color GetGameColor(string propertyName)

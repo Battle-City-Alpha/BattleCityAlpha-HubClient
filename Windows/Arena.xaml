@@ -17,7 +17,7 @@
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
                 <ImageBrush.ImageSource>
-                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_arena.png" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_arena.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" BaseUri="pack://siteoforigin:,,,/Assets/Background/bg_arena.jpg"/>
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Border.Background>

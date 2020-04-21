@@ -112,6 +112,9 @@ namespace hub_client.Network
         public event Action<int> UpdateProgress;
         public event Action<Customization[]> LoadPrestigeCustomizations;
         #endregion
+        #region DataRetrievalWindow Events
+        public event Action<bool, LoginFailReason, bool> DataRetrievalInfos;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -134,6 +137,7 @@ namespace hub_client.Network
         public SleevesHandleAdministrator SleevesHandleAdmin;
         public PrestigeShopAdministrator PrestigeShopAdmin;
         public PrestigeCustomizationsViewerAdministrator PrestigeCustomizationsViewerAdmin;
+        public DataRetrievalAdministrator DataRetrievalAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -169,6 +173,7 @@ namespace hub_client.Network
             SleevesHandleAdmin = new SleevesHandleAdministrator(this);
             PrestigeShopAdmin = new PrestigeShopAdministrator(this);
             PrestigeCustomizationsViewerAdmin = new PrestigeCustomizationsViewerAdministrator(this);
+            DataRetrievalAdmin = new DataRetrievalAdministrator(this);
         }
 
         private void InitManager()
@@ -418,6 +423,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.AskPrestigeCustoms:
                     OnLoadPrestigeCustomizations(JsonConvert.DeserializeObject<StandardServerLoadPrestigeCustomizations>(packet));
+                    break;
+                case PacketType.DataRetrieval:
+                    OnDataRetrievalInfos(JsonConvert.DeserializeObject<StandardServerDataRetrieval>(packet));
                     break;
             }
         }
@@ -1121,6 +1129,12 @@ namespace hub_client.Network
             }
 
             logger.Trace("LOAD PRESTIGE CUSTOMIZATIONS - Type : {0}", packet.CType);
+        }
+
+        public void OnDataRetrievalInfos(StandardServerDataRetrieval packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => DataRetrievalInfos?.Invoke(packet.Success, packet.Reason, packet.End));
+            logger.Trace("DATA RETRIEVAL - Packet : {0}", packet);
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

@@ -252,7 +252,6 @@ namespace hub_client
             File.WriteAllText(AppConfigPath, JsonConvert.SerializeObject(AppConfig));
 
             File.WriteAllText(AppDesignConfigPath, JsonConvert.SerializeObject(AppDesignConfig, Formatting.Indented));
-            AppDesignConfig.UpdateResourcesDictionary();
 
             File.WriteAllText(ClientConfigPath, JsonConvert.SerializeObject(ClientConfig, Formatting.Indented));
 
@@ -357,6 +356,11 @@ namespace hub_client
 
             SoloMode sm = new SoloMode();
             sm.Show();
+        }
+        public static void OpenDatasRetrievalWindow()
+        {
+            DataRetrievalWindow window = new DataRetrievalWindow(Client.DataRetrievalAdmin);
+            window.ShowDialog();
         }
 
         public static void RefreshChatStyle()
