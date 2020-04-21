@@ -87,7 +87,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_save, btn_datasretrieval});
+            Buttons.AddRange(new[] { btn_save, btn_datasretrieval, btn_choosepics });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -172,13 +172,22 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { };
         }
 
         private void btn_datasretrieval_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenDatasRetrievalWindow();
+        }
+
+        private void btn_choosepics_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() => FormExecution.OpenChangePicsWindow());
         }
     }
 }

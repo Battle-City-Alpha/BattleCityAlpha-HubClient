@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Royaume des duels" Height="224.8" Width="418.4" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+        Title="Battle City Alpha - Récupération V1" Height="252" Width="420" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"

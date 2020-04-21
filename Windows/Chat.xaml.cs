@@ -402,8 +402,12 @@ namespace hub_client.Windows
         }
         private void Chat_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
 
         private PlayerItem CreatePlayerItem(PlayerInfo infos)

@@ -171,15 +171,17 @@
                         </Border>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Battle City Alpha - Récupération de données V1">
+                <TabItem Header="Battle City Alpha - Autre">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Controls:BCA_ColorButton x:Name="btn_datasretrieval" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
+                        <Controls:BCA_ColorButton x:Name="btn_datasretrieval" Grid.Row="0" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données V1" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
+                        <Controls:BCA_ColorButton x:Name="btn_choosepics" Grid.Row="1" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Choix du style d'image" MouseLeftButtonDown="btn_choosepics_MouseLeftButtonDown"  HorizontalAlignment="Center"/>
                     </Grid>
                 </TabItem>
             </TabControl>

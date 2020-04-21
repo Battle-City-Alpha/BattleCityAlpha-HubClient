@@ -28,6 +28,8 @@ namespace hub_client.Windows
             InitializeComponent();
             LoadStyle();
 
+            this.MouseDown += Window_MouseDown;
+
             _admin = admin;
             _admin.StartLoading += _admin_StartLoading;
             _admin.EndLoading += _admin_EndLoading;
@@ -96,7 +98,7 @@ namespace hub_client.Windows
         {
             this.WindowState = WindowState.Minimized;
         }
-        private void Chat_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();

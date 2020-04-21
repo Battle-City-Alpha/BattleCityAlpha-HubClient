@@ -75,7 +75,6 @@ namespace hub_client
         public static void Init()
         {
             AssetsManager = new AssetsManager();
-            CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
 
             if (File.Exists(AppConfigPath))
                 AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
@@ -90,6 +89,7 @@ namespace hub_client
             else
                 ClientConfig = new ClientConfig();
 
+            CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
             BoosterManager.LoadList();
             //AppDesignConfig = new AppDesignConfig(); //To debug config
 
@@ -360,6 +360,11 @@ namespace hub_client
         public static void OpenDatasRetrievalWindow()
         {
             DataRetrievalWindow window = new DataRetrievalWindow(Client.DataRetrievalAdmin);
+            window.ShowDialog();
+        }
+        public static void OpenChangePicsWindow()
+        {
+            ChangePicsStyle window = new ChangePicsStyle();
             window.ShowDialog();
         }
 

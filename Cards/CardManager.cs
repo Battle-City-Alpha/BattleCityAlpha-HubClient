@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static hub_client.Cards.SQLCommands;
@@ -26,7 +27,7 @@ namespace hub_client.Cards
             dic[toKey] = value;
         }
 
-        public static bool LoadCDB(string dir, bool overwrite, bool clearData = false)
+        public static async Task<bool> LoadCDB(string dir, bool overwrite, bool clearData = false)
         {
             if (!File.Exists(dir))
                 return false;
@@ -63,6 +64,9 @@ namespace hub_client.Cards
                     if (!CardManager.ContainsCard(Int32.Parse(row[0])))
                         CardManager.UpdateOrAddCard(new CardInfos(row));
                 }
+
+                if (!CheckPicsLoaded(row[0]))
+                    await DownloadPics(row[0]);
             }
             foreach (string[] row in texts)
             {
@@ -206,6 +210,32 @@ namespace hub_client.Cards
                 else
                     SetCodes[setcode] = setname;
             }
+        }
+
+        private static bool CheckPicsLoaded(string id)
+        {
+            return File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg"));
+        }
+        private static async Task DownloadPics(string id)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                wc.DownloadFileAsync(
+                    GetUri(id),
+                    Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg")
+                    );
+            }
+            await Task.Delay(1);
+        }
+        public static Uri GetUri(string id)
+        {
+            string s = "";
+            if (FormExecution.ClientConfig.BCA_Card_Design)
+                s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
+            else
+                s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
+
+            return new Uri(s);
         }
     }
 }
