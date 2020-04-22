@@ -29,6 +29,7 @@ namespace hub_client.Cards
 
         public static async Task<bool> LoadCDB(string dir, bool overwrite, bool clearData = false)
         {
+            logger.Info("Start LOAD CDB {0}", dir);
             if (!File.Exists(dir))
                 return false;
 
@@ -234,8 +235,6 @@ namespace hub_client.Cards
                 s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
             else
                 s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
-
-            logger.Trace("URI : {0}", s);
             return new Uri(s);
         }
     }
