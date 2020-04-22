@@ -159,7 +159,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Content="Choix de l'image à modifier :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <ComboBox Name="cb_pics" Grid.Column="1" VerticalAlignment="Center" Margin="20"/>
+                                <ComboBox Name="cb_pics" Grid.Column="1" VerticalAlignment="Center" Margin="20, 0"/>
                             </Grid>
                         </Border>
 

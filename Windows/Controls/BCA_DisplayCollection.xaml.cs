@@ -63,7 +63,10 @@ namespace hub_client.Windows.Controls
             _collection = collection;
             foreach (var args in _collection)
             {
-                args.Value.Name = CardManager.GetCard(args.Key).Name;
+                CardInfos c = CardManager.GetCard(args.Key);
+                if (c == null)
+                    continue;
+                args.Value.Name = c.Name;
                 Add(args.Value);
             }
         }
