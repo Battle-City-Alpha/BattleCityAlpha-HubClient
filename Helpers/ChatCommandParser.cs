@@ -400,5 +400,10 @@ namespace hub_client.Helpers
         {
             return new StandardClientStopMaintenance { };
         }
+
+        public StandardClientNextRankingSeason AskNextRankingSeason()
+        {
+            return new StandardClientNextRankingSeason { };
+        }
     }
 }

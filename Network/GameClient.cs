@@ -422,6 +422,9 @@ namespace hub_client.Network
                 case PacketType.DataRetrieval:
                     OnDataRetrievalInfos(JsonConvert.DeserializeObject<StandardServerDataRetrieval>(packet));
                     break;
+                case PacketType.NextRankingSeason:
+                    OnNextRankingSeason(JsonConvert.DeserializeObject<StandardServerNextRankingSeason>(packet));
+                    break;
             }
         }
 
@@ -1130,6 +1133,17 @@ namespace hub_client.Network
         {
             Application.Current.Dispatcher.Invoke(() => DataRetrievalInfos?.Invoke(packet.Success, packet.Reason, packet.End));
             logger.Trace("DATA RETRIEVAL - Packet : {0}", packet);
+        }
+
+        public void OnNextRankingSeason(StandardServerNextRankingSeason packet)
+        {
+            logger.Trace("NEW RANKING SEASON - {0}", packet.Season);
+
+            Color c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
+            string msg = "Une nouvelle saison de classement a commencé ! (Classement n°" + packet.Season + ")";
+            bool italic = false;
+            bool bold = false;
+            Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, msg, italic, bold));
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

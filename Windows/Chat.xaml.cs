@@ -93,9 +93,24 @@ namespace hub_client.Windows
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
         {
-            PlayerItem item = CreatePlayerItem(infos);
-            Players.Remove(item);
+            int index = -1;
+            foreach (PlayerItem p in Players)
+                if (p.UserId == infos.UserId)
+                {
+                    index = Players.IndexOf(p);
+                    break;
+                }
+
+            if (index == -1)
+                return;
+
+            Players.RemoveAt(index);
             lvUserlist.Items.Refresh();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
+            view.GroupDescriptions.Clear();
+            view.GroupDescriptions.Add(groupDescription);
 
             if (FormExecution.ClientConfig.Connexion_Message)
                 _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
