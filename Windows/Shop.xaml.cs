@@ -246,6 +246,7 @@ namespace hub_client.Windows
             tb_cardgot.Text = cardgot.ToString();
             tb_totalcard.Text = totalcard.ToString();
             tb_price.Text = price.ToString();
+            BoosterChoosen.Price = price;
             tb_numbercardpack.Text = cardperpack.ToString();
             tb_bps.Text = bp.ToString();
 
