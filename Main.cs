@@ -9,11 +9,13 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace hub_client
 {
     class Main
     {
+        private int CLIENT_VERSION = 2000;
         public static string VERSION = "2.0.0.0";
 
         public Main()
@@ -21,6 +23,7 @@ namespace hub_client
             FormExecution.Init();
             VERSION += "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
+            CheckClientUpdate();
             CheckCardsStuffUpdate();
         }
 
@@ -30,33 +33,36 @@ namespace hub_client
             {
                 using (WebClient wc = new WebClient())
                 {
-                    string query = "https://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/update.txt";
+                    string query = "https://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/updates.txt";
                     string updateCardsStuff = wc.DownloadString(query);
-                    if (GetLastVersion(updateCardsStuff) != FormExecution.ClientConfig.CardsStuffVersion)
-                        UpdateCardsStuff(updateCardsStuff);
+                    string[] updatefilelines = updateCardsStuff.Split(
+                    new[] { "\r\n", "\r", "\n" },
+                    StringSplitOptions.None
+                    );
+                    if (GetLastVersion(updatefilelines) != FormExecution.ClientConfig.CardsStuffVersion)
+                        UpdateCardsStuff(updatefilelines);
                     else
                         return;
                 }
             }
             catch { return; }
         }
-        private int GetLastVersion(string updatefile)
+        private int GetLastVersion(string[] updatefilelines)
         {
-            return Convert.ToInt32(updatefile.Split(' ')[0]);
+            return Convert.ToInt32(updatefilelines[0]);
         }
-        private void UpdateCardsStuff(string updatefile)
+        private void UpdateCardsStuff(string[] updatefilelines)
         {
             FormExecution.HideLogin();
 
             FormExecution.Client_PopMessageBox("Un mise à jour au niveau des cartes et des boosters est disponible !", "Mise à jour", true);
 
-            string[] updates = updatefile.Split(' ');
             List<string> updatesToDo = new List<string>();
 
             int i = 0;
-            while (updates[i] != FormExecution.ClientConfig.CardsStuffVersion.ToString())
+            while (updatefilelines[i] != FormExecution.ClientConfig.CardsStuffVersion.ToString() && i < updatefilelines.Length - 1)
             {
-                updatesToDo.Add(updates[i]);
+                updatesToDo.Add(updatefilelines[i]);
                 i++;
             }
 
@@ -69,8 +75,34 @@ namespace hub_client
 
             FormExecution.ShowLogin();
         }
+        private void CheckClientUpdate()
+        {
 
-        private static bool CheckUpdate()
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    string query = "https://battlecityalpha.xyz/BCA/UPDATEV2/Client/updates.txt";
+                    string updateCardsStuff = wc.DownloadString(query);
+                    string[] updatefilelines = updateCardsStuff.Split(
+                    new[] { "\r\n", "\r", "\n" },
+                    StringSplitOptions.None
+                    );
+                    if (GetLastVersion(updatefilelines) != CLIENT_VERSION)
+                        UpdateClient(updatefilelines);
+                    else
+                        return;
+                }
+            }
+            catch
+            {
+                FormExecution.Client_PopMessageBox("Problème de connexion pour vérifier les mises à jour..", "Erreur mise à jour", true);
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+                return;
+            }
+        }
+
+        private bool CheckUpdate()
         {
             try
             {
@@ -114,6 +146,35 @@ namespace hub_client
                 FormExecution.Client_PopMessageBox("Problème de connexion pour vérifier les mises à jour..", "Erreur mise à jour", true);
                 return false;
             }
+        }
+        private void UpdateClient(string[] updatefilelines)
+        {
+            string updates = "#";
+            List<string> updatesToDo = new List<string>();
+            int i = 0;
+            while (updatefilelines[i] != CLIENT_VERSION.ToString() && i < updatefilelines.Length - 1)
+            {
+                updatesToDo.Add(GetClientUpdateURL(updatefilelines[i]));
+                i++;
+            }
+
+            updatesToDo.Reverse();
+
+            foreach (string update in updatesToDo)
+                updates += update + "#";
+
+            string arg = GetLastVersion(updatefilelines) + " " + updates + " " + Assembly.GetExecutingAssembly().Location;
+
+            Process p = new Process();
+            p.StartInfo.FileName = Path.Combine(FormExecution.path, "BCAUpdater.exe");
+            p.StartInfo.WorkingDirectory = Path.Combine(FormExecution.path);
+            p.StartInfo.Arguments = arg;
+            p.StartInfo.Verb = "runas";
+            p.Start();
+        }
+        private string GetClientUpdateURL(string version)
+        {
+            return string.Format("https://battlecityalpha.xyz/BCA/UPDATEV2/Client/zip/{0}.zip", version);
         }
     }
 }

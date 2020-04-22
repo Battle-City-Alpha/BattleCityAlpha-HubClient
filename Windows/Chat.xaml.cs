@@ -58,6 +58,7 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+            tb_version.Text = Main.VERSION;
 
         }
 

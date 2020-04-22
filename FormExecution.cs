@@ -90,6 +90,7 @@ namespace hub_client
                 ClientConfig = new ClientConfig();
 
             CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
+
             BoosterManager.LoadList();
             //AppDesignConfig = new AppDesignConfig(); //To debug config
 

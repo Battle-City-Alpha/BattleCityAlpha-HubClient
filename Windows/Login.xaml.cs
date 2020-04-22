@@ -65,7 +65,7 @@ namespace hub_client.Windows
                 pbPassword.Password = FormExecution.AppConfig.Password;
             }
 
-            webview_patchnotes.Source = new Uri("https://battlecityalpha.xyz/BCA/MAJ/News.txt");
+            webview_patchnotes.Source = new Uri("https://battlecityalpha.xyz/BCA/UPDATEV2/Client/News.txt");
 
             LoadStyle();
         }
