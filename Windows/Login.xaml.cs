@@ -27,6 +27,7 @@ namespace hub_client.Windows
     public partial class Login : Window
     {
         LoginAdminstrator _admin;
+        bool _complete = false;
 
         public Login(LoginAdminstrator admin)
         {
@@ -72,6 +73,7 @@ namespace hub_client.Windows
 
         private void _admin_LoginComplete()
         {
+            _complete = true;
             Close();
         }
 
@@ -102,7 +104,9 @@ namespace hub_client.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
             _admin.LoginComplete -= _admin_LoginComplete;
-            Loaded -= Login_Loaded;
+            Loaded -= Login_Loaded; 
+            if (!_complete)
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
         private void CbRememberMe_Checked(object sender, RoutedEventArgs e)
