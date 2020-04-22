@@ -128,6 +128,7 @@ namespace hub_client.Windows
             InputText form = new InputText();
             form.Title = "Nouveau pseudo";
             form.SelectedText += ChangeUsernameSelectedText;
+            form.Owner = this;
             form.ShowDialog();
         }
         private void ChangeUsernameSelectedText(string newusername)
@@ -158,18 +159,21 @@ namespace hub_client.Windows
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Sleeve);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Sleeve);
+            window.Owner = this;
             window.ShowDialog();
         }        
         private void BuyCustomBorder(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Border);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Border);
+            window.Owner = this;
             window.ShowDialog();
         }
         private void BuyCustomAvatar(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Avatar);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Avatar);
+            window.Owner = this;
             window.Show();
         }
         private void SendCustomCustomizationURL(string url, CustomizationType ctype)
@@ -180,6 +184,7 @@ namespace hub_client.Windows
         {
             ColorPickerWindow window = new ColorPickerWindow();
             window.SelectedColor += SendUsernameColor;
+            window.Owner = this;
             window.ShowDialog();
         }
         private void SendUsernameColor(string color)
@@ -230,8 +235,12 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
     }
 }

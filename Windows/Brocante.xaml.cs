@@ -219,6 +219,7 @@ namespace hub_client.Windows
         {
             _admin.AskSelectCard();
             SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
+            form.Owner = this;
             form.SelectedCard += Form_SelectedCard;
             form.ShowDialog();
             form.SelectedCard -= Form_SelectedCard;
@@ -305,8 +306,12 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
 
         public class SortAdorner : Adorner

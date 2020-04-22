@@ -177,6 +177,7 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
                         case "PANEL":
                             Panel panel = new Panel(Client.PanelAdmin);
+                            panel.Owner = FormExecution.GetChatWindow();
                             panel.Show();
                             return null;
                         case "BANLIST":
@@ -209,6 +210,7 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.StopMaintenance, _cmdParser.StopMaintenance());
                         case "BLACKLIST":
                             Blacklist blacklist = new Blacklist(Client.BlacklistManager);
+                            blacklist.Owner = FormExecution.GetChatWindow();
                             blacklist.Show();
                             return null;
                         default:

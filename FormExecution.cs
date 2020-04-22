@@ -61,6 +61,8 @@ namespace hub_client
         private static Shop _shop;
         private static Purchase _purchase;
         private static Brocante _brocante;
+        private static PrestigeShop _pshop;
+        private static Tools _tools;
         #endregion
 
         public static string GetIp()
@@ -134,6 +136,7 @@ namespace hub_client
         {
             InputText form = new InputText();
             form.Title = "Mot de passe";
+            form.Owner = _arena;
             form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
             form.ShowDialog();
         }
@@ -155,6 +158,7 @@ namespace hub_client
         private static void Client_LoadOfflineMessages(OfflineMessage[] messages)
         {
             OfflineMessagesBox box = new OfflineMessagesBox();
+            box.Owner = _chat;
             box.LoadMessages(messages);
             box.ShowDialog();
         }
@@ -162,12 +166,15 @@ namespace hub_client
         private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
         {
             DuelResult box = new DuelResult(bps, exps, win);
+            box.Owner = _chat;
+            box.Topmost = true;
             box.Show();
         }
 
         private static void Client_LaunchBonusBox(BonusType type, int numberconnexion, string gift, int[] cards)
         {
             BonusBox box = new BonusBox(type, numberconnexion, gift);
+            box.Owner = _chat;
             box.ShowDialog();
             if (type == BonusType.Booster)
             {
@@ -187,6 +194,7 @@ namespace hub_client
         private static void Client_LaunchTrade()
         {
             Trade trade = new Trade(Client.TradeAdmin);
+            trade.Owner = _chat;
             trade.Show();
         }
 
@@ -222,7 +230,13 @@ namespace hub_client
             PrivateMessageAdministrator admin = new PrivateMessageAdministrator(Client);
             PrivateMessage form = new PrivateMessage(username, admin);
             PrivateForms.Add(username, admin);
+            form.Owner = _chat;
             form.Show();
+        }
+
+        public static Chat GetChatWindow()
+        {
+            return _chat;
         }
 
         private static void Client_Shutdown()
@@ -240,6 +254,8 @@ namespace hub_client
         public static void Client_PopMessageBox(string text, string title, bool showDialog)
         {
             PopBox box = new PopBox(text, title);
+            box.Topmost = true;
+            box.Owner = _chat;
             if (showDialog)
                 box.ShowDialog();
             else
@@ -283,42 +299,50 @@ namespace hub_client
         {
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
+            _register.Owner = _login;
             _register.Show();
         }
         public static void OpenArena()
         {
             logger.Trace("Open arena");
             _arena = new Arena(Client.ArenaAdmin);
+            _arena.Owner = _chat;
             _arena.Show();
         }
         public static void OpenShop()
         {
             logger.Trace("Open Shop");
             _shop = new Shop(Client.ShopAdmin);
+            _shop.Owner = _chat;
             _shop.Show();
         }
         public static void OpenPrestigeShop()
         {
             logger.Trace("Open Prestige Shop");
-            PrestigeShop pshop = new PrestigeShop(Client.PrestigeShopAdmin);
+            _pshop = new PrestigeShop(Client.PrestigeShopAdmin);
             Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
-            pshop.Show();
+            _pshop.Owner = _shop;
+            _pshop.Show();
         }
         public static void OpenPrestigeCustomizationsViewer()
         {
             logger.Trace("Open Prestige Customizations viewer");
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, true);
+            viewer.Owner = _pshop;
+            viewer.Topmost = true;
             viewer.Show();
         }
         public static void OpenPrestigeCustomizationsVerticalViewer()
         {
             logger.Trace("Open Prestige Customizations vertical viewer");
             PrestigeCustomizationViewerVertical viewer = new PrestigeCustomizationViewerVertical(Client.PrestigeCustomizationsViewerAdmin, true);
+            viewer.Owner = _pshop;
             viewer.Show();
         }
         public static void OpenPrestigeTitleViewer()
         {
             TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin, true);
+            form.Owner = _pshop;
             form.Show();
         }
         public static void OpenPurchase(BoosterInfo booster)
@@ -326,13 +350,15 @@ namespace hub_client
             logger.Trace("Open Purchase");
             _purchase = new Purchase(Client.PurchaseAdmin, booster);
             _purchase.Title = booster.Name;
+            _purchase.Owner = _shop;
             _purchase.Show();
         }
         public static void OpenTools()
         {
             logger.Trace("Open Tools");
-            Tools tools = new Tools(Client.ToolsAdmin);
-            tools.Show();
+            _tools = new Tools(Client.ToolsAdmin);
+            _tools.Owner = _chat;
+            _tools.Show();
         }
         public static void OpenBrocante()
         {
@@ -342,6 +368,7 @@ namespace hub_client
                 _brocante.Activate();
 
             _brocante = new Brocante(Client.BrocanteAdmin);
+            _brocante.Owner = _shop;
             _brocante.Show();
         }
         public static void OpenDuelRequest(int id)
@@ -349,6 +376,7 @@ namespace hub_client
             logger.Trace("Open Duel Request Form");
 
             DuelRequest request = new DuelRequest(Client.DuelRequestAdmin, id);
+            request.Topmost = true;
             request.Show();
         }
         public static void OpenSoloModeWindow()
@@ -356,16 +384,19 @@ namespace hub_client
             logger.Trace("Open Solo mode");
 
             SoloMode sm = new SoloMode();
+            sm.Owner = _arena;
             sm.Show();
         }
         public static void OpenDatasRetrievalWindow()
         {
             DataRetrievalWindow window = new DataRetrievalWindow(Client.DataRetrievalAdmin);
+            window.Owner = _tools;
             window.ShowDialog();
         }
         public static void OpenChangePicsWindow()
         {
             ChangePicsStyle window = new ChangePicsStyle();
+            window.Owner = _tools;
             window.ShowDialog();
         }
 

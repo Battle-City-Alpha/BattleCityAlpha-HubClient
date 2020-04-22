@@ -1,4 +1,5 @@
-﻿using hub_client.Configuration;
+﻿using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
@@ -44,18 +45,18 @@ namespace hub_client.Windows
         private void StartDownloadingPics(object sender, MouseButtonEventArgs e)
         {
             btnDownloadPics.IsEnabled = false;
-            string[] pics = Directory.GetFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics"));
-            progressBar_update.Maximum = pics.Length;
-            tb_update_total.Text = pics.Length.ToString();
+            //string[] pics = Directory.GetFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics"));
+            progressBar_update.Maximum = CardManager.Count;
+            tb_update_total.Text = CardManager.Count.ToString();
 
-            DownloadPics(pics);
+            DownloadPics();
         }
 
-        private async void DownloadPics(string[] pics)
+        private async void DownloadPics()
         {
-            foreach (string pic in pics)
+            foreach (int card in CardManager.GetKeys())
             {
-                string id = ParseFileName(pic);
+                string id = card.ToString();
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileCompleted += PicDownloaded;

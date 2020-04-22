@@ -74,6 +74,7 @@ namespace hub_client.Windows
                     InputText form = new InputText();
                     form.Title = "Mot de passe";
                     form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);
+                    form.Owner = this;
                     form.ShowDialog();
                 }
             }
@@ -196,8 +197,12 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
 
         private void btn_IA_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

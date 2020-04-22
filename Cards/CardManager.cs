@@ -230,11 +230,12 @@ namespace hub_client.Cards
         public static Uri GetUri(string id)
         {
             string s = "";
-            if (FormExecution.ClientConfig.BCA_Card_Design)
+            if (!FormExecution.ClientConfig.BCA_Card_Design)
                 s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
             else
                 s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
 
+            logger.Trace("URI : {0}", s);
             return new Uri(s);
         }
     }

@@ -18,8 +18,18 @@ namespace hub_client
 
         public App()
         {
-            ShutdownMode = ShutdownMode.OnLastWindowClose;
-            Main BCA = new hub_client.Main();
+            try
+            {
+                ShutdownMode = ShutdownMode.OnLastWindowClose;
+                Main BCA = new hub_client.Main();
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal("GLOBAL ERROR - {0}", ex);
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite.", "Problème", true);
+                //Thread.Sleep(1500);
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+            }
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)

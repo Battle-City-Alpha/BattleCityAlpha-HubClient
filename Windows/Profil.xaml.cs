@@ -160,19 +160,19 @@ namespace hub_client.Windows
         {
             if (!this.IsMine())
                 return;
-            _admin.OpenAvatarsForm();
+            _admin.OpenAvatarsForm(this);
         }
         private void img_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!this.IsMine())
                 return;
-            _admin.OpenBordersForm();
+            _admin.OpenBordersForm(this);
         }
         private void img_sleeve_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!this.IsMine())
                 return;
-            _admin.OpenSleevesForm();
+            _admin.OpenSleevesForm(this);
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -198,13 +198,17 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
 
         private void tb_title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _admin.OpenTitlesForm();
+            _admin.OpenTitlesForm(this);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace hub_client
             try
             {
                 FormExecution.Init();
-                VERSION += "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
                 CheckClientUpdate();
                 CheckCardsStuffUpdate();
@@ -79,6 +78,7 @@ namespace hub_client
             }
 
             UpdateCardsStuffWindow window = new UpdateCardsStuffWindow(updatesToDo.ToArray());
+            window.Topmost = true;
             window.Show();
 
             FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo.Last());

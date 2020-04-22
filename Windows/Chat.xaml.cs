@@ -58,7 +58,7 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
-            tb_version.Text = Main.VERSION;
+            tb_version.Text = Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
         }
 
@@ -174,6 +174,7 @@ namespace hub_client.Windows
         {
             btnNote.ClickedAnimation();
             Notes note = new Notes(_admin.Client.NotesAdmin);
+            note.Owner = this;
             note.Show();
             logger.Trace("Notes clicked.");
         }
@@ -339,6 +340,7 @@ namespace hub_client.Windows
                 InputText form = new InputText();
                 form.Title = "Don de BP à " + target.Username;
                 form.SelectedText += (obj) => BpInputForm_SelectedText(obj, target);
+                form.Owner = this;
                 form.ShowDialog();
             }
         }
@@ -366,6 +368,7 @@ namespace hub_client.Windows
                 SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
                 form.ActivateDonationCardMode();
                 form.SelectedCard += (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
+                form.Owner = this;
                 form.ShowDialog();
                 form.SelectedCard -= (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
             }

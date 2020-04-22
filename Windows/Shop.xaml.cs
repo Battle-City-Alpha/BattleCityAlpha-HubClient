@@ -296,6 +296,7 @@ namespace hub_client.Windows
         private void btn_searchcard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SearchCard form = new SearchCard();
+            form.Owner = this;
             form.Show();
         }
         private void btn_brocante_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -336,8 +337,12 @@ namespace hub_client.Windows
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch { }
         }
 
     }
