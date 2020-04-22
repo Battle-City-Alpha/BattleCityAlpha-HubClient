@@ -20,6 +20,8 @@ namespace hub_client.Windows
         public Login(LoginAdminstrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
             _admin = admin;
 
             _admin.LoginComplete += _admin_LoginComplete;
