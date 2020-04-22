@@ -70,7 +70,7 @@
                         </Border.Background>
                         <ListBox x:Name="lb_booster" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5"  Foreground="Black" FontSize="18" SelectedIndex="0" SelectionChanged="lb_booster_SelectionChanged"/>
                     </Border>
-                    <ComboBox x:Name="cbBooster" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18"  SelectedIndex="0" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cbBooster" Margin="10,5" SelectionChanged="cbBooster_SelectionChanged" FontSize="18"  SelectedIndex="0" Background="White" BorderBrush="{x:Null}" VerticalAlignment="Center"/>
                     <Controls:BCA_TextBox x:Name="tb_searchBooster" Grid.Row="2" Margin="10,5" VerticalAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Column="1" Margin="6.2,0,0.2,-0.4">

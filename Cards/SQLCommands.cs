@@ -1,9 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SQLite;
 
 namespace hub_client.Cards
 {
@@ -11,31 +8,31 @@ namespace hub_client.Cards
     {
         public static class SQLiteCommands
         {
-            public static List<string[]> LoadData(SqliteConnection connection)
+            public static List<string[]> LoadData(SQLiteConnection connection)
             {
-                SqliteCommand datacommand = new SqliteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
+                SQLiteCommand datacommand = new SQLiteCommand("SELECT id, ot, alias, setcode, type, level, race, attribute, atk, def, category FROM datas", connection);
                 return DatabaseHelper.ExecuteStringCommand(datacommand, 11);
             }
 
-            public static List<string[]> LoadText(SqliteConnection connection)
+            public static List<string[]> LoadText(SQLiteConnection connection)
             {
-                SqliteCommand textcommand = new SqliteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
+                SQLiteCommand textcommand = new SQLiteCommand("SELECT id, name, desc, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, str14, str15, str16 FROM texts", connection);
                 return DatabaseHelper.ExecuteStringCommand(textcommand, 19);
             }
 
-            public static bool UpdateCardId(string cardId, string updatedId, SqliteConnection connection)
+            public static bool UpdateCardId(string cardId, string updatedId, SQLiteConnection connection)
             {
                 try
                 {
-                    SqliteCommand command = DatabaseHelper.CreateCommand("UPDATE datas SET id=@updatedId WHERE id=@cardId", connection);
+                    SQLiteCommand command = DatabaseHelper.CreateCommand("UPDATE datas SET id=@updatedId WHERE id=@cardId", connection);
 
-                    command.Parameters.Add(new SqliteParameter("@updatedId", updatedId));
-                    command.Parameters.Add(new SqliteParameter("@cardId", cardId));
+                    command.Parameters.Add(new SQLiteParameter("@updatedId", updatedId));
+                    command.Parameters.Add(new SQLiteParameter("@cardId", cardId));
                     DatabaseHelper.ExecuteNonCommand(command);
 
                     command = DatabaseHelper.CreateCommand("UPDATE texts SET id=@updatedId WHERE id=@cardId", connection);
-                    command.Parameters.Add(new SqliteParameter("@updatedId", updatedId));
-                    command.Parameters.Add(new SqliteParameter("@cardId", cardId));
+                    command.Parameters.Add(new SQLiteParameter("@updatedId", updatedId));
+                    command.Parameters.Add(new SQLiteParameter("@cardId", cardId));
                     DatabaseHelper.ExecuteNonCommand(command);
                     return true;
                 }
@@ -46,13 +43,13 @@ namespace hub_client.Cards
                 }
             }
 
-            public static bool UpdateCardOt(string cardId, string updatedOt, SqliteConnection connection)
+            public static bool UpdateCardOt(string cardId, string updatedOt, SQLiteConnection connection)
             {
                 try
                 {
-                    SqliteCommand command = DatabaseHelper.CreateCommand("UPDATE datas SET ot=@updatedOt WHERE id=@cardId", connection);
-                    command.Parameters.Add(new SqliteParameter("@updatedOt", updatedOt));
-                    command.Parameters.Add(new SqliteParameter("@cardId", cardId));
+                    SQLiteCommand command = DatabaseHelper.CreateCommand("UPDATE datas SET ot=@updatedOt WHERE id=@cardId", connection);
+                    command.Parameters.Add(new SQLiteParameter("@updatedOt", updatedOt));
+                    command.Parameters.Add(new SQLiteParameter("@cardId", cardId));
 
                     return DatabaseHelper.ExecuteNonCommand(command);
                 }
@@ -63,11 +60,11 @@ namespace hub_client.Cards
                 }
             }
 
-            public static bool SaveCard(CardInfos card, SqliteConnection connection, int loadedid, bool overwrite)
+            public static bool SaveCard(CardInfos card, SQLiteConnection connection, int loadedid, bool overwrite)
             {
                 try
                 {
-                    SqliteCommand command;
+                    SQLiteCommand command;
                     if (overwrite)
                     {
                         command = DatabaseHelper.CreateCommand("UPDATE datas" +
@@ -79,18 +76,18 @@ namespace hub_client.Cards
                             " VALUES (@id, @ot, @alias, @setcode, @type, @atk, @def, @level, @race, @attribute, @category)", connection);
                     }
 
-                    command.Parameters.Add(new SqliteParameter("@loadedid", loadedid));
-                    command.Parameters.Add(new SqliteParameter("@id", card.Id));
-                    command.Parameters.Add(new SqliteParameter("@ot", card.Ot));
-                    command.Parameters.Add(new SqliteParameter("@alias", card.AliasId));
-                    command.Parameters.Add(new SqliteParameter("@setcode", card.SetCode));
-                    command.Parameters.Add(new SqliteParameter("@type", card.Type));
-                    command.Parameters.Add(new SqliteParameter("@atk", card.Atk));
-                    command.Parameters.Add(new SqliteParameter("@def", card.Def));
-                    command.Parameters.Add(new SqliteParameter("@level", card.GetLevelCode()));
-                    command.Parameters.Add(new SqliteParameter("@race", card.Race));
-                    command.Parameters.Add(new SqliteParameter("@attribute", card.Attribute));
-                    command.Parameters.Add(new SqliteParameter("@category", card.Category));
+                    command.Parameters.Add(new SQLiteParameter("@loadedid", loadedid));
+                    command.Parameters.Add(new SQLiteParameter("@id", card.Id));
+                    command.Parameters.Add(new SQLiteParameter("@ot", card.Ot));
+                    command.Parameters.Add(new SQLiteParameter("@alias", card.AliasId));
+                    command.Parameters.Add(new SQLiteParameter("@setcode", card.SetCode));
+                    command.Parameters.Add(new SQLiteParameter("@type", card.Type));
+                    command.Parameters.Add(new SQLiteParameter("@atk", card.Atk));
+                    command.Parameters.Add(new SQLiteParameter("@def", card.Def));
+                    command.Parameters.Add(new SQLiteParameter("@level", card.GetLevelCode()));
+                    command.Parameters.Add(new SQLiteParameter("@race", card.Race));
+                    command.Parameters.Add(new SQLiteParameter("@attribute", card.Attribute));
+                    command.Parameters.Add(new SQLiteParameter("@category", card.Category));
                     DatabaseHelper.ExecuteNonCommand(command);
 
                     if (overwrite)
@@ -103,14 +100,14 @@ namespace hub_client.Cards
                         command = DatabaseHelper.CreateCommand("INSERT INTO texts (id,name,desc,str1,str2,str3,str4,str5,str6,str7,str8,str9,str10,str11,str12,str13,str14,str15,str16)" +
                         " VALUES (@id,@name,@des,@str1,@str2,@str3,@str4,@str5,@str6,@str7,@str8,@str9,@str10,@str11,@str12,@str13,@str14,@str15,@str16)", connection);
                     }
-                    command.Parameters.Add(new SqliteParameter("@loadedid", loadedid));
-                    command.Parameters.Add(new SqliteParameter("@id", card.Id));
-                    command.Parameters.Add(new SqliteParameter("@name", card.Name));
-                    command.Parameters.Add(new SqliteParameter("@des", card.Description));
-                    var parameters = new List<SqliteParameter>();
+                    command.Parameters.Add(new SQLiteParameter("@loadedid", loadedid));
+                    command.Parameters.Add(new SQLiteParameter("@id", card.Id));
+                    command.Parameters.Add(new SQLiteParameter("@name", card.Name));
+                    command.Parameters.Add(new SQLiteParameter("@des", card.Description));
+                    var parameters = new List<SQLiteParameter>();
                     for (int i = 0; i < 16; i++)
                     {
-                        parameters.Add(new SqliteParameter("@str" + (i + 1), (i < card.EffectStrings.Length ? card.EffectStrings[i].ToString() : string.Empty)));
+                        parameters.Add(new SQLiteParameter("@str" + (i + 1), (i < card.EffectStrings.Length ? card.EffectStrings[i].ToString() : string.Empty)));
                     }
                     command.Parameters.AddRange(parameters.ToArray());
                     return DatabaseHelper.ExecuteNonCommand(command);
@@ -122,15 +119,15 @@ namespace hub_client.Cards
                 }
             }
 
-            public static bool DeleteCard(int cardid, SqliteConnection connection)
+            public static bool DeleteCard(int cardid, SQLiteConnection connection)
             {
                 try
                 {
-                    SqliteCommand command = DatabaseHelper.CreateCommand("DELETE FROM datas WHERE id= @id", connection);
-                    command.Parameters.Add(new SqliteParameter("@id", cardid));
+                    SQLiteCommand command = DatabaseHelper.CreateCommand("DELETE FROM datas WHERE id= @id", connection);
+                    command.Parameters.Add(new SQLiteParameter("@id", cardid));
                     DatabaseHelper.ExecuteIntCommand(command);
                     command = DatabaseHelper.CreateCommand("DELETE FROM texts WHERE id= @id", connection);
-                    command.Parameters.Add(new SqliteParameter("@id", cardid));
+                    command.Parameters.Add(new SQLiteParameter("@id", cardid));
 
                     return DatabaseHelper.ExecuteNonCommand(command);
                 }
@@ -141,12 +138,12 @@ namespace hub_client.Cards
                 }
             }
 
-            public static bool ContainsCard(int cardid, SqliteConnection connection)
+            public static bool ContainsCard(int cardid, SQLiteConnection connection)
             {
                 try
                 {
-                    SqliteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
-                    checkcommand.Parameters.Add(new SqliteParameter("@id", cardid));
+                    SQLiteCommand checkcommand = DatabaseHelper.CreateCommand("SELECT COUNT(*) FROM datas WHERE id= @id", connection);
+                    checkcommand.Parameters.Add(new SQLiteParameter("@id", cardid));
                     return DatabaseHelper.ExecuteIntCommand(checkcommand) > 0;
                 }
                 catch (Exception ex)

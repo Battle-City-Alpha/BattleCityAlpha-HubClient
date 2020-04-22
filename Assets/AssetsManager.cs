@@ -1,10 +1,6 @@
 ﻿using NLog;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -32,9 +28,10 @@ namespace hub_client.Assets
                 image.EndInit();
                 return image;
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 logger.Error("IMAGE LOADING - {0}", ex);
-                return null; 
+                return null;
             }
         }
 
@@ -58,7 +55,7 @@ namespace hub_client.Assets
             catch (Exception ex)
             {
                 logger.Warn("PICS LOADED:" + ex.ToString());
-                return new BitmapImage(new Uri(Path.Combine(FormExecution.path,"BattleCityAlpha","textures","unknown.jpg")));
+                return new BitmapImage(new Uri(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "unknown.jpg")));
             }
         }
 

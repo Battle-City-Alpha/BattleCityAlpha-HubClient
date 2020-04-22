@@ -1,22 +1,14 @@
 ﻿using hub_client.Cards;
 using hub_client.Enums;
-using hub_client.Helpers;
 using hub_client.Stuff;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -50,7 +42,7 @@ namespace hub_client.Windows
                 CardInfos infos = CardManager.GetCard(list[i]);
                 cards[i] = infos;
                 if (infos == null)
-                    infos.Name = "Carte inconnue. Id : " + list[i].ToString();
+                    continue;
                 lb_cards.Items.Add(infos.Name);
             }
 

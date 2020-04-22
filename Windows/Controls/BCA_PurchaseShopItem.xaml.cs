@@ -1,19 +1,12 @@
 ﻿using hub_client.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows.Controls
 {
@@ -60,7 +53,7 @@ namespace hub_client.Windows.Controls
 
         private void BCA_PurchaseShopItem_MouseLeave(object sender, MouseEventArgs e)
         {
-            tb_desc.BeginAnimation(OpacityProperty, fadeOutText);           
+            tb_desc.BeginAnimation(OpacityProperty, fadeOutText);
             border_img.BeginAnimation(OpacityProperty, fadeInBorder);
         }
 
@@ -95,7 +88,7 @@ namespace hub_client.Windows.Controls
         {
             tb_item.Text = item;
             tb_price.Text = price;
-            border_img.Background = new ImageBrush(new BitmapImage(new Uri("Assets/Shop/"+img_source+".png", UriKind.Relative)));
+            border_img.Background = new ImageBrush(new BitmapImage(new Uri("Assets/Shop/" + img_source + ".png", UriKind.Relative)));
             tb_desc.Text = desc;
         }
     }

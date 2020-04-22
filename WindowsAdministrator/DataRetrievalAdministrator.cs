@@ -2,10 +2,6 @@
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -39,7 +35,7 @@ namespace hub_client.WindowsAdministrator
             {
                 EndLoading?.Invoke();
                 string error = "Une erreur s'est produite lors de la récupération : ";
-                switch(reason)
+                switch (reason)
                 {
                     case LoginFailReason.InvalidCombinaison:
                         error += "La combinaison pseudo/mot de passe n'est pas bonne. Mauvais mot de passe ou pseudo inexistant sur la v1";
@@ -58,6 +54,7 @@ namespace hub_client.WindowsAdministrator
             {
                 Username = username,
                 Password = password
-            });        }
+            });
+        }
     }
 }

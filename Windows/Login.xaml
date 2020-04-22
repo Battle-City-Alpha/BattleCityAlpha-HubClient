@@ -1,9 +1,8 @@
-﻿<Window xmlns:Controls1="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=hub-client"  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Login"
+﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls11="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         mc:Ignorable="d"
         Title="Battle City Alpha - Connexion" Height="540.231" Width="627.954" ResizeMode="NoResize" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" Closed="Window_Closed" WindowStyle="None" Background="{x:Null}">
@@ -102,7 +101,7 @@
                     <Controls:BCA_ColorButton x:Name="btnConnexion" Margin="100,10" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ButtonText="Jouer" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>
                 </Grid>
             </Grid>
-            <Controls11:WebView x:Name="webview_patchnotes" Grid.Row="2" Margin="35,20,70,20"/>
+            
         </Grid>
     </Border>
 </Window>

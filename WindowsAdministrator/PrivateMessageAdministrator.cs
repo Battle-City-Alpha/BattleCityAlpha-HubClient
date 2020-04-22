@@ -3,10 +3,6 @@ using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using NLog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -29,7 +25,7 @@ namespace hub_client.WindowsAdministrator
 
         public void SendMessage(PlayerInfo target, string msg)
         {
-            NetworkData data = new NetworkData(BCA.Network.Packets.Enums.PacketType.PrivateMessage, new StandardClientPrivateMessage { Target = target, Message = msg});
+            NetworkData data = new NetworkData(BCA.Network.Packets.Enums.PacketType.PrivateMessage, new StandardClientPrivateMessage { Target = target, Message = msg });
             Client.Send(data);
             logger.Info("Private message sent : {0}.", data);
         }

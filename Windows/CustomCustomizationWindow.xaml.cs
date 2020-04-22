@@ -5,16 +5,9 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows
@@ -89,11 +82,11 @@ namespace hub_client.Windows
                 logger.Error("ERROR WHEN LOADING CUSTOM CUSTOMIZATION {0}", ex.ToString());
                 tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL";
             }
-}
+        }
 
         private void AdaptImageSize()
         {
-            switch  (_ctype)
+            switch (_ctype)
             {
                 case CustomizationType.Avatar:
                     img_custom.Width = 256;

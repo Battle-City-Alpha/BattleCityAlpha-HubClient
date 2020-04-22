@@ -8,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace hub_client
@@ -31,10 +29,8 @@ namespace hub_client
             }
             catch (Exception ex)
             {
-                logger.Fatal("GLOBAL ERROR - {0}", ex);
+                logger.Fatal(ex);
                 FormExecution.Client_PopMessageBox("Une erreur s'est produite.", "Problème", true);
-                //Thread.Sleep(1500);
-                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
             }
         }
 
@@ -44,7 +40,7 @@ namespace hub_client
             {
                 using (WebClient wc = new WebClient())
                 {
-                    string query = "https://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/updates.txt";
+                    string query = "http://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/updates.txt";
                     string updateCardsStuff = wc.DownloadString(query);
                     string[] updatefilelines = updateCardsStuff.Split(
                     new[] { "\r\n", "\r", "\n" },
@@ -94,7 +90,7 @@ namespace hub_client
             {
                 using (WebClient wc = new WebClient())
                 {
-                    string query = "https://battlecityalpha.xyz/BCA/UPDATEV2/Client/updates.txt";
+                    string query = "http://battlecityalpha.xyz/BCA/UPDATEV2/Client/updates.txt";
                     string updateCardsStuff = wc.DownloadString(query);
                     string[] updatefilelines = updateCardsStuff.Split(
                     new[] { "\r\n", "\r", "\n" },
@@ -108,9 +104,8 @@ namespace hub_client
             }
             catch (Exception ex)
             {
-                logger.Error("ERROR SEEKING UPDATE - {0}", ex);
-                FormExecution.Client_PopMessageBox("Problème de connexion pour vérifier les mises à jour..", "Erreur mise à jour", true);
-                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+                logger.Error(ex);
+                throw ex;
                 return;
             }
         }
@@ -142,7 +137,7 @@ namespace hub_client
         }
         private string GetClientUpdateURL(string version)
         {
-            return string.Format("https://battlecityalpha.xyz/BCA/UPDATEV2/Client/zip/{0}.zip", version);
+            return string.Format("http://battlecityalpha.xyz/BCA/UPDATEV2/Client/zip/{0}.zip", version);
         }
     }
 }

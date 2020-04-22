@@ -1,9 +1,6 @@
 ﻿using BCA.Common;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Helpers;
-using hub_client.Network;
 using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
@@ -11,7 +8,6 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -141,7 +137,7 @@ namespace hub_client.Windows
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
             Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnForum });
 
-            foreach(BCA_ColorButton btn in Buttons)
+            foreach (BCA_ColorButton btn in Buttons)
             {
                 btn.Color1 = style.GetGameColor("Color1HomeHeadButton");
                 btn.Color2 = style.GetGameColor("Color2HomeHeadButton");
@@ -161,7 +157,7 @@ namespace hub_client.Windows
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             btnDiscord.ClickedAnimation();
-            System.Diagnostics.Process.Start("https://discordapp.com/invite/seEZAwV");
+            System.Diagnostics.Process.Start("http://discordapp.com/invite/seEZAwV");
             logger.Trace("Discord clicked.");
         }
 
@@ -186,7 +182,7 @@ namespace hub_client.Windows
 
         private void btnFAQ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-681.html");
+            System.Diagnostics.Process.Start("http://forum.battlecityalpha.xyz/thread-681.html");
             logger.Trace("FAQ clicked.");
         }
 
@@ -206,11 +202,11 @@ namespace hub_client.Windows
             }
             e.Handled = true;
         }
-        
+
 
         private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString()); 
+            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }
@@ -244,7 +240,7 @@ namespace hub_client.Windows
         }
 
         private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {            
+        {
             FormExecution.OpenTools();
         }
 

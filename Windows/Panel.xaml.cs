@@ -1,23 +1,14 @@
 ﻿using BCA.Common;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -106,7 +97,7 @@ namespace hub_client.Windows
         private void BCA_ColorButton_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             if (tb_MuteReason.GetText() != "" && profileselected != null && tb_MuteHours.Text != "")
-                _admin.PanelMute(tb_MuteReason.GetText(), profileselected, Convert.ToInt32(tb_MuteHours.Text) );
+                _admin.PanelMute(tb_MuteReason.GetText(), profileselected, Convert.ToInt32(tb_MuteHours.Text));
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)

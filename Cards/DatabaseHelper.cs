@@ -1,18 +1,15 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SQLite;
 
 namespace hub_client.Cards
 {
     public static class DatabaseHelper
     {
-        public static SqliteCommand CreateCommand(string statement, SqliteConnection connection)
+        public static SQLiteCommand CreateCommand(string statement, SQLiteConnection connection)
         {
-            return new SqliteCommand
+            return new SQLiteCommand
             {
                 CommandText = statement,
                 CommandType = CommandType.Text,
@@ -20,7 +17,7 @@ namespace hub_client.Cards
             };
         }
 
-        public static bool ExecuteNonCommand(SqliteCommand command)
+        public static bool ExecuteNonCommand(SQLiteCommand command)
         {
             try
             {
@@ -34,12 +31,12 @@ namespace hub_client.Cards
             }
         }
 
-        public static List<string[]> ExecuteStringCommand(SqliteCommand command, int columncount)
+        public static List<string[]> ExecuteStringCommand(SQLiteCommand command, int columncount)
         {
             try
             {
                 var values = new List<string[]>();
-                SqliteDataReader reader = command.ExecuteReader();
+                SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     var row = new List<string>();
@@ -60,7 +57,7 @@ namespace hub_client.Cards
             }
         }
 
-        public static int ExecuteIntCommand(SqliteCommand command)
+        public static int ExecuteIntCommand(SQLiteCommand command)
         {
             try
             {

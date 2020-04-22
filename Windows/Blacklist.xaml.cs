@@ -4,17 +4,8 @@ using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -48,9 +39,9 @@ namespace hub_client.Windows
                 Manager.Blacklist.Remove(info);
                 Manager.Save();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
+
             }
         }
         private void LoadStyle()

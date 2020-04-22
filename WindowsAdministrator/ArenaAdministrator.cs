@@ -6,9 +6,6 @@ using hub_client.Network;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -20,7 +17,7 @@ namespace hub_client.WindowsAdministrator
         public Dictionary<int, Room> DuelingRooms;
 
         public event Action<Room> UpdateRoom;
-        
+
         public ArenaAdministrator(GameClient client)
         {
             Client = client;
@@ -34,7 +31,7 @@ namespace hub_client.WindowsAdministrator
         {
             UpdateRoom?.Invoke(obj);
 
-            switch(obj.State)
+            switch (obj.State)
             {
                 case RoomState.Waiting:
                     WaitingRooms[obj.Id] = obj;
@@ -50,7 +47,7 @@ namespace hub_client.WindowsAdministrator
                     if (DuelingRooms.ContainsKey(obj.Id))
                         DuelingRooms.Remove(obj.Id);
                     break;
-            }                    
+            }
         }
 
         public void SendJoinRoom(int id, RoomType type, string pass)

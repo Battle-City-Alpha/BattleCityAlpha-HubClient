@@ -1,21 +1,9 @@
 ﻿using BCA.Common;
-using BCA.Common.Enums;
-using BCA.Network.Packets;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -35,7 +23,7 @@ namespace hub_client.Windows
 
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, config.Type);
             if (pass != string.Empty)
-                txt += Environment.NewLine + "Partie privée"; 
+                txt += Environment.NewLine + "Partie privée";
             Title = "Requête de duel";
             if (istrade)
             {

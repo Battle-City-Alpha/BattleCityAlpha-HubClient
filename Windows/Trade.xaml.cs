@@ -1,24 +1,11 @@
 ﻿using BCA.Common;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
-using hub_client.Cards;
 using hub_client.Configuration;
-using hub_client.Network;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -109,7 +96,7 @@ namespace hub_client.Windows
 
             CollectionJ1.UpdateCollection(Collections[0]);
             CollectionJ2.UpdateCollection(Collections[1]);
-        }      
+        }
 
         private void lvPlayer1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -130,7 +117,7 @@ namespace hub_client.Windows
             if (!CollectionJ1.RemoveCard(card))
                 return;
 
-            lb_choice.Items.Add(card.Name + "("+card.Id+")");
+            lb_choice.Items.Add(card.Name + "(" + card.Id + ")");
 
             if (!_cardsToOffer.ContainsKey(card.Id))
                 _cardsToOffer.Add(card.Id, card);

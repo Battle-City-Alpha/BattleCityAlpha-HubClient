@@ -15,12 +15,9 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -30,7 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static string debug_ip = "127.0.0.1";
+        //public static string debug_ip = "127.0.0.1";
+        public static string debug_ip = "185.212.226.12";
         public static string release_ip = "185.212.226.12";
 
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -178,7 +176,7 @@ namespace hub_client
             box.ShowDialog();
             if (type == BonusType.Booster)
             {
-                OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster});
+                OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster });
                 _purchase.UpdateCards(cards);
             }
         }
@@ -255,7 +253,6 @@ namespace hub_client
         {
             PopBox box = new PopBox(text, title);
             box.Topmost = true;
-            box.Owner = _chat;
             if (showDialog)
                 box.ShowDialog();
             else

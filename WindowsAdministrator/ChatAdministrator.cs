@@ -6,10 +6,6 @@ using hub_client.Network;
 using hub_client.Windows;
 using NLog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace hub_client.WindowsAdministrator
@@ -138,7 +134,7 @@ namespace hub_client.WindowsAdministrator
             {
                 Target = target,
                 Quantity = quantity,
-                Card = card                
+                Card = card
             });
         }
 

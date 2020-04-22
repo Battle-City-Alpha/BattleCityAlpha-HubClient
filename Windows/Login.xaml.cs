@@ -1,23 +1,11 @@
-﻿using BCA.Common;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
-using hub_client.Configuration;
+﻿using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -39,7 +27,7 @@ namespace hub_client.Windows
 
             this.MouseDown += Login_MouseDown;
         }
-        
+
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
@@ -66,7 +54,6 @@ namespace hub_client.Windows
                 pbPassword.Password = FormExecution.AppConfig.Password;
             }
 
-            webview_patchnotes.Source = new Uri("https://battlecityalpha.xyz/BCA/UPDATEV2/Client/News.txt");
 
             LoadStyle();
         }
@@ -104,7 +91,7 @@ namespace hub_client.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
             _admin.LoginComplete -= _admin_LoginComplete;
-            Loaded -= Login_Loaded; 
+            Loaded -= Login_Loaded;
             if (!_complete)
                 Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }

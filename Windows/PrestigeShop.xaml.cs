@@ -1,23 +1,12 @@
 ﻿using BCA.Common.Enums;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -161,7 +150,7 @@ namespace hub_client.Windows
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Sleeve);
             window.Owner = this;
             window.ShowDialog();
-        }        
+        }
         private void BuyCustomBorder(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Border);

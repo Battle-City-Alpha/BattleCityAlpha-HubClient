@@ -6,17 +6,9 @@ using hub_client.Windows.Controls.Controls_Stuff;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace hub_client.Windows
@@ -70,7 +62,8 @@ namespace hub_client.Windows
             {
                 if (!room.NeedPassword)
                     _admin.SendJoinRoom(room.Id, room.Type, "");
-                else {
+                else
+                {
                     InputText form = new InputText();
                     form.Title = "Mot de passe";
                     form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);

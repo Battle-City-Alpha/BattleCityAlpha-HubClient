@@ -1,19 +1,11 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
-using BCA.Network.Packets.Standard.FromServer;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace hub_client.Helpers
 {
@@ -77,51 +69,51 @@ namespace hub_client.Helpers
         }
         private static void UpdateAvatar(Customization avatar, int i)
         {
-                if (!avatar.IsHost)
-                    CopyAvatarToTexturesFolder(avatar, i);
-                else
+            if (!avatar.IsHost)
+                CopyAvatarToTexturesFolder(avatar, i);
+            else
+            {
+                using (WebClient wc = new WebClient())
                 {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(avatar.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
-                    }
+                    wc.DownloadFileAsync(
+                        new System.Uri(avatar.URL),
+                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
+                        );
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
                 }
+            }
         }
         private static void UpdateBorder(Customization border, int i)
         {
-                if (!border.IsHost)
-                    CopyBorderToTexturesFolder(border, i);
-                else
+            if (!border.IsHost)
+                CopyBorderToTexturesFolder(border, i);
+            else
+            {
+                using (WebClient wc = new WebClient())
                 {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(border.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
-                    }
+                    wc.DownloadFileAsync(
+                        new System.Uri(border.URL),
+                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
+                        );
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
                 }
+            }
         }
         private static void UpdateSleeve(Customization sleeve, int i)
         {
-                if (!sleeve.IsHost)
-                    CopySleeveToTexturesFolder(sleeve, i);
-                else
+            if (!sleeve.IsHost)
+                CopySleeveToTexturesFolder(sleeve, i);
+            else
+            {
+                using (WebClient wc = new WebClient())
                 {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(sleeve.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
-                    }
+                    wc.DownloadFileAsync(
+                        new System.Uri(sleeve.URL),
+                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
+                        );
+                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
                 }
+            }
         }
 
         private static void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization customitem, int i)

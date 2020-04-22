@@ -38,7 +38,7 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
         }
         private void LoadStyle()
-        { 
+        {
             btnSend.Color1 = style.GetGameColor("Color1DuelRequestButton");
             btnSend.Color2 = style.GetGameColor("Color2DuelRequestButton");
             btnSend.Update();

@@ -1,11 +1,9 @@
-﻿using Microsoft.Data.Sqlite;
-using NLog;
+﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using static hub_client.Cards.SQLCommands;
 
@@ -27,7 +25,7 @@ namespace hub_client.Cards
             dic[toKey] = value;
         }
 
-        public static async Task<bool> LoadCDB(string dir, bool overwrite, bool clearData = false)
+        public static bool LoadCDB(string dir, bool overwrite, bool clearData = false)
         {
             logger.Info("Start LOAD CDB {0}", dir);
             if (!File.Exists(dir))
@@ -38,7 +36,7 @@ namespace hub_client.Cards
                 CardData.Clear();
             }
 
-            SqliteConnection connection = new SqliteConnection("Data Source=" + dir);
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + dir);
             List<string[]> datas = new List<string[]>();
             List<string[]> texts = new List<string[]>();
 
@@ -67,7 +65,7 @@ namespace hub_client.Cards
                 }
 
                 if (!CheckPicsLoaded(row[0]))
-                    await DownloadPics(row[0]);
+                    DownloadPics(row[0]);
             }
             foreach (string[] row in texts)
             {
@@ -217,7 +215,7 @@ namespace hub_client.Cards
         {
             return File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg"));
         }
-        private static async Task DownloadPics(string id)
+        private static async void DownloadPics(string id)
         {
             using (WebClient wc = new WebClient())
             {
@@ -232,9 +230,9 @@ namespace hub_client.Cards
         {
             string s = "";
             if (!FormExecution.ClientConfig.BCA_Card_Design)
-                s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
+                s = string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
             else
-                s = string.Format("https://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
+                s = string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
             return new Uri(s);
         }
     }
