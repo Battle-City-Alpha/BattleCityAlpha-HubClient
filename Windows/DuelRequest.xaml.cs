@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public DuelRequest(DuelRequestAdministrator admin, int id)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             cb_dueltype.ItemsSource = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();

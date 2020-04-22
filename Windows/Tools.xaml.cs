@@ -30,6 +30,7 @@ namespace hub_client.Windows
         public Tools(ToolsAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             this.Loaded += Tools_Loaded;
             this.MouseDown += Window_MouseDown;

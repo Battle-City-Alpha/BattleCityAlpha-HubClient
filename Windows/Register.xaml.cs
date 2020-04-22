@@ -22,6 +22,7 @@ namespace hub_client.Windows
         public Register(RegisterAdminstrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             _admin.RegistrationComplete += _admin_RegistrationComplete;

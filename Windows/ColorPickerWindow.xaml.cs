@@ -19,6 +19,7 @@ namespace hub_client.Windows
         public ColorPickerWindow()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
         }
         private void LoadStyle()

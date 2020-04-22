@@ -19,6 +19,7 @@ namespace hub_client.Windows
         public SoloMode()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             this.MouseDown += Window_MouseDown;
             this.Loaded += SoloMode_Loaded;

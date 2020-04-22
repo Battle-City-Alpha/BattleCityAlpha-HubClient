@@ -19,6 +19,7 @@ namespace hub_client.Windows
         public PrestigeShop(PrestigeShopAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
 

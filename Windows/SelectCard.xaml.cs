@@ -24,6 +24,7 @@ namespace hub_client.Windows
         public SelectCard(SelectCardAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
             _admin.LoadSelectCard += _admin_LoadSelectCard;

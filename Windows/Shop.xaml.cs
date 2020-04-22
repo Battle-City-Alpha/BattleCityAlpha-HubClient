@@ -28,6 +28,7 @@ namespace hub_client.Windows
         public Shop(ShopAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             _admin.UpdateBoosterInfo += UpdateBoosterInfo;

@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public Purchase(PurchaseAdministrator admin, BoosterInfo infos)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
             _admin.PurchaseItem += _admin_PurchaseItem;
 

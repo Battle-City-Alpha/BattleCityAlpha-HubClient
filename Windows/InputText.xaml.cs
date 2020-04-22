@@ -15,6 +15,7 @@ namespace hub_client.Windows
         public InputText()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             LoadStyle();
 

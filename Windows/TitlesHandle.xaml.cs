@@ -20,6 +20,7 @@ namespace hub_client.Windows
         public TitlesHandle(TitlesHandleAdministrator admin, bool prestigetitle)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
             this.FontFamily = style.Font;
 

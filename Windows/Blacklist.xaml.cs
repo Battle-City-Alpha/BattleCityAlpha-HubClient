@@ -19,6 +19,7 @@ namespace hub_client.Windows
         public Blacklist(BlacklistManager manager)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             Manager = manager;
 
             foreach (PlayerInfo player in Manager.Blacklist)

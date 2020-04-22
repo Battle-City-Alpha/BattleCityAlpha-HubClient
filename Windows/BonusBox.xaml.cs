@@ -17,6 +17,7 @@ namespace hub_client.Windows
         public BonusBox(BonusType type, int nbconnexions, string gift)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
             string bonus = "Bonus : ";
             switch (type)

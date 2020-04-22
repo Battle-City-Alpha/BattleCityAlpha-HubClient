@@ -20,6 +20,7 @@ namespace hub_client.Windows
         public PrestigeCustomizationViewerVertical(PrestigeCustomizationsViewerAdministrator admin, bool prestige)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
             _admin = admin;
             _prestige = prestige;

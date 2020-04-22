@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public CustomCustomizationWindow(CustomizationType ctype)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
             _ctype = ctype;
             AdaptImageSize();

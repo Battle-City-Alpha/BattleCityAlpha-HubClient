@@ -29,6 +29,7 @@ namespace hub_client.Windows
         public Arena(ArenaAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             foreach (var room in _admin.WaitingRooms)

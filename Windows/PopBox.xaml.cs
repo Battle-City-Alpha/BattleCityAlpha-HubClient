@@ -15,6 +15,7 @@ namespace hub_client.Windows
         public PopBox(string txt, string title)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             popText.Text = txt;
 
             Loaded += PopBox_Loaded;

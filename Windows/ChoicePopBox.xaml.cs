@@ -20,6 +20,7 @@ namespace hub_client.Windows
         public ChoicePopBox(PlayerInfo player, RoomConfig config, bool istrade, string pass)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             string txt = String.Format("Vous avez été invité en duel par {0}. \r\n Type : {1}", player.Username, config.Type);
             if (pass != string.Empty)

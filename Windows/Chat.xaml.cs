@@ -34,6 +34,7 @@ namespace hub_client.Windows
         public Chat(ChatAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
 

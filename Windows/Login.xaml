@@ -101,7 +101,8 @@
                     <Controls:BCA_ColorButton x:Name="btnConnexion" Margin="100,10" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ButtonText="Jouer" MouseLeftButtonDown="BCA_Button_MouseLeftButtonDown"/>
                 </Grid>
             </Grid>
-            
+            <RichTextBox x:Name="rtb_patchnotes" Grid.Row="2" Margin="30, 30, 60, 30" FontSize="14"/>
+
         </Grid>
     </Border>
 </Window>

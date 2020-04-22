@@ -31,6 +31,7 @@ namespace hub_client.Windows
         public Profil(ProfilAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             _admin.UpdateProfil += _admin_UpdateProfil;

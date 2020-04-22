@@ -20,6 +20,7 @@ namespace hub_client.Windows
         public PrivateMessage(string target, PrivateMessageAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
             _target = _admin.Client.GetPlayerInfo(target);
             if (_target == null)

@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public Panel(PanelAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             _admin.UpdatePlayersList += _admin_UpdatePlayersList;

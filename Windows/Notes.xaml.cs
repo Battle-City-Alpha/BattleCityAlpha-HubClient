@@ -19,6 +19,7 @@ namespace hub_client.Windows
         public Notes(NotesAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
             Loaded += Notes_Loaded;
             path = System.IO.Path.Combine(FormExecution.path, "notes.bca");

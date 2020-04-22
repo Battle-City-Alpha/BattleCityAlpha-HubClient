@@ -31,6 +31,7 @@ namespace hub_client.Windows
         public Brocante(BrocanteAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             _admin.LoadBrocante += _admin_LoadBrocante;

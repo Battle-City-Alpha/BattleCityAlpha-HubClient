@@ -26,6 +26,7 @@ namespace hub_client.Windows
         public Trade(TradeAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
             Closed += Trade_Closed;

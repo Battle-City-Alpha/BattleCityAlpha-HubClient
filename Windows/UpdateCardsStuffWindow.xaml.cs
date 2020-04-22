@@ -17,6 +17,7 @@ namespace hub_client.Windows
         public UpdateCardsStuffWindow(string[] updates)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _updates = updates;
 

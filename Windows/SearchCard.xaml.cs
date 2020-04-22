@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public SearchCard()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             foreach (CardType type in Enum.GetValues(typeof(CardType)))
                 cb_cardtype.Items.Add(type);

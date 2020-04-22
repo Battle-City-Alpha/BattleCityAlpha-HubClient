@@ -14,6 +14,7 @@ namespace hub_client.Windows
         public DuelResult(int exp, int bp, bool win)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             string text;
             if (win)
                 text = "Félicitations pour ta victoire !";

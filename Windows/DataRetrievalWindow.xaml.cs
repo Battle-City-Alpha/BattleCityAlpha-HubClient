@@ -17,6 +17,7 @@ namespace hub_client.Windows
         public DataRetrievalWindow(DataRetrievalAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
 
             this.MouseDown += Window_MouseDown;

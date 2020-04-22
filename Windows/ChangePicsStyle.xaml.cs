@@ -20,6 +20,7 @@ namespace hub_client.Windows
         public ChangePicsStyle()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
 
             btnDownloadPics.MouseLeftButtonDown += StartDownloadingPics;
