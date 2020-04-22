@@ -41,6 +41,8 @@ namespace hub_client.Windows
             _admin.UpdateRoom += UpdateRoom;
 
             singleList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
+            matchList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
+            tagList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
 
             this.Loaded += Arena_Loaded;
             this.MouseDown += Window_MouseDown;
