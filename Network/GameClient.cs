@@ -850,6 +850,8 @@ namespace hub_client.Network
         public void OnSearchCard(StandardServerSearchCard packet)
         {
             string boosters = "La carte est disponible dans les boosters : " + string.Join("/", packet.Boosters.ToArray());
+            if (packet.Boosters.Count == 0)
+                boosters += "Aucun.";
             Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte", true));
 
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());

@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Stuff;
@@ -204,6 +205,8 @@ namespace hub_client.Windows
 
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
+            YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 1);
             YgoProHelper.LaunchYgoPro("-r");
         }
 

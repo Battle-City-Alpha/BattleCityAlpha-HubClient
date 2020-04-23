@@ -42,6 +42,9 @@ namespace hub_client.Windows
         {
             this.tb_price.IsEnabled = false;
             this.tb_price.Text = "1";
+            this.tb_price.Visibility = Visibility.Hidden;
+
+            this.lbl_price.Visibility = Visibility.Hidden;
         }
 
         private void SelectCard_Closed(object sender, EventArgs e)

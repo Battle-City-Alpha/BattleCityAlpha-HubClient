@@ -15,7 +15,7 @@ namespace hub_client.Helpers
 
         private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 406, false, "");
         private static Customization _bot_border = new Customization(CustomizationType.Border, 26, false, "");
-        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 1, false, "");
+        private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 63, false, "");
         private static string _deck = "";
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
@@ -52,6 +52,9 @@ namespace hub_client.Helpers
         public static void LaunchGameAgainstBot(string deck)
         {
             _deck = deck;
+            UpdateAvatar(new Customization(CustomizationType.Avatar, 14, false, ""), 0);
+            UpdateBorder(new Customization(CustomizationType.Border, 1, false, ""), 0);
+            UpdateSleeve(new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
             UpdateAvatar(_bot_avatar, 1);
             UpdateBorder(_bot_border, 1);
             UpdateSleeve(_bot_sleeve, 1);
