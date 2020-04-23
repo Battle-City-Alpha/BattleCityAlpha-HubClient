@@ -344,6 +344,9 @@ namespace hub_client.Network
                 case PacketType.DuelRequest:
                     OnDuelRequest(JsonConvert.DeserializeObject<StandardServerDuelRequest>(packet));
                     break;
+                case PacketType.DuelRequestAnswer:
+                    OnDuelRequestAnswer(JsonConvert.DeserializeObject<StandardServerDuelRequestResult>(packet));
+                    break;
                 case PacketType.UpdateRoom:
                     OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
                     break;
@@ -770,11 +773,11 @@ namespace hub_client.Network
 
         public void OnTradeRequest(StandardServerTradeRequest packet)
         {
-            if (BlacklistManager.CheckBlacklist(packet.Player))
+            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.Trade)
+            {
+                Send(PacketType.TradeRequestAnswer, new StandardClientTradeRequestAnswer { Player = packet.Player, Result = false });
                 return;
-
-            if (FormExecution.ClientConfig.Trade)
-                return;
+            }
 
             Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), true, ""));
             logger.Trace("Trade REQUEST - From {0}", packet.Player.Username);
@@ -789,7 +792,7 @@ namespace hub_client.Network
                 Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { PlayerManager.GetInfos(FormExecution.Username), packet.Player }, packet.Collections));
             }
             else
-                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, packet.Player.Username + " a refusé votre échange.", false, false));
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre échange.", false, false));
         }
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {
@@ -887,13 +890,21 @@ namespace hub_client.Network
         }
         public void OnDuelRequest(StandardServerDuelRequest packet)
         {
-            if (BlacklistManager.CheckBlacklist(packet.Player))
+            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.Request)
+            {
+                Send(PacketType.DuelRequestAnswer, new StandardClientDuelRequestAnswer { Player = packet.Player, Config = packet.Config, Roompass = packet.RoomPass, Result = false });
                 return;
+            }
 
-            if (FormExecution.ClientConfig.Request)
-                return;
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
             Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, false, packet.RoomPass));
+        }
+        public void OnDuelRequestAnswer(StandardServerDuelRequestResult packet)
+        {
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
+            logger.Trace("DUEL REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
+            if (!packet.Result)
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre duel.", false, false));
         }
         public void OnUpdateRoom(StandardServerUpdateRoom packet)
         {

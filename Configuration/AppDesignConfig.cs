@@ -8,7 +8,7 @@ namespace hub_client.Configuration
     public class AppDesignConfig
     {
         public Dictionary<string, Color> GameColors;
-        public FontFamily Font = new FontFamily("Dosis");
+        public FontFamily Font = new FontFamily("Consolas");
         public int FontSize = 22;
 
         public AppDesignConfig()
