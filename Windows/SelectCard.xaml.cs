@@ -60,9 +60,13 @@ namespace hub_client.Windows
 
         private void SelectCard_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Collection.SelectedItem() == null) return;
-            DisplayCardInfo.SetCard(CardManager.GetCard(((PlayerCard)Collection.SelectedItem()).Id));
-            selected_index = Collection.SelectedIndex();
+            try
+            {
+                if (Collection.SelectedItem() == null) return;
+                DisplayCardInfo.SetCard(CardManager.GetCard(((PlayerCard)Collection.SelectedItem()).Id));
+                selected_index = Collection.SelectedIndex();
+            }
+            catch { };
         }
 
         private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

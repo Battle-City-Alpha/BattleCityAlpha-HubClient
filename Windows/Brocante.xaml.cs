@@ -3,6 +3,7 @@ using hub_client.Cards;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Brocante : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         BrocanteAdministrator _admin;
 
         List<BrocanteCard> _cards;
@@ -174,21 +176,33 @@ namespace hub_client.Windows
 
         private void TbChat_Card_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            string research = tb_search_card.GetText().ToUpper();
-
-            if (brocanteList.ItemsSource != null)
-                brocanteList.ItemsSource = null;
-            else
-                brocanteList.Items.Clear();
-
-            if (research != String.Empty)
+            try
             {
-                foreach (BrocanteCard card in _cards)
-                    if (card.CardName.ToUpper().StartsWith(research))
-                        brocanteList.Items.Add(card);
+                string research = tb_search_card.GetText().ToUpper();
+
+                if (brocanteList.ItemsSource != null)
+                    brocanteList.ItemsSource = null;
+                else
+                    brocanteList.Items.Clear();
+
+                logger.Trace("Brocanliste items passé");
+                if (research != String.Empty)
+                {
+                    logger.Trace("empty passé");
+                    foreach (BrocanteCard card in _cards)
+                    {
+                        logger.Trace(card.CardName);
+                        if (card.CardName.ToUpper().StartsWith(research))
+                            brocanteList.Items.Add(card);
+                    }
+                }
+                else
+                    brocanteList.ItemsSource = _cards;
             }
-            else
-                brocanteList.ItemsSource = _cards;
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
         }
 
         private void brocanteList_SelectionChanged(object sender, SelectionChangedEventArgs e)

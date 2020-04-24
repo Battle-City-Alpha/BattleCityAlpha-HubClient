@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
+using hub_client.Cards;
 using System;
 
 namespace hub_client.Helpers
@@ -270,6 +271,9 @@ namespace hub_client.Helpers
             int id = -1;
             Int32.TryParse(args[1], out id);
             if (id == -1)
+                return null;
+
+            if (!CardManager.ContainsCard(id))
                 return null;
 
             return new StandardClientGiveCard

@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/bca.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize"
         Closed="Window_Closed">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"
@@ -77,6 +80,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <WrapPanel>
+                                        <TextBlock Text="⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}"/>
                                         <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}"/>
                                     </WrapPanel>
                                 </DataTemplate>

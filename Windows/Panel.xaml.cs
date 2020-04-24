@@ -64,8 +64,9 @@ namespace hub_client.Windows
                 _admin_UpdatePlayersList(profiles);
         }
 
-        private void _admin_UpdateProfile(string[] accounts, string ip, string obs, int bp)
+        private void _admin_UpdateProfile(PlayerInfo profil, string[] accounts, string ip, string obs, int bp)
         {
+            profileselected = profil;
             string username_accounts = "";
             foreach (string player in accounts)
                 username_accounts += player + ",";
@@ -134,7 +135,6 @@ namespace hub_client.Windows
 
         private void btn_save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            profileselected = profiles[lbUserlist.SelectedIndex];
             _admin.PanelUpdate(profileselected, new TextRange(rtbObs.Document.ContentStart, rtbObs.Document.ContentEnd).Text);
         }
 

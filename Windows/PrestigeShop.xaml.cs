@@ -36,6 +36,7 @@ namespace hub_client.Windows
         private void _admin_UpdateProgress(int progress)
         {
             progressBar_donation.Value = progress;
+            this.label_progressbar.Content = progressBar_donation.Value.ToString();
         }
         private void _admin_UpdatePrestigePoints(int pp)
         {
@@ -44,7 +45,6 @@ namespace hub_client.Windows
 
         private void PrestigeShop_Loaded(object sender, RoutedEventArgs e)
         {
-            this.label_progressbar.Content = progressBar_donation.Value.ToString();
         }
 
         private void LoadStyle()

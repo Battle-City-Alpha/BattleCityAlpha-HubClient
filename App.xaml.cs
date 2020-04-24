@@ -32,7 +32,7 @@ namespace hub_client
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            logger.Error("UNHANDLED EXCEPTION - {0}", e.Exception);
+            logger.Error("UNHANDLED EXCEPTION - {0}", e.Exception.ToString());
             FormExecution.Client_PopMessageBox("Une erreur s'est produite.", "Problème", true);
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }

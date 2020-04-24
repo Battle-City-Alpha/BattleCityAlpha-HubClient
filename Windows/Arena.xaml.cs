@@ -84,7 +84,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> RankedButtons = new List<BCA_ColorButton>();
-            RankedButtons.AddRange(new[] { btn_playranked, btn_ranking, btn_host });
+            RankedButtons.AddRange(new[] { btn_playranked, btn_ranking, btn_host, btn_IA, btn_Switch_Rooms_Visible });
 
             foreach (BCA_ColorButton btn in RankedButtons)
             {

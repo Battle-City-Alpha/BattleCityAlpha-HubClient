@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Stuff;
@@ -45,6 +46,7 @@ namespace hub_client.Windows
             _admin.LoginComplete += _admin_LoginComplete;
             _admin.AddHubPlayer += _admin_AddHubPlayer;
             _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
+            _admin.UpdateHubPlayers += _admin_UpdateHubPlayers;
             _admin.ClearChat += _admin_ClearChat;
 
             tbUserList.TextChanged += SearchUser;
@@ -58,6 +60,17 @@ namespace hub_client.Windows
             this.Title = "Battle City Alpha - " + Main.VERSION;
             tb_version.Text = Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
+        }
+
+        private void _admin_UpdateHubPlayers(PlayerInfo[] players, PlayerState state)
+        {
+            foreach (PlayerInfo player in players)
+                if (player != null)
+                    foreach (PlayerItem item in lvUserlist.Items)
+                        if (item.UserId == player.UserId)
+                            item.State = state;
+
+            lvUserlist.Items.Refresh();
         }
 
         private void _admin_PlayerChatMessage(Color c, PlayerInfo p, string msg)
@@ -174,7 +187,7 @@ namespace hub_client.Windows
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             btnDiscord.ClickedAnimation();
-            System.Diagnostics.Process.Start("http://discordapp.com/invite/seEZAwV");
+            System.Diagnostics.Process.Start("https://discordapp.com/invite/EYkXU7N");
             logger.Trace("Discord clicked.");
         }
 

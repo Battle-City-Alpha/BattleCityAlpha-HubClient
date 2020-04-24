@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows.Controls"
         mc:Ignorable="d"
-        Title="Gestion des titres" ResizeMode="NoResize" Height="240.906" Width="617.8" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+        Title="Gestion des titres" ResizeMode="NoResize" Height="240.906" Width="617.8" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" WindowStartupLocation="CenterOwner">
     <Border Padding="10,0" CornerRadius="50" BorderThickness="2" BorderBrush="Black" x:Name="bg_border">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">

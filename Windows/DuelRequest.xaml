@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Requête de duel" Height="338" Width="377.2" Loaded="Window_Loaded" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">
+        Title="Requête de duel" Height="338" Width="377.2" Loaded="Window_Loaded" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <Border Padding="0" BorderThickness="2" BorderBrush="Black" CornerRadius="100" Margin="0">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">

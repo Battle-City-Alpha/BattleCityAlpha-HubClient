@@ -41,7 +41,7 @@
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock FontSize="14" Text="Mise à jour : " Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow"/>
+                        <TextBlock x:Name="tb_maj" FontSize="14" Text="Mise à jour : " Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow"/>
                         <TextBlock x:Name="tb_update"  FontSize="14" Text="???/???" Foreground="Black" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow"/>
                     </StackPanel>
                     <ProgressBar x:Name="progressBar_update" Grid.Row="1" VerticalAlignment="Center" Height="30" Width="200" Margin="10" Value="20" Foreground="#FF02863D" Background="{x:Null}" BorderBrush="Black" BorderThickness="2"/>

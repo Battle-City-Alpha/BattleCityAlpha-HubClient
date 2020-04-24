@@ -11,7 +11,7 @@ namespace hub_client.WindowsAdministrator
         public GameClient Client;
 
         public event Action<PlayerInfo[]> UpdatePlayersList;
-        public event Action<string[], string, string, int> UpdateProfile;
+        public event Action<PlayerInfo, string[], string, string, int> UpdateProfile;
 
         public PanelAdministrator(GameClient client)
         {
@@ -26,9 +26,9 @@ namespace hub_client.WindowsAdministrator
             UpdatePlayersList?.Invoke(players);
         }
 
-        private void Client_UpdatePanelUser(string[] accounts, string ip, string obs, int bp)
+        private void Client_UpdatePanelUser(PlayerInfo player, string[] accounts, string ip, string obs, int bp)
         {
-            UpdateProfile?.Invoke(accounts, ip, obs, bp);
+            UpdateProfile?.Invoke(player, accounts, ip, obs, bp);
         }
 
         public void SendPanelUserlist()

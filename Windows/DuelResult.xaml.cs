@@ -11,7 +11,7 @@ namespace hub_client.Windows
     public partial class DuelResult : Window
     {
         private AppDesignConfig style = FormExecution.AppDesignConfig;
-        public DuelResult(int exp, int bp, bool win)
+        public DuelResult(int bp, int exp, bool win)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;

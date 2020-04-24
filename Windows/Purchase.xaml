@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Purchase" Height="448.8" Width="513.6" Closed="Window_Closed"
-        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}">
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" WindowStartupLocation="CenterOwner">
     <Border BorderBrush="Black" BorderThickness="2" CornerRadius="50, 0, 50, 50">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">

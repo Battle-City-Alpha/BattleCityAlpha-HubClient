@@ -47,6 +47,7 @@ namespace hub_client.Network
         public event Action Shutdown;
         public event Action<string, string> ClearChat;
         public event Action<string[]> Banlist;
+        public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         #endregion
         #region RegisterForm Events
         public event Action RegistrationComplete;
@@ -72,7 +73,7 @@ namespace hub_client.Network
         #endregion
         #region PanelForm Events
         public event Action<PlayerInfo[]> UpdatePanelUserlist;
-        public event Action<string[], string, string, int> UpdatePanelUser;
+        public event Action<PlayerInfo, string[], string, string, int> UpdatePanelUser;
         #endregion
         #region TradeForm Events
         public event Action<int, PlayerInfo[], Dictionary<int, PlayerCard>[]> InitTrade;
@@ -265,6 +266,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.Muted:
                     OnMuted(JsonConvert.DeserializeObject<StandardServerMuted>(packet));
+                    break;
+                case PacketType.Unmute:
+                    OnUnmute(JsonConvert.DeserializeObject<StandardServerUnmute>(packet));
                     break;
                 case PacketType.DisabledAccount:
                     OnDisabled(JsonConvert.DeserializeObject<StandardServerDisabledAccount>(packet));
@@ -691,6 +695,13 @@ namespace hub_client.Network
 
             logger.Trace("MUTED - End : {0}", packet.End);
         }
+        public void OnUnmute(StandardServerUnmute packet)
+        {
+            string msg = "Tu as été démuté par " + packet.Player.Username + " !";
+            OpenPopBox(msg, "Modération", true);
+
+            logger.Trace("UNMUTE - By : {0}", packet.Player.Username);
+        }
 
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
         {
@@ -752,7 +763,7 @@ namespace hub_client.Network
         }
         public void OnPanelUpdateProfile(StandardServerPanelUpdateProfile packet)
         {
-            Application.Current.Dispatcher.Invoke(() => UpdatePanelUser?.Invoke(packet.Accounts, packet.IP, packet.Observation, packet.Points));
+            Application.Current.Dispatcher.Invoke(() => UpdatePanelUser?.Invoke(packet.Profil, packet.Accounts, packet.IP, packet.Observation, packet.Points));
             logger.Trace("UPDATE PANEL PLAYER - Players : {0} | IP : {1} | Observation : {2} | Points : {3}", packet.Accounts, packet.IP, packet.Observation, packet.Points);
         }
 
@@ -766,7 +777,7 @@ namespace hub_client.Network
         {
             string type = "Battle";
             if (packet.PrestigePoints)
-                type = "Pretige";
+                type = "Prestige";
             OpenPopBox("Vous avez reçu " + packet.Points + " " + type + " points de la part de " + packet.Player.Username, "Réception de points");
             logger.Trace("GET POINTS - From : {0} | Amount : {1} | Prestige : {2}", packet.Player.Username, packet.Points, packet.PrestigePoints);
         }
@@ -934,6 +945,8 @@ namespace hub_client.Network
         public void OnUpdateRoom(StandardServerUpdateRoom packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdateRoom?.Invoke(packet.Room));
+            if (packet.Room.State != RoomState.Waiting)
+                Application.Current.Dispatcher.Invoke(() => UpdateHubPlayers?.Invoke(packet.Room.Players, packet.Room.State == RoomState.Dueling ? PlayerState.Duel : PlayerState.Lobby));
             logger.Trace("UPDATE ROOM - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
         }
         public void OnRoomNeedPassword(StandardServerNeedRoomPassword packet)

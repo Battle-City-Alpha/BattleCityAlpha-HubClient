@@ -21,6 +21,8 @@ namespace hub_client.Windows
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
+            LoadStyle();
+
             this.MouseDown += Window_MouseDown;
             this.Loaded += SoloMode_Loaded;
         }

@@ -2777,7 +2777,6 @@
     <None Include="Assets\unknown.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="bcav2_y9s_icon.ico" />
     <Resource Include="Assets\Icon\bca.ico" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

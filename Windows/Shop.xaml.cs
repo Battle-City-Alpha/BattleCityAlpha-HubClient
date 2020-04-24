@@ -141,7 +141,7 @@ namespace hub_client.Windows
         private void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_prestigeshop, btn_purchase, btn_searchcard });
+            Buttons.AddRange(new[] { btn_prestigeshop, btn_purchase, btn_searchcard, btn_brocante });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -269,6 +269,8 @@ namespace hub_client.Windows
             try
             {
                 int numberPacket = Convert.ToInt32(tb_numberpack.Text);
+                if (numberPacket > 3 && (BoosterChoosen.Type == PurchaseType.Demarrage || BoosterChoosen.Type == PurchaseType.Structure))
+                    numberPacket = 3;
                 if (numberPacket > 24)
                     numberPacket = 24;
                 if (numberPacket < 0)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Profil" Height="614.556" Width="945.359" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed" ResizeMode="NoResize"
+        Title="Profil" Height="614.556" Width="945.359" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">
     <Border x:Name="bg_border" BorderBrush="Black" BorderThickness="2" CornerRadius="50">
         <Border.Background>

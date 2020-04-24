@@ -23,6 +23,7 @@ namespace hub_client.WindowsAdministrator
         public event Action<Color, PlayerInfo, string> PlayerChatMessage;
         public event Action<PlayerInfo> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
+        public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
 
         public ChatAdministrator(GameClient client)
@@ -33,10 +34,16 @@ namespace hub_client.WindowsAdministrator
             Client.LoginComplete += Client_LoginComplete;
             Client.AddHubPlayer += Client_AddHubPlayer;
             Client.RemoveHubPlayer += Client_RemoveHubPlayer;
+            Client.UpdateHubPlayers += Client_UpdateHubPlayers;
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_UpdateHubPlayers(PlayerInfo[] players, PlayerState state)
+        {
+            UpdateHubPlayers?.Invoke(players, state);
         }
 
         private void Client_SpecialChatMessageRecieved(Color c, string text, bool isBold, bool isItalic)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="None" Closed="Window_Closed"
+        Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="None" Closed="Window_Closed" WindowStartupLocation="CenterOwner"
         AllowsTransparency="True" Background="{x:Null}">
     <Border BorderBrush="Black" BorderThickness="2" CornerRadius="80,20,20,80">
         <Border.Background>

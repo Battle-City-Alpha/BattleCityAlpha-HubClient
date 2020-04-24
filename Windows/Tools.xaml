@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Tools" Height="583.053" Width="786.059" 
-        ResizeMode="CanResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">
+        ResizeMode="CanResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"

@@ -14,16 +14,29 @@ namespace hub_client.Windows
     public partial class UpdateCardsStuffWindow : Window
     {
         private string[] _updates;
-        public UpdateCardsStuffWindow(string[] updates)
+        public UpdateCardsStuffWindow(string[] updates, bool infini = false)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
-            _updates = updates;
+            if (!infini)
+            {
+                _updates = updates;
+                this.Loaded += UpdateCardsStuffWindow_Loaded;
+            }
+            else
+            {                
+                this.tb_update.Visibility = Visibility.Hidden;
+                this.tb_maj.Text = "Chargement...";
+                //this.progressBar_update.IsIndeterminate = true;
+            }
 
             this.MouseDown += Window_MouseDown;
+        }
 
-            this.Loaded += UpdateCardsStuffWindow_Loaded;
+        public void SetProgressValue(int progress)
+        {
+            this.progressBar_update.Value = progress;
         }
 
         private void UpdateCardsStuffWindow_Loaded(object sender, RoutedEventArgs e)

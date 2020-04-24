@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 using static hub_client.Cards.SQLCommands;
 
 namespace hub_client.Cards
@@ -12,6 +13,9 @@ namespace hub_client.Cards
     public static class CardManager
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public static event Action LoadingFinished;
+        public static event Action<int, int> LoadingProgress;
 
         private static Dictionary<int, CardInfos> CardData = new Dictionary<int, CardInfos>();
         public static Dictionary<int, string> SetCodes = new Dictionary<int, string>();
@@ -54,8 +58,13 @@ namespace hub_client.Cards
                 return false;
             }
 
+            int i = 0;
+            int total = datas.Count + texts.Count;
             foreach (string[] row in datas)
             {
+                i++;
+                Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, total));
+
                 if (overwrite)
                     CardManager.UpdateOrAddCard(new CardInfos(row));
                 else
@@ -69,6 +78,9 @@ namespace hub_client.Cards
             }
             foreach (string[] row in texts)
             {
+                i++;
+                Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, total));
+
                 if (CardManager.ContainsCard(Int32.Parse(row[0])))
                     CardManager.GetCard(Int32.Parse(row[0])).SetCardText(row);
             }
@@ -76,6 +88,8 @@ namespace hub_client.Cards
             if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf")))
                 LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf"))));
             SetCodesStringInit();
+
+            Application.Current.Dispatcher.Invoke(() => LoadingFinished?.Invoke());
 
             return true;
         }

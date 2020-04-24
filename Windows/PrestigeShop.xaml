@@ -52,7 +52,7 @@
                     </Border.Background>
                     <StackPanel Orientation="Horizontal" Grid.Column="0" >
                         <Label Content="Couverture frais mensuels via donations : " FontSize="20" VerticalAlignment="Center" FontFamily="Dosis"/>
-                        <ProgressBar x:Name="progressBar_donation" Grid.Column="0" VerticalAlignment="Center" Height="30" Width="200" Margin="10,0" Value="20" Foreground="#FF2264FF" Background="{x:Null}" BorderBrush="Black" BorderThickness="2"/>
+                        <ProgressBar x:Name="progressBar_donation" Grid.Column="0" VerticalAlignment="Center" Height="30" Width="200" Margin="10,0" Value="20" Foreground="#FF2264FF" Background="#3FFFFFFF" BorderBrush="Black" BorderThickness="2"/>
                         <Label x:Name="label_progressbar" Content="99" FontSize="20"/>
                         <Label Content="%" FontSize="20"/>
                     </StackPanel>

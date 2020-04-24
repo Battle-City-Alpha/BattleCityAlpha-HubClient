@@ -66,7 +66,10 @@ namespace hub_client.Windows.Controls
             {
                 CardInfos c = CardManager.GetCard(args.Key);
                 if (c == null)
+                {
+                    args.Value.Name = "Id inconnue : " + args.Key;
                     continue;
+                }
                 args.Value.Name = c.Name;
                 Add(args.Value);
             }
@@ -76,7 +79,7 @@ namespace hub_client.Windows.Controls
         {
             Clear();
             foreach (var var in _collection)
-                if (!string.IsNullOrEmpty(tb_search.GetText()) && var.Value.Name.ToLower().Contains(tb_search.GetText().ToLower()))
+                if (!string.IsNullOrEmpty(tb_search.GetText()) && var.Value.Name != null && var.Value.Name.ToLower().Contains(tb_search.GetText().ToLower()))
                     Add(var.Value);
             if (tb_search.GetText() == "")
             {

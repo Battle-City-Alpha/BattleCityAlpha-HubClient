@@ -49,9 +49,10 @@ namespace hub_client
 
         public static GameClient Client { get; private set; }
 
-        public static Dictionary<string, PrivateMessageAdministrator> PrivateForms = new Dictionary<string, PrivateMessageAdministrator>();
+        public static Dictionary<int, PrivateMessageAdministrator> PrivateForms = new Dictionary<int, PrivateMessageAdministrator>();
 
         #region Windows
+        private static UpdateCardsStuffWindow _windowload;
         private static Login _login;
         private static Register _register;
         private static Chat _chat;
@@ -89,12 +90,18 @@ namespace hub_client
             else
                 ClientConfig = new ClientConfig();
 
-            CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true);
-
             BoosterManager.LoadList();
             //AppDesignConfig = new AppDesignConfig(); //To debug config
-
+            
             SaveConfig();
+
+            _windowload = new UpdateCardsStuffWindow(new string[] { }, true);
+            _windowload.Show();
+
+            CardManager.LoadingFinished += CardManager_LoadingFinished;
+            CardManager.LoadingProgress += CardManager_LoadingProgress;
+            Task.Run(() => CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true));
+
 
             Client = new GameClient();
 
@@ -115,10 +122,25 @@ namespace hub_client
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
 
+            logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void CardManager_LoadingProgress(int i, int total)
+        {
+            _windowload.SetProgressValue((int)Math.Round((double)(i / total * 100)));
+        }
+
+        private static void CardManager_LoadingFinished()
+        {
+            logger.Trace("CDB Loaded.");
+            _windowload.Close();
+
             StartConnexion();
             _login.Focus();
             _login.Show();
-            logger.Trace("FormExecution initialisation.");
+
+            CardManager.LoadingProgress -= CardManager_LoadingProgress;
+            CardManager.LoadingFinished -= CardManager_LoadingFinished;
         }
 
         public static void HideLogin()
@@ -213,25 +235,34 @@ namespace hub_client
 
         private static void Client_PrivateMessageReceived(PlayerInfo user, string message)
         {
-            if (PrivateForms.ContainsKey(user.Username))
-                PrivateForms[user.Username].PrivateMessageRecieved(user, message);
+            if (PrivateForms.ContainsKey(user.UserId))
+                PrivateForms[user.UserId].PrivateMessageRecieved(user, message);
             else
             {
                 if (Client.BlacklistManager.CheckBlacklist(user))
                     return;
                 OpenNewPrivateForm(user);
-                PrivateForms[user.Username].PrivateMessageRecieved(user, message);
+                PrivateForms[user.UserId].PrivateMessageRecieved(user, message);
             }
         }
 
         public static void OpenNewPrivateForm(PlayerInfo user)
         {
+            if (PrivateForms.ContainsKey(user.UserId))
+                return;
+
             string username = user.Username;
             PrivateMessageAdministrator admin = new PrivateMessageAdministrator(Client);
             PrivateMessage form = new PrivateMessage(username, admin);
-            PrivateForms.Add(username, admin);
+            PrivateForms.Add(user.UserId, admin);
             form.Owner = _chat;
             form.Show();
+            form.Closed += (sender,e) => PMClosed(sender, e, user.UserId);
+        }
+
+        private static void PMClosed(object sender, EventArgs e, int userID)
+        {
+            PrivateForms.Remove(userID);
         }
 
         public static Chat GetChatWindow()
@@ -298,7 +329,8 @@ namespace hub_client
         {
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
-            _register.Owner = _login;
+            //_register.Owner = _login;
+            _register.Topmost = true;
             _register.Show();
         }
         public static void OpenArena()
