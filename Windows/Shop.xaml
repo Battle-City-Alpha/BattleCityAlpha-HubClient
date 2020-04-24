@@ -87,7 +87,7 @@
                                 <RowDefinition Height="395*"/>
                                 <RowDefinition Height="44*"/>
                             </Grid.RowDefinitions>
-                            <Image x:Name="img_booster" Grid.Row="0" Source="/hub-client;component/Assets/CRMS.jpg" Margin="10" RenderTransformOrigin="0.5,0.5">
+                            <Image x:Name="img_booster" Grid.Row="0" Source="pack://siteoforigin:,,,/Assets/unknown.png" Margin="10" RenderTransformOrigin="0.5,0.5">
                                 
                             </Image>
                             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">

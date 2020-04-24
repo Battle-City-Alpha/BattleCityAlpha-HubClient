@@ -217,6 +217,8 @@ namespace hub_client
                 PrivateForms[user.Username].PrivateMessageRecieved(user, message);
             else
             {
+                if (Client.BlacklistManager.CheckBlacklist(user))
+                    return;
                 OpenNewPrivateForm(user);
                 PrivateForms[user.Username].PrivateMessageRecieved(user, message);
             }

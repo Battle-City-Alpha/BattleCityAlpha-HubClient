@@ -248,6 +248,7 @@ namespace hub_client.Windows
 
                 searchMyCard = !searchMyCard;
                 btnMyCards.ButtonText = "Mes cartes";
+                btnMyCards.Update();
             }
         }
         private bool CheckIsOwn(BrocanteCard card)

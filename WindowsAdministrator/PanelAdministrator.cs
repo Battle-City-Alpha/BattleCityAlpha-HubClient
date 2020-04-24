@@ -45,11 +45,18 @@ namespace hub_client.WindowsAdministrator
         }
         public void PanelBan(string reason, PlayerInfo target, int time)
         {
-            Client.Send(PacketType.Ban, new StandardClientBan { Reason = reason, Target = target, Time = time });
+            Client.Send(PacketType.Ban, new StandardClientBan { Reason = reason, Target = target.Username, Time = time });
         }
         public void PanelAskProfile(PlayerInfo target)
         {
             Client.Send(PacketType.PanelAskProfile, new StandardClientAskPanelProfile { Player = target });
+        }
+        public void PanelAskProfile(string target)
+        {
+            PlayerInfo info = new PlayerInfo();
+            info.Username = target;
+            info.UserId = -1;
+            Client.Send(PacketType.PanelAskProfile, new StandardClientAskPanelProfile { Player = info });
         }
         public void PanelUpdate(PlayerInfo target, string obs)
         {

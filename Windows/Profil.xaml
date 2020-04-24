@@ -89,7 +89,7 @@
                         <Border.Background>
                             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                         </Border.Background>
-                        <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
+                        <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
                     </Border>
                 </Grid>
             </Grid>

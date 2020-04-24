@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize"
+        Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/bca.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize"
         Closed="Window_Closed">
     <WindowChrome.WindowChrome>
         <WindowChrome 

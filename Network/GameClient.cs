@@ -263,6 +263,12 @@ namespace hub_client.Network
                 case PacketType.Mute:
                     OnMute(JsonConvert.DeserializeObject<StandardServerMute>(packet));
                     break;
+                case PacketType.Muted:
+                    OnMuted(JsonConvert.DeserializeObject<StandardServerMuted>(packet));
+                    break;
+                case PacketType.DisabledAccount:
+                    OnDisabled(JsonConvert.DeserializeObject<StandardServerDisabledAccount>(packet));
+                    break;
                 case PacketType.PrivateMessage:
                     OnPrivateMessage(JsonConvert.DeserializeObject<StandardServerPrivateMessage>(packet));
                     break;
@@ -638,6 +644,9 @@ namespace hub_client.Network
                 case CommandErrorType.NotEnoughPP:
                     msg = "Tu ne possèdes pas assez de PPs !";
                     break;
+                case CommandErrorType.AlreadyBanned:
+                    msg = "••• Le joueur est déjà banni !";
+                    break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
                     break;
@@ -655,16 +664,32 @@ namespace hub_client.Network
             logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
+        public void OnDisabled(StandardServerDisabledAccount packet)
+        {
+            OpenPopBox("Votre compte a été désactivé par : " + packet.Player + " pour la raison : " + packet.Reason, "Compte désactivé", true);
+            logger.Trace("DISABLED - By : {0} | Reason : {1}", packet.Player, packet.Reason);
+            Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
+        }
         public void OnBan(StandardServerBan packet)
         {
-            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Banni du serveur", true);
+            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Banni du serveur", true);
             logger.Trace("BANNED - By : {0} | Time : {1} | Reason : {2}", packet.Banner, packet.Time, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnMute(StandardServerMute packet)
         {
-            OpenPopBox("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time, "Mute");
+            OpenPopBox("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Mute");
             logger.Trace("MUTED - By : {0} | Time : {1} | Reason : {2}", packet.Muter, packet.Time, packet.Reason);
+        }
+        public void OnMuted(StandardServerMuted packet)
+        {
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
+            string msg = "Tu es muet ! Jusqu'au " + packet.End + ". Après ce moment, déconnecte toi et reconnecte toi pouvoir de nouveau parler.";
+            bool italic = false;
+            bool bold = false;
+            Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, msg, italic, bold));
+
+            logger.Trace("MUTED - End : {0}", packet.End);
         }
 
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
@@ -987,7 +1012,7 @@ namespace hub_client.Network
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un ta customisation personnalisée ! Va vite l'essayer dans ton profil !", "Customisation personnalisée !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1), "Customisation personnalisée !", false);
             logger.Trace("BUY OWN CUSTOMIZATION");
         }
         public void OnBuyPrestigeCustomization(StandardServerBuyPrestigeCustomization packet)
@@ -999,13 +1024,13 @@ namespace hub_client.Network
         public void OnBuyVIP(StandardServerBuyVIP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !", "Nouveau VIP !", false);
+            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !" + Environment.NewLine + "Tu le seras jusqu'au " + DateTime.Now.AddMonths(3), "Nouveau VIP !", false);
             logger.Trace("BUY VIP");
         }
         public void OnBuyDoubleBP(StandardServerDoubleBP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !", "Double de BPs !", false);
+            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !" + Environment.NewLine + "Tu pourras en profiter jusqu'au " + DateTime.Now.AddMonths(1), "Double de BPs !", false);
             logger.Trace("BUY DOUBLE BP");
         }
         public void OnBuyInfiniteGreet(StandardServerGreetInfinite packet)

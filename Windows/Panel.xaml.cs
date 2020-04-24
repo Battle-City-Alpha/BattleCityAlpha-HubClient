@@ -30,12 +30,28 @@ namespace hub_client.Windows
 
             _admin.UpdatePlayersList += _admin_UpdatePlayersList;
             _admin.UpdateProfile += _admin_UpdateProfile;
+
             tbUserlist.tbChat.TextChanged += TbChat_TextChanged;
+            tbUserlist.tbChat.KeyUp += TbChat_KeyUp;
 
             _admin.SendPanelUserlist();
             LoadStyle();
 
+
+
             this.MouseDown += Window_MouseDown;
+        }
+
+        private void TbChat_KeyUp(object sender, KeyEventArgs e)
+        {
+           switch (e.Key)
+            {
+                case Key.Enter:
+                    _admin.PanelAskProfile(tbUserlist.GetText());
+                    tbUserlist.Clear();
+                    break;
+            }
+            e.Handled = true;
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
@@ -104,11 +120,14 @@ namespace hub_client.Windows
         private void BCA_ColorButton_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
             if (tb_BanReason.GetText() != "" && profileselected != null && tb_BanHours.Text != "")
-                _admin.PanelBan(tb_MuteReason.GetText(), profileselected, Convert.ToInt32(tb_MuteHours.Text));
+                _admin.PanelBan(tb_BanReason.GetText(), profileselected, Convert.ToInt32(tb_BanHours.Text));
         }
 
         private void lbUserlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (lbUserlist.SelectedIndex == -1)
+                return;
+
             profileselected = profiles[lbUserlist.SelectedIndex];
             _admin.PanelAskProfile(profileselected);
         }

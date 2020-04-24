@@ -4,6 +4,7 @@ using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,14 +17,15 @@ namespace hub_client.Windows
     {
         public BlacklistManager Manager;
 
+
         public Blacklist(BlacklistManager manager)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             Manager = manager;
 
-            foreach (PlayerInfo player in Manager.Blacklist)
-                lbBlacklist.Items.Add(player.Username);
+            foreach (var player in Manager.Blacklist)
+                lbBlacklist.Items.Add(player.Value);
 
             LoadStyle();
 
@@ -34,10 +36,11 @@ namespace hub_client.Windows
         {
             try
             {
-                PlayerInfo info = Manager.Blacklist[lbBlacklist.SelectedIndex];
+                string username = lbBlacklist.SelectedItem.ToString();
+                int userid = Manager.Blacklist.FirstOrDefault(x => x.Value == username).Key;
                 lbBlacklist.SelectedItem = null;
-                lbBlacklist.Items.Remove(info.Username);
-                Manager.Blacklist.Remove(info);
+                lbBlacklist.Items.Remove(username);
+                Manager.Blacklist.Remove(userid);
                 Manager.Save();
             }
             catch (Exception)

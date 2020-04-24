@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Battle City Alpha - Connexion" Height="540.231" Width="627.954" ResizeMode="NoResize" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen" Closed="Window_Closed" WindowStyle="None" Background="{x:Null}">
+        WindowStartupLocation="CenterScreen" Closed="Window_Closed" WindowStyle="None" Background="{x:Null}" Icon="/hub-client;component/Assets/Icon/bca.ico">
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"

@@ -56,7 +56,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Assets\Icon\BCA.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Icon\bca.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -524,7 +524,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Assets\Icon\BCA.ico" />
     <None Include="app.manifest" />
     <None Include="Assets\Background\Button.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -544,7 +543,6 @@
     <None Include="Assets\Duel\single.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="Assets\CRMS.jpg" />
     <Resource Include="Assets\Cards Infos\setname.txt" />
     <None Include="Assets\Background\bg_searchcard.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -2776,6 +2774,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Resource Include="Assets\Avatars\408.png" />
+    <None Include="Assets\unknown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="bcav2_y9s_icon.ico" />
+    <Resource Include="Assets\Icon\bca.ico" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

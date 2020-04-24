@@ -168,7 +168,7 @@ namespace hub_client.WindowsAdministrator
                         case "UNMUTE":
                             return new NetworkData(PacketType.Unmute, _cmdParser.Unmute(txt.Substring(cmd.Length + 1)));
                         case "CLEAR":
-                            return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Substring(cmd.Length + 1)));
+                            return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Length > cmd.Length ? txt.Substring(cmd.Length + 1) : "."));
                         case "MPALL":
                             return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
                         case "PANEL":
@@ -210,6 +210,9 @@ namespace hub_client.WindowsAdministrator
                             Blacklist blacklist = new Blacklist(Client.BlacklistManager);
                             blacklist.Owner = FormExecution.GetChatWindow();
                             blacklist.Show();
+                            return null;
+                        case "STATS":
+                            SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Il y a " + FormExecution.GetChatWindow().Players.Count + " utilisateurs connectés.", false, false);
                             return null;
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);

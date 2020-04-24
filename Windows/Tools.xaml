@@ -167,7 +167,7 @@
                             <Border.Background>
                                 <SolidColorBrush Color="White" Opacity="0.9"/>
                             </Border.Background>
-                            <Image x:Name="showroom_pics" Source="pack://siteoforigin:,,,/Assets/Background/bg_arena.png" Margin="10" MouseLeftButtonDown="showroom_pics_MouseLeftButtonDown" Cursor="Hand"/>
+                            <Image x:Name="showroom_pics" Source="pack://siteoforigin:,,,/Assets/Background/bg_arena.jpg" Margin="10" MouseLeftButtonDown="showroom_pics_MouseLeftButtonDown" Cursor="Hand"/>
                         </Border>
                     </Grid>
                 </TabItem>

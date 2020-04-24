@@ -42,9 +42,10 @@ namespace hub_client.Windows
             {
                 CardInfos infos = CardManager.GetCard(list[i]);
                 cards[i] = infos;
-                if (infos == null)
-                    continue;
-                lb_cards.Items.Add(infos.Name);
+                if (infos != null)
+                    lb_cards.Items.Add(infos.Name);
+                else
+                    lb_cards.Items.Add("Id inconnue : " + list[i]);
             }
 
             lb_cards.Items.SortDescriptions.Add(
@@ -94,8 +95,16 @@ namespace hub_client.Windows
 
         private void lb_cards_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CardInfos infos = cards[lb_cards.SelectedIndex];
-            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", infos.Id.ToString() + ".jpg" });
+            CardInfos infos = null;
+            foreach (CardInfos card in cards)
+                if (card.Name == lb_cards.SelectedItem.ToString())
+                {
+                    infos = card;
+                    break;
+                }
+
+            if (infos != null)
+                img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", infos.Id.ToString() + ".jpg" });
         }
 
         private void Window_Closed(object sender, EventArgs e)

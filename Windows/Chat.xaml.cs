@@ -27,7 +27,7 @@ namespace hub_client.Windows
         ChatAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
-        private List<PlayerItem> Players;
+        public List<PlayerItem> Players;
         private List<PlayerItem> PlayersFound;
 
         InputText form = new InputText();
@@ -238,6 +238,9 @@ namespace hub_client.Windows
 
         private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
+            YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 1);
+
             _admin.SendDeck();
         }
 

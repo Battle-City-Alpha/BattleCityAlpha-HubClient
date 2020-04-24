@@ -54,6 +54,7 @@ namespace hub_client.Windows.Controls
             {
                 lv.Items.RemoveAt(index);
                 lv.Items.Insert(index, card);
+                lv.Items.Refresh();
             }
             lv.SelectedIndex = index;
             return true;

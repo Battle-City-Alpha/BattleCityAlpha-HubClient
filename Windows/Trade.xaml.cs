@@ -52,6 +52,7 @@ namespace hub_client.Windows
         }
         private void _admin_TradeExit()
         {
+            endTrade = true;
             Close();
         }
         private void Trade_Closed(object sender, EventArgs e)
@@ -94,6 +95,8 @@ namespace hub_client.Windows
             _id = id;
             _players = players;
             this.Title = _players[0].Username + " & " + _players[1].Username;
+            this.nameJ1.Text = "Collection de " + _players[0].Username;
+            this.nameJ2.Text = "Collection de " + _players[1].Username;
 
             CollectionJ1.UpdateCollection(Collections[0]);
             CollectionJ2.UpdateCollection(Collections[1]);
@@ -120,9 +123,14 @@ namespace hub_client.Windows
 
             lb_choice.Items.Add(card.Name + "(" + card.Id + ")");
 
-            if (!_cardsToOffer.ContainsKey(card.Id))
-                _cardsToOffer.Add(card.Id, card);
-            _cardsToOffer[card.Id].Quantity++;
+            PlayerCard offerCard = new PlayerCard();
+            offerCard.Id = card.Id;
+            offerCard.Name = card.Name;
+            offerCard.Quantity = 1;
+
+            if (!_cardsToOffer.ContainsKey(offerCard.Id))
+                _cardsToOffer.Add(offerCard.Id, offerCard);
+            _cardsToOffer[offerCard.Id].Quantity++;
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)
@@ -163,7 +171,10 @@ namespace hub_client.Windows
         private void BCA_ColorButton_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             if (lb_choice.Items.Count <= 0)
+            {
+                FormExecution.Client_PopMessageBox("Il faut proposer au moins une carte !", "Echange", true);
                 return;
+            }
             if (!validate)
             {
                 btnProposition.IsEnabled = false;
