@@ -144,6 +144,13 @@ namespace hub_client.WindowsAdministrator
                 Card = card
             });
         }
+        public void SendAskProfil(PlayerInfo infos)
+        {
+            Client.Send(PacketType.Profil, new StandardClientProfilAsk
+            {
+                Username = infos
+            });
+        }
 
 
         private NetworkData ParseMessage(string txt)

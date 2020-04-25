@@ -65,8 +65,8 @@ namespace hub_client.Windows
                 string[] name = p.Split('\\');
                 cb_pics.Items.Add(name[name.Length - 1]);
             }
-            cb_pics.SelectedIndex = 0;
             cb_pics.SelectionChanged += Cb_pics_SelectionChanged;
+            cb_pics.SelectedIndex = 0;
         }
 
         private void Cb_pics_SelectionChanged(object sender, SelectionChangedEventArgs e)

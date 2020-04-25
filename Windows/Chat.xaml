@@ -69,6 +69,7 @@
                             <ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
+                                    <MenuItem x:Name="profile" Header="Profil" Click="profile_Click"/>
                                     <MenuItem x:Name="duelrequest" Header="Requête de duel" Click="duelrequest_Click"/>
                                     <MenuItem x:Name="traderequest" Header="Requête d'échange" Click="traderequest_Click"/>
                                     <MenuItem x:Name="setblacklist" Header="Blacklister" Click="setblacklist_Click"/>
@@ -92,17 +93,15 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate>
-                                                        <Expander IsExpanded="False">
-                                                            <Expander.Header>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="20" VerticalAlignment="Bottom"/>
-                                                                    <TextBlock Text=" [" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                                    <TextBlock Text="{Binding ItemCount}" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                                    <TextBlock Text="]" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                                </StackPanel>
-                                                            </Expander.Header>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                                <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="20" VerticalAlignment="Bottom" FontStyle="Italic"/>
+                                                                <TextBlock Text=" [" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                                <TextBlock Text="{Binding ItemCount}" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                                <TextBlock Text="]" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                            </StackPanel>
                                                             <ItemsPresenter />
-                                                        </Expander>
+                                                        </StackPanel>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>

@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using hub_client.Assets;
+using NLog;
 using System;
 using System.IO;
 using System.Net;
@@ -13,6 +14,7 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_CustomizationsVerticalViewer : UserControl
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private Customization[] _customs;
         private int _index = 2;
 
@@ -84,6 +86,7 @@ namespace hub_client.Windows.Controls
                 return GetImage("Borders", custom.Id.ToString());
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFile(
@@ -92,6 +95,13 @@ namespace hub_client.Windows.Controls
                         );
                 }
                 return GetImage("Borders", "temp");
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
+                    return null;
+                }
             }
         }
         private BitmapImage GetImage(string directory, string img)

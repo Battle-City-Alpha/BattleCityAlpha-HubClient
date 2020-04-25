@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +22,8 @@ namespace hub_client.Cards
         public static Dictionary<int, string> SetCodes = new Dictionary<int, string>();
         public static Dictionary<char, List<string>> SetCodesString = new Dictionary<char, List<string>>();
 
+        private static HashSet<int> PicsID;
+
         private static void RenameKey<TKey, TValue>(this IDictionary<TKey, TValue> dic,
                               TKey fromKey, TKey toKey)
         {
@@ -28,10 +31,18 @@ namespace hub_client.Cards
             dic.Remove(fromKey);
             dic[toKey] = value;
         }
+        
 
+        private static void LoadPicsFile()
+        {
+            int[] ids = Directory.GetFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics")).Select(file => Convert.ToInt32(Path.GetFileName(file).Split('.')[0])).ToArray();
+            PicsID = new HashSet<int>(ids);
+        }
         public static bool LoadCDB(string dir, bool overwrite, bool clearData = false)
         {
             logger.Info("Start LOAD CDB {0}", dir);
+            LoadPicsFile();
+
             if (!File.Exists(dir))
                 return false;
 
@@ -73,7 +84,7 @@ namespace hub_client.Cards
                         CardManager.UpdateOrAddCard(new CardInfos(row));
                 }
 
-                if (!CheckPicsLoaded(row[0]))
+                if (!CheckPicsLoaded(Convert.ToInt32(row[0])))
                     DownloadPics(row[0]);
             }
             foreach (string[] row in texts)
@@ -225,18 +236,25 @@ namespace hub_client.Cards
             }
         }
 
-        private static bool CheckPicsLoaded(string id)
+        private static bool CheckPicsLoaded(int id)
         {
-            return File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg"));
+            return PicsID.Contains(id);
         }
         private static async void DownloadPics(string id)
         {
-            using (WebClient wc = new WebClient())
+            try
             {
-                wc.DownloadFileAsync(
-                    GetUri(id),
-                    Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg")
-                    );
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadFileAsync(
+                        GetUri(id),
+                        Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg")
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Card error when downloading : " + id + " Ex : " + ex.ToString());
             }
             await Task.Delay(1);
         }

@@ -11,7 +11,7 @@ namespace hub_client.Configuration
         public bool Connexion_Message = true;
         public bool Autoscroll = true;
 
-        public bool BCA_Card_Design = true;
+        public bool BCA_Card_Design = false;
 
         public int CardsStuffVersion = 0;
 

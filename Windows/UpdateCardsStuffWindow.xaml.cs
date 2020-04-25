@@ -14,10 +14,12 @@ namespace hub_client.Windows
     public partial class UpdateCardsStuffWindow : Window
     {
         private string[] _updates;
+        private bool _isDownloadFinished = false;
         public UpdateCardsStuffWindow(string[] updates, bool infini = false)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            this.progressBar_update.Value = 0;
 
             if (!infini)
             {
@@ -32,11 +34,27 @@ namespace hub_client.Windows
             }
 
             this.MouseDown += Window_MouseDown;
+            this.Closed += UpdateCardsStuffWindow_Closed;
         }
 
-        public void SetProgressValue(int progress)
+        private void UpdateCardsStuffWindow_Closed(object sender, EventArgs e)
         {
+            if (!_isDownloadFinished)
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+        }
+
+        public void EndDownload()
+        {
+            _isDownloadFinished = true;
+        }
+
+        public void SetProgressValue(double progress)
+        {
+            this.tb_maj.Text = "Chargement... " + (int)progress + "%";
             this.progressBar_update.Value = progress;
+
+            if (progress == 100)
+                _isDownloadFinished = true;
         }
 
         private void UpdateCardsStuffWindow_Loaded(object sender, RoutedEventArgs e)
@@ -61,6 +79,7 @@ namespace hub_client.Windows
             progressBar_update.Value = 100;
             progressBar_update.IsIndeterminate = false;
             FormExecution.Client_PopMessageBox("Mise à jour terminée !", "Mise à jour", true);
+            _isDownloadFinished = true;
             Close();
         }
 

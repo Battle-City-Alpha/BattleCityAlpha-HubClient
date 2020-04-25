@@ -76,6 +76,7 @@ namespace hub_client.Helpers
                 CopyAvatarToTexturesFolder(avatar, i);
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileAsync(
@@ -83,6 +84,12 @@ namespace hub_client.Helpers
                         Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
                         );
                     wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
         }
@@ -92,6 +99,7 @@ namespace hub_client.Helpers
                 CopyBorderToTexturesFolder(border, i);
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileAsync(
@@ -99,6 +107,12 @@ namespace hub_client.Helpers
                         Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
                         );
                     wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
         }
@@ -108,6 +122,7 @@ namespace hub_client.Helpers
                 CopySleeveToTexturesFolder(sleeve, i);
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileAsync(
@@ -115,6 +130,12 @@ namespace hub_client.Helpers
                         Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
                         );
                     wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
         }

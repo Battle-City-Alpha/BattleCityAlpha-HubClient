@@ -127,12 +127,14 @@ namespace hub_client
 
         private static void CardManager_LoadingProgress(int i, int total)
         {
-            _windowload.SetProgressValue((int)Math.Round((double)(i / total * 100)));
+            double progress = ((double)i / (double)total) * 100;
+            _windowload.SetProgressValue(progress);
         }
 
         private static void CardManager_LoadingFinished()
         {
             logger.Trace("CDB Loaded.");
+            _windowload.EndDownload();
             _windowload.Close();
 
             StartConnexion();

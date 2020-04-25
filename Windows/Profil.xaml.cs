@@ -4,6 +4,7 @@ using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.IO;
 using System.Net;
@@ -18,6 +19,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Profil : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private ProfilAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
@@ -47,13 +49,21 @@ namespace hub_client.Windows
                 img_avatar.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
             else
             {
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Avatar);
-                    wc.DownloadFileAsync(
-                        new System.Uri(infos.Avatar.URL),
-                        Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
-                        );
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Avatar);
+                        wc.DownloadFileAsync(
+                            new System.Uri(infos.Avatar.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
+                            );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
 
@@ -61,6 +71,7 @@ namespace hub_client.Windows
                 img_border.Source = PicsManager.GetImage("Borders", infos.Border.Id.ToString());
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Border);
@@ -68,6 +79,12 @@ namespace hub_client.Windows
                         new System.Uri(infos.Border.URL),
                         Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
                         );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
 
@@ -75,6 +92,7 @@ namespace hub_client.Windows
                 img_sleeve.Source = PicsManager.GetImage("Sleeves", infos.Sleeve.Id.ToString());
             else
             {
+                try { 
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Sleeve);
@@ -82,6 +100,12 @@ namespace hub_client.Windows
                         new System.Uri(infos.Sleeve.URL),
                         Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")
                         );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
             }
 
@@ -199,6 +223,8 @@ namespace hub_client.Windows
 
         private void tb_title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!this.IsMine())
+                return;
             _admin.OpenTitlesForm(this);
         }
     }

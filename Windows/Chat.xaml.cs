@@ -460,5 +460,38 @@ namespace hub_client.Windows
                 VIP = infos.VIP
             };
         }
+
+        private void profile_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+
+            if (target != null)
+            {
+                Profil profile = new Profil(_admin.Client.ProfilAdmin);
+                _admin.SendAskProfil(target);
+            }
+        }
+
+        private string ParseGroup(PlayerRank group)
+        {
+            switch (group)
+            {
+                case PlayerRank.Administrateurs:
+                    return "♛Administrateurs";
+                case PlayerRank.Robots:
+                    return "☎";
+                case PlayerRank.Moderateurs:
+                    return "♝Modérateurs";
+                case PlayerRank.Animateurs:
+                    return "♞Animateurs";
+                case PlayerRank.Developpeurs:
+                    return "♣Développeur";
+                case PlayerRank.Rullers:
+                    return "♟Rullers";
+                default:
+                    return group.ToString();
+            }
+        }
     }
 }
