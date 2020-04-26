@@ -58,7 +58,6 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
-            tb_version.Text = Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
         }
 
@@ -158,6 +157,8 @@ namespace hub_client.Windows
                 cb_defaultdeck.Items.Add(nomFinal[0]);
             }
             cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
+
+            tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
             logger.Trace("Style loaded.");
         }

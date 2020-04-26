@@ -17,8 +17,8 @@ namespace hub_client
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private int CLIENT_VERSION = 2002;
-        public static string VERSION = "2.0.0.0b2";
+        private int CLIENT_VERSION = 2003;
+        public static string VERSION = "2.0.0.0b3";
 
         public Main()
         {
