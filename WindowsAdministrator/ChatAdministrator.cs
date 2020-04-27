@@ -151,6 +151,15 @@ namespace hub_client.WindowsAdministrator
                 Username = infos
             });
         }
+        public void SendShareDeck(PlayerInfo infos, string[] deckfile, string deckname)
+        {
+            Client.Send(PacketType.ShareDeck, new StandardClientSendDeck
+            {
+                Target = infos,
+                Deckfile = deckfile,
+                Deckname = deckname
+            });
+        }
 
 
         private NetworkData ParseMessage(string txt)

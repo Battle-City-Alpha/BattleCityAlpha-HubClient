@@ -34,6 +34,7 @@ namespace hub_client.Network
         public event Action LaunchTrade;
         public event Action CloseBrocante;
         public event Action<int, int, bool> LaunchDuelResultBox;
+        public event Action<PlayerInfo, string[], string> RecieveDeck;
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -111,6 +112,9 @@ namespace hub_client.Network
         #region DataRetrievalWindow Events
         public event Action<bool, LoginFailReason, bool> DataRetrievalInfos;
         #endregion
+        #region RankingDisplay Events
+        public event Action<RankingPlayerInfos[], Customization[]> ShowRanking;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -134,6 +138,7 @@ namespace hub_client.Network
         public PrestigeShopAdministrator PrestigeShopAdmin;
         public PrestigeCustomizationsViewerAdministrator PrestigeCustomizationsViewerAdmin;
         public DataRetrievalAdministrator DataRetrievalAdmin;
+        public RankingDisplayAdministrator RankingDisplayAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -170,6 +175,7 @@ namespace hub_client.Network
             PrestigeShopAdmin = new PrestigeShopAdministrator(this);
             PrestigeCustomizationsViewerAdmin = new PrestigeCustomizationsViewerAdministrator(this);
             DataRetrievalAdmin = new DataRetrievalAdministrator(this);
+            RankingDisplayAdmin = new RankingDisplayAdministrator(this);
         }
 
         private void InitManager()
@@ -437,6 +443,12 @@ namespace hub_client.Network
                     break;
                 case PacketType.NextRankingSeason:
                     OnNextRankingSeason(JsonConvert.DeserializeObject<StandardServerNextRankingSeason>(packet));
+                    break;
+                case PacketType.ShareDeck:
+                    OnShareDeck(JsonConvert.DeserializeObject<StandardServerSendDeck>(packet));
+                    break;
+                case PacketType.GetRanking:
+                    OnGetRanking(JsonConvert.DeserializeObject<StandardServerGetRanking>(packet));
                     break;
             }
         }
@@ -1195,6 +1207,23 @@ namespace hub_client.Network
             bool italic = false;
             bool bold = false;
             Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, msg, italic, bold));
+        }
+
+        public void OnShareDeck(StandardServerSendDeck packet)
+        {
+            if (BlacklistManager.CheckBlacklist(packet.Sender))
+                return;
+
+            Application.Current.Dispatcher.InvokeAsync(() => RecieveDeck?.Invoke(packet.Sender, packet.Deckfile, packet.Deckname));
+            logger.Trace("Recieve deck - From : {0}", packet.Sender);
+        }
+
+        public void OnGetRanking(StandardServerGetRanking packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => ShowRanking?.Invoke(packet.Rankings, packet.PodiumCustoms));
+
+            logger.Trace("RECIEVE RANKING");
+
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

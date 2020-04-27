@@ -13,5 +13,10 @@ namespace hub_client.Stuff
         public string Cover;
         public PurchaseType Type;
         public int Price;
+
+        public override string ToString()
+        {
+            return Name + " (" + PurchaseTag + ")";
+        }
     }
 }

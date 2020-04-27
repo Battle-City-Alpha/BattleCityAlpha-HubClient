@@ -260,5 +260,10 @@ namespace hub_client.Windows
 
             UpdateRooms();
         }
+
+        private void btn_ranking_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.SendGetRanking();
+        }
     }
 }

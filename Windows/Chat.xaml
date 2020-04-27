@@ -24,13 +24,34 @@
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Border.Background>
-        <Grid Margin="5">
+        <Grid Margin="5" x:Name="maingrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <Popup x:Name="profil_popup" Width="300" Height="320" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Center" PlacementTarget="{Binding ElementName=maingrid}" AllowsTransparency="True" PopupAnimation="Fade">
+                <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="276"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="popup_avatar" Grid.Row="0" CornerRadius="300" Margin="10" Height="256" Width="256" VerticalAlignment="Center" BorderBrush="Black" HorizontalAlignment="Center">
+                            <Border.Background>
+                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  ImageSource="pack://siteoforigin:,,,/Assets/Avatars/1.png" Stretch="UniformToFill"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock x:Name="popup_username" FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="PSEUDO" Grid.Row="1" />
+                    </Grid>
+                </Border>
+            </Popup>
+            
             <TextBlock x:Name="tb_version" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Grid.Row="0" Text="2.0.0.0" Margin="40,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
@@ -76,13 +97,20 @@
                                     <MenuItem x:Name="look" Header="Regarder" Click="Regarder_Click"/>
                                     <MenuItem x:Name="giveBP" Header="Envoyer des BPs" Click="SendBP_Click"/>
                                     <MenuItem x:Name="giveCard" Header="Envoyer des cartes" Click="GiveCard_Click"/>
+                                    <MenuItem x:Name="shareDeck" Header="Partager un deck" Click="shareDeck_Click"/>
                                 </ContextMenu>
                             </ListView.ContextMenu>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel>
-                                        <TextBlock Text="⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}"/>
-                                        <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}"/>
+                                    <WrapPanel x:Name="userlistPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border x:Name="userlistAvatarPics" CornerRadius="50" Width="35" Height="35" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Black" MouseEnter="userlistAvatarPics_MouseEnter" MouseLeave="userlistAvatarPics_MouseLeave">
+                                            <Border.Background>
+                                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  ImageSource="{Binding AvatarPic}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                            <TextBlock Visibility="Hidden" Text="{Binding Username}" Foreground="{Binding ChatColor}" />
+                                        </Border>
+                                        <TextBlock Text="⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}" VerticalAlignment="Center"/>
                                     </WrapPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

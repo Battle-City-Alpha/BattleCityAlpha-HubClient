@@ -82,7 +82,7 @@
                     </Grid.ColumnDefinitions>
                     <Controls:BCA_ColorButton x:Name="btn_playranked" Margin="5" Width="Auto" Height="Auto" ButtonText="Jouer (classé)" Grid.Column="0" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center" MouseLeftButtonDown="btn_playranked_MouseLeftButtonDown"/>
                     <Controls:BCA_ColorButton x:Name="btn_host" Margin="5" Width="Auto" Height="Auto" ButtonText="Héberger" Grid.Column="1" Color1="#FFF40202" Color2="#FFC20505" MouseLeftButtonDown="Btn_host_MouseLeftButtonDown" VerticalAlignment="Center"/>
-                    <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_ranking" Margin="5" Width="Auto" Height="Auto" ButtonText="Classement" Grid.Column="2" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center" MouseLeftButtonDown="btn_ranking_MouseLeftButtonDown"/>
                     <Controls:BCA_ColorButton x:Name="btn_IA" Margin="5" Width="Auto" Height="Auto" ButtonText="Mode Solo" Grid.Column="3" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center" MouseLeftButtonDown="btn_IA_MouseLeftButtonDown"/>
                     <Controls:BCA_ColorButton x:Name="btn_Switch_Rooms_Visible" Margin="5" Width="Auto" Height="Auto" ButtonText="Disponible" Grid.Column="4" Color1="#FFF40202" Color2="#FFC20505" VerticalAlignment="Center" MouseLeftButtonDown="btn_Switch_Rooms_Visible_MouseLeftButtonDown"/>
                 </Grid>

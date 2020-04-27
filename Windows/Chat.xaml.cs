@@ -1,20 +1,25 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
+using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using Microsoft.Win32;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows
 {
@@ -32,6 +37,7 @@ namespace hub_client.Windows
         private List<PlayerItem> PlayersFound;
 
         InputText form = new InputText();
+        AssetsManager PicsManager = new AssetsManager();
 
         public Chat(ChatAdministrator admin)
         {
@@ -50,6 +56,7 @@ namespace hub_client.Windows
             _admin.ClearChat += _admin_ClearChat;
 
             tbUserList.TextChanged += SearchUser;
+
 
             Players = new List<PlayerItem>();
             PlayersFound = new List<PlayerItem>();
@@ -159,7 +166,7 @@ namespace hub_client.Windows
             cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
-
+            
             logger.Trace("Style loaded.");
         }
 
@@ -448,7 +455,7 @@ namespace hub_client.Windows
 
         private PlayerItem CreatePlayerItem(PlayerInfo infos)
         {
-            return new PlayerItem
+            PlayerItem item = new PlayerItem
             {
                 ChatColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + infos.ChatColorString)),
                 ELO = infos.ELO,
@@ -460,6 +467,51 @@ namespace hub_client.Windows
                 Username = infos.Username,
                 VIP = infos.VIP
             };
+
+            if (!infos.Avatar.IsHost)
+                item.AvatarPic = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
+            else
+            {
+                try
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => userAvatarDownloaded(sender, e, item);
+                        wc.DownloadFileAsync(
+                            new System.Uri(infos.Avatar.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png")
+                            );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
+                }
+            }
+
+            return item;
+        }
+
+        private void userAvatarDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e, PlayerItem item)
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png"));
+            image.EndInit();
+
+            item.AvatarPic = image;
+
+            lvUserlist.Items.Refresh();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
+            view.GroupDescriptions.Clear();
+            view.GroupDescriptions.Add(groupDescription);
+
+            File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png"));
         }
 
         private void profile_Click(object sender, RoutedEventArgs e)
@@ -493,6 +545,41 @@ namespace hub_client.Windows
                 default:
                     return group.ToString();
             }
+        }
+
+        private void shareDeck_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+
+            if (target != null)
+            {
+                OpenFileDialog getdeck = new OpenFileDialog();
+                getdeck.Filter = "Deck files (*.ydk;)|*.ydk|All files (*.*)|*.*";
+                if (getdeck.ShowDialog() == true)
+                {
+                    _admin.SendShareDeck(target, File.ReadAllLines(getdeck.FileName), Path.GetFileNameWithoutExtension(getdeck.FileName));
+                }
+            }
+        }
+
+        private void userlistAvatarPics_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Border border = (Border)sender;
+
+            popup_username.Text = ((TextBlock)border.Child).Text;
+            popup_username.Foreground = ((TextBlock)border.Child).Foreground;
+            popup_avatar.Background = border.Background;
+
+            popup_border.Opacity = 0;
+            popup_border.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 100, new Duration(new TimeSpan(0, 0, 0, 1, 0))));
+            profil_popup.IsOpen = true;
+        }
+
+        private void userlistAvatarPics_MouseLeave(object sender, MouseEventArgs e)
+        {
+            popup_border.BeginAnimation(OpacityProperty, new DoubleAnimation(100, 0, new Duration(new TimeSpan(0, 0, 0, 1, 0))));
+            profil_popup.IsOpen = false;
         }
     }
 }

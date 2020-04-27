@@ -2,13 +2,13 @@
 {
     public enum PurchaseType
     {
-        Booster = 1,
-        Pack_Duelist = 2,
-        Structure = 3,
-        Arsenal_Mysterieux = 4,
-        Demarrage = 5,
-        Booster_Pack = 6,
-        Premium_Gold = 7,
-        Tournoi_Pack = 8
+        Booster = 0,
+        Pack_Duelist = 1,
+        Structure = 2,
+        Demarrage = 3,
+        Booster_Pack = 4,
+        Boite = 5,
+        Tournoi_Pack = 6,
+        Special_Pack = 7
     }
 }

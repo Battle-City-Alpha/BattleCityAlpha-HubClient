@@ -85,7 +85,7 @@ namespace hub_client.Windows
 
         private Uri GetUpdateFileLink(string updatename)
         {
-            return new Uri("https://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/zip/" + updatename + ".zip");
+            return new Uri("http://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/zip/" + updatename + ".zip");
         }
         private void UnzipFromStream(Stream zipStream, string outFolder)
         {

@@ -110,6 +110,8 @@ namespace hub_client.Windows
             client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
+            if (style.Font == null)
+                style.Font = new FontFamily("Consolas");
             style.FontSize = Convert.ToInt32(tb_fontsize.Text);
 
             style.Save();

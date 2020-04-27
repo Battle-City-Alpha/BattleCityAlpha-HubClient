@@ -38,11 +38,10 @@ namespace hub_client.Windows
             cbBooster.Items.Add("Booster Pack");
             cbBooster.Items.Add("Tournoi Pack");
             cbBooster.Items.Add("Pack du duelliste");
-            cbBooster.Items.Add("Arsenal Mystérieux");
-            cbBooster.Items.Add("Gold Premium");
+            cbBooster.Items.Add("Boîtes");
             cbBooster.Items.Add("Deck de démarrage");
             cbBooster.Items.Add("Deck de structure");
-            cbBooster.Items.Add("Battle Pack");
+            //cbBooster.Items.Add("Boosters spéciaux");
 
             tb_searchBooster.tbChat.TextChanged += TbChat_TextChanged;
 
@@ -54,83 +53,24 @@ namespace hub_client.Windows
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
         {
             List<string> BoosterSelect = new List<string>();
-            foreach (string name in BoosterManager.BoosterEditionList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.BoosterPackList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.PackDuellisteList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.ArsenalMysterieuxList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.DeckDeDemarrageList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.DeckStructureList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.GoldPremiumList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.BattlePackList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
-            foreach (string name in BoosterManager.TournoiList)
-                if (name.ToLower().Contains(tb_searchBooster.GetText().ToLower()))
-                    BoosterSelect.Add(name);
             lb_booster.Items.Clear();
-            foreach (string name in BoosterSelect)
-                lb_booster.Items.Add(name);
+
+            foreach (PurchaseType type in Enum.GetValues(typeof(PurchaseType)))
+                if (BoosterManager.Boosters.ContainsKey(type))
+                    foreach (BoosterInfo info in BoosterManager.Boosters[type])
+                        if (info.ToString().ToLower().Contains(tb_searchBooster.GetText().ToLower()))
+                            BoosterSelect.Add(info.ToString());
+
             if (tb_searchBooster.GetText() == "")
             {
-                lb_booster.Items.Clear();
-                switch (cbBooster.Text)
-                {
-                    case "Booster":
-                        foreach (string item in BoosterManager.BoosterEditionList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Booster Pack":
-                        foreach (string item in BoosterManager.BoosterPackList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Pack Du Duelliste":
-                        foreach (string item in BoosterManager.PackDuellisteList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Arsenal Mystérieux":
-                        foreach (string item in BoosterManager.ArsenalMysterieuxList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Deck De Démarrage":
-                        foreach (string item in BoosterManager.DeckDeDemarrageList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Deck De Structure":
-                        foreach (string item in BoosterManager.DeckStructureList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Gold Premium":
-                        foreach (string item in BoosterManager.GoldPremiumList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Battle Pack":
-                        foreach (string item in BoosterManager.BattlePackList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Tournoi Pack":
-                        foreach (string item in BoosterManager.TournoiList)
-                            lb_booster.Items.Add(item);
-                        break;
-                    case "Booster Spéciaux":
-                        foreach (string item in BoosterManager.BoosterSpecial)
-                            lb_booster.Items.Add(item);
-                        break;
-                }
+                foreach (PurchaseType type in Enum.GetValues(typeof(PurchaseType)))
+                    if (BoosterManager.Boosters.ContainsKey(type))
+                        foreach (BoosterInfo info in BoosterManager.Boosters[type])
+                            BoosterSelect.Add(info.ToString());
             }
+
+            foreach (string name in BoosterSelect)
+                lb_booster.Items.Add(name);
         }
 
         private void _admin_UpdateBattlePoints(int points)
@@ -156,7 +96,7 @@ namespace hub_client.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             lb_booster.Items.Clear();
-            foreach (string item in BoosterManager.BoosterEditionList)
+            foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Booster])
                 lb_booster.Items.Add(item);
         }
 
@@ -167,43 +107,35 @@ namespace hub_client.Windows
             switch (newitem)
             {
                 case "Booster":
-                    foreach (string item in BoosterManager.BoosterEditionList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Booster])
                         lb_booster.Items.Add(item);
                     break;
                 case "Booster Pack":
-                    foreach (string item in BoosterManager.BoosterPackList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Booster_Pack])
                         lb_booster.Items.Add(item);
                     break;
                 case "Pack du duelliste":
-                    foreach (string item in BoosterManager.PackDuellisteList)
-                        lb_booster.Items.Add(item);
-                    break;
-                case "Arsenal Mystérieux":
-                    foreach (string item in BoosterManager.ArsenalMysterieuxList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Pack_Duelist])
                         lb_booster.Items.Add(item);
                     break;
                 case "Deck de démarrage":
-                    foreach (string item in BoosterManager.DeckDeDemarrageList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Demarrage])
                         lb_booster.Items.Add(item);
                     break;
                 case "Deck de structure":
-                    foreach (string item in BoosterManager.DeckStructureList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Structure])
                         lb_booster.Items.Add(item);
                     break;
-                case "Gold Premium":
-                    foreach (string item in BoosterManager.GoldPremiumList)
-                        lb_booster.Items.Add(item);
-                    break;
-                case "Battle Pack":
-                    foreach (string item in BoosterManager.BattlePackList)
+                case "Boîtes":
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Boite])
                         lb_booster.Items.Add(item);
                     break;
                 case "Tournoi Pack":
-                    foreach (string item in BoosterManager.TournoiList)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Tournoi_Pack])
                         lb_booster.Items.Add(item);
                     break;
                 case "Booster Spéciaux":
-                    foreach (string item in BoosterManager.BoosterSpecial)
+                    foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Special_Pack])
                         lb_booster.Items.Add(item);
                     break;
             }

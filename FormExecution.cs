@@ -118,11 +118,19 @@ namespace hub_client
             Client.LaunchBonusBox += Client_LaunchBonusBox;
             Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
             Client.LoadOfflineMessages += Client_LoadOfflineMessages;
+            Client.RecieveDeck += Client_RecieveDeck;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
 
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_RecieveDeck(PlayerInfo sender, string[] decklist, string deckname)
+        {
+            File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
+            Client_PopMessageBox("Vous avez reçu le deck " + deckname + " de la part de " + sender.Username + ".", "Partage de deck", true);
+            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss"));
         }
 
         private static void CardManager_LoadingProgress(int i, int total)
@@ -431,6 +439,10 @@ namespace hub_client
             ChangePicsStyle window = new ChangePicsStyle();
             window.Owner = _tools;
             window.ShowDialog();
+        }
+        public static void OpenRankingWindow()
+        {
+            RankingWindow window = new RankingWindow(Client.RankingDisplayAdmin);
         }
 
         public static void RefreshChatStyle()

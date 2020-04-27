@@ -111,5 +111,10 @@ namespace hub_client.Windows
                 _admin.ChangeBorder(custom.Id);
             Close();
         }
+
+        private void btn_unlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/borders.php");
+        }
     }
 }

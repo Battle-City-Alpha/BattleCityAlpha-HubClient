@@ -30,6 +30,16 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
             this.Closed += PrestigeCustomizationsViewer_Closed;
             LoadStyle();
+
+            this.btn_unlock.MouseLeftButtonDown += Btn_unlock_MouseLeftButtonDown;
+        }
+
+        private void Btn_unlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_customs[0].CustomizationType == CustomizationType.Avatar)
+                System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/avatars.php");
+            else
+                System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/sleeves.php");
         }
 
         private void PrestigeCustomizationsViewer_Closed(object sender, EventArgs e)

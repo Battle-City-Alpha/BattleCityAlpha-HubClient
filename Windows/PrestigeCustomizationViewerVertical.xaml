@@ -32,34 +32,43 @@
                 </Border.Background>
                 <Controls:BCA_CustomizationsVerticalViewer x:Name="viewer_customs" />
             </Border>
-            <Border Grid.Row="2" CornerRadius="10" Margin="10" HorizontalAlignment="Center">
-                <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.7"/>
-                </Border.Background>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
-                    <Image x:Name="img_up" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png" Width="75" MouseLeftButtonDown="img_up_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                    <Controls:BCA_ColorButton x:Name="btn_choose" Padding="5" ButtonText="Choisir" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="1" MouseLeftButtonDown="btn_choose_MouseLeftButtonDown"/>
-                    <Image x:Name="img_down" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png" Width="75" MouseLeftButtonDown="img_down_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </StackPanel>
-            </Border>
+            <Grid Grid.Row="2" Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Controls:BCA_ColorButton x:Name="btn_unlock" Padding="5" ButtonText="En obtenir plus !" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="0" MouseLeftButtonDown="btn_unlock_MouseLeftButtonDown"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <Border Grid.Column="1" CornerRadius="10" Margin="0,10" HorizontalAlignment="Center">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                        <Image x:Name="img_up" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png" Width="75" MouseLeftButtonDown="img_up_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Controls:BCA_ColorButton x:Name="btn_choose" Padding="5" ButtonText="Choisir" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="1" MouseLeftButtonDown="btn_choose_MouseLeftButtonDown"/>
+                        <Image x:Name="img_down" Margin="12" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png" Width="75" MouseLeftButtonDown="img_down_MouseLeftButtonDown" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </StackPanel>
+                </Border>
+            </Grid>            
         </Grid>
     </Border>
 </Window>

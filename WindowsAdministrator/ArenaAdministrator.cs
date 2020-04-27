@@ -73,13 +73,10 @@ namespace hub_client.WindowsAdministrator
             logger.Trace("Send Stop Play Ranked");
         }
 
-        /*public void SendDuelSeek(RoomType type)
+        public void SendGetRanking()
         {
-            Client.Send(PacketType.DuelSeeker, new StandardClientDuelSeeker
-            {
-                Type = type
-            });
-            logger.Trace("Duel Seeker - " + type.ToString());
-        }*/
+            Client.Send(PacketType.GetRanking, new StandardClientGetRanking { });
+            FormExecution.OpenRankingWindow();
+        }
     }
 }
