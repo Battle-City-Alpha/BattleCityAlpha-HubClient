@@ -1,6 +1,8 @@
 ﻿using hub_client.Cards;
+using hub_client.Configuration;
 using hub_client.Enums;
 using hub_client.Stuff;
+using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -17,15 +21,19 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Purchase : Window
     {
+        private AppDesignConfig style = FormExecution.AppDesignConfig;
         PurchaseAdministrator _admin;
         CardInfos[] cards;
         ToolTip tip = new ToolTip();
         private BoosterInfo _infos;
+        private int index_show = 0;
 
         public Purchase(PurchaseAdministrator admin, BoosterInfo infos)
         {
             InitializeComponent();
+            LoadStyle();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
             _admin = admin;
             _admin.PurchaseItem += _admin_PurchaseItem;
 
@@ -33,6 +41,64 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
 
             _infos = infos;
+
+            btn_next.IsEnabled = false;
+            btn_all.IsEnabled = false;
+            btn_next.Visibility = Visibility.Hidden;
+            btn_all.Visibility = Visibility.Hidden;
+
+            btn_next.MouseLeftButtonDown += Btn_next_MouseLeftButtonDown;
+            btn_all.MouseLeftButtonDown += Btn_all_MouseLeftButtonDown;
+        }
+
+        private void Btn_all_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            btn_next.IsEnabled = false;
+            btn_all.IsEnabled = false;
+            btn_next.Visibility = Visibility.Hidden;
+            btn_all.Visibility = Visibility.Hidden;
+            Grid.SetRowSpan(img_card, 2);
+            img_card.Margin = new Thickness(20);
+
+            lb_cards.Items.Clear();
+            foreach (CardInfos infos in cards)
+                lb_cards.Items.Add(infos.Name);
+
+
+            lb_cards.Items.SortDescriptions.Add(
+            new System.ComponentModel.SortDescription("",
+            System.ComponentModel.ListSortDirection.Ascending));
+        }
+
+        private void Btn_next_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AnimationDisplayCard(cards[index_show].Id);
+            index_show++;
+
+            if (index_show == cards.Length)
+            {
+                btn_next.IsEnabled = false;
+                btn_all.IsEnabled = false;
+                btn_next.Visibility = Visibility.Hidden;
+                btn_all.Visibility = Visibility.Hidden;
+                Grid.SetRowSpan(img_card, 2);
+                img_card.Margin = new Thickness(20);
+            }
+        }
+
+        private void LoadStyle()
+        {
+            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            Buttons.AddRange(new[] { btn_all, btn_next });
+
+            foreach (BCA_ColorButton btn in Buttons)
+            {
+                btn.Color1 = style.GetGameColor("Color1ShopButton");
+                btn.Color2 = style.GetGameColor("Color2ShopButton");
+                btn.Update();
+            }
+
+            this.FontFamily = style.Font;
         }
 
         public void UpdateCards(int[] list)
@@ -42,15 +108,20 @@ namespace hub_client.Windows
             {
                 CardInfos infos = CardManager.GetCard(list[i]);
                 cards[i] = infos;
-                if (infos != null)
-                    lb_cards.Items.Add(infos.Name);
-                else
-                    lb_cards.Items.Add("Id inconnue : " + list[i]);
+                if (infos == null)
+                {
+                    infos.Id = list[i];
+                    infos.Name = "Id inconnu :" + infos.Id;
+                }
             }
 
-            lb_cards.Items.SortDescriptions.Add(
-            new System.ComponentModel.SortDescription("",
-            System.ComponentModel.ListSortDirection.Ascending));
+            AnimationDisplayCard(cards[index_show].Id);
+            index_show++;
+
+            btn_next.IsEnabled = true;
+            btn_all.IsEnabled = true;
+            btn_next.Visibility = Visibility.Visible;
+            btn_all.Visibility = Visibility.Visible;
         }
 
         private void SaveDeck(bool isStructureOrStartingDeck)
@@ -97,7 +168,7 @@ namespace hub_client.Windows
         {
             CardInfos infos = null;
             foreach (CardInfos card in cards)
-                if (card.Name == lb_cards.SelectedItem.ToString())
+                if (lb_cards.SelectedItem != null && card.Name == lb_cards.SelectedItem.ToString())
                 {
                     infos = card;
                     break;
@@ -105,6 +176,58 @@ namespace hub_client.Windows
 
             if (infos != null)
                 img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", infos.Id.ToString() + ".jpg" });
+        }
+
+        private void AnimationDisplayCard(int id)
+        {
+            img_card.Source = FormExecution.AssetsManager.GetImage("Sleeves", "203");
+
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            img_card.RenderTransformOrigin = new Point(0.5, 0.5);
+            img_card.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(200);
+            growAnimationClose.From = 1.0;
+            growAnimationClose.To = 0.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, img_card);
+
+            storyboard.Completed += (senderA, eA) => Storyboard_Completed(senderA, eA, id);
+            storyboard.Begin();
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e, int id)
+        {
+            lb_cards.SelectedIndex = index_show - 1;
+            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", id.ToString() + ".jpg" });
+
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            img_card.RenderTransformOrigin = new Point(0.5, 0.5);
+            img_card.RenderTransform = scale;
+
+            DoubleAnimation growAnimationOpen = new DoubleAnimation();
+            growAnimationOpen.Duration = TimeSpan.FromMilliseconds(200);
+            growAnimationOpen.From = 0.0;
+            growAnimationOpen.To = 1.0;
+            storyboard.Children.Add(growAnimationOpen);
+            Storyboard.SetTargetProperty(growAnimationOpen, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationOpen, img_card);
+
+            storyboard.Completed += DisplayFinish;
+
+            storyboard.Begin();
+        }
+
+        private void DisplayFinish(object sender, EventArgs e)
+        {
+            lb_cards.Items.Add(cards[index_show - 1].Name);
         }
 
         private void Window_Closed(object sender, EventArgs e)

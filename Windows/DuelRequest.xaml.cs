@@ -20,8 +20,6 @@ namespace hub_client.Windows
         private AppDesignConfig style = FormExecution.AppDesignConfig;
         private int _id;
 
-        private Dictionary<string, int> _banlists = new Dictionary<string, int>();
-
         public DuelRequest(DuelRequestAdministrator admin, int id)
         {
             InitializeComponent();
@@ -53,9 +51,9 @@ namespace hub_client.Windows
             int MR = 5 - cb_masterrules.SelectedIndex;
             string password = chb_password.IsChecked == true ? tb_password.Text : String.Empty;
             if (_id != -1)
-                _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
+                _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
             else
-                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, password, GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
+                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, password, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR);
 
             Close();
         }
@@ -69,36 +67,16 @@ namespace hub_client.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadStyle();
-            LoadBanlist();
+
+            cb_banlist.ItemsSource = FormExecution.GetBanlists().Keys.ToArray();
 
             cb_banlist.SelectedIndex = 0;
             cb_dueltype.SelectedIndex = 0;
             tb_handcard.Text = "5";
             tb_lpstartduel.Text = "8000";
             cb_masterrules.SelectedIndex = 0;
-        }
-
-        private void LoadBanlist()
-        {
-            if (!File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "lflist.conf")))
-                return;
-            _banlists.Clear();
-            var lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "lflist.conf"));
-
-            foreach (string nonTrimmerLine in lines)
-            {
-                string line = nonTrimmerLine.Trim();
-
-                if (line.StartsWith("!"))
-                    _banlists.Add(line.Substring(1), _banlists.Count);
-            }
-
-            cb_banlist.ItemsSource = _banlists.Keys.ToArray();
-        }
-        private int GetBanlistValue(string key)
-        {
-            return _banlists.ContainsKey(key) ? _banlists[key] : 0;
-        }
+        }   
+        
 
         private void Cb_dueltype_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {

@@ -6,6 +6,7 @@ using hub_client.Enums;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;

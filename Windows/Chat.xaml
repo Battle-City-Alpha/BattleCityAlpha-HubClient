@@ -110,6 +110,7 @@
                                             <TextBlock Visibility="Hidden" Text="{Binding Username}" Foreground="{Binding ChatColor}" />
                                         </Border>
                                         <TextBlock Text="⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="✮" Foreground="{Binding ChatColor}" Visibility="{Binding VIP, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}" VerticalAlignment="Center"/>
                                     </WrapPanel>
                                 </DataTemplate>

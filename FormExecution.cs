@@ -47,6 +47,8 @@ namespace hub_client
         public static AssetsManager AssetsManager;
         public static ClientConfig ClientConfig;
 
+        private static Dictionary<string, int> _banlists = new Dictionary<string, int>();
+
         public static GameClient Client { get; private set; }
 
         public static Dictionary<int, PrivateMessageAdministrator> PrivateForms = new Dictionary<int, PrivateMessageAdministrator>();
@@ -91,6 +93,7 @@ namespace hub_client
                 ClientConfig = new ClientConfig();
 
             BoosterManager.LoadList();
+            LoadBanlist();
             //AppDesignConfig = new AppDesignConfig(); //To debug config
             
             SaveConfig();
@@ -124,6 +127,38 @@ namespace hub_client
             _login = new Login(Client.LoginAdmin);
 
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void LoadBanlist()
+        {
+            if (!File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "lflist.conf")))
+                return;
+            _banlists.Clear();
+            var lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "lflist.conf"));
+
+            foreach (string nonTrimmerLine in lines)
+            {
+                string line = nonTrimmerLine.Trim();
+
+                if (line.StartsWith("!"))
+                    _banlists.Add(line.Substring(1), _banlists.Count);
+            }
+        }
+
+        public static Dictionary<string, int> GetBanlists()
+        {
+            return _banlists;
+        }
+        public static int GetBanlistValue(string key)
+        {
+            return _banlists.ContainsKey(key) ? _banlists[key] : 0;
+        }
+        public static string GetBanlistValue(int key)
+        {
+            foreach (var banlist in _banlists)
+                if (banlist.Value == key)
+                    return banlist.Key;
+            return "Banlist inconnue";
         }
 
         private static void Client_RecieveDeck(PlayerInfo sender, string[] decklist, string deckname)

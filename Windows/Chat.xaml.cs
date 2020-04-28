@@ -479,7 +479,7 @@ namespace hub_client.Windows
                         wc.DownloadFileCompleted += (sender, e) => userAvatarDownloaded(sender, e, item);
                         wc.DownloadFileAsync(
                             new System.Uri(infos.Avatar.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png")
+                            Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png")
                             );
                     }
                 }
@@ -499,7 +499,7 @@ namespace hub_client.Windows
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png"));
+            image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png"));
             image.EndInit();
 
             item.AvatarPic = image;
@@ -511,7 +511,7 @@ namespace hub_client.Windows
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(groupDescription);
 
-            File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", item.UserId + ".png"));
+            File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png"));
         }
 
         private void profile_Click(object sender, RoutedEventArgs e)
