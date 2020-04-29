@@ -7,6 +7,8 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -29,9 +31,53 @@ namespace hub_client.Windows
 
             this.FontFamily = FormExecution.AppDesignConfig.Font;
             this.MouseDown += Window_MouseDown;
+
+            this.Loaded += Register_Loaded;
+        }
+
+        private void Register_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationClose.From = 0.0;
+            growAnimationClose.To = 1.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, this);
+
+            storyboard.Begin();
         }
 
         private void _admin_RegistrationComplete()
+        {
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationClose.From = 1.0;
+            growAnimationClose.To = 0.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, this);
+
+            storyboard.Completed += Storyboard_Completed;
+
+            storyboard.Begin();
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
         {
             Close();
         }
@@ -65,7 +111,24 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationClose.From = 1.0;
+            growAnimationClose.To = 0.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, this);
+
+            storyboard.Completed += Storyboard_Completed;
+
+            storyboard.Begin();
         }
         private void minimizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

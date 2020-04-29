@@ -19,13 +19,15 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Path=Type}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24"/>
-                        <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
-                        <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="Black" Grid.Row="0" FontSize="24" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
+                    <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="0" FontSize="16" Foreground="{Binding RoomColor}"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                        <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
+                        <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
+                        <TextBlock Text="VS" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16"/>
                     </StackPanel>
-                    <TextBlock Text="{Binding Path=Players}" HorizontalAlignment="Center" Foreground="Black" Grid.Row="1" FontSize="24"/>
+                    <TextBlock Text="{Binding Path=Players2}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="2" FontSize="16"/>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -39,7 +41,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="_Border" Property="BorderBrush" Value="Black"/>
+                                <Setter TargetName="_Border" Property="BorderBrush" Value="{Binding RoomColor}"/>
                                 <Setter TargetName="_Border" Property="BorderThickness" Value="1"/>
                                 <Setter Property="FontWeight" Value="Bold" />
                             </Trigger>

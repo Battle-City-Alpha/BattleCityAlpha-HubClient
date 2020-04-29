@@ -13,7 +13,10 @@ namespace hub_client.Cards
             get;
             private set;
         }
+        public CardInfos()
+        {
 
+        }
         public CardInfos(IList<string> carddata)
         {
             Id = Int32.Parse(carddata[0]);

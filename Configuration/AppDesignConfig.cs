@@ -22,6 +22,8 @@ namespace hub_client.Configuration
             GameColors.Add("GreetMessageColor", Colors.ForestGreen);
             GameColors.Add("StaffMessageColor", Colors.Red);
 
+            GameColors.Add("CustomRoomColor", Colors.Red);
+
             GameColors.Add("Color1HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF26164F"));
 
             GameColors.Add("Color2HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF221A29"));

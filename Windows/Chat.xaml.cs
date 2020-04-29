@@ -148,12 +148,29 @@ namespace hub_client.Windows
 
         private void _admin_LoginComplete()
         {
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation scaley = new DoubleAnimation();
+            scaley.Duration = TimeSpan.FromMilliseconds(200);
+            scaley.From = 0.0;
+            scaley.To = 1.0;
+            storyboard.Children.Add(scaley);
+
+            Storyboard.SetTargetProperty(scaley, new PropertyPath("RenderTransform.ScaleY"));
+            Storyboard.SetTarget(scaley, this);
+
+            storyboard.Begin();
+
             Show();
         }
 
         private void Chat_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadStyle();
+            LoadStyle();            
 
             cb_defaultdeck.Items.Clear();
             List<string> Deck = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "deck")));
@@ -555,6 +572,7 @@ namespace hub_client.Windows
             if (target != null)
             {
                 OpenFileDialog getdeck = new OpenFileDialog();
+                getdeck.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "decks");
                 getdeck.Filter = "Deck files (*.ydk;)|*.ydk|All files (*.*)|*.*";
                 if (getdeck.ShowDialog() == true)
                 {
@@ -567,8 +585,20 @@ namespace hub_client.Windows
         {
             Border border = (Border)sender;
 
-            popup_username.Text = ((TextBlock)border.Child).Text;
-            popup_username.Foreground = ((TextBlock)border.Child).Foreground;
+            var item = VisualTreeHelper.HitTest(lvUserlist, Mouse.GetPosition(lvUserlist)).VisualHit;
+
+            // find ListViewItem (or null)
+            while (item != null && !(item is ListViewItem))
+                item = VisualTreeHelper.GetParent(item);
+
+            if (item == null)
+                return;
+            int i = lvUserlist.Items.IndexOf(((ListViewItem)item).DataContext);
+
+            PlayerItem pitem = lvUserlist.Items[i] as PlayerItem;
+
+            popup_username.Text = _admin.Client.ParseUsernames(pitem.Username, pitem.Rank, pitem.VIP);
+            popup_username.Foreground = pitem.ChatColor;
             popup_avatar.Background = border.Background;
 
             popup_border.Opacity = 0;

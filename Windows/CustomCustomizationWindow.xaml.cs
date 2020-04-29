@@ -38,8 +38,16 @@ namespace hub_client.Windows
 
         private void ValidURL(object sender, MouseButtonEventArgs e)
         {
-            if (tb_url.Text == string.Empty && tb_url.Text == "Une erreur s'est produite. Veuillez vérifier votre URL")
+            if (tb_url.Text == string.Empty || tb_url.Text == "Une erreur s'est produite. Veuillez vérifier votre URL")
                 return;
+
+            string[] urlformat = tb_url.Text.Split('.');
+            if (urlformat[urlformat.Length - 1] != "png")
+            {
+                tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.";
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.", "Erreur", true);
+                return;
+            }
 
             SelectedURL?.Invoke(tb_url.Text);
             Close();
@@ -47,6 +55,14 @@ namespace hub_client.Windows
 
         private void LoadCustomization(object sender, MouseButtonEventArgs e)
         {
+            string[] urlformat = tb_url.Text.Split('.');
+            if (urlformat[urlformat.Length - 1] != "png")
+            {
+                tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.";
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.", "Erreur", true);
+                return;
+            }
+
             try
             {
                 using (WebClient wc = new WebClient())
@@ -61,7 +77,7 @@ namespace hub_client.Windows
             catch (Exception ex)
             {
                 logger.Error("ERROR WHEN LOADING CUSTOM CUSTOMIZATION {0}", ex.ToString());
-                tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL";
+                tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.";
             }
         }
 

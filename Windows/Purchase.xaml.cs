@@ -107,12 +107,13 @@ namespace hub_client.Windows
             for (int i = 0; i < list.Count(); i++)
             {
                 CardInfos infos = CardManager.GetCard(list[i]);
-                cards[i] = infos;
                 if (infos == null)
                 {
+                    infos = new CardInfos();
                     infos.Id = list[i];
                     infos.Name = "Id inconnu :" + infos.Id;
                 }
+                cards[i] = infos;
             }
 
             AnimationDisplayCard(cards[index_show].Id);
@@ -204,7 +205,8 @@ namespace hub_client.Windows
         private void Storyboard_Completed(object sender, EventArgs e, int id)
         {
             lb_cards.SelectedIndex = index_show - 1;
-            img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", id.ToString() + ".jpg" });
+            if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id.ToString() + ".jpg")))
+                img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", id.ToString() + ".jpg" });
 
             Storyboard storyboard = new Storyboard();
 
@@ -251,6 +253,16 @@ namespace hub_client.Windows
                     this.DragMove();
             }
             catch { }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation translateY = new DoubleAnimation();
+            translateY.Duration = TimeSpan.FromMilliseconds(100);
+            translateY.From = 450;
+            translateY.To = 0;
+
+            translateTransformBgBorder.BeginAnimation(TranslateTransform.YProperty, translateY);
         }
     }
 }

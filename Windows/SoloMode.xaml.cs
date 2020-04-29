@@ -1,10 +1,13 @@
 ﻿using hub_client.Configuration;
 using hub_client.Helpers;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -21,14 +24,14 @@ namespace hub_client.Windows
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
-            LoadStyle();
-
             this.MouseDown += Window_MouseDown;
             this.Loaded += SoloMode_Loaded;
         }
 
         private void SoloMode_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadStyle();
+
             cb_AI_decks.Items.Clear();
             cb_AI_decks.Items.Add("Random");
             List<string> Deck = new List<string>(Directory.EnumerateFiles(System.IO.Path.Combine(FormExecution.path, "BattleCityAlpha", "Kaibot", "Decks")));
@@ -39,6 +42,23 @@ namespace hub_client.Windows
                 cb_AI_decks.Items.Add(nomFinal[0].Substring(3));
             }
             cb_AI_decks.SelectedIndex = 0;
+
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationClose.From = 0.0;
+            growAnimationClose.To = 1.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, this);
+
+            storyboard.Begin();
         }
 
         public void LoadStyle()
@@ -52,8 +72,31 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            this.RenderTransformOrigin = new Point(0.5, 0.5);
+            this.RenderTransform = scale;
+
+            DoubleAnimation growAnimationClose = new DoubleAnimation();
+            growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationClose.From = 1.0;
+            growAnimationClose.To = 0.0;
+            storyboard.Children.Add(growAnimationClose);
+
+            Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationClose, this);
+
+            storyboard.Completed += Storyboard_Completed;
+
+            storyboard.Begin();
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
             this.Close();
         }
+
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (WindowState == WindowState.Maximized)

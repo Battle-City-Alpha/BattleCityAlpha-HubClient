@@ -1,7 +1,10 @@
 ﻿using BCA.Common;
+using BCA.Common.Enums;
 using hub_client.Windows.Controls.Controls_Stuff;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace hub_client.Windows.Controls
 {
@@ -17,6 +20,7 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
             _rooms = new Dictionary<int, RoomItem>();
         }
+
         public void RefreshStyle()
         {
             this.FontFamily = FormExecution.AppDesignConfig.Font;
@@ -50,22 +54,35 @@ namespace hub_client.Windows.Controls
 
         public void UpdateRoom(Room room)
         {
+            if (room.Players[0] == null && room.Players[1] == null && room.Players[2] == null && room.Players[3] == null)
+                return;
+
+
             RoomItem item = GetItem(room.Id);
 
-            string players = "";
-            foreach (PlayerInfo info in room.Players)
-                if (info != null)
-                    players += info.Username + " (" + info.ELO + ") vs ";
-            if (room.Players[room.Players.Length - 1] != null)
-                players = players.Substring(0, players.Length - 3);
+            string players1 = "";
+            string players2 = "";
+            if (room.GetRoomType() != (int)RoomType.Tag)
+            {
+                players1 = room.Players[0] != null ? room.Players[0].Username : "???";
+                players2 = room.Players[1] != null ? room.Players[1].Username : "???";
+            }
             else
-                players += "???";
+            {
+                players1 = room.Players[0] != null ? room.Players[0].Username : "???";
+                players1 += " & " + room.Players[1] != null ? room.Players[1].Username : "???";
 
+                players2 = room.Players[2] != null ? room.Players[2].Username : "???";
+                players2 += " & " + room.Players[3] != null ? room.Players[3].Username : "???";
+            }
+            
             RoomItem newitem = new RoomItem
             {
                 Id = room.Id,
-                Players = players,
+                Players1 = players1,
+                Players2 = players2,
                 Type = room.Config.Type,
+                Config = room.Config,
                 NeedPassword = room.NeedPassword,
                 IsRanked = room.IsRanked()
             };

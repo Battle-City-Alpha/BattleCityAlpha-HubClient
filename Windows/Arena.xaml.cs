@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace hub_client.Windows
@@ -44,6 +46,13 @@ namespace hub_client.Windows
             matchList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
             tagList.Itemslist.MouseDoubleClick += Room_MouseDoubleClick;
 
+            singleList.Itemslist.MouseMove += Room_MouseEnter;
+            matchList.Itemslist.MouseMove += Room_MouseEnter;
+            tagList.Itemslist.MouseMove += Room_MouseEnter;
+            singleList.Itemslist.MouseLeave += Room_MouseLeave;
+            matchList.Itemslist.MouseLeave += Room_MouseLeave;
+            tagList.Itemslist.MouseLeave += Room_MouseLeave;
+
             this.Loaded += Arena_Loaded;
             this.MouseDown += Window_MouseDown;
 
@@ -51,6 +60,73 @@ namespace hub_client.Windows
             RankedTimer.Interval = TimeSpan.FromSeconds(1);
             RankedTimer.Tick += RankedTimer_Tick;
             RankedTimer.IsEnabled = false;
+        }
+
+        private void Room_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (duel_popup.IsOpen)
+                duel_popup.IsOpen = false;
+        }
+
+        private void Room_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ListBox Itemslist = ((ListBox)sender);
+            var item = VisualTreeHelper.HitTest(Itemslist, Mouse.GetPosition(Itemslist)).VisualHit;
+
+            // find ListViewItem (or null)
+            while (item != null && !(item is ListBoxItem))
+                item = VisualTreeHelper.GetParent(item);
+
+            if (item == null)
+                return;
+
+            int i = Itemslist.Items.IndexOf(((ListBoxItem)item).DataContext);
+            RoomItem room = Itemslist.Items[i] as RoomItem;
+            if (room != null)
+            {
+                //popup_dueltype_img.Background = new ImageBrush(room.Image);
+
+                tb_popup_banlist.Foreground = new SolidColorBrush(Colors.Black);
+                tb_popup_lp.Foreground = new SolidColorBrush(Colors.Black);
+                tb_popup_MR.Foreground = new SolidColorBrush(Colors.Black);
+                tb_popup_starthand.Foreground = new SolidColorBrush(Colors.Black);
+                tb_shuffledeck.Foreground = new SolidColorBrush(Colors.Black);
+                tb_shuffledeck.Visibility = Visibility.Hidden;
+                tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
+
+                if (room.Config.Banlist != 0)
+                    tb_popup_banlist.Foreground = room.RoomColor;
+                tb_popup_banlist.Text = FormExecution.GetBanlistValue(room.Config.Banlist);
+
+                if ((room.Config.StartDuelLP != 8000 && room.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Type == RoomType.Tag))
+                    tb_popup_lp.Foreground = room.RoomColor;
+                tb_popup_lp.Text = room.Config.StartDuelLP.ToString();
+
+                if (room.Config.MasterRules != 5)
+                    tb_popup_MR.Foreground = room.RoomColor;
+                tb_popup_MR.Text = room.Config.MasterRules.ToString();
+
+                tb_popup_players1.Text = room.Players1;
+                tb_popup_players2.Text = room.Players2;
+
+                if (room.Config.CardByHand != 5)
+                    tb_popup_starthand.Foreground = room.RoomColor;
+                tb_popup_starthand.Text = room.Config.CardByHand.ToString();
+
+                if (room.Config.DrawCount != 1)
+                    tb_drawcount.Foreground = room.RoomColor;
+                tb_drawcount.Text = room.Config.DrawCount.ToString();
+
+                if (room.Config.NoShuffleDeck)
+                {
+                    tb_shuffledeck.Foreground = room.RoomColor;
+                    tb_shuffledeck.Visibility = Visibility.Visible;
+                }
+
+                tb_popup_type.Text = room.Type.ToString();
+
+                duel_popup.IsOpen = true;
+            }
         }
 
         private void Arena_Loaded(object sender, RoutedEventArgs e)

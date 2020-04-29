@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Battle City Alpha - Inscription" Height="220.976" Width="526.098" ResizeMode="NoResize" WindowStyle="None" Closed="Window_Closed" WindowStartupLocation="CenterOwner"
+        Title="Battle City Alpha - Inscription" Height="250.576" Width="533.298" ResizeMode="NoResize" WindowStyle="None" Closed="Window_Closed" WindowStartupLocation="CenterOwner"
         AllowsTransparency="True" Background="{x:Null}">
     <Border BorderBrush="Black" BorderThickness="2" CornerRadius="80,20,20,80">
         <Border.Background>
@@ -60,22 +60,22 @@
             </Border>
 
 
-            <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+            <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" FontSize="15" Margin="30,2" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </TextBox.Background>
             </TextBox>
-            <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+            <PasswordBox x:Name="pbPassword" Grid.Column="1" Grid.Row="2" FontSize="15" Margin="30,2" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </PasswordBox.Background>
             </PasswordBox>
-            <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+            <PasswordBox x:Name="pbPasswordConfirm" Grid.Column="1" Grid.Row="3" FontSize="15" Margin="30,2" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
                 <PasswordBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </PasswordBox.Background>
             </PasswordBox>
-            <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="4" FontSize="15" Margin="30,5" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
+            <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="4" FontSize="15" Margin="30,2" BorderBrush="White" BorderThickness="1"  Foreground="White" VerticalContentAlignment="Center">
                 <TextBox.Background>
                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                 </TextBox.Background>

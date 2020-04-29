@@ -1037,7 +1037,7 @@ namespace hub_client.Network
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1), "Customisation personnalisée !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un mois ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1), "Customisation personnalisée !", false);
             logger.Trace("BUY OWN CUSTOMIZATION");
         }
         public void OnBuyPrestigeCustomization(StandardServerBuyPrestigeCustomization packet)

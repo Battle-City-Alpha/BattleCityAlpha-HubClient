@@ -7,6 +7,8 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -58,6 +60,11 @@ namespace hub_client.Windows
             }
 
             LoadStyle();
+
+            var animation = new DoubleAnimation(89, 0,
+                         new Duration(new TimeSpan(0, 0, 0, 0, 200)));
+
+            skewTransbg.BeginAnimation(SkewTransform.AngleYProperty, animation);
 
             using (WebClient wc = new WebClient())
             {

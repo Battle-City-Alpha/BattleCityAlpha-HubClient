@@ -64,7 +64,7 @@ namespace hub_client.Windows
                 if (info.RankedLose == 0 & info.RankedWin == 0)
                     item.WinRate = 1.0;
                 else
-                    item.WinRate = ((double)info.RankedWin) / (info.RankedLose + info.RankedWin);
+                    item.WinRate = Math.Round(((double)info.RankedWin) / (info.RankedLose + info.RankedWin), 2);
                 lvRanking.Items.Add(item);
             }
             
