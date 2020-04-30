@@ -82,7 +82,7 @@
                             <TextBlock x:Name="tb_drawcount" Text="???" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7">
-                            <TextBlock x:Name="tb_shuffledeck" Text="Deck non mélangé : " FontSize="20"/>
+                            <TextBlock x:Name="tb_shuffledeck" Text="Deck mélangé " FontSize="20"/>
                         </StackPanel>
                     </Grid>
                 </Border>

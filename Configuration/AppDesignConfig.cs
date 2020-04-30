@@ -24,6 +24,11 @@ namespace hub_client.Configuration
 
             GameColors.Add("CustomRoomColor", Colors.Red);
 
+            GameColors.Add("PopupPMBackgroundColor", (Color)ColorConverter.ConvertFromString("#FF341c4d")); 
+            GameColors.Add("PopupPMContentColor", Colors.White);
+            GameColors.Add("PopupPMTitleColor", Colors.Yellow);
+            GameColors.Add("PopupPMHeaderColor", (Color)ColorConverter.ConvertFromString("#FFa57daf"));
+
             GameColors.Add("Color1HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF26164F"));
 
             GameColors.Add("Color2HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF221A29"));
@@ -85,6 +90,11 @@ namespace hub_client.Configuration
                 return true;
             }
             return false;
+        }
+
+        public System.Drawing.Color GetDrawingColor(Color color)
+        {
+            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
 
         public void Save()

@@ -7,6 +7,7 @@ using BCA.Network.Packets.Standard.FromClient;
 using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Cards;
 using hub_client.Configuration;
+using hub_client.Enums;
 using hub_client.Helpers;
 using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
@@ -26,7 +27,7 @@ namespace hub_client.Network
         private string _username;
 
         public event Action<string, string, bool> PopMessageBox;
-        public event Action<PlayerInfo, RoomConfig, bool, string> ChoicePopBox;
+        public event Action<PlayerInfo, RoomConfig, ChoiceBoxType, string> ChoicePopBox;
         public event Action<int, RoomType> RoomNeedPassword;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
@@ -827,7 +828,7 @@ namespace hub_client.Network
                 return;
             }
 
-            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), true, ""));
+            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), ChoiceBoxType.Trade, ""));
             logger.Trace("Trade REQUEST - From {0}", packet.Player.Username);
         }
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
@@ -945,7 +946,7 @@ namespace hub_client.Network
             }
 
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
-            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, false, packet.RoomPass));
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
         }
         public void OnDuelRequestAnswer(StandardServerDuelRequestResult packet)
         {

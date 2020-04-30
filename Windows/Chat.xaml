@@ -8,7 +8,7 @@
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/bca.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize"
         Closed="Window_Closed">
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />        
     </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -27,9 +27,9 @@
         <Grid Margin="5" x:Name="maingrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="65"/>
                 <RowDefinition Height="6*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" MaxHeight="65"/>
             </Grid.RowDefinitions>
 
             <Popup x:Name="profil_popup" Width="300" Height="320" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Center" PlacementTarget="{Binding ElementName=maingrid}" AllowsTransparency="True" PopupAnimation="Fade">
@@ -80,7 +80,7 @@
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="349*"/>
-                        <RowDefinition Height="38*"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Border CornerRadius="15" Margin="10,5" BorderBrush="Black" BorderThickness="1">
                         <Border.Background>
@@ -102,7 +102,7 @@
                             </ListView.ContextMenu>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel x:Name="userlistPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <WrapPanel x:Name="userlistPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,2,0,0">
                                         <Border x:Name="userlistAvatarPics" CornerRadius="50" Width="35" Height="35" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Black" MouseEnter="userlistAvatarPics_MouseEnter" MouseLeave="userlistAvatarPics_MouseLeave">
                                             <Border.Background>
                                                 <ImageBrush RenderOptions.BitmapScalingMode="Fant"  ImageSource="{Binding AvatarPic}" Stretch="UniformToFill"/>
@@ -123,11 +123,10 @@
                                                 <Setter.Value>
                                                     <ControlTemplate>
                                                         <StackPanel Orientation="Vertical">
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                                <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="20" VerticalAlignment="Bottom" FontStyle="Italic"/>
-                                                                <TextBlock Text=" [" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                                <TextBlock Text="{Binding ItemCount}" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                                                <TextBlock Text="]" FontSize="20" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="12" VerticalAlignment="Bottom" FontStyle="Italic"/>
+                                                                <TextBlock Text=" -" FontSize="12" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                                                <TextBlock Text="{Binding ItemCount}" FontSize="12" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                                                             </StackPanel>
                                                             <ItemsPresenter />
                                                         </StackPanel>
@@ -145,7 +144,7 @@
                         <Border.Background>
                             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                         </Border.Background>
-                        <TextBox x:Name="tbUserList" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" BorderBrush="{x:Null}" BorderThickness="0">
+                        <TextBox x:Name="tbUserList" Background="{x:Null}" Margin="5" Foreground="Black" FontSize="14" BorderBrush="{x:Null}" BorderThickness="0" VerticalAlignment="Center">
 
                         </TextBox>
                     </Border>
@@ -153,7 +152,7 @@
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="349*"/>
-                        <RowDefinition Height="38*"/>
+                        <RowDefinition Height="40" MaxHeight="40"/>
                     </Grid.RowDefinitions>
                     <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,5"/>
                     <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,0,10,5" KeyUp="tbChat_KeyUp" VerticalAlignment="Center"/>

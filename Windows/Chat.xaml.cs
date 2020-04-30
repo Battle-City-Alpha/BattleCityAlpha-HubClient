@@ -13,10 +13,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -28,6 +30,8 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Chat : Window
     {
+        [DllImport("user32")] public static extern int FlashWindow(IntPtr hwnd, bool bInvert);
+
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         ChatAdministrator _admin;
@@ -38,6 +42,9 @@ namespace hub_client.Windows
 
         InputText form = new InputText();
         AssetsManager PicsManager = new AssetsManager();
+
+        private List<string> _last_messages;
+        int _index_last_message = 0;
 
         public Chat(ChatAdministrator admin)
         {
@@ -56,16 +63,49 @@ namespace hub_client.Windows
             _admin.ClearChat += _admin_ClearChat;
 
             tbUserList.TextChanged += SearchUser;
+            lvUserlist.MouseDoubleClick += LvUserlist_MouseDoubleClick;
 
+            tbChat.PreviewKeyDown += TbChat_PreviewKeyDown;
 
             Players = new List<PlayerItem>();
             PlayersFound = new List<PlayerItem>();
             lvUserlist.ItemsSource = Players;
 
+            _last_messages = new List<string>();
+
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
 
+        }
+
+        public void Flash()
+        {
+            WindowInteropHelper wih = new WindowInteropHelper(FormExecution.GetChat());
+            FlashWindow(wih.Handle, true);
+        }
+
+        private void TbChat_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Tab:
+                    string[] words = tbChat.GetText().Split(' ');
+                    words[words.Length - 1] = FindUsername(words[words.Length - 1]);
+                    tbChat.SetText(String.Join(" ", words));
+                    tbChat.tbChat.SelectionStart = tbChat.tbChat.Text.Length;
+                    tbChat.tbChat.SelectionLength = 0;
+                    e.Handled = true;
+                    break;
+            }
+        }
+
+        private void LvUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
+            if (target != null)
+                FormExecution.OpenNewPrivateForm(target);
         }
 
         private void _admin_UpdateHubPlayers(PlayerInfo[] players, PlayerState state)
@@ -254,10 +294,30 @@ namespace hub_client.Windows
             {
                 case Key.Enter:
                     _admin.SendMessage(tbChat.GetText());
+                    _last_messages.Add(tbChat.GetText());
+                    _index_last_message = _last_messages.Count;
                     tbChat.Clear();
+                    break;
+                case Key.Up:
+                    if (_index_last_message != 0)
+                        _index_last_message -= 1;
+                    tbChat.SetText(_last_messages[_index_last_message]);
+                    break;
+                case Key.Down:
+                    if (_index_last_message != _last_messages.Count - 1)
+                        _index_last_message += 1;
+                    tbChat.SetText(_last_messages[_index_last_message]);
                     break;
             }
             e.Handled = true;
+        }
+
+        private string FindUsername(string txt)
+        {
+            foreach (PlayerItem i in Players)
+                if (i.Username.ToLower().StartsWith(txt.ToLower()))
+                    return i.Username;
+            return txt;
         }
 
 
@@ -528,7 +588,7 @@ namespace hub_client.Windows
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(groupDescription);
 
-            File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png"));
+            //File.Delete(Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png"));
         }
 
         private void profile_Click(object sender, RoutedEventArgs e)

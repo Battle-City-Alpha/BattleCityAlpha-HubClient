@@ -1,9 +1,15 @@
 ﻿using BCA.Common;
+using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
 using NLog;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
+using Tulpep.NotificationWindow;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
+using System.Windows.Media;
 
 namespace hub_client.Windows
 {
@@ -12,7 +18,10 @@ namespace hub_client.Windows
     /// </summary>
     public partial class PrivateMessage : Window
     {
+        [DllImport("user32")] public static extern int FlashWindow(IntPtr hwnd, bool bInvert);
+
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        private AppDesignConfig style = FormExecution.AppDesignConfig;
 
         private PlayerInfo _target;
         PrivateMessageAdministrator _admin;
@@ -35,12 +44,58 @@ namespace hub_client.Windows
             this.FontFamily = FormExecution.AppDesignConfig.Font;
 
             this.MouseDown += Window_MouseDown;
+
+            this.Activated += PrivateMessage_Activated;
+        }
+
+        private void PrivateMessage_Activated(object sender, EventArgs e)
+        {
+            tbChat.Focus();
         }
 
         private void _admin_MessageRecieved(PlayerInfo infos, string message)
         {
             Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message); });
             Dispatcher.InvokeAsync(delegate { Show(); });
+
+            if (!this.IsActive)
+            {
+                if (FormExecution.ClientConfig.PMPopup)
+                {
+                    PopupNotifier popup = new PopupNotifier();
+                    popup.BodyColor = style.GetDrawingColor(style.GetGameColor("PopupPMBackgroundColor"));
+                    popup.ContentColor = style.GetDrawingColor(style.GetGameColor("PopupPMContentColor"));
+                    popup.HeaderColor = style.GetDrawingColor(style.GetGameColor("PopupPMHeaderColor"));
+                    popup.TitleColor = style.GetDrawingColor(style.GetGameColor("PopupPMTitleColor"));
+                    popup.BorderColor = System.Drawing.Color.White;
+                    popup.TitleText = "Battle City Alpha - MP : " + infos.Username;
+                    popup.ContentText = message;
+
+                    try
+                    {
+                        if (infos.Avatar.IsHost)
+                        {
+                            popup.Image = Image.FromFile(FormExecution.AssetsManager.GetSource("Avatars", "A_" + infos.UserId + ".png"));
+                        }
+                        else
+                        {
+                            popup.Image = Image.FromFile(FormExecution.AssetsManager.GetSource("Avatars", infos.Avatar.Id + ".png"));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        popup.Image = Image.FromFile(FormExecution.AssetsManager.GetSource("Logo", "pm_logo.png"));
+                    }
+                    popup.ImageSize = new System.Drawing.Size(popup.Size.Height - 18, popup.Size.Height - 18);
+                    popup.ImagePadding = new System.Windows.Forms.Padding(5);
+                    
+                    popup.Popup();
+                }
+
+                WindowInteropHelper wih = new WindowInteropHelper(this);
+                FlashWindow(wih.Handle, true);
+            }
         }
 
         private void BCA_TextBox_KeyUp(object sender, KeyEventArgs e)

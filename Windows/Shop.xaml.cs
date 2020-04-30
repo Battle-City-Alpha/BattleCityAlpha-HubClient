@@ -242,6 +242,7 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            FormExecution.ActivateChat();
             this.Close();
         }
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

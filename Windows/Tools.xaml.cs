@@ -47,6 +47,8 @@ namespace hub_client.Windows
             cb_traderequest.IsChecked = client_config.Request;
             cb_duelrequest.IsChecked = client_config.Trade;
             cb_autoscroll.IsChecked = client_config.Autoscroll;
+            cb_popuppm.IsChecked = client_config.PMPopup;
+            cb_allowsharedeck.IsChecked = !client_config.AllowDeckShare;
 
             foreach (var color in style.GameColors)
                 cb_colorList.Items.Add(color.Key);
@@ -108,10 +110,12 @@ namespace hub_client.Windows
             client_config.Trade = (bool)cb_traderequest.IsChecked;
             client_config.Connexion_Message = (bool)cb_connectionmsg.IsChecked;
             client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
+            client_config.PMPopup = (bool)cb_popuppm.IsChecked;
+            client_config.AllowDeckShare = (bool)!cb_allowsharedeck.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
             if (style.Font == null)
-                style.Font = new FontFamily("Consolas");
+                style.Font = new FontFamily("Arial");
             style.FontSize = Convert.ToInt32(tb_fontsize.Text);
 
             style.Save();
@@ -154,6 +158,7 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            FormExecution.ActivateChat();
             this.Close();
         }
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

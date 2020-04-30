@@ -67,7 +67,7 @@ namespace hub_client.Windows
         {
             MonthPack_Item.Initialize("Pack du mois !", "800 PP", "monthpack", "Le pack du mois vous offre : " + Environment.NewLine + " - un avatar, une bordure, une sleeve EXCLUSIFS." + Environment.NewLine + " - 24h (à partir du moment de l'achat) de double gains de BPs en duel !");
 
-            VIP_Item.Initialize("Membre VIP (3 mois)", "1000 PP", "vip", "Permet d'obtenir le statut de membre VIP pendant 3 mois." + Environment.NewLine + "Un statut spécial dans le chat." + Environment.NewLine + "Un avatar, une border et une sleeve exclusifs !" + Environment.NewLine + "Les gains de BPs doublés lors des animations !");
+            VIP_Item.Initialize("Membre VIP (3 mois)", "1000 PP", "vip", "Permet d'obtenir le statut de membre VIP pendant 3 mois." + Environment.NewLine + "Un statut spécial dans le chat." + Environment.NewLine + "Un avatar, une border, une sleeve et un titre exclusifs !" + Environment.NewLine + "Les gains de BPs doublés lors des animations !");
             DoubleBP_Item.Initialize("Doublez vos BPs (3J)", "500 PP", "double_bp", "Permet de doubler ses gains de BPs en duels pendant 3 jours");
             UsernameColor_Item.Initialize("Couleur pseudo personnalisée", "300 PP", "username_color", "Permet de changer la couleur de son pseudo dans le chat");
 
@@ -198,7 +198,7 @@ namespace hub_client.Windows
         private void PP_Item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = "http://battlecityalpha.xyz/Donation.html";
+            p.StartInfo.FileName = "http://battlecityalpha.xyz/donations/donate.php";
             p.Start();
         }
 

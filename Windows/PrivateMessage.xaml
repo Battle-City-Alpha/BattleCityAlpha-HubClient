@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="PrivateMessage" Height="402.229" Width="347.522" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed"
-        WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+        WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">    
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"

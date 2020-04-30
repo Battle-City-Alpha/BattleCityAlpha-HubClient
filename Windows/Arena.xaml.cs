@@ -64,7 +64,7 @@ namespace hub_client.Windows
 
         private void Room_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (duel_popup.IsOpen)
+            if (duel_popup.IsOpen && !duel_popup.IsMouseOver)
                 duel_popup.IsOpen = false;
         }
 
@@ -91,7 +91,6 @@ namespace hub_client.Windows
                 tb_popup_MR.Foreground = new SolidColorBrush(Colors.Black);
                 tb_popup_starthand.Foreground = new SolidColorBrush(Colors.Black);
                 tb_shuffledeck.Foreground = new SolidColorBrush(Colors.Black);
-                tb_shuffledeck.Visibility = Visibility.Hidden;
                 tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
 
                 if (room.Config.Banlist != 0)
@@ -120,7 +119,7 @@ namespace hub_client.Windows
                 if (room.Config.NoShuffleDeck)
                 {
                     tb_shuffledeck.Foreground = room.RoomColor;
-                    tb_shuffledeck.Visibility = Visibility.Visible;
+                    tb_shuffledeck.Text = "Deck non mélangé";
                 }
 
                 tb_popup_type.Text = room.Type.ToString();
@@ -248,6 +247,7 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            FormExecution.ActivateChat();
             this.Close();
         }
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

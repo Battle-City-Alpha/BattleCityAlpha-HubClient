@@ -15,11 +15,14 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using Tulpep.NotificationWindow;
 
 namespace hub_client
 {
@@ -27,9 +30,11 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        //public static string debug_ip = "127.0.0.1";
-        public static string debug_ip = "185.212.226.12";
-        public static string release_ip = "185.212.226.12";
+        public static string debug_ip = "127.0.0.1";
+        //public static string debug_ip = "185.212.225.85";
+        //public static string debug_ip = "185.212.226.12";
+        //public static string release_ip = "185.212.226.12";
+        public static string release_ip = "185.212.225.85";
 
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -73,6 +78,11 @@ namespace hub_client
 #else
             return release_ip;
 #endif
+        }
+
+        public static Chat GetChat()
+        {
+            return _chat;
         }
 
         public static void Init()
@@ -163,8 +173,20 @@ namespace hub_client
 
         private static void Client_RecieveDeck(PlayerInfo sender, string[] decklist, string deckname)
         {
-            File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
-            Client_PopMessageBox("Vous avez reçu le deck " + deckname + " de la part de " + sender.Username + ".", "Partage de deck", true);
+            if (!ClientConfig.AllowDeckShare)
+                return;
+
+            ChoicePopBox cpb = new ChoicePopBox(sender, new RoomConfig(), ChoiceBoxType.Deck, "", deckname);
+            cpb.Choice += (r) => DeckCPBChoice(r, decklist, sender, deckname);
+            cpb.ShowDialog();
+        }
+
+        private static void DeckCPBChoice(bool result, string[] decklist, PlayerInfo sender, string deckname)
+        {
+            if (!result)
+                return;
+
+            File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
             YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss"));
         }
 
@@ -263,9 +285,9 @@ namespace hub_client
             trade.Show();
         }
 
-        private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, bool isTrade, string pass)
+        private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, ChoiceBoxType type, string pass)
         {
-            ChoicePopBox box = new ChoicePopBox(player, config, isTrade, pass);
+            ChoicePopBox box = new ChoicePopBox(player, config, type, pass);
             box.Owner = _chat;
             box.Topmost = true;
             box.ShowDialog();
@@ -280,12 +302,13 @@ namespace hub_client
 
         private static void Client_PrivateMessageReceived(PlayerInfo user, string message)
         {
+            if (Client.BlacklistManager.CheckBlacklist(user))
+                return;
+
             if (PrivateForms.ContainsKey(user.UserId))
                 PrivateForms[user.UserId].PrivateMessageRecieved(user, message);
             else
             {
-                if (Client.BlacklistManager.CheckBlacklist(user))
-                    return;
                 OpenNewPrivateForm(user);
                 PrivateForms[user.UserId].PrivateMessageRecieved(user, message);
             }
@@ -302,6 +325,7 @@ namespace hub_client
             PrivateForms.Add(user.UserId, admin);
             form.Owner = _chat;
             form.Show();
+            form.Activate();
             form.Closed += (sender,e) => PMClosed(sender, e, user.UserId);
         }
 
@@ -478,6 +502,15 @@ namespace hub_client
         public static void OpenRankingWindow()
         {
             RankingWindow window = new RankingWindow(Client.RankingDisplayAdmin);
+        }
+
+        public static void ActivateChat()
+        {
+            _chat.Activate();
+        }
+        public static void FlashChat()
+        {
+            _chat.Flash();
         }
 
         public static void RefreshChatStyle()

@@ -1,6 +1,8 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Windows.Controls.Controls_Stuff;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,6 +16,7 @@ namespace hub_client.Windows.Controls
     public partial class BCA_RoomList : UserControl
     {
         private Dictionary<int, RoomItem> _rooms;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public BCA_RoomList()
         {
@@ -54,8 +57,12 @@ namespace hub_client.Windows.Controls
 
         public void UpdateRoom(Room room)
         {
-            if (room.Players[0] == null && room.Players[1] == null && room.Players[2] == null && room.Players[3] == null)
-                return;
+            if (room.GetRoomType() != (int)RoomType.Tag)
+                if (room.Players[0] == null && room.Players[1] == null)
+                    return;
+            else
+                if (room.Players[0] == null && room.Players[1] == null && room.Players[2] == null && room.Players[3] == null)
+                    return;
 
 
             RoomItem item = GetItem(room.Id);
@@ -91,10 +98,17 @@ namespace hub_client.Windows.Controls
                 AddItem(newitem);
             else
             {
-                int index = Itemslist.Items.IndexOf(item);
-                Itemslist.Items.Remove(item);
-                Itemslist.Items.Insert(index, newitem);
-                _rooms[item.Id] = newitem;
+                try
+                {
+                    int index = Itemslist.Items.IndexOf(item);
+                    Itemslist.Items.Remove(item);
+                    Itemslist.Items.Insert(index, newitem);
+                    _rooms[item.Id] = newitem;
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                }
             }
         }
         public void RemoveRoom(Room room)
