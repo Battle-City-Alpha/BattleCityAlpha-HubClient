@@ -227,8 +227,7 @@ namespace hub_client.Windows
             SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
             form.Owner = this;
             form.SelectedCard += Form_SelectedCard;
-            form.ShowDialog();
-            form.SelectedCard -= Form_SelectedCard;
+            form.Show();
         }
 
         private void Form_SelectedCard(PlayerCard card, int price, int quantity)

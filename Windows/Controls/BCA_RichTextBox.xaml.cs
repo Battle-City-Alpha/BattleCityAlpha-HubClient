@@ -25,7 +25,7 @@ namespace hub_client.Windows.Controls
         }
         public void RefreshStyle()
         {
-            this.FontFamily = FormExecution.AppDesignConfig.Font;
+            this.chat.VerticalScrollBarVisibility = FormExecution.ClientConfig.ShowChatScrollbar ? ScrollBarVisibility.Auto : ScrollBarVisibility.Hidden;
         }
 
         public void OnSpecialColoredMessage(Color color, string text, bool IsBold, bool IsItalic)
@@ -35,14 +35,40 @@ namespace hub_client.Windows.Controls
             date.Foreground = new SolidColorBrush(color);
             pr.Inlines.Add(date);
 
-            Run txt = new Run(text);
-            txt.Foreground = new SolidColorBrush(color);
-            if (IsBold)
-                txt.FontWeight = FontWeights.Bold;
-            if (IsItalic)
-                txt.FontStyle = FontStyles.Italic;
+            string[] args = text.Split(' ');
+            foreach (string word in args)
+            {
+                if (word.StartsWith("http://") || word.StartsWith("www.") || word.StartsWith("https://"))
+                {
+                    Hyperlink textLink = new Hyperlink(new Run(word));
+                    textLink.NavigateUri = new Uri(word);
+                    textLink.RequestNavigate += TextLink_RequestNavigate;
+                    if (IsBold)
+                        textLink.FontWeight = FontWeights.Bold;
+                    if (IsItalic)
+                        textLink.FontStyle = FontStyles.Italic;
 
-            pr.Inlines.Add(txt);
+                    pr.Inlines.Add(textLink);
+
+                    Run normalTxt = new Run(" ");
+                    normalTxt.Foreground = new SolidColorBrush(color);
+                    if (IsBold)
+                        normalTxt.FontWeight = FontWeights.Bold;
+                    if (IsItalic)
+                        normalTxt.FontStyle = FontStyles.Italic;
+                    pr.Inlines.Add(normalTxt);
+                }
+                else
+                {
+                    Run normalTxt = new Run(word + " ");
+                    normalTxt.Foreground = new SolidColorBrush(color);
+                    if (IsBold)
+                        normalTxt.FontWeight = FontWeights.Bold;
+                    if (IsItalic)
+                        normalTxt.FontStyle = FontStyles.Italic;
+                    pr.Inlines.Add(normalTxt);
+                }
+            }
 
             pr.Margin = new Thickness(0);
             chat.Document.Blocks.Add(pr);
@@ -50,7 +76,7 @@ namespace hub_client.Windows.Controls
             if (FormExecution.ClientConfig.Autoscroll)
                 ScrollToCarret();
         }
-        public void OnPlayerColoredMessage(Color color, PlayerInfo player, string text)
+        public void OnPlayerColoredMessage(Color color, PlayerInfo player, string text, bool PM = false)
         {
             Paragraph pr = new Paragraph();
             Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] [");
@@ -70,7 +96,7 @@ namespace hub_client.Windows.Controls
             string[] args = text.Split(' ');
 
             bool highlight = false;
-            if (args.Contains(FormExecution.Username))
+            if (!PM && args.Contains(FormExecution.Username))
                 highlight = true;
 
             foreach (string word in args)
@@ -79,7 +105,7 @@ namespace hub_client.Windows.Controls
                 {
                     Hyperlink textLink = new Hyperlink(new Run(word));
                     if (highlight)
-                        textLink.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AAf5f314"));
+                        textLink.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
                     textLink.NavigateUri = new Uri(word);
                     textLink.RequestNavigate += TextLink_RequestNavigate;
 
@@ -88,14 +114,14 @@ namespace hub_client.Windows.Controls
                     Run normalTxt = new Run(" ");
                     normalTxt.Foreground = new SolidColorBrush(color);
                     if (highlight)
-                        normalTxt.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AAf5f314"));
+                        normalTxt.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
                     pr.Inlines.Add(normalTxt);
                 }
                 else if (word == FormExecution.Username)
                 {
                     Run normalTxt = new Run(word + " ");
                     normalTxt.Foreground = new SolidColorBrush(color);
-                    normalTxt.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AAf5f314"));
+                    normalTxt.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
                     normalTxt.FontWeight = FontWeights.Bold;
                     pr.Inlines.Add(normalTxt);
 
@@ -106,7 +132,7 @@ namespace hub_client.Windows.Controls
                     Run normalTxt = new Run(word + " ");
                     normalTxt.Foreground = new SolidColorBrush(color);
                     if (highlight)
-                        normalTxt.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AAf5f314"));
+                        normalTxt.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
                     pr.Inlines.Add(normalTxt);
                 }
             }

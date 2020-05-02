@@ -27,6 +27,7 @@
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <TextBlock x:Name="tb_username"  Text="???" Foreground="White" Grid.Row="0" Margin="20,5"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,20,5" Grid.Row="0" Grid.ColumnSpan="2">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>

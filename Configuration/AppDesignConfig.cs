@@ -29,8 +29,9 @@ namespace hub_client.Configuration
             GameColors.Add("PopupPMTitleColor", Colors.Yellow);
             GameColors.Add("PopupPMHeaderColor", (Color)ColorConverter.ConvertFromString("#FFa57daf"));
 
-            GameColors.Add("Color1HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF26164F"));
+            GameColors.Add("HighlighMessageColor", (Color)ColorConverter.ConvertFromString("#AAf5f314"));
 
+            GameColors.Add("Color1HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF26164F"));
             GameColors.Add("Color2HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF221A29"));
 
             GameColors.Add("Color1ArenaButton", (Color)ColorConverter.ConvertFromString("#FFF40202"));

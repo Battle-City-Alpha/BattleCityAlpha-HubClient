@@ -117,6 +117,11 @@ namespace hub_client.WindowsAdministrator
             Client.BlacklistManager.AddPlayer(target);
             Client.BlacklistManager.Save();
         }
+        public void RemoveBlacklistPlayer(PlayerInfo target)
+        {
+            Client.BlacklistManager.RemovePlayer(target);
+            Client.BlacklistManager.Save();
+        }
         public void SendDonationBP(string amount, PlayerInfo target)
         {
             int pts;
@@ -131,17 +136,11 @@ namespace hub_client.WindowsAdministrator
             else
                 SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "Vous n'avez pas indiqué un nombre valable de BPs.", false, false);
         }
-        public void AskSelectCard()
+        public void AskSelectCard(AskCollectionReason reason)
         {
-            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
-        }
-        public void SendCardDonation(PlayerCard card, int quantity, PlayerInfo target)
-        {
-            Client.Send(PacketType.CardDonation, new StandardClientCardDonation
+            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard
             {
-                Target = target,
-                Quantity = quantity,
-                Card = card
+               Reason = reason
             });
         }
         public void SendAskProfil(PlayerInfo infos)

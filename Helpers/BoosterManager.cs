@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 
@@ -58,23 +59,18 @@ namespace hub_client.Helpers
     }
     public class BoosterInfosDateComparer : IComparer<BoosterInfo>
     {
-        List<string> wow = new List<string>();
         public int Compare(BoosterInfo x, BoosterInfo y)
         {
             try
             {
-                DateTime xt = DateTime.Parse(x.Date);
-                DateTime yt = DateTime.Parse(y.Date);
+                CultureInfo frenchCI = new CultureInfo("fr-FR");
+                DateTime xt = DateTime.Parse(x.Date, frenchCI);
+                DateTime yt = DateTime.Parse(y.Date, frenchCI);
                 return xt.CompareTo(yt);
             }
             catch
-            {
-                if (!wow.Contains(x.PurchaseTag))
-                {
-                    wow.Add(x.PurchaseTag);
-                    MessageBox.Show(x.PurchaseTag);
-                }
-                return 0;
+            {              
+                return 1;
             }
         }
     }

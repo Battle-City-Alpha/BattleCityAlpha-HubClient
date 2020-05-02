@@ -60,7 +60,7 @@ namespace hub_client.Windows
                         Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg")
                         );
                 }
-                await Task.Delay(1);
+                await Task.Delay(100);
             }
         }
         private string ParseFileName(string filename)

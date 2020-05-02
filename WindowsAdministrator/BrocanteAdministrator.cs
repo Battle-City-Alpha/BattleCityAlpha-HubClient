@@ -35,7 +35,10 @@ namespace hub_client.WindowsAdministrator
         }
         public void AskSelectCard()
         {
-            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard());
+            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard
+            {
+                Reason = AskCollectionReason.Brocante
+            });
         }
         public void SellBrocanteCard(PlayerCard card, int price, int quantity)
         {

@@ -86,6 +86,8 @@ namespace hub_client.Windows
             {
                 //popup_dueltype_img.Background = new ImageBrush(room.Image);
 
+                //duel_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
+
                 tb_popup_banlist.Foreground = new SolidColorBrush(Colors.Black);
                 tb_popup_lp.Foreground = new SolidColorBrush(Colors.Black);
                 tb_popup_MR.Foreground = new SolidColorBrush(Colors.Black);
@@ -146,7 +148,8 @@ namespace hub_client.Windows
                     form.Title = "Mot de passe";
                     form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);
                     form.Owner = this;
-                    form.ShowDialog();
+                    form.Topmost = true;
+                    form.Show();
                 }
             }
         }

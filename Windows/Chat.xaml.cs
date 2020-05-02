@@ -76,7 +76,6 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
-
         }
 
         public void Flash()
@@ -241,6 +240,7 @@ namespace hub_client.Windows
 
             this.FontFamily = style.Font;
             this.chat.chat.FontSize = style.FontSize;
+            this.chat.RefreshStyle();
 
             Resources.Clear();
 
@@ -302,11 +302,17 @@ namespace hub_client.Windows
                     if (_index_last_message != 0)
                         _index_last_message -= 1;
                     tbChat.SetText(_last_messages[_index_last_message]);
+                    tbChat.tbChat.SelectionStart = tbChat.tbChat.Text.Length;
+                    tbChat.tbChat.SelectionLength = 0;
                     break;
                 case Key.Down:
+                    if (_last_messages.Count == 0)
+                        break;
                     if (_index_last_message != _last_messages.Count - 1)
                         _index_last_message += 1;
                     tbChat.SetText(_last_messages[_index_last_message]);
+                    tbChat.tbChat.SelectionStart = tbChat.tbChat.Text.Length;
+                    tbChat.tbChat.SelectionLength = 0;
                     break;
             }
             e.Handled = true;
@@ -457,7 +463,7 @@ namespace hub_client.Windows
                 form.Title = "Don de BP à " + target.Username;
                 form.SelectedText += (obj) => BpInputForm_SelectedText(obj, target);
                 form.Owner = this;
-                form.ShowDialog();
+                form.Show();
             }
         }
         private void BpInputForm_SelectedText(string obj, PlayerInfo target)
@@ -480,18 +486,10 @@ namespace hub_client.Windows
 
             if (target != null)
             {
-                _admin.AskSelectCard();
-                SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
-                form.ActivateDonationCardMode();
-                form.SelectedCard += (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
-                form.Owner = this;
-                form.ShowDialog();
-                form.SelectedCard -= (arg1, arg2, arg3) => SendGiveCard(arg1, arg2, arg3, target);
+                _admin.AskSelectCard(AskCollectionReason.GiveCard);
+                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin, target);
+                window.Show();
             }
-        }
-        private void SendGiveCard(PlayerCard card, int price, int quantity, PlayerInfo target)
-        {
-            _admin.SendCardDonation(card, quantity, target);
         }
 
         private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -633,10 +631,14 @@ namespace hub_client.Windows
             {
                 OpenFileDialog getdeck = new OpenFileDialog();
                 getdeck.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "decks");
-                getdeck.Filter = "Deck files (*.ydk;)|*.ydk|All files (*.*)|*.*";
+                getdeck.Filter = "Deck files (*.ydk;)|*.ydk";
                 if (getdeck.ShowDialog() == true)
                 {
-                    _admin.SendShareDeck(target, File.ReadAllLines(getdeck.FileName), Path.GetFileNameWithoutExtension(getdeck.FileName));
+                    FileInfo info = new FileInfo(getdeck.FileName);
+                    if (info.Length < 5000)
+                        _admin.SendShareDeck(target, File.ReadAllLines(getdeck.FileName), Path.GetFileNameWithoutExtension(getdeck.FileName));
+                    else
+                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Ton deck est trop lourd !"), false, false);
                 }
             }
         }
@@ -665,11 +667,21 @@ namespace hub_client.Windows
             popup_border.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 100, new Duration(new TimeSpan(0, 0, 0, 1, 0))));
             profil_popup.IsOpen = true;
         }
-
         private void userlistAvatarPics_MouseLeave(object sender, MouseEventArgs e)
         {
             popup_border.BeginAnimation(OpacityProperty, new DoubleAnimation(100, 0, new Duration(new TimeSpan(0, 0, 0, 1, 0))));
             profil_popup.IsOpen = false;
+        }
+
+        private void unblock_click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+            if (target != null)
+            {
+                _admin.RemoveBlacklistPlayer(target);
+                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);
+            }
         }
     }
 }

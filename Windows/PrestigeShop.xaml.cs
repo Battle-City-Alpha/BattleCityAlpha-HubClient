@@ -119,7 +119,7 @@ namespace hub_client.Windows
             form.Title = "Nouveau pseudo";
             form.SelectedText += ChangeUsernameSelectedText;
             form.Owner = this;
-            form.ShowDialog();
+            form.Show();
         }
         private void ChangeUsernameSelectedText(string newusername)
         {
@@ -150,14 +150,14 @@ namespace hub_client.Windows
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Sleeve);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Sleeve);
             window.Owner = this;
-            window.ShowDialog();
+            window.Show();
         }
         private void BuyCustomBorder(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Border);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Border);
             window.Owner = this;
-            window.ShowDialog();
+            window.Show();
         }
         private void BuyCustomAvatar(object sender, MouseButtonEventArgs e)
         {
@@ -175,7 +175,7 @@ namespace hub_client.Windows
             ColorPickerWindow window = new ColorPickerWindow();
             window.SelectedColor += SendUsernameColor;
             window.Owner = this;
-            window.ShowDialog();
+            window.Show();
         }
         private void SendUsernameColor(string color)
         {
@@ -204,6 +204,7 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            FormExecution.ActivateShop();
             this.Close();
         }
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

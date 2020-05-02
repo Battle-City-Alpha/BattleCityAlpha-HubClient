@@ -20,7 +20,7 @@
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeader_Click">Nom</GridViewColumnHeader>
+                                <GridViewColumnHeader Tag="Name" Click="GridViewColumnHeader_Click" MaxWidth="280">Nom</GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Quantity}">

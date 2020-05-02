@@ -38,6 +38,7 @@ namespace hub_client.Windows
                 return;
             }
             Title = "Privé : " + _target.Username;
+            tb_username.Text = _target.Username;
 
             _admin.MessageRecieved += _admin_MessageRecieved;
 
@@ -55,7 +56,7 @@ namespace hub_client.Windows
 
         private void _admin_MessageRecieved(PlayerInfo infos, string message)
         {
-            Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message); });
+            Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message, true); });
             Dispatcher.InvokeAsync(delegate { Show(); });
 
             if (!this.IsActive)

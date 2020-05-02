@@ -102,6 +102,9 @@ namespace hub_client.Network
         #region SelectCardForm Events
         public event Action<Dictionary<int, PlayerCard>> LoadSelectCard;
         #endregion
+        #region GiveCard Events
+        public event Action<Dictionary<int, PlayerCard>> LoadGiveCards;
+        #endregion
         #region OfflineMessagesBox Events
         public event Action<OfflineMessage[]> LoadOfflineMessages;
         #endregion
@@ -140,6 +143,7 @@ namespace hub_client.Network
         public PrestigeCustomizationsViewerAdministrator PrestigeCustomizationsViewerAdmin;
         public DataRetrievalAdministrator DataRetrievalAdmin;
         public RankingDisplayAdministrator RankingDisplayAdmin;
+        public GiveCardAdministrator GiveCardAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -177,6 +181,7 @@ namespace hub_client.Network
             PrestigeCustomizationsViewerAdmin = new PrestigeCustomizationsViewerAdministrator(this);
             DataRetrievalAdmin = new DataRetrievalAdministrator(this);
             RankingDisplayAdmin = new RankingDisplayAdministrator(this);
+            GiveCardAdmin = new GiveCardAdministrator(this);
         }
 
         private void InitManager()
@@ -450,6 +455,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.GetRanking:
                     OnGetRanking(JsonConvert.DeserializeObject<StandardServerGetRanking>(packet));
+                    break;
+                case PacketType.Ping:
+                    OnPing(JsonConvert.DeserializeObject<StandardServerPing>(packet));
                     break;
             }
         }
@@ -816,8 +824,12 @@ namespace hub_client.Network
         }
         public void OnCardDonation(StandardServerCardDonation packet)
         {
-            OpenPopBox("Vous avez reçu la carte : " + CardManager.GetCard(packet.Id).Name + " de la part de " + packet.Player.Username + " (Quantité:" + packet.Quantity + ")", "Réception d'une carte");
-            logger.Trace("GET CARD - From : {0} | Id : {1} | Quantity : {2}", packet.Player.Username, packet.Id, packet.Quantity);
+            List<string> cards = new List<string>();
+            foreach (var card in packet.Cards)
+                cards.Add(card.Value.Name);
+
+            OpenPopBox("Vous avez reçu les cartes : " + string.Join(",", cards) + " de la part de " + packet.Player.Username, "Réception d'une carte");
+            logger.Trace("GET CARD - From : {0} | Ids : {1}", packet.Player.Username, string.Join(",", cards));
         }
 
         public void OnTradeRequest(StandardServerTradeRequest packet)
@@ -885,12 +897,19 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD BROCANTE");
             Application.Current.Dispatcher.Invoke(() => LoadBrocante?.Invoke(packet.Cards));
-            Application.Current.Dispatcher.Invoke(() => UpdateBattlePoints?.Invoke(packet.BattlePoints));
         }
         public void OnLoadSelectCard(StandardServerLoadSelectCard packet)
         {
             logger.Trace("LOAD SELECT CARD");
-            Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));
+            switch(packet.Reason)
+            {
+                case AskCollectionReason.Brocante:
+                    Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));
+                    break;
+                case AskCollectionReason.GiveCard:
+                    Application.Current.Dispatcher.Invoke(() => LoadGiveCards?.Invoke(packet.Collection));
+                    break;
+            }
         }
         public void OnCloseBrocante(StandardServerCloseBrocante packet)
         {
@@ -982,7 +1001,23 @@ namespace hub_client.Network
 
         public void OnDuelResult(StandardServerDuelResult packet)
         {
-            Application.Current.Dispatcher.Invoke(() => LaunchDuelResultBox?.Invoke(packet.PointsGain, packet.ExpGain, packet.Win));
+            if (FormExecution.ClientConfig.PMEndDuel)
+                Application.Current.Dispatcher.Invoke(() => LaunchDuelResultBox?.Invoke(packet.PointsGain, packet.ExpGain, packet.Win));
+            else
+            {
+                Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
+                string text = "••• ";
+                if (packet.Win)
+                    text = "Félicitations pour ta victoire !";
+                else
+                    text = "Dommage tu viens de perdre... Tu feras mieux la prochaine fois !";
+                text += Environment.NewLine + Environment.NewLine;
+
+                text += "Tu as remporté " + packet.PointsGain.ToString() + " BPs et " + packet.ExpGain.ToString() + " points d'expériences.";
+
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, text, false, false));
+
+            }
             logger.Trace("DUEL RESULT - BPs Gain : {0} | EXPs Gain : {1} | Win : {2}", packet.PointsGain, packet.ExpGain, packet.Win);
         }
 
@@ -1225,6 +1260,11 @@ namespace hub_client.Network
 
             logger.Trace("RECIEVE RANKING");
 
+        }
+
+        public void OnPing(StandardServerPing packet)
+        {
+            this.Send(PacketType.Ping, new StandardClientPong { });
         }
 
         public string ParseUsernames(string username, PlayerRank rank, bool isVip)

@@ -24,6 +24,7 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
 
             tb_search.tbChat.TextChanged += TbChat_TextChanged;
+            tb_search.tbChat.IsEnabled = false;
         }
 
         public PlayerCard AddCard(int id)
@@ -73,6 +74,8 @@ namespace hub_client.Windows.Controls
                 args.Value.Name = c.Name;
                 Add(args.Value);
             }
+
+            tb_search.tbChat.IsEnabled = true;
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)

@@ -9,27 +9,29 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <DataTemplate x:Key="RoomItemTemplate">
-            <Grid Height="80">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="{Binding Path=Image}" Stretch="Fill" Grid.Column="0"/>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="0" FontSize="16" Foreground="{Binding RoomColor}"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-                        <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
-                        <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
-                        <TextBlock Text="VS" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Path=Players2}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="2" FontSize="16"/>
+            <Border>
+                <Grid Height="80">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="{Binding Path=Image}" Stretch="Fill" Grid.Column="0"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="0" FontSize="16" Foreground="{Binding RoomColor}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                            <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
+                            <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
+                            <TextBlock Text="VS" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Path=Players2}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="2" FontSize="16"/>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Border>
         </DataTemplate>
         <Style x:Key="_ListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Template">

@@ -44,11 +44,13 @@ namespace hub_client.Windows
 
             cb_connectionmsg.IsChecked = client_config.Connexion_Message;
             cb_greet.IsChecked = client_config.Greet;
-            cb_traderequest.IsChecked = client_config.Request;
-            cb_duelrequest.IsChecked = client_config.Trade;
+            cb_traderequest.IsChecked = client_config.Trade;
+            cb_duelrequest.IsChecked = client_config.Request;
             cb_autoscroll.IsChecked = client_config.Autoscroll;
             cb_popuppm.IsChecked = client_config.PMPopup;
             cb_allowsharedeck.IsChecked = !client_config.AllowDeckShare;
+            cb_popupduelend.IsChecked = client_config.PMEndDuel;
+            cb_showchatscrollbar.IsChecked = client_config.ShowChatScrollbar;
 
             foreach (var color in style.GameColors)
                 cb_colorList.Items.Add(color.Key);
@@ -112,6 +114,8 @@ namespace hub_client.Windows
             client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
             client_config.PMPopup = (bool)cb_popuppm.IsChecked;
             client_config.AllowDeckShare = (bool)!cb_allowsharedeck.IsChecked;
+            client_config.PMEndDuel = (bool)cb_popupduelend.IsChecked;
+            client_config.ShowChatScrollbar = (bool)cb_showchatscrollbar.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
             if (style.Font == null)

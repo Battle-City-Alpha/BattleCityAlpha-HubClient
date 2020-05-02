@@ -82,12 +82,12 @@ namespace hub_client.Windows
             foreach (PlayerCard card in cards)
                 CollectionJ2.Add(card);
 
-            btnValidate.IsEnabled = true;
+            btnValidate.IsEnabled = false;
         }
 
         private void _admin_GetMessage(PlayerInfo user, string message)
         {
-            Dispatcher.InvokeAsync(delegate { chat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), user, message); });
+            Dispatcher.InvokeAsync(delegate { chat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), user, message, true); });
         }
 
         private void _admin_InitTrade(int id, PlayerInfo[] players, Dictionary<int, BCA.Common.PlayerCard>[] Collections)
@@ -100,6 +100,8 @@ namespace hub_client.Windows
 
             CollectionJ1.UpdateCollection(Collections[0]);
             CollectionJ2.UpdateCollection(Collections[1]);
+
+            btnValidate.IsEnabled = true;
         }
 
         private void lvPlayer1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -130,7 +132,8 @@ namespace hub_client.Windows
 
             if (!_cardsToOffer.ContainsKey(offerCard.Id))
                 _cardsToOffer.Add(offerCard.Id, offerCard);
-            _cardsToOffer[offerCard.Id].Quantity++;
+            else
+                _cardsToOffer[offerCard.Id].Quantity++;
         }
 
         private void tbChat_KeyUp(object sender, KeyEventArgs e)

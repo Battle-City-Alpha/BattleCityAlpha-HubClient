@@ -32,14 +32,13 @@ namespace hub_client
 
         public static string debug_ip = "127.0.0.1";
         //public static string debug_ip = "185.212.225.85";
-        //public static string debug_ip = "185.212.226.12";
-        //public static string release_ip = "185.212.226.12";
+        public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        public static string HID = HardwareIdManager.GetId();
+        public static string HID;
         public static string Username;
 
 
@@ -73,6 +72,8 @@ namespace hub_client
 
         public static string GetIp()
         {
+            if (ClientConfig.TestMode)
+                return test_ip;
 #if DEBUG
             return debug_ip;
 #else
@@ -87,6 +88,15 @@ namespace hub_client
 
         public static void Init()
         {
+            try
+            {
+                HID = HardwareIdManager.GetId();
+            }
+            catch (Exception ex)
+            {
+                HID = "";
+            }
+
             AssetsManager = new AssetsManager();
 
             if (File.Exists(AppConfigPath))
@@ -101,6 +111,8 @@ namespace hub_client
                 ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
             else
                 ClientConfig = new ClientConfig();
+
+            //ClientConfig.TestMode = false;
 
             BoosterManager.LoadList();
             LoadBanlist();
@@ -178,7 +190,8 @@ namespace hub_client
 
             ChoicePopBox cpb = new ChoicePopBox(sender, new RoomConfig(), ChoiceBoxType.Deck, "", deckname);
             cpb.Choice += (r) => DeckCPBChoice(r, decklist, sender, deckname);
-            cpb.ShowDialog();
+            cpb.Topmost = true;
+            cpb.Show();
         }
 
         private static void DeckCPBChoice(bool result, string[] decklist, PlayerInfo sender, string deckname)
@@ -225,7 +238,8 @@ namespace hub_client
             form.Title = "Mot de passe";
             form.Owner = _arena;
             form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
-            form.ShowDialog();
+            form.Topmost = true;
+            form.Show();
         }
         private static void RoomPassInput_SelectedText(string pass, int id, RoomType type)
         {
@@ -247,7 +261,7 @@ namespace hub_client
             OfflineMessagesBox box = new OfflineMessagesBox();
             box.Owner = _chat;
             box.LoadMessages(messages);
-            box.ShowDialog();
+            box.Show();
         }
 
         private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
@@ -262,7 +276,8 @@ namespace hub_client
         {
             BonusBox box = new BonusBox(type, numberconnexion, gift);
             box.Owner = _chat;
-            box.ShowDialog();
+            box.Topmost = true;
+            box.Show();
             if (type == BonusType.Booster)
             {
                 OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster });
@@ -290,7 +305,7 @@ namespace hub_client
             ChoicePopBox box = new ChoicePopBox(player, config, type, pass);
             box.Owner = _chat;
             box.Topmost = true;
-            box.ShowDialog();
+            box.Show();
         }
 
         public static void Client_LaunchYGOPro(Room room, string arg)
@@ -399,7 +414,6 @@ namespace hub_client
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
             //_register.Owner = _login;
-            _register.Topmost = true;
             _register.Show();
         }
         public static void OpenArena()
@@ -429,7 +443,6 @@ namespace hub_client
             logger.Trace("Open Prestige Customizations viewer");
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, true);
             viewer.Owner = _pshop;
-            viewer.Topmost = true;
             viewer.Show();
         }
         public static void OpenPrestigeCustomizationsVerticalViewer()
@@ -491,13 +504,13 @@ namespace hub_client
         {
             DataRetrievalWindow window = new DataRetrievalWindow(Client.DataRetrievalAdmin);
             window.Owner = _tools;
-            window.ShowDialog();
+            window.Show();
         }
         public static void OpenChangePicsWindow()
         {
             ChangePicsStyle window = new ChangePicsStyle();
             window.Owner = _tools;
-            window.ShowDialog();
+            window.Show();
         }
         public static void OpenRankingWindow()
         {
@@ -511,6 +524,11 @@ namespace hub_client
         public static void FlashChat()
         {
             _chat.Flash();
+        }
+
+        public static void ActivateShop()
+        {
+            _shop.Activate();
         }
 
         public static void RefreshChatStyle()

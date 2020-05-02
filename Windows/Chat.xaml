@@ -86,14 +86,15 @@
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
-                        <ListView x:Name="lvUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" Foreground="Black" FontSize="18" BorderThickness="0">
+                        <ListView x:Name="lvUserlist" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5" Foreground="Black" FontSize="18" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                             <ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
                                     <MenuItem x:Name="profile" Header="Profil" Click="profile_Click"/>
                                     <MenuItem x:Name="duelrequest" Header="Requête de duel" Click="duelrequest_Click"/>
                                     <MenuItem x:Name="traderequest" Header="Requête d'échange" Click="traderequest_Click"/>
-                                    <MenuItem x:Name="setblacklist" Header="Blacklister" Click="setblacklist_Click"/>
+                                    <MenuItem x:Name="setblacklist" Header="Bloquer" Click="setblacklist_Click"/>
+                                    <MenuItem x:Name="unblock" Header="Débloquer" Click="unblock_click"/>
                                     <MenuItem x:Name="look" Header="Regarder" Click="Regarder_Click"/>
                                     <MenuItem x:Name="giveBP" Header="Envoyer des BPs" Click="SendBP_Click"/>
                                     <MenuItem x:Name="giveCard" Header="Envoyer des cartes" Click="GiveCard_Click"/>
@@ -109,9 +110,9 @@
                                             </Border.Background>
                                             <TextBlock Visibility="Hidden" Text="{Binding Username}" Foreground="{Binding ChatColor}" />
                                         </Border>
-                                        <TextBlock Text="⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
                                         <TextBlock Text="✮" Foreground="{Binding ChatColor}" Visibility="{Binding VIP, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding Username}" Foreground="{Binding ChatColor}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="  ⚔" Foreground="{Binding ChatColor}" Visibility="{Binding IsOnDuel, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center"/>
                                     </WrapPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -123,7 +124,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate>
                                                         <StackPanel Orientation="Vertical">
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                                                 <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="12" VerticalAlignment="Bottom" FontStyle="Italic"/>
                                                                 <TextBlock Text=" -" FontSize="12" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                                                                 <TextBlock Text="{Binding ItemCount}" FontSize="12" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>

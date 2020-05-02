@@ -170,6 +170,7 @@
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DataRetrievalAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\GiveCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PanelAdministrator.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="Windows\DuelResult.xaml.cs">
       <DependentUpon>DuelResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GiveCard.xaml.cs">
+      <DependentUpon>GiveCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InputText.xaml.cs">
       <DependentUpon>InputText.xaml</DependentUpon>
@@ -419,6 +423,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DuelResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GiveCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
