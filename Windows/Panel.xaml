@@ -68,7 +68,7 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Comptes :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="lblAccounts" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox x:Name="lblAccounts" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" IsReadOnly="True" TextWrapping="Wrap" Background="{x:Null}"/>
                     </Grid>
                 </Border>
                 <Border Grid.Row="1" CornerRadius="15" Margin="5,5">
@@ -81,7 +81,7 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="IP :"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="lblIP" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBox x:Name="lblIP" Grid.Column="1" Text="???"  FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" IsReadOnly="True" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}"/>
                     </Grid>
                 </Border>
                 <Border Grid.Row="2" CornerRadius="15" Margin="10,5">

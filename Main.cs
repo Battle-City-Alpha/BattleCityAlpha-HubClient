@@ -17,8 +17,8 @@ namespace hub_client
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private int CLIENT_VERSION = 2006;
-        public static string VERSION = "2.0.0.6";
+        private static int CLIENT_VERSION = 2009;
+        public static string VERSION = "2.0.0.9";
 
         public Main()
         {
@@ -35,7 +35,7 @@ namespace hub_client
             }
         }
 
-        private void CheckCardsStuffUpdate()
+        public static void CheckCardsStuffUpdate()
         {
             try
             {
@@ -55,11 +55,11 @@ namespace hub_client
             }
             catch { return; }
         }
-        private int GetLastVersion(string[] updatefilelines)
+        private static int GetLastVersion(string[] updatefilelines)
         {
             return Convert.ToInt32(updatefilelines[0]);
         }
-        private void UpdateCardsStuff(string[] updatefilelines)
+        private static void UpdateCardsStuff(string[] updatefilelines)
         {
             FormExecution.HideLogin();
 
@@ -84,7 +84,7 @@ namespace hub_client
 
             FormExecution.ShowLogin();
         }
-        private void CheckClientUpdate()
+        public static void CheckClientUpdate()
         {
 
             try
@@ -110,7 +110,7 @@ namespace hub_client
             }
         }
 
-        private void UpdateClient(string[] updatefilelines)
+        private static void UpdateClient(string[] updatefilelines)
         {
             FormExecution.HideLogin();
             FormExecution.Client_PopMessageBox("Un mise à jour du jeu est disponible !", "Mise à jour", true);
@@ -141,7 +141,7 @@ namespace hub_client
             p.StartInfo.Verb = "runas";
             p.Start();
         }
-        private string GetClientUpdateURL(string version)
+        private static string GetClientUpdateURL(string version)
         {
             return string.Format("http://battlecityalpha.xyz/BCA/UPDATEV2/Client/zip/{0}.zip", version);
         }

@@ -44,9 +44,10 @@ namespace hub_client.Network
         #region ChatForm Events
         public event Action<Color, string, bool, bool> SpecialChatMessageRecieved;
         public event Action<Color, PlayerInfo, string> PlayerChatMessageRecieved;
-        public event Action<PlayerInfo> AddHubPlayer;
+        public event Action<PlayerInfo, bool> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
         public event Action Shutdown;
+        public event Action Restart;
         public event Action<string, string> ClearChat;
         public event Action<string[]> Banlist;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
@@ -209,9 +210,8 @@ namespace hub_client.Network
         private void Client_Disconnected(Exception ex)
         {
             logger.Fatal(ex);
-            OpenPopBox("Vous avez été déconnecté du serveur.", "Problème", true);
             //Thread.Sleep(1500);
-            Shutdown?.Invoke();
+            Application.Current.Dispatcher.Invoke(() => Restart?.Invoke());
         }
 
         public PlayerInfo GetPlayerInfo(string username)
@@ -481,7 +481,7 @@ namespace hub_client.Network
                     break;
                 case ChatMessageType.Animation:
                     c = FormExecution.AppDesignConfig.GetGameColor("AnimationMessageColor");
-                    msg = "[Animation - " + packet.Player.Username + "]:" + packet.Message;
+                    msg = "[Animation - " + packet.Player.Username + "]: " + packet.Message;
                     break;
                 case ChatMessageType.Information:
                     c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
@@ -492,11 +492,11 @@ namespace hub_client.Network
                     if (!FormExecution.ClientConfig.Greet)
                         return;
                     c = FormExecution.AppDesignConfig.GetGameColor("GreetMessageColor");
-                    msg = "[Greet - " + packet.Player.Username + "]:" + packet.Message;
+                    msg = "[Greet - " + packet.Player.Username + "]: " + packet.Message;
                     break;
                 case ChatMessageType.Staff:
                     c = FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor");
-                    msg = "[Staff - " + packet.Player.Username + "]:" + packet.Message;
+                    msg = "[Staff - " + packet.Player.Username + "]: " + packet.Message;
                     italic = true;
                     break;
                 default:
@@ -582,7 +582,7 @@ namespace hub_client.Network
         private void OnAddHubPlayer(StandardServerAddHubPlayer packet)
         {
             PlayerManager.UpdatePlayer(packet.Infos);
-            Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(packet.Infos));
+            Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(packet.Infos, true));
             logger.Trace("AddHubPlayer - {0}", packet.Infos);
         }
         private void OnRemoveHubPlayer(StandardServerRemoveHubPlayer packet)
@@ -596,7 +596,7 @@ namespace hub_client.Network
             foreach (PlayerInfo infos in packet.Userlist)
             {
                 PlayerManager.UpdatePlayer(infos);
-                Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(infos));
+                Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(infos, false));
             }
             logger.Trace("UpdatePlayerList - {0}", packet.Userlist);
         }
@@ -928,18 +928,18 @@ namespace hub_client.Network
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());
         }
 
-        /*public void OnDuelSeeker(StandardServerDuelStart packet)
-        {
-            string arg = "-j";
-
-            FormExecution.YgoproConfig.updateconfig(packet.Room.Id.ToString(), _username);
-
-            LaunchYGOPro?.Invoke(arg);
-
-            logger.Trace("DUEL SEEKER - Id : {0} | Type : {1} | Players : {2}", packet.Room.Id, packet.Room.Config.Type, packet.Room.Players);
-        }*/
         public void OnDuelStart(StandardServerDuelStart packet)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png"));
+            }
+
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
             YgoproConfig.UpdateNickname(FormExecution.Username);
 
@@ -1018,6 +1018,7 @@ namespace hub_client.Network
                 Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, text, false, false));
 
             }
+
             logger.Trace("DUEL RESULT - BPs Gain : {0} | EXPs Gain : {1} | Win : {2}", packet.PointsGain, packet.ExpGain, packet.Win);
         }
 

@@ -16,6 +16,7 @@ namespace hub_client.Configuration
         public bool PMPopup = true;
         public bool PMEndDuel = true;
         public bool ShowChatScrollbar = false;
+        public bool UserlistScrollbar = false;
 
         public bool BCA_Card_Design = false;
 

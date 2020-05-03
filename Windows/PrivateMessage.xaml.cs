@@ -47,11 +47,17 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
 
             this.Activated += PrivateMessage_Activated;
+
+            this.rtbChat.RefreshStyle();
+
+            tbChat.Focus();
+            tbChat.tbChat.Select(0, 0);
         }
 
         private void PrivateMessage_Activated(object sender, EventArgs e)
         {
             tbChat.Focus();
+            tbChat.tbChat.Select(0, 0);
         }
 
         private void _admin_MessageRecieved(PlayerInfo infos, string message)

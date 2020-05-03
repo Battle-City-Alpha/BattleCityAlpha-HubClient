@@ -86,48 +86,50 @@ namespace hub_client
             return _chat;
         }
 
-        public static void Init()
+        public static void Init(bool restart = false)
         {
-            try
+            if (!restart)
             {
-                HID = HardwareIdManager.GetId();
+                try
+                {
+                    HID = HardwareIdManager.GetId();
+                }
+                catch (Exception ex)
+                {
+                    HID = "";
+                }
+
+                AssetsManager = new AssetsManager();
+
+                if (File.Exists(AppConfigPath))
+                    AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
+                else
+                    AppConfig = new AppConfig();
+                if (File.Exists(AppDesignConfigPath))
+                    AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
+                else
+                    AppDesignConfig = new AppDesignConfig();
+                if (File.Exists(ClientConfigPath))
+                    ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
+                else
+                    ClientConfig = new ClientConfig();
+
+                //ClientConfig.TestMode = true;
+
+                BoosterManager.LoadList();
+                LoadBanlist();
+                //AppDesignConfig = new AppDesignConfig(); //To debug config
+
+                SaveConfig();
+
+                _windowload = new UpdateCardsStuffWindow(new string[] { }, true);
+                _windowload.Show();
+
+                CardManager.LoadingFinished += CardManager_LoadingFinished;
+                CardManager.LoadingProgress += CardManager_LoadingProgress;
+                Task.Run(() => CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true));
+
             }
-            catch (Exception ex)
-            {
-                HID = "";
-            }
-
-            AssetsManager = new AssetsManager();
-
-            if (File.Exists(AppConfigPath))
-                AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
-            else
-                AppConfig = new AppConfig();
-            if (File.Exists(AppDesignConfigPath))
-                AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
-            else
-                AppDesignConfig = new AppDesignConfig();
-            if (File.Exists(ClientConfigPath))
-                ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
-            else
-                ClientConfig = new ClientConfig();
-
-            //ClientConfig.TestMode = false;
-
-            BoosterManager.LoadList();
-            LoadBanlist();
-            //AppDesignConfig = new AppDesignConfig(); //To debug config
-            
-            SaveConfig();
-
-            _windowload = new UpdateCardsStuffWindow(new string[] { }, true);
-            _windowload.Show();
-
-            CardManager.LoadingFinished += CardManager_LoadingFinished;
-            CardManager.LoadingProgress += CardManager_LoadingProgress;
-            Task.Run(() => CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true));
-
-
             Client = new GameClient();
 
             Client.PopMessageBox += Client_PopMessageBox;
@@ -144,11 +146,29 @@ namespace hub_client
             Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
             Client.LoadOfflineMessages += Client_LoadOfflineMessages;
             Client.RecieveDeck += Client_RecieveDeck;
+            Client.Restart += Client_Restart;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
+            if (restart)
+            {
+                StartConnexion();
+                _login.Focus();
+                _login.Activate();
+                _login.Show();
+            }
 
-            logger.Trace("FormExecution initialisation.");
+                logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_Restart()
+        {
+            Client_PopMessageBox("Vous avez été déconnecté du serveur.", "Problème", true);
+            _chat.Restart = true;
+            _chat.Close();
+            Main.CheckClientUpdate();
+            Main.CheckCardsStuffUpdate();
+            Init(true);
         }
 
         private static void LoadBanlist()
@@ -331,6 +351,8 @@ namespace hub_client
 
         public static void OpenNewPrivateForm(PlayerInfo user)
         {
+            if (user.Username == Username)
+                return;
             if (PrivateForms.ContainsKey(user.UserId))
                 return;
 

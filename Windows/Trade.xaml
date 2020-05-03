@@ -32,6 +32,57 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
+            <Popup x:Name="cardinfos_popup" MaxWidth="300" MaxHeight="500" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Mouse"  AllowsTransparency="True" PopupAnimation="Fade">
+                <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Margin="0">
+                            <TextBlock x:Name="tb_cardname" Text="???" FontSize="18" Padding="10" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="1" Grid.ColumnSpan="2">
+                            <TextBlock x:Name="tb_cardtype" Text="???" FontSize="18" Padding="10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+                            <TextBlock x:Name="tb_cardattribute" Text="???" FontSize="18" Padding="10" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                    <TextBlock x:Name="tb_cardatkdef" Text="???" FontSize="18" Padding="10"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Column="1">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                    <TextBlock x:Name="tb_cardlevel" Text="???" FontSize="18" Padding="10"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Grid>
+                        <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2">
+                            <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.ColumnSpan="3">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>

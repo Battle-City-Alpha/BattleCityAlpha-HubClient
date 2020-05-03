@@ -215,7 +215,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
-                    <Image x:Name="img_sleeve" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="142" Height="203" Stretch="Fill" MouseLeftButtonDown="img_sleeve_MouseLeftButtonDown"/>
+                    <Image x:Name="img_sleeve" Cursor="Hand" Grid.Column="2" Margin="3" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Stretch="Fill" MouseLeftButtonDown="img_sleeve_MouseLeftButtonDown"/>
                 </Border>
             </Grid>
         </Grid>

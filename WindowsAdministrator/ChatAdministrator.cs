@@ -21,7 +21,7 @@ namespace hub_client.WindowsAdministrator
         public event Action LoginComplete;
         public event Action<Color, string, bool, bool> SpecialChatMessage;
         public event Action<Color, PlayerInfo, string> PlayerChatMessage;
-        public event Action<PlayerInfo> AddHubPlayer;
+        public event Action<PlayerInfo, bool> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
@@ -75,9 +75,9 @@ namespace hub_client.WindowsAdministrator
             RemoveHubPlayer?.Invoke(infos);
         }
 
-        private void Client_AddHubPlayer(PlayerInfo infos)
+        private void Client_AddHubPlayer(PlayerInfo infos, bool showmessage)
         {
-            AddHubPlayer?.Invoke(infos);
+            AddHubPlayer?.Invoke(infos, showmessage);
         }
 
         private void Client_LoginComplete()

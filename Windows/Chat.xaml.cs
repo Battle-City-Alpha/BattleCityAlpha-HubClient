@@ -39,12 +39,15 @@ namespace hub_client.Windows
 
         public List<PlayerItem> Players;
         private List<PlayerItem> PlayersFound;
+        private PlayerItemNameComparer _playersNameComparer;
 
         InputText form = new InputText();
         AssetsManager PicsManager = new AssetsManager();
 
         private List<string> _last_messages;
         int _index_last_message = 0;
+
+        public bool Restart = false;
 
         public Chat(ChatAdministrator admin)
         {
@@ -69,6 +72,7 @@ namespace hub_client.Windows
 
             Players = new List<PlayerItem>();
             PlayersFound = new List<PlayerItem>();
+            _playersNameComparer = new PlayerItemNameComparer();
             lvUserlist.ItemsSource = Players;
 
             _last_messages = new List<string>();
@@ -176,13 +180,40 @@ namespace hub_client.Windows
                 _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} removed from userlist.", infos);
         }
-        private void _admin_AddHubPlayer(PlayerInfo infos)
+        private void _admin_AddHubPlayer(PlayerInfo infos, bool showmessage)
         {
-            AddPlayer(infos);
+            if (!AddPlayer(infos))
+                return;
 
-            if (FormExecution.ClientConfig.Connexion_Message)
+            if (FormExecution.ClientConfig.Connexion_Message && showmessage)
                 _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
+        }
+        private bool AddPlayer(PlayerInfo infos)
+        {
+            PlayerItem item = CreatePlayerItem(infos);
+            if (Players.Contains(item))
+                return false;
+
+            for (int i = 0; i < Players.Count; i++)
+                if (Players[i].Rank <= item.Rank)
+                {
+                    Players.Insert(i, item);
+                    break;
+                }
+
+            if (!Players.Contains(item))
+                Players.Add(item);
+
+            Players.Sort(_playersNameComparer);
+
+            lvUserlist.Items.Refresh();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
+            view.GroupDescriptions.Clear();
+            view.GroupDescriptions.Add(groupDescription);
+            return true;
         }
 
         private void _admin_LoginComplete()
@@ -242,6 +273,11 @@ namespace hub_client.Windows
             this.chat.chat.FontSize = style.FontSize;
             this.chat.RefreshStyle();
 
+            if (FormExecution.ClientConfig.UserlistScrollbar)
+                this.lvUserlist.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+            else
+                this.lvUserlist.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+
             Resources.Clear();
 
             Style s = new Style(typeof(Control));
@@ -255,12 +291,10 @@ namespace hub_client.Windows
             System.Diagnostics.Process.Start("https://discordapp.com/invite/EYkXU7N");
             logger.Trace("Discord clicked.");
         }
-
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             btnDiscord.ReleasedAnimation();
         }
-
         private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             btnNote.ClickedAnimation();
@@ -269,18 +303,15 @@ namespace hub_client.Windows
             note.Show();
             logger.Trace("Notes clicked.");
         }
-
         private void Image_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
         {
             btnNote.ReleasedAnimation();
         }
-
         private void btnFAQ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("http://forum.battlecityalpha.xyz/thread-681.html");
             logger.Trace("FAQ clicked.");
         }
-
         private void btnCGU_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
@@ -317,21 +348,12 @@ namespace hub_client.Windows
             }
             e.Handled = true;
         }
-
         private string FindUsername(string txt)
         {
             foreach (PlayerItem i in Players)
                 if (i.Username.ToLower().StartsWith(txt.ToLower()))
                     return i.Username;
             return txt;
-        }
-
-
-        private void lbUserlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            PlayerInfo target = FormExecution.Client.GetPlayerInfo(lvUserlist.SelectedItem.ToString());
-            if (target != null)
-                FormExecution.OpenNewPrivateForm(target);
         }
 
         private void btnProfil_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -381,8 +403,8 @@ namespace hub_client.Windows
         private void duelrequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
-            if (target != null)
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;            
+            if (target != null && target.Username != FormExecution.Username)
                 FormExecution.OpenDuelRequest(target.UserId);
         }
 
@@ -390,7 +412,7 @@ namespace hub_client.Windows
         {
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
                 _admin.SendTradeRequest(target);
         }
 
@@ -398,7 +420,7 @@ namespace hub_client.Windows
         {
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.AddBlacklistPlayer(target);
                 _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
@@ -416,28 +438,8 @@ namespace hub_client.Windows
             _admin.ClearChat -= _admin_ClearChat;
             tbUserList.TextChanged -= SearchUser;
 
-            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
-        }
-
-        private void AddPlayer(PlayerInfo infos)
-        {
-            PlayerItem item = CreatePlayerItem(infos);
-            for (int i = 0; i < Players.Count; i++)
-                if (Players[i].Rank <= item.Rank)
-                {
-                    Players.Insert(i, item);
-                    break;
-                }
-
-            if (!Players.Contains(item))
-                Players.Add(item);
-
-            lvUserlist.Items.Refresh();
-
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUserlist.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Rank");
-            view.GroupDescriptions.Clear();
-            view.GroupDescriptions.Add(groupDescription);
+            if (!Restart)
+                Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
         private void BtnRules_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -457,7 +459,7 @@ namespace hub_client.Windows
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
 
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
             {
                 InputText form = new InputText();
                 form.Title = "Don de BP à " + target.Username;
@@ -484,7 +486,7 @@ namespace hub_client.Windows
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
 
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.AskSelectCard(AskCollectionReason.GiveCard);
                 GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin, target);
@@ -627,7 +629,7 @@ namespace hub_client.Windows
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
 
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
             {
                 OpenFileDialog getdeck = new OpenFileDialog();
                 getdeck.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "decks");
@@ -677,7 +679,7 @@ namespace hub_client.Windows
         {
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
-            if (target != null)
+            if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.RemoveBlacklistPlayer(target);
                 _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);

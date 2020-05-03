@@ -1,8 +1,12 @@
 ﻿using BCA.Common;
+using hub_client.Cards;
 using hub_client.Configuration;
+using hub_client.Enums;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,6 +18,8 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Trade : Window
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
+
         bool validate = false;
         bool endTrade = false;
 
@@ -22,6 +28,8 @@ namespace hub_client.Windows
         private int _id;
         private PlayerInfo[] _players = new PlayerInfo[2];
         Dictionary<int, PlayerCard> _cardsToOffer = new Dictionary<int, PlayerCard>();
+
+        int _idCardShow = -1;
 
         public Trade(TradeAdministrator admin)
         {
@@ -43,6 +51,102 @@ namespace hub_client.Windows
             CollectionJ2.GetListview().SelectionChanged += lvPlayer2_SelectionChanged;
 
             LoadStyle();
+
+            img_card.MouseEnter += Img_card_MouseEnter;
+            img_card.MouseLeave += Img_card_MouseLeave;
+        }
+
+        private void Img_card_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.cardinfos_popup.IsOpen = false;
+        }
+
+        private void Img_card_MouseEnter(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                CardInfos info = CardManager.GetCard(_idCardShow);
+                SetCard(info);
+                this.cardinfos_popup.IsOpen = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("POPUP PURCHASE - {0}", ex.ToString());
+            }
+        }
+
+        private void SetCard(CardInfos card)
+        {
+            tb_cardname.Text = card.Name;
+            CardType[] typeArray = card.GetCardTypes();
+            string level = "";
+            string atkdef = "";
+            string attribute = "";
+            if (typeArray.Contains(CardType.Magie) || typeArray.Contains(CardType.Piège))
+            {
+
+            }
+            else
+            {
+                if (!typeArray.Contains(CardType.Link))
+                {
+                    if (typeArray.Contains(CardType.Pendule))
+                        level = string.Format("◊{0}    {1}◊", card.LScale, card.RScale);
+                    else
+                        level = card.Level + "★";
+
+                    atkdef = string.Format("{0}/{1}", card.Atk, card.Def);
+                }
+                else
+                {
+                    LinkMarker[] markers = card.GetLinkMarkers();
+                    atkdef = card.Atk + "/LINK-" + markers.Count();
+
+                    level = GetStringLinksMarkers(markers);
+                }
+                attribute = string.Format("{0}|{1}", card.GetRace(), card.GetAttribute());
+            }
+            tb_cardlevel.Text = level;
+            tb_cardatkdef.Text = atkdef;
+            tb_cardattribute.Text = attribute;
+            tb_cardtype.Text = card.GetCardType();
+            tb_carddesc.Text = card.Description;
+
+        }
+        private string GetStringLinksMarkers(IEnumerable<LinkMarker> types)
+        {
+            string toReturn = "";
+            foreach (var linkmarker in types)
+            {
+                switch (linkmarker)
+                {
+                    case LinkMarker.BottomLeft:
+                        toReturn += "[↙]";
+                        break;
+                    case LinkMarker.Bottom:
+                        toReturn += "[↓]";
+                        break;
+                    case LinkMarker.BottomRight:
+                        toReturn += "[↘]";
+                        break;
+                    case LinkMarker.Left:
+                        toReturn += "[←]";
+                        break;
+                    case LinkMarker.Right:
+                        toReturn += "[→]";
+                        break;
+                    case LinkMarker.TopLeft:
+                        toReturn += "[↖]";
+                        break;
+                    case LinkMarker.Top:
+                        toReturn += "[↑]";
+                        break;
+                    case LinkMarker.TopRight:
+                        toReturn += "[↗]";
+                        break;
+                }
+            }
+            return toReturn;
         }
 
         private void _admin_TradeEnd()
@@ -107,11 +211,13 @@ namespace hub_client.Windows
         private void lvPlayer1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CollectionJ1.SelectedItem() == null) return;
+            _idCardShow = ((PlayerCard)CollectionJ1.SelectedItem()).Id;
             img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)CollectionJ1.SelectedItem()).Id + ".jpg" });
         }
         private void lvPlayer2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CollectionJ2.SelectedItem() == null) return;
+            _idCardShow = ((PlayerCard)CollectionJ2.SelectedItem()).Id;
             img_card.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", ((PlayerCard)CollectionJ2.SelectedItem()).Id + ".jpg" });
         }
 
