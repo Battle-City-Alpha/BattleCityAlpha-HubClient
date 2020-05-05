@@ -23,6 +23,8 @@ namespace hub_client.Windows
         private ProfilAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
+        private int _userID = -1;
+
         AssetsManager PicsManager = new AssetsManager();
 
         private bool IsMine()
@@ -45,6 +47,8 @@ namespace hub_client.Windows
 
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
         {
+            _userID = infos.UserID;
+
             if (!infos.Avatar.IsHost)
                 img_avatar.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
             else
@@ -111,7 +115,6 @@ namespace hub_client.Windows
             }
 
             tb_username.Text = infos.Username;
-            tb_cardnumber.Text = infos.CardNumber.ToString();
             tb_level.Text = infos.Level.ToString();
             tb_experience.Text = infos.Exp.ToString();
 
@@ -120,7 +123,7 @@ namespace hub_client.Windows
             tb_rankeddraw.Text = infos.RankedDraw.ToString();
             tb_elo.Text = infos.ELO.ToString();
             tb_rank.Text = infos.Rank.ToString();
-            tb_ranking.Text = infos.Ranking.ToString();
+            tb_ranking.Text = infos.Ranking != 0 ? infos.Ranking.ToString() : "NC";
 
             tb_single.Text = infos.SingleWin.ToString() + "|" + infos.SingleLose.ToString() + "|" + infos.SingleDraw.ToString();
             tb_match.Text = infos.MatchWin.ToString() + "|" + infos.MatchLose.ToString() + "|" + infos.MatchDraw.ToString();
@@ -228,6 +231,12 @@ namespace hub_client.Windows
             if (!this.IsMine())
                 return;
             _admin.OpenTitlesForm(this);
+        }
+
+        private void tb_historic_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_userID != -1)
+                _admin.SendAskGamesHistory(_userID);
         }
     }
 }

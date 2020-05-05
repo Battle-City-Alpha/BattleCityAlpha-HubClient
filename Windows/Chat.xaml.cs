@@ -617,7 +617,7 @@ namespace hub_client.Windows
                     return "♞Animateurs";
                 case PlayerRank.Developpeurs:
                     return "♣Développeur";
-                case PlayerRank.Rullers:
+                case PlayerRank.Rulers:
                     return "♟Rullers";
                 default:
                     return group.ToString();

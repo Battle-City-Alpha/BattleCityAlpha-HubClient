@@ -8,8 +8,9 @@ namespace hub_client.Configuration
         public bool TestMode = false;
 
         public bool Greet = true;
-        public bool Trade = false;
-        public bool Request = false;
+        public bool IgnoreTradeRequest = false;
+        public bool IgnoreDuelRequest = false;
+        public bool IgnoreCustomDuelRequest = false;
         public bool AllowDeckShare = true;
         public bool Connexion_Message = true;
         public bool Autoscroll = true;

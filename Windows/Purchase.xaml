@@ -33,7 +33,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Popup x:Name="cardinfos_popup" MaxWidth="300" MaxHeight="500" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Mouse"  AllowsTransparency="True" PopupAnimation="Fade">
+            <Popup x:Name="cardinfos_popup" MaxWidth="300" MaxHeight="500" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Mouse" AllowsTransparency="True" PopupAnimation="Fade">
                 <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.9"/>

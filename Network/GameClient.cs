@@ -120,6 +120,9 @@ namespace hub_client.Network
         #region RankingDisplay Events
         public event Action<RankingPlayerInfos[], Customization[]> ShowRanking;
         #endregion
+        #region Games History Events
+        public event Action<RoomResult[]> GetGamesHistory;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -145,6 +148,7 @@ namespace hub_client.Network
         public DataRetrievalAdministrator DataRetrievalAdmin;
         public RankingDisplayAdministrator RankingDisplayAdmin;
         public GiveCardAdministrator GiveCardAdmin;
+        public GamesHistoryAdministrator GamesHistoryAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -183,6 +187,7 @@ namespace hub_client.Network
             DataRetrievalAdmin = new DataRetrievalAdministrator(this);
             RankingDisplayAdmin = new RankingDisplayAdministrator(this);
             GiveCardAdmin = new GiveCardAdministrator(this);
+            GamesHistoryAdmin = new GamesHistoryAdministrator(this);
         }
 
         private void InitManager()
@@ -458,6 +463,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.Ping:
                     OnPing(JsonConvert.DeserializeObject<StandardServerPing>(packet));
+                    break;
+                case PacketType.AskGamesHistory:
+                    OnGetGamesHistory(JsonConvert.DeserializeObject<StandardServerGamesHistory>(packet));
                     break;
             }
         }
@@ -826,7 +834,7 @@ namespace hub_client.Network
         {
             List<string> cards = new List<string>();
             foreach (var card in packet.Cards)
-                cards.Add(card.Value.Name);
+                cards.Add(card.Value.ToString());
 
             OpenPopBox("Vous avez reçu les cartes : " + string.Join(",", cards) + " de la part de " + packet.Player.Username, "Réception d'une carte");
             logger.Trace("GET CARD - From : {0} | Ids : {1}", packet.Player.Username, string.Join(",", cards));
@@ -834,7 +842,7 @@ namespace hub_client.Network
 
         public void OnTradeRequest(StandardServerTradeRequest packet)
         {
-            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.Trade)
+            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.IgnoreTradeRequest)
             {
                 Send(PacketType.TradeRequestAnswer, new StandardClientTradeRequestAnswer { Player = packet.Player, Result = false });
                 return;
@@ -958,7 +966,12 @@ namespace hub_client.Network
         }
         public void OnDuelRequest(StandardServerDuelRequest packet)
         {
-            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.Request)
+            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.IgnoreDuelRequest)
+            {
+                Send(PacketType.DuelRequestAnswer, new StandardClientDuelRequestAnswer { Player = packet.Player, Config = packet.Config, Roompass = packet.RoomPass, Result = false });
+                return;
+            }
+            if (packet.Config.IsCustom() && FormExecution.ClientConfig.IgnoreCustomDuelRequest)
             {
                 Send(PacketType.DuelRequestAnswer, new StandardClientDuelRequestAnswer { Player = packet.Player, Config = packet.Config, Roompass = packet.RoomPass, Result = false });
                 return;
@@ -1261,6 +1274,12 @@ namespace hub_client.Network
 
             logger.Trace("RECIEVE RANKING");
 
+        }
+        public void OnGetGamesHistory(StandardServerGamesHistory packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => GetGamesHistory?.Invoke(packet.Results));
+
+            logger.Trace("RECIEVE GAMES HISTORY");
         }
 
         public void OnPing(StandardServerPing packet)

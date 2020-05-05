@@ -60,6 +60,14 @@ namespace hub_client.Windows
             RankedTimer.Interval = TimeSpan.FromSeconds(1);
             RankedTimer.Tick += RankedTimer_Tick;
             RankedTimer.IsEnabled = false;
+
+            duel_popup.MouseEnter += Duel_popup_MouseEnter;
+        }
+
+        private void Duel_popup_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (duel_popup.IsOpen)
+                duel_popup.IsOpen = false;
         }
 
         private void Room_MouseLeave(object sender, MouseEventArgs e)
@@ -86,7 +94,9 @@ namespace hub_client.Windows
             {
                 //popup_dueltype_img.Background = new ImageBrush(room.Image);
 
-                //duel_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
+                duel_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
+                duel_popup.HorizontalOffset = 10;
+                duel_popup.VerticalOffset = 10;
 
                 tb_popup_banlist.Foreground = new SolidColorBrush(Colors.Black);
                 tb_popup_lp.Foreground = new SolidColorBrush(Colors.Black);
@@ -250,6 +260,11 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (RankedTimer.IsEnabled)
+            {
+                _admin.SendStopPlayRanked();
+                StopTimer();
+            }
             FormExecution.ActivateChat();
             this.Close();
         }

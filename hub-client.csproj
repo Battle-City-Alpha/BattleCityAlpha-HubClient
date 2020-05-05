@@ -170,6 +170,7 @@
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DataRetrievalAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\GamesHistoryAdministrator.cs" />
     <Compile Include="WindowsAdministrator\GiveCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
@@ -250,6 +251,7 @@
       <DependentUpon>BCA_TextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
+    <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
       <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
     </Compile>
@@ -261,6 +263,9 @@
     </Compile>
     <Compile Include="Windows\DuelResult.xaml.cs">
       <DependentUpon>DuelResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GamesHistory.xaml.cs">
+      <DependentUpon>GamesHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\GiveCard.xaml.cs">
       <DependentUpon>GiveCard.xaml</DependentUpon>
@@ -423,6 +428,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DuelResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GamesHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2979,6 +2988,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Logo\pm_logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_gamehistory.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Logo\win.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Logo\lose.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

@@ -70,9 +70,9 @@ namespace hub_client.Windows
             {
                 i++;
                 tb_update.Text = i + "/" + n;
-                foreach (string update in _updates)
+                for (int u = _updates.Length - 1; u >= 0; u--)
                 {
-                    UnzipFromStream(wc.OpenRead(GetUpdateFileLink(update)), FormExecution.path);
+                    UnzipFromStream(wc.OpenRead(GetUpdateFileLink(_updates[u])), FormExecution.path);
                 }
             }
 

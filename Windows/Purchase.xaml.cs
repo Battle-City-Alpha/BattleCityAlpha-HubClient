@@ -57,6 +57,13 @@ namespace hub_client.Windows
 
             img_card.MouseEnter += Img_card_MouseEnter;
             img_card.MouseLeave += Img_card_MouseLeave;
+            cardinfos_popup.MouseEnter += Cardinfos_popup_MouseEnter;
+        }
+
+        private void Cardinfos_popup_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (cardinfos_popup.IsOpen)
+                cardinfos_popup.IsOpen = true;
         }
 
         private void Img_card_MouseLeave(object sender, MouseEventArgs e)

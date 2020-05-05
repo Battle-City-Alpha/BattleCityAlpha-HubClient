@@ -61,5 +61,14 @@ namespace hub_client.WindowsAdministrator
             viewer.Owner = window;
             viewer.Show();
         }
+
+        public void SendAskGamesHistory(int userID)
+        {
+            FormExecution.OpenGamesHistory();
+            Client.Send(PacketType.AskGamesHistory, new StandardClientAskGamesHistory
+            {
+                UserID = userID
+            });
+        }
     }
 }

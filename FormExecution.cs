@@ -114,7 +114,7 @@ namespace hub_client
                 else
                     ClientConfig = new ClientConfig();
 
-                //ClientConfig.TestMode = true;
+                ClientConfig.TestMode = false;
 
                 BoosterManager.LoadList();
                 LoadBanlist();
@@ -337,7 +337,7 @@ namespace hub_client
 
         private static void Client_PrivateMessageReceived(PlayerInfo user, string message)
         {
-            if (Client.BlacklistManager.CheckBlacklist(user))
+            if (Client.BlacklistManager.CheckBlacklist(user) || user.Username == FormExecution.Username)
                 return;
 
             if (PrivateForms.ContainsKey(user.UserId))
@@ -537,6 +537,10 @@ namespace hub_client
         public static void OpenRankingWindow()
         {
             RankingWindow window = new RankingWindow(Client.RankingDisplayAdmin);
+        }
+        public static void OpenGamesHistory()
+        {
+            GamesHistory gh = new GamesHistory(Client.GamesHistoryAdmin);
         }
 
         public static void ActivateChat()

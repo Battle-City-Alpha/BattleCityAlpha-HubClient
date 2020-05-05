@@ -17,8 +17,8 @@ namespace hub_client
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 2009;
-        public static string VERSION = "2.0.0.9";
+        private static int CLIENT_VERSION = 20013;
+        public static string VERSION = "2.0.0.13";
 
         public Main()
         {
@@ -78,7 +78,7 @@ namespace hub_client
             window.Topmost = true;
             window.Show();
 
-            FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo.Last());
+            FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo[0]);
             FormExecution.SaveConfig();
             CardManager.LoadCDB(Path.Combine(FormExecution.path, "BattleCityAlpha", "cards.cdb"), true, true);
 

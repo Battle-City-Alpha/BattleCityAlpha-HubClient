@@ -45,7 +45,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Choix de la couleur : " FontSize="24"  Margin="10"/>
+                        <TextBlock x:Name="tb_choice" Text="Choix de la couleur : " FontSize="24"  Margin="10"/>
                         <xctk:ColorPicker Name="cpicker" FontSize="24"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" SelectedColorChanged="cpicker_SelectedColorChanged"/>
                     </Grid>
                 </Border>

@@ -1,38 +1,50 @@
-﻿using hub_client.Configuration;
-using hub_client.Windows.Controls;
+﻿using hub_client.Windows.Controls.Controls_Stuff;
+using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
     /// <summary>
-    /// Logique d'interaction pour ColorPickerWindow.xaml
+    /// Logique d'interaction pour GamesHistory.xaml
     /// </summary>
-    public partial class ColorPickerWindow : Window
+    public partial class GamesHistory : Window
     {
-        private AppDesignConfig style = FormExecution.AppDesignConfig;
-
-        public event Action<string> SelectedColor;
-        public ColorPickerWindow()
+        private GamesHistoryAdministrator _admin;
+        public GamesHistory(GamesHistoryAdministrator admin)
         {
             InitializeComponent();
-            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-            LoadStyle();
-        }
-        private void LoadStyle()
-        {
-            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btn_choose });
 
-            foreach (BCA_ColorButton btn in Buttons)
-            {
-                btn.Color1 = style.GetGameColor("Color1PrestigeShopButton");
-                btn.Color2 = style.GetGameColor("Color2PrestigeShopButton");
-                btn.Update();
-            }
+            _admin = admin;
+            _admin.GetGamesHistory += _admin_GetGamesHistory;
+
+            this.MouseDown += Window_MouseDown;
+            this.Closed += GamesHistory_Closed;
+        }
+
+        private void GamesHistory_Closed(object sender, EventArgs e)
+        {
+            _admin.GetGamesHistory -= _admin_GetGamesHistory;
+        }
+
+        private void _admin_GetGamesHistory(RoomResultItem[] items)
+        {
+            foreach (RoomResultItem item in items)
+                gamesList.Items.Add(item);
+
+            this.Show();
+            this.Activate();
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -64,17 +76,6 @@ namespace hub_client.Windows
                     this.DragMove();
             }
             catch { }
-        }
-
-        private void cpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            tb_choice.Foreground = new SolidColorBrush(cpicker.SelectedColor.Value);
-        }
-
-        private void btn_choose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            SelectedColor?.Invoke(cpicker.SelectedColor.Value.ToString());
-            Close();
         }
     }
 }

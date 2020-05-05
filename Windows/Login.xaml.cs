@@ -31,6 +31,14 @@ namespace hub_client.Windows
             Loaded += Login_Loaded;
 
             this.MouseDown += Login_MouseDown;
+
+            pbPassword.KeyUp += PbPassword_KeyUp;
+        }
+
+        private void PbPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SendLogin();
         }
 
         private void LoadStyle()
@@ -79,6 +87,11 @@ namespace hub_client.Windows
         }
 
         private void BCA_Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SendLogin();
+        }
+
+        private void SendLogin()
         {
             if (tbUsername.Text == string.Empty || pbPassword.Password == string.Empty)
             {

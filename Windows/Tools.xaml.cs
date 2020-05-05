@@ -36,6 +36,15 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
 
             _admin = admin;
+
+            cb_duelrequest.Checked += Cb_duelrequest_Checked;
+        }
+
+        private void Cb_duelrequest_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cb_duelrequest.IsChecked == false)
+                return;
+
         }
 
         private void Tools_Loaded(object sender, RoutedEventArgs e)
@@ -44,8 +53,9 @@ namespace hub_client.Windows
 
             cb_connectionmsg.IsChecked = client_config.Connexion_Message;
             cb_greet.IsChecked = client_config.Greet;
-            cb_traderequest.IsChecked = client_config.Trade;
-            cb_duelrequest.IsChecked = client_config.Request;
+            cb_traderequest.IsChecked = client_config.IgnoreTradeRequest;
+            cb_duelrequest.IsChecked = client_config.IgnoreDuelRequest;
+            cb_customduelrequest.IsChecked = client_config.IgnoreCustomDuelRequest;
             cb_autoscroll.IsChecked = client_config.Autoscroll;
             cb_popuppm.IsChecked = client_config.PMPopup;
             cb_allowsharedeck.IsChecked = !client_config.AllowDeckShare;
@@ -109,8 +119,9 @@ namespace hub_client.Windows
         private void btn_save_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             client_config.Greet = (bool)cb_greet.IsChecked;
-            client_config.Request = (bool)cb_duelrequest.IsChecked;
-            client_config.Trade = (bool)cb_traderequest.IsChecked;
+            client_config.IgnoreDuelRequest = (bool)cb_duelrequest.IsChecked;
+            client_config.IgnoreCustomDuelRequest = (bool)cb_customduelrequest.IsChecked;
+            client_config.IgnoreTradeRequest = (bool)cb_traderequest.IsChecked;
             client_config.Connexion_Message = (bool)cb_connectionmsg.IsChecked;
             client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
             client_config.PMPopup = (bool)cb_popuppm.IsChecked;

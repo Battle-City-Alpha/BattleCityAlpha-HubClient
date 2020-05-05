@@ -186,7 +186,7 @@ namespace hub_client.Windows
             foreach (PlayerCard card in cards)
                 CollectionJ2.Add(card);
 
-            btnValidate.IsEnabled = false;
+            btnValidate.IsEnabled = true;
         }
 
         private void _admin_GetMessage(PlayerInfo user, string message)

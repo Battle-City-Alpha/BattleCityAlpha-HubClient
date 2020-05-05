@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Arena" Height="568.4" Width="623.6" Icon="/hub-client;component/Assets/Icon/bca.ico" AllowsTransparency="True" ResizeMode="CanResize" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner">
+        Title="Classement" Height="568.4" Width="623.6" Icon="/hub-client;component/Assets/Icon/bca.ico" AllowsTransparency="True" ResizeMode="CanResize" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner">
 
     <WindowChrome.WindowChrome>
         <WindowChrome 

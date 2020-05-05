@@ -102,6 +102,10 @@ namespace hub_client.Windows
 
         private void TbChat_GotFocus(object sender, RoutedEventArgs e)
         {
+            tb_search_seller.SetText("Vendeur...");
+            tb_search_card.SetText("Carte...");
+            tb_search_max_price.SetText("Prix max...");
+            tb__search_max_quantity.SetText("Quantité max...");
             ((TextBox)sender).Text = "";
         }
 
@@ -185,10 +189,8 @@ namespace hub_client.Windows
                 else
                     brocanteList.Items.Clear();
 
-                logger.Trace("Brocanliste items passé");
                 if (research != String.Empty)
                 {
-                    logger.Trace("empty passé");
                     foreach (BrocanteCard card in _cards)
                     {
                         logger.Trace(card.CardName);

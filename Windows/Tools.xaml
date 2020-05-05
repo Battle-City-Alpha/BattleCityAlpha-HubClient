@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Tools" Height="583.053" Width="786.059" 
+        Title="Tools" Height="583.053" Width="873.659" 
         ResizeMode="CanResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -71,12 +71,24 @@
                             </Border.Background>
                             <CheckBox x:Name="cb_traderequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes d'échanges" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
-                        <Border Grid.Row="3" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                            </Border.Background>
-                            <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
-                        </Border>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="3" Grid.Column="0" CornerRadius="15" Margin="25,0,5,0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_duelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer toutes les demandes de duels" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Row="3" Grid.Column="1" CornerRadius="15" Margin="5,0,25,0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_customduelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels custom" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                         <Border Grid.Row="4" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
                             <Border.Background>
                                 <SolidColorBrush Color="White" Opacity="0.9"/>
@@ -107,13 +119,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Row="8" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                            <Border Grid.Row="8" Grid.Column="0" CornerRadius="15" Margin="25,0,5,0" VerticalAlignment="Center">
                                 <Border.Background>
                                     <SolidColorBrush Color="White" Opacity="0.9"/>
                                 </Border.Background>
                                 <CheckBox x:Name="cb_showchatscrollbar" Grid.Row="0" Grid.Column="0" Margin="10" Content="Scroll bar chat" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <Border Grid.Row="8" Grid.Column="1" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                            <Border Grid.Row="8" Grid.Column="1" CornerRadius="15" Margin="5,0,25,0" VerticalAlignment="Center">
                                 <Border.Background>
                                     <SolidColorBrush Color="White" Opacity="0.9"/>
                                 </Border.Background>
@@ -229,11 +241,11 @@
             </TabControl>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="197*"/>
-                    <ColumnDefinition Width="326*"/>
-                    <ColumnDefinition Width="261*"/>
+                    <ColumnDefinition Width="99*"/>
+                    <ColumnDefinition Width="191*"/>
+                    <ColumnDefinition Width="145*"/>
                 </Grid.ColumnDefinitions>
-                <Controls:BCA_ColorButton x:Name="btn_save" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="4.2,19,5.4,19.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown" Height="53" HorizontalAlignment="Center"/>
+                <Controls:BCA_ColorButton x:Name="btn_save" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="265.4,19,262.4,19.2" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Sauvegarder" MouseLeftButtonDown="btn_save_MouseLeftButtonDown" Height="53" HorizontalAlignment="Center" Width="145"/>
             </Grid>
         </Grid>
     </Border>
