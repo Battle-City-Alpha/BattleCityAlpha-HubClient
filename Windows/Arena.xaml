@@ -44,12 +44,12 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.RowSpan="8" Opacity="0.2" x:Name="popup_dueltype_img">
+                        <Border Grid.RowSpan="20" Opacity="0.2" x:Name="popup_dueltype_img">
                             <Border.Background>
                                 <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Duel/duel_result.png" Stretch="UniformToFill"/>
                             </Border.Background>
-
                         </Border>
                         
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
@@ -82,6 +82,10 @@
                             <TextBlock x:Name="tb_drawcount" Text="???" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7">
+                            <TextBlock Text="Info : " FontSize="20"/>
+                            <TextBlock x:Name="tb_captiontext" Text="????" FontSize="20"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8">
                             <TextBlock x:Name="tb_shuffledeck" Text="Deck mélangé " FontSize="20"/>
                         </StackPanel>
                     </Grid>

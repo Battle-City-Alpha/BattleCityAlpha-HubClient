@@ -77,7 +77,7 @@ namespace hub_client.Windows
             using (WebClient wc = new WebClient())
             {
                 this.rtb_patchnotes.AppendText(wc.DownloadString("http://battlecityalpha.xyz/BCA/UPDATEV2/Client/news.txt"));
-            }            
+            }
         }
 
         private void _admin_LoginComplete()

@@ -15,14 +15,11 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using Tulpep.NotificationWindow;
 
 namespace hub_client
 {
@@ -94,7 +91,7 @@ namespace hub_client
                 {
                     HID = HardwareIdManager.GetId();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     HID = "";
                 }
@@ -114,7 +111,7 @@ namespace hub_client
                 else
                     ClientConfig = new ClientConfig();
 
-                ClientConfig.TestMode = false;
+                //ClientConfig.TestMode = false;
 
                 BoosterManager.LoadList();
                 LoadBanlist();
@@ -158,7 +155,7 @@ namespace hub_client
                 _login.Show();
             }
 
-                logger.Trace("FormExecution initialisation.");
+            logger.Trace("FormExecution initialisation.");
         }
 
         private static void Client_Restart()
@@ -225,7 +222,7 @@ namespace hub_client
 
         private static void CardManager_LoadingProgress(int i, int total)
         {
-            double progress = ((double)i / (double)total) * 100;
+            double progress = (i / (double)total) * 100;
             _windowload.SetProgressValue(progress);
         }
 
@@ -363,7 +360,7 @@ namespace hub_client
             form.Owner = _chat;
             form.Show();
             form.Activate();
-            form.Closed += (sender,e) => PMClosed(sender, e, user.UserId);
+            form.Closed += (sender, e) => PMClosed(sender, e, user.UserId);
         }
 
         private static void PMClosed(object sender, EventArgs e, int userID)

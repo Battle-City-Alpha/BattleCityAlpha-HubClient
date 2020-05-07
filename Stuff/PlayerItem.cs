@@ -21,5 +21,5 @@ namespace hub_client.Stuff
                 return y.Rank.CompareTo(x.Rank);
             return x.Username.CompareTo(y.Username);
         }
-    } 
+    }
 }

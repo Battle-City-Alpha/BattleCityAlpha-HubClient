@@ -44,7 +44,7 @@ namespace hub_client.Windows
 
         private void TbChat_KeyUp(object sender, KeyEventArgs e)
         {
-           switch (e.Key)
+            switch (e.Key)
             {
                 case Key.Enter:
                     _admin.PanelAskProfile(tbUserlist.GetText());

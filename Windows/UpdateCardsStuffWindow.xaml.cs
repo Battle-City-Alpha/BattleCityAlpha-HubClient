@@ -27,7 +27,7 @@ namespace hub_client.Windows
                 this.Loaded += UpdateCardsStuffWindow_Loaded;
             }
             else
-            {                
+            {
                 this.tb_update.Visibility = Visibility.Hidden;
                 this.tb_maj.Text = "Chargement...";
                 //this.progressBar_update.IsIndeterminate = true;

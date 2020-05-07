@@ -140,7 +140,7 @@ namespace hub_client.WindowsAdministrator
         {
             Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard
             {
-               Reason = reason
+                Reason = reason
             });
         }
         public void SendAskProfil(PlayerInfo infos)

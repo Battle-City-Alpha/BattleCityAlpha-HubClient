@@ -2,8 +2,6 @@
 using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -35,7 +33,15 @@ namespace hub_client.Windows
             _id = id;
 
             this.MouseDown += Window_MouseDown;
+
+            tb_captiontext.GotFocus += Tb_captiontext_GotFocus;
         }
+
+        private void Tb_captiontext_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tb_captiontext.Text = "";
+        }
+
         private void LoadStyle()
         {
             btnSend.Color1 = style.GetGameColor("Color1DuelRequestButton");
@@ -51,9 +57,9 @@ namespace hub_client.Windows
             int MR = 5 - cb_masterrules.SelectedIndex;
             string password = chb_password.IsChecked == true ? tb_password.Text : String.Empty;
             if (_id != -1)
-                _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true);
+                _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, tb_captiontext.Text);
             else
-                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, password, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true);
+                _admin.SendHost((RoomType)cb_dueltype.SelectedIndex, password, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, tb_captiontext.Text);
 
             Close();
         }
@@ -77,8 +83,8 @@ namespace hub_client.Windows
             cb_masterrules.SelectedIndex = 0;
             tb_drawcount.Text = "1";
             chb_shuffledeck.IsChecked = false;
-        }   
-        
+        }
+
 
         private void Cb_dueltype_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {

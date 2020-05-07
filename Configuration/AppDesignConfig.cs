@@ -24,12 +24,14 @@ namespace hub_client.Configuration
 
             GameColors.Add("CustomRoomColor", Colors.Red);
 
-            GameColors.Add("PopupPMBackgroundColor", (Color)ColorConverter.ConvertFromString("#FF341c4d")); 
+            GameColors.Add("PopupPMBackgroundColor", (Color)ColorConverter.ConvertFromString("#FF341c4d"));
             GameColors.Add("PopupPMContentColor", Colors.White);
             GameColors.Add("PopupPMTitleColor", Colors.Yellow);
             GameColors.Add("PopupPMHeaderColor", (Color)ColorConverter.ConvertFromString("#FFa57daf"));
 
             GameColors.Add("HighlighMessageColor", (Color)ColorConverter.ConvertFromString("#AAf5f314"));
+
+            GameColors.Add("CaptionDuelTextColor", (Color)ColorConverter.ConvertFromString("#ff0000ff"));
 
             GameColors.Add("Color1HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF26164F"));
             GameColors.Add("Color2HomeHeadButton", (Color)ColorConverter.ConvertFromString("#FF221A29"));

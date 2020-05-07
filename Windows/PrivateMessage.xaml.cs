@@ -4,12 +4,11 @@ using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
-using Tulpep.NotificationWindow;
 using System.Windows.Interop;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
+using Tulpep.NotificationWindow;
 
 namespace hub_client.Windows
 {
@@ -96,7 +95,7 @@ namespace hub_client.Windows
                     }
                     popup.ImageSize = new System.Drawing.Size(popup.Size.Height - 18, popup.Size.Height - 18);
                     popup.ImagePadding = new System.Windows.Forms.Padding(5);
-                    
+
                     popup.Popup();
                 }
 
@@ -113,7 +112,7 @@ namespace hub_client.Windows
                     if (tbChat.GetText() == string.Empty)
                         return;
                     _admin.SendMessage(_target, tbChat.GetText());
-                    rtbChat.OnSpecialColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "[" + FormExecution.Username  + "]: " + tbChat.GetText(), false, false);
+                    rtbChat.OnSpecialColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "[" + FormExecution.Username + "]: " + tbChat.GetText(), false, false);
                     tbChat.Clear();
                     break;
             }

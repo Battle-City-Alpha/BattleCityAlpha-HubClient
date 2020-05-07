@@ -5,8 +5,6 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace hub_client.Windows.Controls
 {
@@ -22,6 +20,12 @@ namespace hub_client.Windows.Controls
         {
             InitializeComponent();
             _rooms = new Dictionary<int, RoomItem>();
+
+
+            if (FormExecution.ClientConfig.UserlistScrollbar)
+                this.Itemslist.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+            else
+                this.Itemslist.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
         }
 
         public void RefreshStyle()
@@ -103,7 +107,8 @@ namespace hub_client.Windows.Controls
                     Type = room.Config.Type,
                     Config = room.Config,
                     NeedPassword = room.NeedPassword,
-                    IsRanked = room.IsRanked()
+                    IsRanked = room.IsRanked(),
+                    CaptionText = room.Config.CaptionText
                 };
 
                 if (item == null)

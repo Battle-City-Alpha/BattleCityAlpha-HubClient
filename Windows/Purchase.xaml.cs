@@ -73,7 +73,7 @@ namespace hub_client.Windows
 
         private void Img_card_MouseEnter(object sender, MouseEventArgs e)
         {
-           try
+            try
             {
                 SetCard(_cardShow);
                 this.cardinfos_popup.IsOpen = true;

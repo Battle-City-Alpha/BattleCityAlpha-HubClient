@@ -240,7 +240,7 @@ namespace hub_client.Windows
 
         private void Chat_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadStyle();            
+            LoadStyle();
 
             cb_defaultdeck.Items.Clear();
             List<string> Deck = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "deck")));
@@ -253,7 +253,7 @@ namespace hub_client.Windows
             cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
-            
+
             logger.Trace("Style loaded.");
         }
 
@@ -373,7 +373,6 @@ namespace hub_client.Windows
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenArena();
-            //_admin.Client.OpenPopBox("Fonctionnalité à venir !", "Message technique");
         }
 
         private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -403,7 +402,7 @@ namespace hub_client.Windows
         private void duelrequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
-            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;            
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
             if (target != null && target.Username != FormExecution.Username)
                 FormExecution.OpenDuelRequest(target.UserId);
         }

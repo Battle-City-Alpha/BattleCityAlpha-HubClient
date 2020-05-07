@@ -300,7 +300,6 @@ namespace hub_client.Helpers
                 Reason = reason
             };
         }
-
         public StandardClientDisabled DisabledAccount(string txt)
         {
             string[] args = txt.Split(' ');

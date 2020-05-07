@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace hub_client.Windows
@@ -135,6 +134,8 @@ namespace hub_client.Windows
                 }
 
                 tb_popup_type.Text = room.Type.ToString();
+
+                tb_captiontext.Text = room.Config.CaptionText;
 
                 duel_popup.IsOpen = true;
             }

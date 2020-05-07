@@ -909,7 +909,7 @@ namespace hub_client.Network
         public void OnLoadSelectCard(StandardServerLoadSelectCard packet)
         {
             logger.Trace("LOAD SELECT CARD");
-            switch(packet.Reason)
+            switch (packet.Reason)
             {
                 case AskCollectionReason.Brocante:
                     Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));

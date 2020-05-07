@@ -39,6 +39,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.ColumnSpan="2" Margin="40,0">
@@ -95,17 +96,11 @@
                             <TextBox x:Name="tb_password" Grid.Row="6" Grid.Column="1"  Margin="10,0" VerticalAlignment="Center" IsEnabled="False"/>
                         </Grid>
 
-                        <Controls:BCA_ColorButton x:Name="btnSend" Grid.Row="9" Grid.ColumnSpan="2" Margin="10,0" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Envoyer" MouseLeftButtonDown="BtnSend_MouseLeftButtonDown" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="9" Text="Info en plus :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="tb_captiontext" Text="..." Grid.Row="9" Grid.Column="1"  Margin="20,0" VerticalAlignment="Center"/>
+
+                        <Controls:BCA_ColorButton x:Name="btnSend" Grid.Row="10" Grid.ColumnSpan="2" Margin="10,0" Color1="#FFFF7811" Color2="#FFD30D0D" ButtonText="Envoyer" MouseLeftButtonDown="BtnSend_MouseLeftButtonDown" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
                     </Grid>
-                    <Grid Grid.Column="1" Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                    </Grid>
-                    <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
         </Grid>

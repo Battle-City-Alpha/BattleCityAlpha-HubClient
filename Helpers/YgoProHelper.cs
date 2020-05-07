@@ -76,14 +76,15 @@ namespace hub_client.Helpers
                 CopyAvatarToTexturesFolder(avatar, i);
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileAsync(
-                        new System.Uri(avatar.URL),
-                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
-                        );
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileAsync(
+                            new System.Uri(avatar.URL),
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
+                            );
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
                     }
                 }
                 catch (Exception ex)
@@ -99,14 +100,15 @@ namespace hub_client.Helpers
                 CopyBorderToTexturesFolder(border, i);
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileAsync(
-                        new System.Uri(border.URL),
-                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
-                        );
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileAsync(
+                            new System.Uri(border.URL),
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
+                            );
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
                     }
                 }
                 catch (Exception ex)
@@ -122,14 +124,15 @@ namespace hub_client.Helpers
                 CopySleeveToTexturesFolder(sleeve, i);
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileAsync(
-                        new System.Uri(sleeve.URL),
-                        Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
-                        );
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileAsync(
+                            new System.Uri(sleeve.URL),
+                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
+                            );
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
                     }
                 }
                 catch (Exception ex)

@@ -19,7 +19,7 @@
                 <RowDefinition Height="178*"/>
                 <RowDefinition Height="51*"/>
             </Grid.RowDefinitions>
-            <Border CornerRadius="5" Grid.Row="0" Margin="20">
+            <Border CornerRadius="5" Grid.Row="0" Margin="20" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>

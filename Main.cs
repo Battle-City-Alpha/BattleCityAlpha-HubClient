@@ -6,19 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Windows;
 
 namespace hub_client
 {
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 20013;
-        public static string VERSION = "2.0.0.13";
+        private static int CLIENT_VERSION = 20014;
+        public static string VERSION = "2.0.0.14";
 
         public Main()
         {
@@ -114,8 +112,6 @@ namespace hub_client
         {
             FormExecution.HideLogin();
             FormExecution.Client_PopMessageBox("Un mise à jour du jeu est disponible !", "Mise à jour", true);
-
-            string updates = "#";
             List<string> updatesToDo = new List<string>();
             int i = 0;
             while (updatefilelines[i] != CLIENT_VERSION.ToString() && i < updatefilelines.Length - 1)

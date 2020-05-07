@@ -1,5 +1,4 @@
-﻿using BCA.Common;
-using hub_client.Configuration;
+﻿using hub_client.Configuration;
 using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using System;

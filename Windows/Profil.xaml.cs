@@ -69,21 +69,22 @@ namespace hub_client.Windows
                     logger.Error(ex.ToString());
                     FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
                 }
-                
+
             }
 
             if (!infos.Border.IsHost)
                 img_border.Source = PicsManager.GetImage("Borders", infos.Border.Id.ToString());
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Border);
-                    wc.DownloadFileAsync(
-                        new System.Uri(infos.Border.URL),
-                        Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
-                        );
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Border);
+                        wc.DownloadFileAsync(
+                            new System.Uri(infos.Border.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
+                            );
                     }
                 }
                 catch (Exception ex)
@@ -97,14 +98,15 @@ namespace hub_client.Windows
                 img_sleeve.Source = PicsManager.GetImage("Sleeves", infos.Sleeve.Id.ToString());
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Sleeve);
-                    wc.DownloadFileAsync(
-                        new System.Uri(infos.Sleeve.URL),
-                        Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")
-                        );
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Sleeve);
+                        wc.DownloadFileAsync(
+                            new System.Uri(infos.Sleeve.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")
+                            );
                     }
                 }
                 catch (Exception ex)

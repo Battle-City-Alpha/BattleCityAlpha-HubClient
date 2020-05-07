@@ -28,7 +28,7 @@ namespace hub_client.Windows
             string txt = string.Empty;
 
             _type = type;
-            switch(_type)
+            switch (_type)
             {
                 case ChoiceBoxType.Duel:
                     txt = String.Format("Vous avez été invité en duel par {0}. \r\nType : {1}", player.Username, config.Type);
@@ -37,6 +37,7 @@ namespace hub_client.Windows
                     txt += Environment.NewLine + string.Format("Point de vie : {0}", config.StartDuelLP);
                     txt += Environment.NewLine + string.Format("Carte dans la main au départ : {0}", config.CardByHand);
                     txt += Environment.NewLine + string.Format("Pioche par tour : {0}", config.DrawCount);
+                    txt += Environment.NewLine + string.Format("Info : {0}", config.CaptionText);
                     txt += Environment.NewLine + (config.NoShuffleDeck ? "Deck non mélangé" : "Deck mélangé");
                     if (pass != string.Empty)
                         txt += Environment.NewLine + "Partie privée";

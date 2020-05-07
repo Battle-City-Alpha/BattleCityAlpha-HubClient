@@ -31,14 +31,14 @@ namespace hub_client.Cards
             dic.Remove(fromKey);
             dic[toKey] = value;
         }
-        
+
 
         private static void LoadPicsFile()
         {
             string[] ids = Directory.GetFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics")).Select(file => Path.GetFileName(file).Split('.')[0]).ToArray();
 
             PicsID = new HashSet<int>();
-            foreach(string id in ids)
+            foreach (string id in ids)
             {
                 int i;
                 if (Int32.TryParse(id, out i))

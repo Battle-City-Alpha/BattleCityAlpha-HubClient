@@ -7,7 +7,6 @@ using hub_client.Enums;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -64,7 +63,7 @@ namespace hub_client.Windows
         {
             if (cb_cardtype1.SelectedIndex == 0)
             {
-                cb_cardtype2.IsEnabled = false; 
+                cb_cardtype2.IsEnabled = false;
                 cb_cardtype1.SelectedIndex = 0;
                 cb_cardtype2.SelectedIndex = 0;
                 cb_cardattribute.SelectedIndex = 0;
@@ -82,7 +81,7 @@ namespace hub_client.Windows
             if (selected == CardType.Monstre)
             {
                 cb_cardattribute.IsEnabled = true;
-                cb_cardrace.IsEnabled = true;                
+                cb_cardrace.IsEnabled = true;
             }
             else
             {

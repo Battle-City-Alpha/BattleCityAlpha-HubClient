@@ -22,13 +22,16 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="0" FontSize="16" Foreground="{Binding RoomColor}"/>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Path=CaptionText}" HorizontalAlignment="Center" Grid.Row="0" FontSize="16" Foreground="{Binding CaptionColor}" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
                             <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
-                            <TextBlock Text="VS" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16"/>
                         </StackPanel>
-                        <TextBlock Text="{Binding Path=Players2}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="2" FontSize="16"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="2" FontSize="14" Foreground="{Binding RoomColor}"/>
+                            <TextBlock Text="VS" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="14" Margin="5,0,0,0"/>
+                            <TextBlock Text="{Binding Path=Players2}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="2" FontSize="14" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
@@ -57,6 +60,6 @@
         <Border.Background>
             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.9"/>
         </Border.Background>
-        <ListBox x:Name="Itemslist" Foreground="Black" Background="{x:Null}" Margin="7" BorderThickness="0" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemTemplate="{DynamicResource RoomItemTemplate}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}"/>
+        <ListBox x:Name="Itemslist" Foreground="Black" Background="{x:Null}" Margin="7" BorderThickness="0" Width="Auto" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{DynamicResource RoomItemTemplate}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}"/>
     </Border>
 </UserControl>

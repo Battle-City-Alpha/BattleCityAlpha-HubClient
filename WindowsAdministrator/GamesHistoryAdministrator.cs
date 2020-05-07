@@ -5,10 +5,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace hub_client.WindowsAdministrator
@@ -43,7 +40,7 @@ namespace hub_client.WindowsAdministrator
                     TotalRank = r.TotalRank,
                     ResultPic = r.ELO > 0 ? FormExecution.AssetsManager.GetImage("Logo", "win") : FormExecution.AssetsManager.GetImage("Logo", "lose")
                 };
-            
+
                 if (!r.Opponent.Avatar.IsHost)
                     item.AvatarPic = FormExecution.AssetsManager.GetImage("Avatars", r.Opponent.Avatar.Id.ToString());
                 else

@@ -86,15 +86,16 @@ namespace hub_client.Windows.Controls
                 return GetImage("Borders", custom.Id.ToString());
             else
             {
-                try { 
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    wc.DownloadFile(
-                        new System.Uri(custom.URL),
-                        Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
-                        );
-                }
-                return GetImage("Borders", "temp");
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFile(
+                            new System.Uri(custom.URL),
+                            Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
+                            );
+                    }
+                    return GetImage("Borders", "temp");
                 }
                 catch (Exception ex)
                 {
