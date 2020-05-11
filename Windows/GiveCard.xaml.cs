@@ -19,6 +19,7 @@ namespace hub_client.Windows
 
         private PlayerInfo _target;
         private Dictionary<int, PlayerCard> _cards;
+        private List<int> _ids;
 
         public GiveCard(GiveCardAdministrator admin, PlayerInfo target)
         {
@@ -28,6 +29,7 @@ namespace hub_client.Windows
             _cards = new Dictionary<int, PlayerCard>();
             _target = target;
             _admin = admin;
+            _ids = new List<int>();
 
             _admin.LoadCards += _admin_LoadCards;
 
@@ -35,6 +37,32 @@ namespace hub_client.Windows
             btnSelect.MouseLeftButtonDown += BtnSelect_MouseLeftButtonDown;
 
             Collection.GetListview().SelectionChanged += GiveCard_SelectionChanged;
+
+            lb_choice.MouseDoubleClick += Lb_choice_MouseDoubleClick;
+
+            this.MouseDown += Window_MouseDown;
+        }
+
+        private void Lb_choice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string item = lb_choice.SelectedItem.ToString();
+            if (lb_choice.SelectedIndex == -1) return;
+
+            int id = _ids[lb_choice.SelectedIndex];
+
+            if (!_cards.ContainsKey(id))
+                return;
+            else
+            {
+                if (_cards[id].Quantity > 1)
+                    _cards[id].Quantity--;
+                else
+                    _cards.Remove(id);
+            }
+
+            Collection.AddCard(id);
+            _ids.RemoveAt(lb_choice.SelectedIndex);
+            lb_choice.Items.RemoveAt(lb_choice.SelectedIndex);
         }
 
         private void GiveCard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,6 +100,8 @@ namespace hub_client.Windows
                 _cards.Add(offerCard.Id, offerCard);
             else
                 _cards[offerCard.Id].Quantity++;
+
+            _ids.Add(offerCard.Id);
         }
 
         private void _admin_LoadCards(Dictionary<int, PlayerCard> cards)

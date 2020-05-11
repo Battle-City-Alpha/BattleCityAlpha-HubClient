@@ -4,6 +4,7 @@ using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.Windows.Controls.Controls_Stuff;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Arena : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         ArenaAdministrator _admin;
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
@@ -77,67 +79,74 @@ namespace hub_client.Windows
 
         private void Room_MouseEnter(object sender, MouseEventArgs e)
         {
-            ListBox Itemslist = ((ListBox)sender);
-            var item = VisualTreeHelper.HitTest(Itemslist, Mouse.GetPosition(Itemslist)).VisualHit;
-
-            // find ListViewItem (or null)
-            while (item != null && !(item is ListBoxItem))
-                item = VisualTreeHelper.GetParent(item);
-
-            if (item == null)
-                return;
-
-            int i = Itemslist.Items.IndexOf(((ListBoxItem)item).DataContext);
-            RoomItem room = Itemslist.Items[i] as RoomItem;
-            if (room != null)
+            try
             {
-                //popup_dueltype_img.Background = new ImageBrush(room.Image);
+                ListBox Itemslist = ((ListBox)sender);
+                var item = VisualTreeHelper.HitTest(Itemslist, Mouse.GetPosition(Itemslist)).VisualHit;
 
-                duel_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
-                duel_popup.HorizontalOffset = 10;
-                duel_popup.VerticalOffset = 10;
+                // find ListViewItem (or null)
+                while (item != null && !(item is ListBoxItem))
+                    item = VisualTreeHelper.GetParent(item);
 
-                tb_popup_banlist.Foreground = new SolidColorBrush(Colors.Black);
-                tb_popup_lp.Foreground = new SolidColorBrush(Colors.Black);
-                tb_popup_MR.Foreground = new SolidColorBrush(Colors.Black);
-                tb_popup_starthand.Foreground = new SolidColorBrush(Colors.Black);
-                tb_shuffledeck.Foreground = new SolidColorBrush(Colors.Black);
-                tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
+                if (item == null)
+                    return;
 
-                if (room.Config.Banlist != 0)
-                    tb_popup_banlist.Foreground = room.RoomColor;
-                tb_popup_banlist.Text = FormExecution.GetBanlistValue(room.Config.Banlist);
-
-                if ((room.Config.StartDuelLP != 8000 && room.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Type == RoomType.Tag))
-                    tb_popup_lp.Foreground = room.RoomColor;
-                tb_popup_lp.Text = room.Config.StartDuelLP.ToString();
-
-                if (room.Config.MasterRules != 5)
-                    tb_popup_MR.Foreground = room.RoomColor;
-                tb_popup_MR.Text = room.Config.MasterRules.ToString();
-
-                tb_popup_players1.Text = room.Players1;
-                tb_popup_players2.Text = room.Players2;
-
-                if (room.Config.CardByHand != 5)
-                    tb_popup_starthand.Foreground = room.RoomColor;
-                tb_popup_starthand.Text = room.Config.CardByHand.ToString();
-
-                if (room.Config.DrawCount != 1)
-                    tb_drawcount.Foreground = room.RoomColor;
-                tb_drawcount.Text = room.Config.DrawCount.ToString();
-
-                if (room.Config.NoShuffleDeck)
+                int i = Itemslist.Items.IndexOf(((ListBoxItem)item).DataContext);
+                RoomItem room = Itemslist.Items[i] as RoomItem;
+                if (room != null)
                 {
-                    tb_shuffledeck.Foreground = room.RoomColor;
-                    tb_shuffledeck.Text = "Deck non mélangé";
+                    //popup_dueltype_img.Background = new ImageBrush(room.Image);
+
+                    duel_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
+                    duel_popup.HorizontalOffset = 10;
+                    duel_popup.VerticalOffset = 10;
+
+                    tb_popup_banlist.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_popup_lp.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_popup_MR.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_popup_starthand.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_shuffledeck.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
+
+                    if (room.Config.Banlist != 0)
+                        tb_popup_banlist.Foreground = room.RoomColor;
+                    tb_popup_banlist.Text = FormExecution.GetBanlistValue(room.Config.Banlist);
+
+                    if ((room.Config.StartDuelLP != 8000 && room.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Type == RoomType.Tag))
+                        tb_popup_lp.Foreground = room.RoomColor;
+                    tb_popup_lp.Text = room.Config.StartDuelLP.ToString();
+
+                    if (room.Config.MasterRules != 5)
+                        tb_popup_MR.Foreground = room.RoomColor;
+                    tb_popup_MR.Text = room.Config.MasterRules.ToString();
+
+                    tb_popup_players1.Text = room.Players1;
+                    tb_popup_players2.Text = room.Players2;
+
+                    if (room.Config.CardByHand != 5)
+                        tb_popup_starthand.Foreground = room.RoomColor;
+                    tb_popup_starthand.Text = room.Config.CardByHand.ToString();
+
+                    if (room.Config.DrawCount != 1)
+                        tb_drawcount.Foreground = room.RoomColor;
+                    tb_drawcount.Text = room.Config.DrawCount.ToString();
+
+                    if (room.Config.NoShuffleDeck)
+                    {
+                        tb_shuffledeck.Foreground = room.RoomColor;
+                        tb_shuffledeck.Text = "Deck non mélangé";
+                    }
+
+                    tb_popup_type.Text = room.Type.ToString();
+
+                    tb_captiontext.Text = room.Config.CaptionText;
+
+                    duel_popup.IsOpen = true;
                 }
-
-                tb_popup_type.Text = room.Type.ToString();
-
-                tb_captiontext.Text = room.Config.CaptionText;
-
-                duel_popup.IsOpen = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
             }
         }
 

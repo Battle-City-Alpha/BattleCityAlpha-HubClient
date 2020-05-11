@@ -57,7 +57,14 @@ namespace hub_client.Windows
 
             img_card.MouseEnter += Img_card_MouseEnter;
             img_card.MouseLeave += Img_card_MouseLeave;
+            img_card.PreviewMouseWheel += Img_card_PreviewMouseWheel;
             cardinfos_popup.MouseEnter += Cardinfos_popup_MouseEnter;
+        }
+
+        private void Img_card_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrCardDesc.ScrollToVerticalOffset(-e.Delta);
+            e.Handled = true;
         }
 
         private void Cardinfos_popup_MouseEnter(object sender, MouseEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class Login : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         LoginAdminstrator _admin;
         bool _complete = false;
 
@@ -60,11 +62,18 @@ namespace hub_client.Windows
 
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            cbRememberMe.IsChecked = FormExecution.AppConfig.RememberMe;
-            if (cbRememberMe.IsChecked == true)
+            try
             {
-                tbUsername.Text = FormExecution.AppConfig.Username;
-                pbPassword.Password = FormExecution.AppConfig.Password;
+                cbRememberMe.IsChecked = FormExecution.AppConfig.RememberMe;
+                if (cbRememberMe.IsChecked == true)
+                {
+                    tbUsername.Text = FormExecution.AppConfig.Username;
+                    pbPassword.Password = FormExecution.AppConfig.Password;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
             }
 
             LoadStyle();

@@ -82,6 +82,37 @@ namespace hub_client.Windows
             }
             cb_pics.SelectionChanged += Cb_pics_SelectionChanged;
             cb_pics.SelectedIndex = 0;
+
+            cb_ygopro_pics.Items.Clear();
+            List<string> ygopropics = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures")));
+            foreach (string p in ygopropics)
+            {
+                if (!p.EndsWith(".png") && !p.EndsWith("jpg"))
+                    continue;
+                string[] name = p.Split('\\');
+                cb_ygopro_pics.Items.Add(name[name.Length - 1]);
+            }
+            cb_ygopro_pics.SelectionChanged += Cb_ygopro_pics_SelectionChanged; ;
+            cb_ygopro_pics.SelectedIndex = 0;
+            showroom_ygopro_pics.MouseLeftButtonDown += Showroom_ygopro_pics_MouseLeftButtonDown;
+        }
+
+        private void Showroom_ygopro_pics_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog getpic = new OpenFileDialog();
+            getpic.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+            if (getpic.ShowDialog() == true)
+            {
+                File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", cb_ygopro_pics.SelectedItem.ToString()));
+                File.Copy(getpic.FileName, Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", cb_ygopro_pics.SelectedItem.ToString()));
+            }
+
+            showroom_ygopro_pics.Source = CreateImage(FormExecution.AssetsManager.GetSource("Background", cb_pics.SelectedItem.ToString()));
+        }
+
+        private void Cb_ygopro_pics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            showroom_ygopro_pics.Source = CreateImage(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", cb_ygopro_pics.SelectedItem.ToString()));
         }
 
         private void Cb_pics_SelectionChanged(object sender, SelectionChangedEventArgs e)

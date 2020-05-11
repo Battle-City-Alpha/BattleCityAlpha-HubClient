@@ -119,12 +119,8 @@ namespace hub_client
 
                 SaveConfig();
 
-                _windowload = new UpdateCardsStuffWindow(new string[] { }, true);
-                _windowload.Show();
-
-                CardManager.LoadingFinished += CardManager_LoadingFinished;
-                CardManager.LoadingProgress += CardManager_LoadingProgress;
-                Task.Run(() => CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true));
+                if (!CheckCardsStuffUpdate())
+                    LoadCDB();
 
             }
             Client = new GameClient();
@@ -143,7 +139,9 @@ namespace hub_client
             Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
             Client.LoadOfflineMessages += Client_LoadOfflineMessages;
             Client.RecieveDeck += Client_RecieveDeck;
+            Client.RecieveReplay += Client_RecieveReplay;
             Client.Restart += Client_Restart;
+            Client.CustomizationAchievement += Client_CustomizationAchievement;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -158,13 +156,113 @@ namespace hub_client
             logger.Trace("FormExecution initialisation.");
         }
 
+        private static void Client_CustomizationAchievement(CustomizationType ctype, string text, int id)
+        {
+            CustomViewer viewer = new CustomViewer(ctype, text, id);
+            viewer.Show();
+        }
+
+        public static void LoadCDB()
+        {
+            _windowload = new UpdateCardsStuffWindow(true);
+            _windowload.Show();
+
+            CardManager.LoadingFinished += CardManager_LoadingFinished;
+            CardManager.LoadingProgress += CardManager_LoadingProgress;
+            Task.Run(() => CardManager.LoadCDB(Path.Combine(path, "BattleCityAlpha", "cards.cdb"), true, true));
+        }
+
+        public static bool CheckCardsStuffUpdate()
+        {
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    string query = "http://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/updates.txt";
+                    string updateCardsStuff = wc.DownloadString(query);
+                    string[] updatefilelines = updateCardsStuff.Split(
+                    new[] { "\r\n", "\r", "\n" },
+                    StringSplitOptions.None
+                    );
+                    if (GetLastVersion(updatefilelines) != FormExecution.ClientConfig.CardsStuffVersion)
+                    {
+                        UpdateCardsStuff(updatefilelines);
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+            catch { return false; }
+        }
+        public static int GetLastVersion(string[] updatefilelines)
+        {
+            return Convert.ToInt32(updatefilelines[0]);
+        }
+        private static void UpdateCardsStuff(string[] updatefilelines)
+        {
+            _windowload = new UpdateCardsStuffWindow(false);
+            _windowload.Show();
+            FormExecution.Client_PopMessageBox("Un mise à jour au niveau des cartes et des boosters est disponible !", "Mise à jour", true);
+
+            List<string> updatesToDo = new List<string>();
+
+            int i = 0;
+            while (updatefilelines[i] != FormExecution.ClientConfig.CardsStuffVersion.ToString() && i < updatefilelines.Length - 1)
+            {
+                updatesToDo.Add(updatefilelines[i]);
+                i++;
+            }
+
+            CardsUpdateDownloader.LoadingProgress += CardsUpdateDownloader_LoadingProgress;
+            CardsUpdateDownloader.UpdateCompleted += CardsUpdateDownloader_UpdateCompleted;
+            Task.Run(() => CardsUpdateDownloader.DownloadUpdates(updatesToDo.ToArray()));
+        }
+
+        private static void CardsUpdateDownloader_UpdateCompleted()
+        {
+            _windowload.EndDownload(); 
+            _windowload.Close();
+
+            CardsUpdateDownloader.LoadingProgress -= CardsUpdateDownloader_LoadingProgress;
+            CardsUpdateDownloader.UpdateCompleted -= CardsUpdateDownloader_UpdateCompleted;
+
+            LoadCDB();
+        }
+
+        private static void CardsUpdateDownloader_LoadingProgress(int i, int n)
+        {
+            _windowload.SetProgressUpdate(i, n);
+        }
+
+        private static void Client_RecieveReplay(PlayerInfo sender, byte[] replay, string replayname)
+        {
+            if (!ClientConfig.AllowDeckShare)
+                return;
+
+            ChoicePopBox cpb = new ChoicePopBox(sender, new RoomConfig(), ChoiceBoxType.Replay, "", replayname);
+            cpb.Choice += (r) => ReplayCPBChoice(r, replay, sender, replayname);
+            cpb.Topmost = true;
+            cpb.Show();
+        }
+        private static void ReplayCPBChoice(bool result, byte[] replay, PlayerInfo sender, string replayname)
+        {
+            if (!result)
+                return;
+
+            string name = sender.Username + "_" + replayname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".yrp";
+            name = name.Replace(' ', '_');
+            File.WriteAllBytes(Path.Combine(path, "BattleCityAlpha", "replay", name), replay);
+            YgoProHelper.LaunchYgoPro("-r " + name);
+        }
+
         private static void Client_Restart()
         {
             Client_PopMessageBox("Vous avez été déconnecté du serveur.", "Problème", true);
             _chat.Restart = true;
             _chat.Close();
             Main.CheckClientUpdate();
-            Main.CheckCardsStuffUpdate();
+            CheckCardsStuffUpdate();
             Init(true);
         }
 
@@ -217,7 +315,7 @@ namespace hub_client
                 return;
 
             File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
-            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss"));
+            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".yrp");
         }
 
         private static void CardManager_LoadingProgress(int i, int total)

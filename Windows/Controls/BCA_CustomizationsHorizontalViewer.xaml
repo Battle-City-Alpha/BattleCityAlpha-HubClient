@@ -24,7 +24,10 @@
         </Border>
 
         <Border BorderThickness="2" BorderBrush="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="2" Grid.ColumnSpan="2">
-            <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="177" Height="256"/>
+            <Grid>
+                <TextBlock x:Name="tb_customID" Text="12" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Opacity="0"/>
+                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="177" Height="256"/>
+            </Grid>
         </Border>
 
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="4">

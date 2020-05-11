@@ -99,6 +99,7 @@
                                     <MenuItem x:Name="giveBP" Header="Envoyer des BPs" Click="SendBP_Click"/>
                                     <MenuItem x:Name="giveCard" Header="Envoyer des cartes" Click="GiveCard_Click"/>
                                     <MenuItem x:Name="shareDeck" Header="Partager un deck" Click="shareDeck_Click"/>
+                                    <MenuItem x:Name="shareReplay" Header="Partager un replay" Click="shareReplay_Click"/>
                                 </ContextMenu>
                             </ListView.ContextMenu>
                             <ListView.ItemTemplate>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -21,6 +22,23 @@ namespace hub_client.Configuration
 
             int index = Array.FindIndex(lines, x => x.StartsWith("nickname"));
             lines[index] = "nickname = " + nickname;
+
+            File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
+        }
+        public static void UpdateForced(bool forced)
+        {
+            string[] lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"));
+            try
+            {
+                int index = Array.FindIndex(lines, x => x.StartsWith("forced"));
+                lines[index] = "forced = " + Convert.ToInt32(forced);
+            }
+            catch (Exception ex)
+            {
+                List<string> newlines = lines.ToList();
+                newlines.Add("forced = " + Convert.ToInt32(forced));
+                lines = newlines.ToArray();
+            }
 
             File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
         }

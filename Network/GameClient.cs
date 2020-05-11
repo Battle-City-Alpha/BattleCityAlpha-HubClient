@@ -36,6 +36,8 @@ namespace hub_client.Network
         public event Action CloseBrocante;
         public event Action<int, int, bool> LaunchDuelResultBox;
         public event Action<PlayerInfo, string[], string> RecieveDeck;
+        public event Action<PlayerInfo, byte[], string> RecieveReplay;
+        public event Action<CustomizationType, string, int> CustomizationAchievement;
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -458,6 +460,9 @@ namespace hub_client.Network
                 case PacketType.ShareDeck:
                     OnShareDeck(JsonConvert.DeserializeObject<StandardServerSendDeck>(packet));
                     break;
+                case PacketType.ShareReplay:
+                    OnShareReplay(JsonConvert.DeserializeObject<StandardServerShareReplay>(packet));
+                    break;
                 case PacketType.GetRanking:
                     OnGetRanking(JsonConvert.DeserializeObject<StandardServerGetRanking>(packet));
                     break;
@@ -493,7 +498,7 @@ namespace hub_client.Network
                     break;
                 case ChatMessageType.Information:
                     c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
-                    msg = "[Information - " + packet.Player.Username + "]:" + packet.Message;
+                    msg = "**[Information - " + packet.Player.Username + "]:" + packet.Message + "**";
                     bold = true;
                     break;
                 case ChatMessageType.Greet:
@@ -560,7 +565,7 @@ namespace hub_client.Network
                 switch (packet.Reason)
                 {
                     case LoginFailReason.Banned:
-                        OpenPopBox("Vous êtes banni.", "Problème");
+                        OpenPopBox(string.Format("Vous êtes banni jusqu'au {0}. Raison : {1}.", packet.EndSanction, packet.SanctionReason), "Problème");
                         break;
                     case LoginFailReason.InvalidCombinaison:
                         OpenPopBox("La combinaison utilisateur/mot de passe est invalide.", "Problème");
@@ -569,10 +574,10 @@ namespace hub_client.Network
                         OpenPopBox("Le nom d'utilisateur n'existe pas.", "Problème");
                         break;
                     case LoginFailReason.DisabledAccount:
-                        OpenPopBox("Votre compte est désactivé.", "Problème");
+                        OpenPopBox(string.Format("Votre compte est désactivé. Raison : {0}", packet.SanctionReason), "Problème");
                         break;
                     case LoginFailReason.UserAlreadyConnected:
-                        OpenPopBox("Quelqu'un est déja connecté sur votre compte.", "Problème");
+                        OpenPopBox("Quelqu'un est déja connecté sur votre compte. Tentez de vous reconnecter maintenant.", "Problème");
                         break;
                     case LoginFailReason.Maintenance:
                         OpenPopBox("Une maintenance est en cours." + Environment.NewLine + "Raison: " + packet.MaintenanceReason + Environment.NewLine + "Temps estimé: " + packet.MaintenanceTimeEstimation.ToString() + "h.", "Maintenance");
@@ -950,6 +955,7 @@ namespace hub_client.Network
 
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
             YgoproConfig.UpdateNickname(FormExecution.Username);
+            YgoproConfig.UpdateForced(packet.Room.IsRanked());
 
             Application.Current.Dispatcher.Invoke(() => LaunchYGOPro?.Invoke(packet.Room, arg));
 
@@ -1223,7 +1229,10 @@ namespace hub_client.Network
                     break;
             }
             txt += Environment.NewLine + "Va vite voir ce nouvel élément dans ton profil !";
-            OpenPopBox(txt, "Quête terminée !");
+            if (packet.CustomType != CustomizationType.Title)
+                Application.Current.Dispatcher.Invoke(() => CustomizationAchievement?.Invoke(packet.CustomType, txt, packet.Id));
+            else
+                OpenPopBox(txt, "Quête accomplie !");
             logger.Trace("GET CUSTOMIZATION ACHIEVEMENT  - Id : {0} | Type : {1} | Custom Type {2}", packet.Id, packet.AchievementType, packet.CustomType);
         }
 
@@ -1266,6 +1275,14 @@ namespace hub_client.Network
 
             Application.Current.Dispatcher.InvokeAsync(() => RecieveDeck?.Invoke(packet.Sender, packet.Deckfile, packet.Deckname));
             logger.Trace("Recieve deck - From : {0}", packet.Sender);
+        }
+        public void OnShareReplay(StandardServerShareReplay packet)
+        {
+            if (BlacklistManager.CheckBlacklist(packet.Sender))
+                return;
+
+            Application.Current.Dispatcher.InvokeAsync(() => RecieveReplay?.Invoke(packet.Sender, packet.ReplayFile, packet.ReplayName));
+            logger.Trace("Recieve replay - From : {0}", packet.Sender);
         }
 
         public void OnGetRanking(StandardServerGetRanking packet)

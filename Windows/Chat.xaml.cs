@@ -129,7 +129,7 @@ namespace hub_client.Windows
 
         private void _admin_SpecialChatMessage(Color c, string msg, bool italic, bool bold)
         {
-            Dispatcher.InvokeAsync(delegate { chat.OnSpecialColoredMessage(c, msg, italic, bold); });
+            Dispatcher.InvokeAsync(delegate { chat.OnSpecialColoredMessage(c, msg); });
         }
 
         private void SearchUser(object sender, TextChangedEventArgs e)
@@ -361,7 +361,6 @@ namespace hub_client.Windows
             Profil profil = new Profil(_admin.Client.ProfilAdmin);
             _admin.SendProfileAsking();
         }
-
         private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             YgoProHelper.LoadCustomization(new Customization(CustomizationType.Avatar, 14, false, ""), new Customization(CustomizationType.Border, 1, false, ""), new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
@@ -369,23 +368,19 @@ namespace hub_client.Windows
 
             _admin.SendDeck();
         }
-
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenArena();
         }
-
         private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenShop();
         }
-
         private void btnAnimations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/forum-25.html");
             logger.Trace("Animations clicked.");
         }
-
         private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormExecution.OpenTools();
@@ -398,7 +393,6 @@ namespace hub_client.Windows
             if (target != null)
                 FormExecution.OpenNewPrivateForm(target);
         }
-
         private void duelrequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
@@ -406,7 +400,6 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
                 FormExecution.OpenDuelRequest(target.UserId);
         }
-
         private void traderequest_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
@@ -414,7 +407,6 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
                 _admin.SendTradeRequest(target);
         }
-
         private void setblacklist_Click(object sender, RoutedEventArgs e)
         {
             if (lvUserlist.SelectedIndex == -1) return;
@@ -643,6 +635,26 @@ namespace hub_client.Windows
                 }
             }
         }
+        private void shareReplay_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = ((PlayerInfo)lvUserlist.SelectedItem);
+
+            if (target != null && target.Username != FormExecution.Username)
+            {
+                OpenFileDialog getfile = new OpenFileDialog();
+                getfile.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "replay");
+                getfile.Filter = "Deck files (*.yrp;)|*.yrp";
+                if (getfile.ShowDialog() == true)
+                {
+                    FileInfo info = new FileInfo(getfile.FileName);
+                    if (info.Length < 5000)
+                        _admin.SendShareReplay(target, File.ReadAllBytes(getfile.FileName), Path.GetFileNameWithoutExtension(getfile.FileName));
+                    else
+                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Ton replay est trop lourd !"), false, false);
+                }
+            }
+        }
 
         private void userlistAvatarPics_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -684,5 +696,6 @@ namespace hub_client.Windows
                 _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);
             }
         }
+
     }
 }

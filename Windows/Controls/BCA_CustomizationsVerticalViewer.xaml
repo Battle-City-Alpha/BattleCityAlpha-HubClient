@@ -18,7 +18,10 @@
         </Border>
 
         <Border BorderThickness="2" BorderBrush="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Row="1">
-            <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Borders/7.png" Width="306" Height="136"/>
+            <Grid>
+                <TextBlock x:Name="tb_customID" Text="12" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Opacity="0"/>
+                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Borders/7.png" Width="306" Height="136"/>
+            </Grid>
         </Border>
 
 

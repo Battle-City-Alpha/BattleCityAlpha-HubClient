@@ -1,4 +1,6 @@
 ﻿using BCA.Common;
+using BCA.Network.Packets.Enums;
+using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
 
@@ -19,6 +21,14 @@ namespace hub_client.WindowsAdministrator
         private void Client_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs)
         {
             ShowRanking?.Invoke(infos, customs);
+        }
+
+        public void SendAskProfil(int userID)
+        {
+            Client.Send(PacketType.Profil, new StandardClientProfilAsk
+            {
+                UserID = userID
+            });
         }
     }
 }

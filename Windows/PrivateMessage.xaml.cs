@@ -112,7 +112,7 @@ namespace hub_client.Windows
                     if (tbChat.GetText() == string.Empty)
                         return;
                     _admin.SendMessage(_target, tbChat.GetText());
-                    rtbChat.OnSpecialColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "[" + FormExecution.Username + "]: " + tbChat.GetText(), false, false);
+                    rtbChat.OnSpecialColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), "[" + FormExecution.Username + "]: " + tbChat.GetText());
                     tbChat.Clear();
                     break;
             }

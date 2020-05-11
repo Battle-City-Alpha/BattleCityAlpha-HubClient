@@ -71,6 +71,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -82,6 +83,8 @@
                                 <TextBlock x:Name="tb_level" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
                                 <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" FontWeight="Bold"/>
                                 <TextBlock x:Name="tb_experience" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                                <TextBlock Text="Cartes"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="3" FontWeight="Bold"/>
+                                <TextBlock x:Name="tb_cardcount" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
                             </Grid>
                         </Grid>
                     </Border>

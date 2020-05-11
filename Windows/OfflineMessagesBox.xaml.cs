@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using hub_client.Cards;
 using hub_client.Configuration;
 using System;
 using System.Linq;
@@ -63,10 +64,26 @@ namespace hub_client.Windows
         public void LoadMessages(OfflineMessage[] msgs)
         {
             _messages = msgs;
+            ParseMsg();
             if (msgs.Count() == 1)
                 boxTitle.Text = "Message reçu hors-ligne";
 
             UpdateMessage();
+        }
+        private void ParseMsg()
+        {
+            for (int i = 0; i < _messages.Length; i++)
+            {
+                if (_messages[i].Message.Contains("("))
+                {
+                    string[] parts = _messages[i].Message.Split('(');
+                    string id = parts[1].Split(')')[0];
+                    CardInfos c = CardManager.GetCard(Convert.ToInt32(id));
+                    if (c == null)
+                        continue;
+                    _messages[i].Message = parts[0] + "(" + c.Name + parts[1].Substring(id.Length);
+                }
+            }
         }
 
         private void UpdateMessage()

@@ -119,6 +119,7 @@ namespace hub_client.Windows
             tb_username.Text = infos.Username;
             tb_level.Text = infos.Level.ToString();
             tb_experience.Text = infos.Exp.ToString();
+            tb_cardcount.Text = infos.CardNumber.ToString();
 
             tb_rankedwin.Text = infos.RankedWin.ToString();
             tb_rankedlose.Text = infos.RankedLose.ToString();

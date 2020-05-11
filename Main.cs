@@ -9,14 +9,16 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace hub_client
 {
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 20014;
-        public static string VERSION = "2.0.0.14";
+        private static int CLIENT_VERSION = 20019;
+        public static string VERSION = "2.0.0.19";
 
         public Main()
         {
@@ -24,7 +26,6 @@ namespace hub_client
             {
                 FormExecution.Init();
                 CheckClientUpdate();
-                CheckCardsStuffUpdate();
             }
             catch (Exception ex)
             {
@@ -33,55 +34,6 @@ namespace hub_client
             }
         }
 
-        public static void CheckCardsStuffUpdate()
-        {
-            try
-            {
-                using (WebClient wc = new WebClient())
-                {
-                    string query = "http://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/updates.txt";
-                    string updateCardsStuff = wc.DownloadString(query);
-                    string[] updatefilelines = updateCardsStuff.Split(
-                    new[] { "\r\n", "\r", "\n" },
-                    StringSplitOptions.None
-                    );
-                    if (GetLastVersion(updatefilelines) != FormExecution.ClientConfig.CardsStuffVersion)
-                        UpdateCardsStuff(updatefilelines);
-                    else
-                        return;
-                }
-            }
-            catch { return; }
-        }
-        private static int GetLastVersion(string[] updatefilelines)
-        {
-            return Convert.ToInt32(updatefilelines[0]);
-        }
-        private static void UpdateCardsStuff(string[] updatefilelines)
-        {
-            FormExecution.HideLogin();
-
-            FormExecution.Client_PopMessageBox("Un mise à jour au niveau des cartes et des boosters est disponible !", "Mise à jour", true);
-
-            List<string> updatesToDo = new List<string>();
-
-            int i = 0;
-            while (updatefilelines[i] != FormExecution.ClientConfig.CardsStuffVersion.ToString() && i < updatefilelines.Length - 1)
-            {
-                updatesToDo.Add(updatefilelines[i]);
-                i++;
-            }
-
-            UpdateCardsStuffWindow window = new UpdateCardsStuffWindow(updatesToDo.ToArray());
-            window.Topmost = true;
-            window.Show();
-
-            FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updatesToDo[0]);
-            FormExecution.SaveConfig();
-            CardManager.LoadCDB(Path.Combine(FormExecution.path, "BattleCityAlpha", "cards.cdb"), true, true);
-
-            FormExecution.ShowLogin();
-        }
         public static void CheckClientUpdate()
         {
 
@@ -95,7 +47,7 @@ namespace hub_client
                     new[] { "\r\n", "\r", "\n" },
                     StringSplitOptions.None
                     );
-                    if (GetLastVersion(updatefilelines) != CLIENT_VERSION)
+                    if (FormExecution.GetLastVersion(updatefilelines) != CLIENT_VERSION)
                         UpdateClient(updatefilelines);
                     else
                         return;
@@ -107,7 +59,6 @@ namespace hub_client
                 throw ex;
             }
         }
-
         private static void UpdateClient(string[] updatefilelines)
         {
             FormExecution.HideLogin();
@@ -124,7 +75,7 @@ namespace hub_client
 
             UpdatesInfos infos = new UpdatesInfos
             {
-                LastVersion = GetLastVersion(updatefilelines).ToString(),
+                LastVersion = FormExecution.GetLastVersion(updatefilelines).ToString(),
                 Updates = updatesToDo.ToArray(),
                 ProcessName = Assembly.GetExecutingAssembly().Location
             };

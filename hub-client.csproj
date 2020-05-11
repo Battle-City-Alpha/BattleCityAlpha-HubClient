@@ -153,6 +153,7 @@
     <Compile Include="FormExecution.cs" />
     <Compile Include="Helpers\BlacklistManager.cs" />
     <Compile Include="Helpers\BoosterManager.cs" />
+    <Compile Include="Helpers\CardsUpdateDownloader.cs" />
     <Compile Include="Helpers\ChatCommandParser.cs" />
     <Compile Include="Helpers\HardwareIdManager.cs" />
     <Compile Include="Helpers\PlayerManager.cs" />
@@ -254,6 +255,9 @@
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
       <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CustomViewer.xaml.cs">
+      <DependentUpon>CustomViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DataRetrievalWindow.xaml.cs">
       <DependentUpon>DataRetrievalWindow.xaml</DependentUpon>
@@ -416,6 +420,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CustomCustomizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CustomViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

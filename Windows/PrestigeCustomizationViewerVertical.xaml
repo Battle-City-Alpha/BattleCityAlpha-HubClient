@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Controls:BCA_ColorButton x:Name="btn_unlock" Padding="5" ButtonText="En obtenir plus !" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="0" MouseLeftButtonDown="btn_unlock_MouseLeftButtonDown"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Controls:BCA_ColorButton x:Name="btn_unlock" Padding="5" ButtonText="La liste complète !" Color1="#FF202CB3" Color2="#FF1666B1" Grid.Column="0" MouseLeftButtonDown="btn_unlock_MouseLeftButtonDown"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                 <Border Grid.Column="1" CornerRadius="10" Margin="0,10" HorizontalAlignment="Center">
                     <Border.Background>

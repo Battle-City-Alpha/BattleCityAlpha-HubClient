@@ -32,6 +32,19 @@ namespace hub_client.Windows
 
             this.MouseDown += Window_MouseDown;
             this.Closed += RankingWindow_Closed;
+
+            this.lvRanking.MouseDoubleClick += LvRanking_MouseDoubleClick;
+        }
+
+        private void LvRanking_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lvRanking.SelectedIndex == -1) return;
+            RankingPlayerItem target = lvRanking.SelectedItem as RankingPlayerItem;
+            if (target != null)
+            {
+                Profil profile = new Profil(_admin.Client.ProfilAdmin);
+                _admin.SendAskProfil(target.UserID);
+            }
         }
 
         private void RankingWindow_Closed(object sender, EventArgs e)

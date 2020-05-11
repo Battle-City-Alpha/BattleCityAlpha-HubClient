@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
+using hub_client.Configuration;
 using NLog;
 using System;
 using System.Diagnostics;
@@ -52,6 +53,7 @@ namespace hub_client.Helpers
         public static void LaunchGameAgainstBot(string deck)
         {
             _deck = deck;
+            YgoproConfig.UpdateForced(false);
             UpdateAvatar(new Customization(CustomizationType.Avatar, 14, false, ""), 0);
             UpdateBorder(new Customization(CustomizationType.Border, 1, false, ""), 0);
             UpdateSleeve(new Customization(CustomizationType.Sleeve, 203, false, ""), 0);

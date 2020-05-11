@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Tools" Height="583.053" Width="873.659" 
+        Title="Tools" Height="583.053" Width="908.459" 
         ResizeMode="CanResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -236,6 +236,38 @@
                         </Grid.RowDefinitions>
                         <Controls:BCA_ColorButton x:Name="btn_datasretrieval" Grid.Row="0" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données V1" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
                         <Controls:BCA_ColorButton x:Name="btn_choosepics" Grid.Row="1" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Choix du style d'image" MouseLeftButtonDown="btn_choosepics_MouseLeftButtonDown"  HorizontalAlignment="Center"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="YGOPro - Design image">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.9"/>
+                            </Border.Background>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Choix de l'image à modifier :" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <ComboBox Name="cb_ygopro_pics" Grid.Column="1" VerticalAlignment="Center" Margin="20, 0"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Margin="10" Grid.ColumnSpan="2">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.9"/>
+                            </Border.Background>
+                            <Image x:Name="showroom_ygopro_pics" Margin="10" MouseLeftButtonDown="showroom_pics_MouseLeftButtonDown" Cursor="Hand"/>
+                        </Border>
                     </Grid>
                 </TabItem>
             </TabControl>

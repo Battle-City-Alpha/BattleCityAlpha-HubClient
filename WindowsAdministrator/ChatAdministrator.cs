@@ -96,7 +96,7 @@ namespace hub_client.WindowsAdministrator
         }
         public void SendProfileAsking()
         {
-            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { Username = Client.GetPlayerInfo(FormExecution.Username) });
+            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { UserID = Client.GetPlayerInfo(FormExecution.Username).UserId });
             Client.Send(data);
         }
         public void SendDeck()
@@ -147,7 +147,7 @@ namespace hub_client.WindowsAdministrator
         {
             Client.Send(PacketType.Profil, new StandardClientProfilAsk
             {
-                Username = infos
+                UserID = infos.UserId
             });
         }
         public void SendShareDeck(PlayerInfo infos, string[] deckfile, string deckname)
@@ -157,6 +157,15 @@ namespace hub_client.WindowsAdministrator
                 Target = infos,
                 Deckfile = deckfile,
                 Deckname = deckname
+            });
+        }
+        public void SendShareReplay(PlayerInfo infos, byte[] replayfile, string replayname)
+        {
+            Client.Send(PacketType.ShareReplay, new StandardClientShareReplay
+            {
+                Target = infos,
+                ReplayFile = replayfile,
+                ReplayName = replayname
             });
         }
 

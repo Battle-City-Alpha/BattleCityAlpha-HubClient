@@ -4,6 +4,7 @@
     {
         Duel,
         Trade,
-        Deck
+        Deck,
+        Replay
     }
 }

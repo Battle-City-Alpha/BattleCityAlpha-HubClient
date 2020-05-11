@@ -13,24 +13,21 @@ namespace hub_client.Windows
     /// </summary>
     public partial class UpdateCardsStuffWindow : Window
     {
-        private string[] _updates;
-        private bool _isDownloadFinished = false;
-        public UpdateCardsStuffWindow(string[] updates, bool infini = false)
+        public bool _isDownloadFinished = false;
+        public UpdateCardsStuffWindow(bool cdb)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.progressBar_update.Value = 0;
 
-            if (!infini)
+            if (!cdb)
             {
-                _updates = updates;
-                this.Loaded += UpdateCardsStuffWindow_Loaded;
+                progressBar_update.IsIndeterminate = true;
             }
             else
             {
                 this.tb_update.Visibility = Visibility.Hidden;
                 this.tb_maj.Text = "Chargement...";
-                //this.progressBar_update.IsIndeterminate = true;
             }
 
             this.MouseDown += Window_MouseDown;
@@ -46,6 +43,7 @@ namespace hub_client.Windows
         public void EndDownload()
         {
             _isDownloadFinished = true;
+            SetProgressValue(100.0);
         }
 
         public void SetProgressValue(double progress)
@@ -56,75 +54,9 @@ namespace hub_client.Windows
             if (progress == 100)
                 _isDownloadFinished = true;
         }
-
-        private void UpdateCardsStuffWindow_Loaded(object sender, RoutedEventArgs e)
+        public void SetProgressUpdate(int i, int n)
         {
-            DownloadUpdates();
-        }
-
-        private void DownloadUpdates()
-        {
-            int i = 0;
-            int n = _updates.Length;
-            using (WebClient wc = new WebClient())
-            {
-                i++;
-                tb_update.Text = i + "/" + n;
-                for (int u = _updates.Length - 1; u >= 0; u--)
-                {
-                    UnzipFromStream(wc.OpenRead(GetUpdateFileLink(_updates[u])), FormExecution.path);
-                }
-            }
-
-            progressBar_update.Value = 100;
-            progressBar_update.IsIndeterminate = false;
-            FormExecution.Client_PopMessageBox("Mise à jour terminée !", "Mise à jour", true);
-            _isDownloadFinished = true;
-            Close();
-        }
-
-        private Uri GetUpdateFileLink(string updatename)
-        {
-            return new Uri("http://battlecityalpha.xyz/BCA/UPDATEV2/CardsStuff/zip/" + updatename + ".zip");
-        }
-        private void UnzipFromStream(Stream zipStream, string outFolder)
-        {
-            progressBar_update.IsIndeterminate = true;
-            using (var zipInputStream = new ZipInputStream(zipStream))
-            {
-                while (zipInputStream.GetNextEntry() is ZipEntry zipEntry)
-                {
-                    var entryFileName = zipEntry.Name;
-                    // To remove the folder from the entry:
-                    //var entryFileName = Path.GetFileName(entryFileName);
-                    // Optionally match entrynames against a selection list here
-                    // to skip as desired.
-                    // The unpacked length is available in the zipEntry.Size property.
-
-                    // 4K is optimum
-                    var buffer = new byte[4096];
-
-                    // Manipulate the output filename here as desired.
-                    var fullZipToPath = Path.Combine(outFolder, entryFileName);
-                    var directoryName = Path.GetDirectoryName(fullZipToPath);
-                    if (directoryName.Length > 0)
-                        Directory.CreateDirectory(directoryName);
-
-                    // Skip directory entry
-                    if (Path.GetFileName(fullZipToPath).Length == 0)
-                    {
-                        continue;
-                    }
-
-                    // Unzip file in buffered chunks. This is just as fast as unpacking
-                    // to a buffer the full size of the file, but does not waste memory.
-                    // The "using" will close the stream even if an exception occurs.
-                    using (FileStream streamWriter = File.Create(fullZipToPath))
-                    {
-                        StreamUtils.Copy(zipInputStream, streamWriter, buffer);
-                    }
-                }
-            }
+            this.tb_update.Text = i + "/" + n;
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

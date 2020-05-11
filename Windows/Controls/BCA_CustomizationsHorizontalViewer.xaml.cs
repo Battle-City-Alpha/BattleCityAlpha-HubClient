@@ -5,7 +5,9 @@ using NLog;
 using System;
 using System.IO;
 using System.Net;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows.Controls
@@ -19,7 +21,12 @@ namespace hub_client.Windows.Controls
 
         private Customization[] _customs;
         private int _index = 2;
-        string ctypetext = "";
+        string ctypetext = ""; 
+        
+        DoubleAnimation fadeInBorder;
+        DoubleAnimation fadeOutBorder;
+        DoubleAnimation fadeInText;
+        DoubleAnimation fadeOutText;
 
         private Image[] imgs;
 
@@ -30,6 +37,42 @@ namespace hub_client.Windows.Controls
             InitializeComponent();
 
             imgs = new Image[] { img_center, img_center_left, img_center_right, img_left, img_right };
+
+            fadeInBorder = new DoubleAnimation();
+            fadeInBorder.From = 0.3;
+            fadeInBorder.To = 1;
+            fadeInBorder.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeOutBorder = new DoubleAnimation();
+            fadeOutBorder.From = 1;
+            fadeOutBorder.To = 0.3;
+            fadeOutBorder.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeInText = new DoubleAnimation();
+            fadeInText.From = 0;
+            fadeInText.To = 1;
+            fadeInText.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeOutText = new DoubleAnimation();
+            fadeOutText.From = 1;
+            fadeOutText.To = 0;
+            fadeOutText.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            img_center.MouseEnter += Img_center_MouseEnter;
+            img_center.MouseLeave += Img_center_MouseLeave;
+        }
+
+        private void Img_center_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            tb_customID.BeginAnimation(OpacityProperty, fadeOutText);
+            img_center.BeginAnimation(OpacityProperty, fadeInBorder);
+        }
+
+        private void Img_center_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            tb_customID.BeginAnimation(OpacityProperty, fadeInText);
+            img_center.BeginAnimation(OpacityProperty, fadeOutBorder);
+            tb_customID.Text = _customs[_index].Id.ToString();
         }
 
         public void LoadFirstCustoms(Customization[] customs)
