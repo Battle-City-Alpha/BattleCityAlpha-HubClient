@@ -107,13 +107,21 @@ namespace hub_client.Windows
                 _admin.Client.OpenPopBox("Vous ne pouvez pas laisser de champs vide.", "Problème de connexion");
                 return;
             }
-            if (cbRememberMe.IsChecked == true)
+            try
             {
-                FormExecution.AppConfig.Username = tbUsername.Text;
-                FormExecution.AppConfig.Password = pbPassword.Password;
-                FormExecution.AppConfig.RememberMe = true;
-                FormExecution.AppConfig.Save();
+                if (cbRememberMe.IsChecked == true)
+                {
+                    FormExecution.AppConfig.Username = tbUsername.Text;
+                    FormExecution.AppConfig.Password = pbPassword.Password;
+                    FormExecution.AppConfig.RememberMe = true;
+                    FormExecution.AppConfig.Save();
+                }
             }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
+            }
+
             string username = tbUsername.Text;
             string password = pbPassword.Password;
             string HID = FormExecution.HID;

@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Configuration;
+using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using hub_client.Windows.Controls.Controls_Stuff;
 using hub_client.WindowsAdministrator;
@@ -312,6 +313,13 @@ namespace hub_client.Windows
 
         private void btn_playranked_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (FormExecution.ClientConfig.FirstTimeRanked)
+            {
+                FormExecution.Client_PopMessageBox(StartDisclaimer.RankedText, "Premièr duel classé !", true);
+                FormExecution.ClientConfig.FirstTimeRanked = false;
+                FormExecution.ClientConfig.Save();
+            }
+
             if (RankedTimer.IsEnabled)
             {
                 _admin.SendStopPlayRanked();

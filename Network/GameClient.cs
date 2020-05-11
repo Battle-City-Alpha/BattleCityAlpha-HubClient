@@ -1093,7 +1093,8 @@ namespace hub_client.Network
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un mois ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1), "Customisation personnalisée !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un mois ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1) + ". Cette date est stockée dans ton bloc-note !", "Customisation personnalisée !", false);
+            FormExecution.AddNotes("Fin de ta customisation personnalisée : " + DateTime.Now.AddMonths(1) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY OWN CUSTOMIZATION");
         }
         public void OnBuyPrestigeCustomization(StandardServerBuyPrestigeCustomization packet)
@@ -1105,13 +1106,15 @@ namespace hub_client.Network
         public void OnBuyVIP(StandardServerBuyVIP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !" + Environment.NewLine + "Tu le seras jusqu'au " + DateTime.Now.AddMonths(3), "Nouveau VIP !", false);
+            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !" + Environment.NewLine + "Tu le seras jusqu'au " + DateTime.Now.AddMonths(3) + ". Cette date est indiquée dans ton bloc note sur le jeu !", "Nouveau VIP !", false);
+            FormExecution.AddNotes("Fin de la période VIP : " + DateTime.Now.AddMonths(3) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY VIP");
         }
         public void OnBuyDoubleBP(StandardServerDoubleBP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !" + Environment.NewLine + "Tu pourras en profiter jusqu'au " + DateTime.Now.AddMonths(1), "Double de BPs !", false);
+            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !" + Environment.NewLine + "Tu pourras en profiter jusqu'au " + DateTime.Now.AddDays(3), "Double de BPs !", false);
+            FormExecution.AddNotes("Fin de la période double BP : " + DateTime.Now.AddDays(3) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY DOUBLE BP");
         }
         public void OnBuyInfiniteGreet(StandardServerGreetInfinite packet)

@@ -42,6 +42,8 @@ namespace hub_client.Windows
 
             _cards = new List<BrocanteCard>();
 
+            
+
             this.MouseDown += Window_MouseDown;
         }
 
@@ -209,12 +211,19 @@ namespace hub_client.Windows
 
         private void brocanteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BrocanteCard card = ((sender as ListView).SelectedItem as BrocanteCard);
+            try
+            {
+                BrocanteCard card = ((sender as ListView).SelectedItem as BrocanteCard);
 
-            if (card == null)
-                return;
+                if (card == null)
+                    return;
 
-            DisplayCardInfo.SetCard(CardManager.GetCard(card.Id));
+                DisplayCardInfo.SetCard(CardManager.GetCard(card.Id));
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -258,6 +267,8 @@ namespace hub_client.Windows
             }
             else
             {
+                if (brocanteList.ItemsSource != null)
+                    brocanteList.ItemsSource = null;
                 brocanteList.Items.Clear();
                 brocanteList.ItemsSource = _cards;
 

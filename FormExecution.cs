@@ -594,6 +594,13 @@ namespace hub_client
         {
             logger.Trace("Open Brocante");
 
+            if (ClientConfig.FirstTimeBrocante)
+            {
+                Client_PopMessageBox(StartDisclaimer.BrocanteText, "Première ouverture de la brocante", true);
+                ClientConfig.FirstTimeBrocante = false;
+                ClientConfig.Save();
+            }
+
             if (_brocante != null && _brocante.IsVisible)
                 _brocante.Activate();
 
@@ -655,6 +662,18 @@ namespace hub_client
         public static void RefreshChatStyle()
         {
             _chat.LoadStyle();
+        }
+
+        public static void AddNotes(string add)
+        {
+            string path = Path.Combine(FormExecution.path, "notes.bca");
+            string notes = string.Empty;
+
+            if (File.Exists(path))
+                notes = File.ReadAllText(System.IO.Path.Combine(FormExecution.path, path));
+            notes += Environment.NewLine + add;
+
+            File.WriteAllText(path, notes);
         }
     }
 }

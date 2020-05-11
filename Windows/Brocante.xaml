@@ -51,7 +51,7 @@
                                 <GridViewColumnHeader Tag="CardName" Click="lvUsersColumnHeader_Click">Carte</GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Price}">
+                        <GridViewColumn DisplayMemberBinding="{Binding Price}" Width="100">
                             <GridViewColumn.Header>
                                 <GridViewColumnHeader Tag="Price" Click="lvUsersColumnHeader_Click">Prix</GridViewColumnHeader>
                             </GridViewColumn.Header>

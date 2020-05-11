@@ -58,6 +58,21 @@ namespace hub_client.Windows.Controls
 
                     normalTxt.Text = " ";
                 }
+                else if (word == "**")
+                {
+                    bold = !bold;
+                    continue;
+                }
+                else if (word == "*")
+                {
+                    italic = !italic;
+                    continue;
+                }
+                else if (word == "__")
+                {
+                    underline = !underline;
+                    continue;
+                }
                 else if (word.StartsWith("**"))
                 {
                     normalTxt.Text = (word.Substring(2) + " ");
@@ -164,6 +179,21 @@ namespace hub_client.Windows.Controls
                     pr.Inlines.Add(textLink);
 
                     normalTxt.Text = " ";
+                }
+                else if (word == "**")
+                {
+                    bold = !bold;
+                    continue;
+                }
+                else if (word == "*")
+                {
+                    italic = !italic;
+                    continue;
+                }
+                else if (word == "__")
+                {
+                    underline = !underline;
+                    continue;
                 }
                 else if (word.StartsWith("**"))
                 {

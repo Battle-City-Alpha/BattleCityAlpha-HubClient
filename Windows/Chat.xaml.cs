@@ -254,7 +254,6 @@ namespace hub_client.Windows
         {
             RefreshDeck();
         }
-
         private void RefreshDeck()
         {
             cb_defaultdeck.Items.Clear();
@@ -342,14 +341,17 @@ namespace hub_client.Windows
                     tbChat.Clear();
                     break;
                 case Key.Up:
-                    if (_index_last_message != 0)
-                        _index_last_message -= 1;
+                    if (_index_last_message == 0)
+                        break;
+                    _index_last_message -= 1;
                     tbChat.SetText(_last_messages[_index_last_message]);
                     tbChat.tbChat.SelectionStart = tbChat.tbChat.Text.Length;
                     tbChat.tbChat.SelectionLength = 0;
                     break;
                 case Key.Down:
                     if (_last_messages.Count == 0)
+                        break;
+                    if (_index_last_message == _last_messages.Count)
                         break;
                     if (_index_last_message != _last_messages.Count - 1)
                         _index_last_message += 1;

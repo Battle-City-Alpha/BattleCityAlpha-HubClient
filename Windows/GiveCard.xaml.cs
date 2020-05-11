@@ -3,6 +3,8 @@ using hub_client.Cards;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +17,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class GiveCard : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private GiveCardAdministrator _admin;
 
         private PlayerInfo _target;
@@ -39,14 +42,33 @@ namespace hub_client.Windows
             Collection.GetListview().SelectionChanged += GiveCard_SelectionChanged;
 
             lb_choice.MouseDoubleClick += Lb_choice_MouseDoubleClick;
+            lb_choice.SelectionChanged += Lb_choice_SelectionChanged; ;
 
             this.MouseDown += Window_MouseDown;
         }
 
+        private void Lb_choice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lb_choice.SelectedIndex == -1) return;
+            string item = lb_choice.SelectedItem.ToString();
+
+            int id = _ids[lb_choice.SelectedIndex];
+            if (!_cards.ContainsKey(id))
+                return;
+            try
+            {
+                DisplayCardInfo.SetCard(CardManager.GetCard(id));
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
+            }
+        }
+
         private void Lb_choice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string item = lb_choice.SelectedItem.ToString();
             if (lb_choice.SelectedIndex == -1) return;
+            string item = lb_choice.SelectedItem.ToString();
 
             int id = _ids[lb_choice.SelectedIndex];
 
@@ -89,8 +111,6 @@ namespace hub_client.Windows
             if (!Collection.RemoveCard(card))
                 return;
 
-            lb_choice.Items.Add(card.Name);
-
             PlayerCard offerCard = new PlayerCard();
             offerCard.Id = card.Id;
             offerCard.Name = card.Name;
@@ -102,6 +122,8 @@ namespace hub_client.Windows
                 _cards[offerCard.Id].Quantity++;
 
             _ids.Add(offerCard.Id);
+
+            lb_choice.Items.Add(card.Name);
         }
 
         private void _admin_LoadCards(Dictionary<int, PlayerCard> cards)

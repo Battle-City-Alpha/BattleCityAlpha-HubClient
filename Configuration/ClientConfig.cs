@@ -7,6 +7,9 @@ namespace hub_client.Configuration
     {
         public bool TestMode = false;
 
+        public bool FirstTimeRanked = true;
+        public bool FirstTimeBrocante = true;
+
         public bool Greet = true;
         public bool IgnoreTradeRequest = false;
         public bool IgnoreDuelRequest = false;

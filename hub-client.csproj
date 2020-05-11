@@ -158,6 +158,7 @@
     <Compile Include="Helpers\HardwareIdManager.cs" />
     <Compile Include="Helpers\PlayerManager.cs" />
     <Compile Include="Helpers\RoomManager.cs" />
+    <Compile Include="Helpers\StartDisclaimer.cs" />
     <Compile Include="Helpers\YgoProHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Network\NetworkData.cs" />
