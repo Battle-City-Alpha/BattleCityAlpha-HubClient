@@ -70,9 +70,16 @@ namespace hub_client.Windows.Controls
 
         private void Img_center_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            tb_customID.BeginAnimation(OpacityProperty, fadeInText);
-            img_center.BeginAnimation(OpacityProperty, fadeOutBorder);
-            tb_customID.Text = _customs[_index].Id.ToString();
+            try
+            {
+                tb_customID.BeginAnimation(OpacityProperty, fadeInText);
+                img_center.BeginAnimation(OpacityProperty, fadeOutBorder);
+                tb_customID.Text = _customs[_index].Id.ToString();
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
+            }
         }
 
         public void LoadFirstCustoms(Customization[] customs)
