@@ -242,8 +242,24 @@ namespace hub_client.Windows
         {
             LoadStyle();
 
+            cb_defaultdeck.PreviewMouseLeftButtonDown += cb_defaultdeck_click;
+            RefreshDeck();           
+
+            tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
+
+            logger.Trace("Style loaded.");
+        }
+
+        private void cb_defaultdeck_click(object sender, MouseButtonEventArgs e)
+        {
+            RefreshDeck();
+        }
+
+        private void RefreshDeck()
+        {
             cb_defaultdeck.Items.Clear();
             List<string> Deck = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "deck")));
+            Deck.Sort();
             foreach (string deck in Deck)
             {
                 string[] name = deck.Split('\\');
@@ -251,10 +267,6 @@ namespace hub_client.Windows
                 cb_defaultdeck.Items.Add(nomFinal[0]);
             }
             cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
-
-            tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
-
-            logger.Trace("Style loaded.");
         }
 
         public void LoadStyle()
@@ -487,7 +499,8 @@ namespace hub_client.Windows
 
         private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            YgoproConfig.UpdateDefaultDeck((string)cb_defaultdeck.SelectedItem);
+            if (cb_defaultdeck.SelectedItem != null)
+                YgoproConfig.UpdateDefaultDeck((string)cb_defaultdeck.SelectedItem);
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
