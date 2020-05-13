@@ -109,7 +109,7 @@ namespace hub_client.Windows.Controls
                 else if (word == FormExecution.Username)
                 {
                     normalTxt.Text = (word + " ");
-                    bold = true;
+                    normalTxt.FontWeight = FontWeights.Bold;
 
                     FormExecution.FlashChat();
                 }
@@ -230,8 +230,8 @@ namespace hub_client.Windows.Controls
                 }
                 else if (word == FormExecution.Username)
                 {
-                    normalTxt.Text = (word + " ");
-                    bold = true;
+                    normalTxt.Text = (word + " "); 
+                    normalTxt.FontWeight = FontWeights.Bold;
 
                     FormExecution.FlashChat();
                 }
