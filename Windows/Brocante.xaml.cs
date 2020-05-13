@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace hub_client.Windows
 {
@@ -30,6 +31,8 @@ namespace hub_client.Windows
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
 
+        private DispatcherTimer _popupTimer;
+
         public Brocante(BrocanteAdministrator admin)
         {
             InitializeComponent();
@@ -42,9 +45,20 @@ namespace hub_client.Windows
 
             _cards = new List<BrocanteCard>();
 
-            
+            _popupTimer = new DispatcherTimer();
+            _popupTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            _popupTimer.Tick += _popupTimer_Tick;
+            _popupTimer.IsEnabled = false;
+
+
 
             this.MouseDown += Window_MouseDown;
+        }
+
+        private void _popupTimer_Tick(object sender, EventArgs e)
+        {
+            brocante_reload_popup.IsOpen = false;
+            _popupTimer.IsEnabled = false;
         }
 
         private void LoadStyle()
@@ -69,6 +83,8 @@ namespace hub_client.Windows
 
         private void _admin_LoadBrocante(List<BrocanteCard> cards)
         {
+            int sitem = brocanteList.SelectedIndex;
+
             brocanteList.ItemsSource = null;
             _cards = cards;
 
@@ -77,7 +93,16 @@ namespace hub_client.Windows
 
             brocanteList.ItemsSource = _cards;
 
-            _admin.Client.OpenPopBox("Les cartes dans la brocante ont été mises à jour.", "Mise à jour brocante");
+            //_admin.Client.OpenPopBox("Les cartes dans la brocante ont été mises à jour.", "Mise à jour brocante");
+
+            if (this.IsActive)
+            {
+                this.brocante_reload_popup.IsOpen = true;
+                _popupTimer.IsEnabled = true;
+            }
+
+            if (sitem != -1 && brocanteList.Items.Count > sitem)
+                brocanteList.SelectedItem = sitem;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

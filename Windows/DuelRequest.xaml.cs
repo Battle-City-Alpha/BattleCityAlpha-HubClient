@@ -29,6 +29,8 @@ namespace hub_client.Windows
             cb_masterrules.Items.Add("MR5 (Avril 2020)");
             cb_masterrules.Items.Add("MR4 (Link)");
             cb_masterrules.Items.Add("MR3 (Pendules)");
+            cb_masterrules.Items.Add("MR2 (Synchro/XYZ)");
+            cb_masterrules.Items.Add("MR1 (Basique)");
 
             _id = id;
 
