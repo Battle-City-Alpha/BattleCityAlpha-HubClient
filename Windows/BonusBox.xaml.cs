@@ -33,8 +33,8 @@ namespace hub_client.Windows
                     break;
                 case BonusType.Avatar:
                     bonus += "L'avatar n°" + gift + " !";
-                    showBonus.Height = 96;
-                    showBonus.Width = 96;
+                    showBonus.Height = 256;
+                    showBonus.Width = 256;
                     showBonus.Source = FormExecution.AssetsManager.GetImage("Avatars", Convert.ToInt32(gift).ToString());
                     break;
                 case BonusType.Sleeve:

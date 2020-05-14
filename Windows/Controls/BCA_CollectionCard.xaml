@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.BCA_CollectionCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls"
+             mc:Ignorable="d" 
+             Width="200" Height="310">
+    <Border x:Name="bg_border" CornerRadius="15" Margin="5" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+        <Border.Background>
+            <SolidColorBrush Color="White" Opacity="0.9"/>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="265" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Popup x:Name="cardinfos_popup" MaxWidth="300" MaxHeight="500" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Mouse" AllowsTransparency="True" PopupAnimation="Fade">
+                <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="0" Margin="0">
+                            <TextBlock x:Name="tb_cardname" Text="???" FontSize="18" Padding="10" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="1" Grid.ColumnSpan="2">
+                            <TextBlock x:Name="tb_cardtype" Text="???" FontSize="18" Padding="10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+                            <TextBlock x:Name="tb_cardattribute" Text="???" FontSize="18" Padding="10" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                    <TextBlock x:Name="tb_cardatkdef" Text="???" FontSize="18" Padding="10"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Column="1">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                                    <TextBlock x:Name="tb_cardlevel" Text="???" FontSize="18" Padding="10"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Grid>
+                        <ScrollViewer x:Name="scrCardDesc" Grid.Row="4" Grid.ColumnSpan="2" >
+                            <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+
+            <Image x:Name="img_card" Width="177" Height="254" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="[Q:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
+                    <TextBlock x:Name="tb_quantity" Text="???" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBlock Text="]" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" />
+                </StackPanel>
+
+                <TextBlock x:Name="tb_rarity" Text="Secret" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

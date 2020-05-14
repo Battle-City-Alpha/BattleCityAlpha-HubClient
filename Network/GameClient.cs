@@ -38,6 +38,7 @@ namespace hub_client.Network
         public event Action<PlayerInfo, string[], string> RecieveDeck;
         public event Action<PlayerInfo, byte[], string> RecieveReplay;
         public event Action<CustomizationType, string, int> CustomizationAchievement;
+        public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -472,6 +473,9 @@ namespace hub_client.Network
                 case PacketType.AskGamesHistory:
                     OnGetGamesHistory(JsonConvert.DeserializeObject<StandardServerGamesHistory>(packet));
                     break;
+                case PacketType.AskBoosterCollection:
+                    OnAskBoosterCollection(JsonConvert.DeserializeObject<StandardServerBoosterCollection>(packet));
+                    break;
             }
         }
 
@@ -782,6 +786,11 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => PurchaseItem?.Invoke(packet.Cards));
             Application.Current.Dispatcher.Invoke(() => UpdateBattlePoints?.Invoke(packet.Points));
             logger.Trace("PURCHASE ITEMS - {0}", packet.Cards);
+        }
+        public void OnAskBoosterCollection(StandardServerBoosterCollection packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => LoadBoosterCollection?.Invoke(packet.PurchaseTag, packet.Id, packet.Quantity, packet.Rarity));
+            logger.Trace("ASK BOOSTER COLLECTION - {0}", packet.PurchaseTag);
         }
 
         public void OnClearChat(StandardServerClear packet)

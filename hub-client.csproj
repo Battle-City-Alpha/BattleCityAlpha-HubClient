@@ -163,6 +163,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Network\NetworkData.cs" />
     <Compile Include="Stuff\BoosterInfo.cs" />
+    <Compile Include="Stuff\CollectionCardItem.cs" />
     <Compile Include="Stuff\PlayerItem.cs" />
     <Compile Include="Stuff\RankingPlayerItem.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
@@ -213,6 +214,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Windows\CollectionViewer.xaml.cs">
+      <DependentUpon>CollectionViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ColorPickerWindow.xaml.cs">
       <DependentUpon>ColorPickerWindow.xaml</DependentUpon>
     </Compile>
@@ -224,6 +228,9 @@
     </Compile>
     <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
       <DependentUpon>BCA_Button.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_CollectionCard.xaml.cs">
+      <DependentUpon>BCA_CollectionCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_CustomizationsHorizontalViewer.xaml.cs">
       <DependentUpon>BCA_CustomizationsHorizontalViewer.xaml</DependentUpon>
@@ -368,6 +375,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\CollectionViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ColorPickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -381,6 +392,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_CollectionCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -3006,6 +3021,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Logo\lose.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_collectionviewer.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

@@ -98,6 +98,13 @@ namespace hub_client.Windows
             lb_booster.Items.Clear();
             foreach (BoosterInfo item in BoosterManager.Boosters[PurchaseType.Booster])
                 lb_booster.Items.Add(item);
+
+            img_booster.MouseLeftButtonDown += Img_booster_MouseLeftButtonDown;
+        }
+
+        private void Img_booster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.AskBoosterCollection(BoosterChoosen.PurchaseTag);
         }
 
         private void cbBooster_SelectionChanged(object sender, SelectionChangedEventArgs e)

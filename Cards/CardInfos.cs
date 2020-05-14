@@ -162,6 +162,19 @@ namespace hub_client.Cards
             return MemberwiseClone();
         }
 
+        public bool IsSpell()
+        {
+            return GetCardTypes().Contains(CardType.Magie);
+        }
+        public bool IsTrap()
+        {
+            return GetCardTypes().Contains(CardType.Piège);
+        }
+        public bool IsMonster()
+        {
+            return GetCardTypes().Contains(CardType.Monstre);
+        }
+
         public int AliasId { get; set; }
 
         public int Atk { get; set; }

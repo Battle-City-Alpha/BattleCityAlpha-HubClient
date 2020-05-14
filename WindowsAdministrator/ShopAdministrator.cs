@@ -37,5 +37,9 @@ namespace hub_client.WindowsAdministrator
         {
             Client.Send(PacketType.PurchaseItem, new StandardClientPurchase { Tag = tag, NumberPacket = numberPacket });
         }
+        public void AskBoosterCollection(string tag)
+        {
+            Client.Send(PacketType.AskBoosterCollection, new StandardClientAskBoosterCollection { PurchaseTag = tag });
+        }
     }
 }

@@ -73,5 +73,16 @@ namespace hub_client.Assets
         {
             return Path.Combine(path, "Assets", directory, img);
         }
+
+        public BitmapImage GetUnknownCardPic()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.UriSource = new Uri(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "unknown.png"));
+            image.EndInit();
+            return image;
+        }
     }
 }

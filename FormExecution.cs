@@ -142,6 +142,7 @@ namespace hub_client
             Client.RecieveReplay += Client_RecieveReplay;
             Client.Restart += Client_Restart;
             Client.CustomizationAchievement += Client_CustomizationAchievement;
+            Client.LoadBoosterCollection += Client_LoadBoosterCollection;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -154,6 +155,13 @@ namespace hub_client
             }
 
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_LoadBoosterCollection(string tag, List<int> ids, List<int> quantities, List<CardRarity> rarities)
+        {
+            CollectionViewer viewer = new CollectionViewer(BoosterManager.GetBoosterInfo(tag), ids, quantities, rarities);
+            Task.Run(() => viewer.LoadCard());
+            viewer.Show();
         }
 
         private static void Client_CustomizationAchievement(CustomizationType ctype, string text, int id)

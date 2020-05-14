@@ -372,8 +372,13 @@ namespace hub_client.Windows
 
         private void btnProfil_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Profil profil = new Profil(_admin.Client.ProfilAdmin);
-            _admin.SendProfileAsking();
+            foreach (PlayerInfo info in lvUserlist.Items)
+                if (info.Username == FormExecution.Username)
+                {
+                    Profil profil = new Profil(_admin.Client.ProfilAdmin);
+                    _admin.SendAskProfil(info);
+                    return;
+                }
         }
         private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

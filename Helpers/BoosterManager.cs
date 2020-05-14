@@ -13,6 +13,7 @@ namespace hub_client.Helpers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public static Dictionary<PurchaseType, List<BoosterInfo>> Boosters;
+        //static string txt = "";
 
         public static void LoadList()
         {
@@ -26,6 +27,7 @@ namespace hub_client.Helpers
                     if (!file.Contains(".json"))
                         continue;
                     BoosterInfo infos = GetBoosterInfo(Path.GetFileNameWithoutExtension(file));
+                    //txt += string.Format("BoosterTagLink[L\"{0}\"] = L\"{1}\";" + Environment.NewLine, infos.Name, infos.PurchaseTag);
                     if (!Boosters.ContainsKey(infos.Type))
                         Boosters[infos.Type] = new List<BoosterInfo>();
                     Boosters[infos.Type].Add(infos);
@@ -40,6 +42,8 @@ namespace hub_client.Helpers
             foreach (PurchaseType type in Enum.GetValues(typeof(PurchaseType)))
                 if (Boosters.ContainsKey(type))
                     Boosters[type].Sort(comparer);
+
+            //File.WriteAllText("boostertag.txt", txt);
         }
 
         public static BoosterInfo InitializeBooster(string name)

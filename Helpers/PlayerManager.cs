@@ -7,32 +7,33 @@ namespace hub_client.Helpers
 {
     public class PlayerManager
     {
-        public Dictionary<string, PlayerInfo> Players;
+        public Dictionary<int, PlayerInfo> Players;
 
         public PlayerManager()
         {
-            Players = new Dictionary<string, PlayerInfo>();
+            Players = new Dictionary<int, PlayerInfo>();
         }
 
         public void UpdatePlayer(PlayerInfo infos)
         {
-            if (Players.ContainsKey(infos.Username))
-                Players[infos.Username] = infos;
+            if (Players.ContainsKey(infos.UserId))
+                Players[infos.UserId] = infos;
             else
-                Players.Add(infos.Username, infos);
+                Players.Add(infos.UserId, infos);
         }
 
 
         public void Remove(PlayerInfo infos)
         {
-            if (Players.ContainsKey(infos.Username))
-                Players.Remove(infos.Username);
+            if (Players.ContainsKey(infos.UserId))
+                Players.Remove(infos.UserId);
         }
 
         public PlayerInfo GetInfos(string username)
         {
-            if (Players.ContainsKey(username))
-                return Players[username];
+            foreach (var info in Players)
+                if (info.Value.Username == username)
+                    return info.Value;
             return null;
         }
 
