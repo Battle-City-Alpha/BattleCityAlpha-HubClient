@@ -63,7 +63,13 @@ namespace hub_client.Windows
 
         private void Img_card_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            scrCardDesc.ScrollToVerticalOffset(-e.Delta);
+            double scrollPos = scrCardDesc.VerticalOffset - e.Delta;
+            if (scrollPos < 0)
+                scrollPos = 0;
+            if (scrollPos > scrCardDesc.ScrollableHeight)
+                scrollPos = (int)scrCardDesc.ScrollableHeight;
+
+            scrCardDesc.ScrollToVerticalOffset(scrollPos);
             e.Handled = true;
         }
 

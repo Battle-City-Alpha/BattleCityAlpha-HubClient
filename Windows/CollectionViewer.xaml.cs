@@ -28,7 +28,7 @@ namespace hub_client.Windows
             this.label_booster_name.Content = "[" + info.PurchaseTag + "] " + info.Name;
             this.total_count.Content = ids.Count();
 
-            int numberIHave = info.CardsNumber;
+            int numberIHave = ids.Count();
 
             _cards = new List<CollectionCardItem>();
             for (int i = 0; i < ids.Count; i++)

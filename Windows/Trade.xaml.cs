@@ -54,6 +54,19 @@ namespace hub_client.Windows
 
             img_card.MouseEnter += Img_card_MouseEnter;
             img_card.MouseLeave += Img_card_MouseLeave;
+            img_card.PreviewMouseWheel += Img_card_PreviewMouseWheel;
+        }
+
+        private void Img_card_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double scrollPos = scrCardDesc.VerticalOffset - e.Delta;
+            if (scrollPos < 0)
+                scrollPos = 0;
+            if (scrollPos > scrCardDesc.ScrollableHeight)
+                scrollPos = (int)scrCardDesc.ScrollableHeight;
+
+            scrCardDesc.ScrollToVerticalOffset(scrollPos);
+            e.Handled = true;
         }
 
         private void Img_card_MouseLeave(object sender, MouseEventArgs e)

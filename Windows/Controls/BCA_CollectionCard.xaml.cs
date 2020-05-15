@@ -34,7 +34,11 @@ namespace hub_client.Windows.Controls
             _item = item;
             SetPic();
             this.tb_quantity.Text = _item.Quantity.ToString();
-            this.tb_rarity.Text = _item.Rarity.ToString().Replace('_', ' ');
+
+            if (_item.Rarity != 0)
+                this.tb_rarity.Text = _item.Rarity.ToString().Replace('_', ' ');
+            else
+                this.tb_rarity.Visibility = Visibility.Hidden;
 
             img_card.MouseEnter += Img_card_MouseEnter;
             img_card.MouseLeave += Img_card_MouseLeave;
@@ -58,9 +62,15 @@ namespace hub_client.Windows.Controls
 
         private void Img_card_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            double scrollPos = scrCardDesc.VerticalOffset - e.Delta;
+            if (scrollPos < 0)
+                scrollPos = 0;
+            if (scrollPos > scrCardDesc.ScrollableHeight)
+                scrollPos = (int)scrCardDesc.ScrollableHeight;
+
             if (this.cardinfos_popup.IsOpen)
             {
-                scrCardDesc.ScrollToVerticalOffset(-e.Delta);
+                scrCardDesc.ScrollToVerticalOffset(scrollPos);
                 e.Handled = true;
             }
         }
