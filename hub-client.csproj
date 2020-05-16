@@ -176,6 +176,7 @@
     <Compile Include="WindowsAdministrator\GamesHistoryAdministrator.cs" />
     <Compile Include="WindowsAdministrator\GiveCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
+    <Compile Include="WindowsAdministrator\MonthPackViewerAdministrator.cs" />
     <Compile Include="WindowsAdministrator\NotesAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PanelAdministrator.cs" />
     <Compile Include="WindowsAdministrator\PrestigeCustomizationsViewerAdministrator.cs" />
@@ -287,6 +288,9 @@
     </Compile>
     <Compile Include="Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MonthPackViewer.xaml.cs">
+      <DependentUpon>MonthPackViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Notes.xaml.cs">
       <DependentUpon>Notes.xaml</DependentUpon>
@@ -468,6 +472,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MonthPackViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

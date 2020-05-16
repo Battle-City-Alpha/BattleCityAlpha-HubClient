@@ -192,7 +192,7 @@ namespace hub_client.Windows
         }
         private void BuyMonthPack(object sender, MouseButtonEventArgs e)
         {
-            _admin.SendBuyMonthPack();
+            _admin.SendAskMonthPack();
         }
 
         private void PP_Item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

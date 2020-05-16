@@ -39,6 +39,7 @@ namespace hub_client.Network
         public event Action<PlayerInfo, byte[], string> RecieveReplay;
         public event Action<CustomizationType, string, int> CustomizationAchievement;
         public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
+        public event Action<int, int, int> LoadMonthPack;
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -152,6 +153,7 @@ namespace hub_client.Network
         public RankingDisplayAdministrator RankingDisplayAdmin;
         public GiveCardAdministrator GiveCardAdmin;
         public GamesHistoryAdministrator GamesHistoryAdmin;
+        public MonthPackViewerAdministrator MonthPackViewerAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -191,6 +193,7 @@ namespace hub_client.Network
             RankingDisplayAdmin = new RankingDisplayAdministrator(this);
             GiveCardAdmin = new GiveCardAdministrator(this);
             GamesHistoryAdmin = new GamesHistoryAdministrator(this);
+            MonthPackViewerAdmin = new MonthPackViewerAdministrator(this);
         }
 
         private void InitManager()
@@ -475,6 +478,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.AskBoosterCollection:
                     OnAskBoosterCollection(JsonConvert.DeserializeObject<StandardServerBoosterCollection>(packet));
+                    break;
+                case PacketType.AskMonthPack:
+                    OnAskMonthPack(JsonConvert.DeserializeObject<StandardServerAskMonthPack>(packet));
                     break;
             }
         }
@@ -1096,8 +1102,14 @@ namespace hub_client.Network
         public void OnBuyMonthPack(StandardServerBuyMonthPack packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir le pack du mois, contenant un avatar, une bordure, une sleeve et t'offrant un jour de multiplication par deux de tes gains de BPs en duel !", "Pack du mois !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir le pack du mois, contenant un avatar, une bordure, une sleeve et t'offrant un jour de multiplication par deux de tes gains de BPs en duel ainsi qu'un mois VIP !", "Pack du mois !", false);
+            FormExecution.AddNotes("Fin de la période VIP : " + DateTime.Now.AddMonths(1) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY MONTH PACK");
+        }
+        public void OnAskMonthPack(StandardServerAskMonthPack packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => LoadMonthPack?.Invoke(packet.Avatar, packet.Border, packet.Sleeve));
+            logger.Trace("ASK MONTH PACK");
         }
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
         {

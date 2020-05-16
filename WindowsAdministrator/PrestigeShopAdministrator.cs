@@ -31,9 +31,9 @@ namespace hub_client.WindowsAdministrator
             UpdatePrestigePoints?.Invoke(pp);
         }
 
-        public void SendBuyMonthPack()
+        public void SendAskMonthPack()
         {
-            Client.Send(PacketType.BuyMonthPack, new StandardClientBuyMonthPack { });
+            Client.Send(PacketType.AskMonthPack, new StandardClientAskMonthPack { });
         }
         public void SendBuyResetStats()
         {
