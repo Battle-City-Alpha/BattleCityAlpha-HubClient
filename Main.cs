@@ -1,6 +1,4 @@
-﻿using hub_client.Cards;
-using hub_client.Windows;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -9,8 +7,6 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace hub_client
 {

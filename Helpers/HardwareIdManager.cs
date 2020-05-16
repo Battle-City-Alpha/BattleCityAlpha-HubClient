@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Management;
 using System.Security.Cryptography;
 using System.Text;
@@ -120,7 +119,7 @@ namespace hub_client.Helpers
         {
             using (SHA256 hash = SHA256.Create())
             {
-                return String.Join("", hash
+                return string.Join("", hash
                   .ComputeHash(Encoding.UTF8.GetBytes(s))
                   .Select(item => item.ToString("x2")));
             }

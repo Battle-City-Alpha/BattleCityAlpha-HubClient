@@ -57,7 +57,7 @@ namespace hub_client.Windows
         private void BtnSend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int MR = 5 - cb_masterrules.SelectedIndex;
-            string password = chb_password.IsChecked == true ? tb_password.Text : String.Empty;
+            string password = chb_password.IsChecked == true ? tb_password.Text : string.Empty;
             if (_id != -1)
                 _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, tb_captiontext.Text);
             else

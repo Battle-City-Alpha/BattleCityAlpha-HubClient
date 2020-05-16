@@ -230,14 +230,14 @@ namespace hub_client.Windows.Controls
                 }
                 else if (word == FormExecution.Username)
                 {
-                    normalTxt.Text = (word + " "); 
+                    normalTxt.Text = (word + " ");
                     normalTxt.FontWeight = FontWeights.Bold;
 
                     FormExecution.FlashChat();
                 }
                 else
                 {
-                    normalTxt.Text = (word + " ");               
+                    normalTxt.Text = (word + " ");
                 }
 
                 normalTxt.Foreground = new SolidColorBrush(color);

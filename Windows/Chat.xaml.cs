@@ -95,7 +95,7 @@ namespace hub_client.Windows
                 case Key.Tab:
                     string[] words = tbChat.GetText().Split(' ');
                     words[words.Length - 1] = FindUsername(words[words.Length - 1]);
-                    tbChat.SetText(String.Join(" ", words));
+                    tbChat.SetText(string.Join(" ", words));
                     tbChat.tbChat.SelectionStart = tbChat.tbChat.Text.Length;
                     tbChat.tbChat.SelectionLength = 0;
                     e.Handled = true;
@@ -152,7 +152,7 @@ namespace hub_client.Windows
         private void _admin_ClearChat(string username, string reason)
         {
             chat.Clear();
-            _admin_SpecialChatMessage(style.GetGameColor("InformationMessageColor"), String.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
+            _admin_SpecialChatMessage(style.GetGameColor("InformationMessageColor"), string.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
         }
 
         private void _admin_RemoveHubPlayer(PlayerInfo infos)
@@ -177,7 +177,7 @@ namespace hub_client.Windows
             view.GroupDescriptions.Add(groupDescription);
 
             if (FormExecution.ClientConfig.Connexion_Message)
-                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est déconnecté.", infos.Username), false, false);
+                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), string.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} removed from userlist.", infos);
         }
         private void _admin_AddHubPlayer(PlayerInfo infos, bool showmessage)
@@ -186,7 +186,7 @@ namespace hub_client.Windows
                 return;
 
             if (FormExecution.ClientConfig.Connexion_Message && showmessage)
-                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), String.Format("{0} s'est connecté.", infos.Username), false, false);
+                _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), string.Format("{0} s'est connecté.", infos.Username), false, false);
             logger.Trace("{0} added to userlist.", infos);
         }
         private bool AddPlayer(PlayerInfo infos)
@@ -243,7 +243,7 @@ namespace hub_client.Windows
             LoadStyle();
 
             cb_defaultdeck.PreviewMouseLeftButtonDown += cb_defaultdeck_click;
-            RefreshDeck();           
+            RefreshDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
@@ -433,7 +433,7 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.AddBlacklistPlayer(target);
-                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
+                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), string.Format("••• Vous avez ajouté à votre blacklist : {0}.", target.Username), false, false);
             }
         }
 
@@ -651,7 +651,7 @@ namespace hub_client.Windows
                     if (info.Length < 5000)
                         _admin.SendShareDeck(target, File.ReadAllLines(getdeck.FileName), Path.GetFileNameWithoutExtension(getdeck.FileName));
                     else
-                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Ton deck est trop lourd !"), false, false);
+                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), string.Format("••• Ton deck est trop lourd !"), false, false);
                 }
             }
         }
@@ -671,7 +671,7 @@ namespace hub_client.Windows
                     if (info.Length < 5000)
                         _admin.SendShareReplay(target, File.ReadAllBytes(getfile.FileName), Path.GetFileNameWithoutExtension(getfile.FileName));
                     else
-                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Ton replay est trop lourd !"), false, false);
+                        _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), string.Format("••• Ton replay est trop lourd !"), false, false);
                 }
             }
         }
@@ -713,7 +713,7 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.RemoveBlacklistPlayer(target);
-                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), String.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);
+                _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), string.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);
             }
         }
 

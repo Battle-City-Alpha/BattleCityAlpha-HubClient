@@ -2,7 +2,6 @@
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Cards;
-using System;
 
 namespace hub_client.Helpers
 {
@@ -80,7 +79,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int time = -1;
-            Int32.TryParse(args[1], out time);
+            int.TryParse(args[1], out time);
             if (time == -1)
                 return null;
 
@@ -120,7 +119,7 @@ namespace hub_client.Helpers
             }
 
             int time = -1;
-            Int32.TryParse(args[1], out time);
+            int.TryParse(args[1], out time);
             if (time == -1)
                 return null;
 
@@ -171,7 +170,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int points = -1;
-            Int32.TryParse(args[1], out points);
+            int.TryParse(args[1], out points);
             if (points == -1)
                 return null;
 
@@ -189,7 +188,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int points = -1;
-            Int32.TryParse(args[1], out points);
+            int.TryParse(args[1], out points);
             if (points == -1)
                 return null;
 
@@ -206,7 +205,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int id = -1;
-            Int32.TryParse(args[1], out id);
+            int.TryParse(args[1], out id);
             if (id == -1)
                 return null;
 
@@ -222,7 +221,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int id = -1;
-            Int32.TryParse(args[1], out id);
+            int.TryParse(args[1], out id);
             if (id == -1)
                 return null;
 
@@ -238,7 +237,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int id = -1;
-            Int32.TryParse(args[1], out id);
+            int.TryParse(args[1], out id);
             if (id == -1)
                 return null;
 
@@ -253,7 +252,7 @@ namespace hub_client.Helpers
             string[] args = txt.Split(' ');
             string target = args[0];
             int id = -1;
-            Int32.TryParse(args[1], out id);
+            int.TryParse(args[1], out id);
             if (id == -1)
                 return null;
 
@@ -269,7 +268,7 @@ namespace hub_client.Helpers
             string target = args[0];
 
             int id = -1;
-            Int32.TryParse(args[1], out id);
+            int.TryParse(args[1], out id);
             if (id == -1)
                 return null;
 
@@ -331,7 +330,7 @@ namespace hub_client.Helpers
             }
 
             int rang = -1;
-            Int32.TryParse(args[1], out rang);
+            int.TryParse(args[1], out rang);
             if (rang == -1)
                 return null;
 
@@ -347,7 +346,7 @@ namespace hub_client.Helpers
             string[] args = txt.Split(' ');
 
             int time = -1;
-            Int32.TryParse(args[0], out time);
+            int.TryParse(args[0], out time);
             if (time == -1)
                 return null;
 

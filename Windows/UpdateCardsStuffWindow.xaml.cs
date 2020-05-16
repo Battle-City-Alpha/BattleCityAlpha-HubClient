@@ -1,8 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
-using System;
-using System.IO;
-using System.Net;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 

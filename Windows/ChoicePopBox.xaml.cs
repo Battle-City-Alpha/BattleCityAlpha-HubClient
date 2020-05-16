@@ -31,7 +31,7 @@ namespace hub_client.Windows
             switch (_type)
             {
                 case ChoiceBoxType.Duel:
-                    txt = String.Format("Vous avez été invité en duel par {0}. \r\nType : {1}", player.Username, config.Type);
+                    txt = string.Format("Vous avez été invité en duel par {0}. \r\nType : {1}", player.Username, config.Type);
                     txt += Environment.NewLine + string.Format("MasterRules : {0}", config.MasterRules);
                     txt += Environment.NewLine + string.Format("Banlist : {0}", FormExecution.GetBanlistValue(config.Banlist));
                     txt += Environment.NewLine + string.Format("Point de vie : {0}", config.StartDuelLP);
@@ -45,7 +45,7 @@ namespace hub_client.Windows
                     break;
                 case ChoiceBoxType.Trade:
                     Title = "Requête d'échange";
-                    txt = String.Format("Vous avez été invité en échange par {0}.", player.Username);
+                    txt = string.Format("Vous avez été invité en échange par {0}.", player.Username);
                     break;
                 case ChoiceBoxType.Deck:
                     txt = "Vous avez reçu le deck " + deckname + " de la part de " + player.Username + ".";

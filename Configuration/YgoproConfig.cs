@@ -33,7 +33,7 @@ namespace hub_client.Configuration
                 int index = Array.FindIndex(lines, x => x.StartsWith("forced"));
                 lines[index] = "forced = " + Convert.ToInt32(forced);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 List<string> newlines = lines.ToList();
                 newlines.Add("forced = " + Convert.ToInt32(forced));

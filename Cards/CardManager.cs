@@ -41,7 +41,7 @@ namespace hub_client.Cards
             foreach (string id in ids)
             {
                 int i;
-                if (Int32.TryParse(id, out i))
+                if (int.TryParse(id, out i))
                     PicsID.Add(i);
             }
         }
@@ -87,7 +87,7 @@ namespace hub_client.Cards
                     CardManager.UpdateOrAddCard(new CardInfos(row));
                 else
                 {
-                    if (!CardManager.ContainsCard(Int32.Parse(row[0])))
+                    if (!CardManager.ContainsCard(int.Parse(row[0])))
                         CardManager.UpdateOrAddCard(new CardInfos(row));
                 }
 
@@ -99,8 +99,8 @@ namespace hub_client.Cards
                 i++;
                 Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, total));
 
-                if (CardManager.ContainsCard(Int32.Parse(row[0])))
-                    CardManager.GetCard(Int32.Parse(row[0])).SetCardText(row);
+                if (CardManager.ContainsCard(int.Parse(row[0])))
+                    CardManager.GetCard(int.Parse(row[0])).SetCardText(row);
             }
 
             if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf")))

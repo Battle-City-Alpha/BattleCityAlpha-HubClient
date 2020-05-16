@@ -19,20 +19,20 @@ namespace hub_client.Cards
         }
         public CardInfos(IList<string> carddata)
         {
-            Id = Int32.Parse(carddata[0]);
-            Ot = Int32.Parse(carddata[1]);
-            AliasId = Int32.Parse(carddata[2]);
-            SetCode = Int64.Parse(carddata[3]);
-            Type = Int32.Parse(carddata[4]);
-            uint level = UInt32.Parse(carddata[5]);
+            Id = int.Parse(carddata[0]);
+            Ot = int.Parse(carddata[1]);
+            AliasId = int.Parse(carddata[2]);
+            SetCode = long.Parse(carddata[3]);
+            Type = int.Parse(carddata[4]);
+            uint level = uint.Parse(carddata[5]);
             Level = level & 0xff;
             LScale = (level >> 24) & 0xff;
             RScale = (level >> 16) & 0xff;
-            Race = Int32.Parse(carddata[6]);
-            Attribute = Int32.Parse(carddata[7]);
-            Atk = Int32.Parse(carddata[8]);
-            Def = Int32.Parse(carddata[9]);
-            Category = Int64.Parse(carddata[10]);
+            Race = int.Parse(carddata[6]);
+            Attribute = int.Parse(carddata[7]);
+            Atk = int.Parse(carddata[8]);
+            Def = int.Parse(carddata[9]);
+            Category = long.Parse(carddata[10]);
         }
 
         public void SetCardText(string[] cardtext)
@@ -106,17 +106,17 @@ namespace hub_client.Cards
 
             string toReturn = "**`Informations:`**" + Environment.NewLine;
             toReturn += "`" + Environment.NewLine;
-            toReturn += String.Format("{0} ` \t ` \n {1} ` \t ` \n {2} `", Name, Id, ot) + Environment.NewLine;
+            toReturn += string.Format("{0} ` \t ` \n {1} ` \t ` \n {2} `", Name, Id, ot) + Environment.NewLine;
             toReturn += "```xl" + Environment.NewLine;
             if (typeArray.Contains(CardType.Monstre))
             {
-                toReturn += String.Format("[{0} - {1}] \t {2} \t {3}", type, race, attribut.ToUpper(), setname) + Environment.NewLine;
-                toReturn += String.Format("{0}: {1}★ \t {2}/{3}", level, Level, Atk, Def) + Environment.NewLine;
+                toReturn += string.Format("[{0} - {1}] \t {2} \t {3}", type, race, attribut.ToUpper(), setname) + Environment.NewLine;
+                toReturn += string.Format("{0}: {1}★ \t {2}/{3}", level, Level, Atk, Def) + Environment.NewLine;
                 if (typeArray.Contains(CardType.Pendule))
-                    toReturn += String.Format("Echelles: {0}/{1}", LScale, RScale) + Environment.NewLine;
+                    toReturn += string.Format("Echelles: {0}/{1}", LScale, RScale) + Environment.NewLine;
             }
             else
-                toReturn += String.Format("[{0}]", type) + Environment.NewLine;
+                toReturn += string.Format("[{0}]", type) + Environment.NewLine;
             toReturn += "```";
             toReturn += "```xl" + Environment.NewLine;
             toReturn += Description + "```";

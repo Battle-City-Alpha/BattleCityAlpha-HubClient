@@ -229,7 +229,7 @@ namespace hub_client
 
         private static void CardsUpdateDownloader_UpdateCompleted()
         {
-            _windowload.EndDownload(); 
+            _windowload.EndDownload();
             _windowload.Close();
 
             CardsUpdateDownloader.LoadingProgress -= CardsUpdateDownloader_LoadingProgress;

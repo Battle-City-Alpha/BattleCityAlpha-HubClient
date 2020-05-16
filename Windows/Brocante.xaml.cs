@@ -145,7 +145,7 @@ namespace hub_client.Windows
         private void TbChat_MaxQuantity_SelectionChanged(object sender, RoutedEventArgs e)
         {
             int research;
-            if (Int32.TryParse(tb__search_max_quantity.GetText(), out research))
+            if (int.TryParse(tb__search_max_quantity.GetText(), out research))
             {
 
                 if (brocanteList.ItemsSource != null)
@@ -153,7 +153,7 @@ namespace hub_client.Windows
                 else
                     brocanteList.Items.Clear();
 
-                if (research.ToString() != String.Empty)
+                if (research.ToString() != string.Empty)
                 {
                     foreach (BrocanteCard card in _cards)
                         if (card.Quantity <= research)
@@ -167,7 +167,7 @@ namespace hub_client.Windows
         private void TbChat_MaxPrice_SelectionChanged(object sender, RoutedEventArgs e)
         {
             int research;
-            if (Int32.TryParse(tb_search_max_price.GetText(), out research))
+            if (int.TryParse(tb_search_max_price.GetText(), out research))
             {
 
                 if (brocanteList.ItemsSource != null)
@@ -175,7 +175,7 @@ namespace hub_client.Windows
                 else
                     brocanteList.Items.Clear();
 
-                if (research.ToString() != String.Empty)
+                if (research.ToString() != string.Empty)
                 {
                     foreach (BrocanteCard card in _cards)
                         if (card.Price <= research)
@@ -195,7 +195,7 @@ namespace hub_client.Windows
             else
                 brocanteList.Items.Clear();
 
-            if (research != String.Empty)
+            if (research != string.Empty)
             {
                 foreach (BrocanteCard card in _cards)
                     if (card.SellerName.ToUpper().StartsWith(research))
@@ -216,7 +216,7 @@ namespace hub_client.Windows
                 else
                     brocanteList.Items.Clear();
 
-                if (research != String.Empty)
+                if (research != string.Empty)
                 {
                     foreach (BrocanteCard card in _cards)
                     {

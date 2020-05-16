@@ -21,8 +21,8 @@ namespace hub_client.Windows.Controls
 
         private Customization[] _customs;
         private int _index = 2;
-        string ctypetext = ""; 
-        
+        string ctypetext = "";
+
         DoubleAnimation fadeInBorder;
         DoubleAnimation fadeOutBorder;
         DoubleAnimation fadeInText;

@@ -33,7 +33,7 @@ namespace hub_client.Helpers
         }
         private static void LaunchWindbot(string deck, string host = _defaultHost, int port = _defaultPort, int version = 0x1340, string dialog = "fr-FR", string name = "Kaibot")
         {
-            string info = String.Format("Name={0}  Deck={1} Dialog={2} Host={3} Port={4} Version={5}", name, deck, dialog, host, port, version);
+            string info = string.Format("Name={0}  Deck={1} Dialog={2} Host={3} Port={4} Version={5}", name, deck, dialog, host, port, version);
 
             logger.Trace("Windbot start with : " + info);
 
@@ -61,7 +61,7 @@ namespace hub_client.Helpers
             UpdateBorder(_bot_border, 1);
             UpdateSleeve(_bot_sleeve, 1);
 
-            LaunchYgoPro(String.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
+            LaunchYgoPro(string.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
             Thread.Sleep(5000);
             LaunchWindbot(_deck);
         }

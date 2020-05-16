@@ -1,5 +1,4 @@
-﻿using BCA.Common.Enums;
-using hub_client.Cards;
+﻿using hub_client.Cards;
 using hub_client.Enums;
 using hub_client.Stuff;
 using NLog;
@@ -7,16 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace hub_client.Windows.Controls
 {
@@ -107,7 +101,7 @@ namespace hub_client.Windows.Controls
         }
 
         private void Img_card_MouseLeave(object sender, MouseEventArgs e)
-        {           
+        {
             if (_item.Quantity == 0)
                 img_card.Source = GetGrayScalePic();
             this.cardinfos_popup.IsOpen = false;

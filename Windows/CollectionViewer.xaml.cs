@@ -1,7 +1,6 @@
 ﻿using BCA.Common.Enums;
 using hub_client.Cards;
 using hub_client.Configuration;
-using hub_client.Enums;
 using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using System;
@@ -140,7 +139,7 @@ namespace hub_client.Windows
                 return 1;
 
             return yInfo.Name.CompareTo(xInfo.Name);
-            
+
         }
     }
 }

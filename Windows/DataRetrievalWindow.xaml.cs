@@ -1,7 +1,6 @@
 ﻿using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -60,7 +59,7 @@ namespace hub_client.Windows
 
         private void LaunchRetrieval(object sender, MouseButtonEventArgs e)
         {
-            if (String.IsNullOrEmpty(tbUsername.Text) || String.IsNullOrEmpty(pbPassword.Password))
+            if (string.IsNullOrEmpty(tbUsername.Text) || string.IsNullOrEmpty(pbPassword.Password))
                 return;
 
             _admin.SendAskDataRetrieval(tbUsername.Text, pbPassword.Password);
