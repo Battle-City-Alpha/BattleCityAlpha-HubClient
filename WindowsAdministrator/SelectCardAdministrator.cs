@@ -9,7 +9,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
-        public event Action<Dictionary<int, PlayerCard>> LoadSelectCard;
+        public event Action<Dictionary<int, PlayerCard>, bool> LoadSelectCard;
 
         public SelectCardAdministrator(GameClient client)
         {
@@ -18,9 +18,9 @@ namespace hub_client.WindowsAdministrator
             Client.LoadSelectCard += Client_LoadSelectCard;
         }
 
-        private void Client_LoadSelectCard(Dictionary<int, PlayerCard> cards)
+        private void Client_LoadSelectCard(Dictionary<int, PlayerCard> cards, bool cardSold)
         {
-            LoadSelectCard?.Invoke(cards);
+            LoadSelectCard?.Invoke(cards, cardSold);
         }
     }
 }

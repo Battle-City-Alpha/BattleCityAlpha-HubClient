@@ -126,7 +126,7 @@ namespace hub_client.Windows
 
         private void btn_duel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            YgoProHelper.LaunchGameAgainstBot(cb_AI_decks.SelectedIndex == 0 ? "" : cb_AI_decks.Text);
+            //YgoProHelper.LaunchGameAgainstBot(cb_AI_decks.SelectedIndex == 0 ? "" : cb_AI_decks.Text);
         }
     }
 }

@@ -295,6 +295,9 @@
     <Compile Include="Windows\Notes.xaml.cs">
       <DependentUpon>Notes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\NumberPopBox.xaml.cs">
+      <DependentUpon>NumberPopBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OfflineMessagesBox.xaml.cs">
       <DependentUpon>OfflineMessagesBox.xaml</DependentUpon>
     </Compile>
@@ -480,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Notes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\NumberPopBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

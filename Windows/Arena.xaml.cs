@@ -308,7 +308,7 @@ namespace hub_client.Windows
 
         private void btn_IA_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FormExecution.OpenSoloModeWindow();
+            YgoProHelper.LaunchGameAgainstBot();
         }
 
         private void btn_playranked_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

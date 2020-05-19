@@ -177,7 +177,7 @@ namespace hub_client.Windows
             tb_card3.Text = BoosterChoosen.MostImportantCards[2];
             tb_card4.Text = BoosterChoosen.MostImportantCards[3];
 
-            img_booster.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", BoosterChoosen.PurchaseTag + ".jpg" });
+            img_booster.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", BoosterChoosen.PurchaseTag + ".png" });
         }
 
         public void UpdateBoosterInfo(int cardgot, int totalcard, int price, int cardperpack, int bp)

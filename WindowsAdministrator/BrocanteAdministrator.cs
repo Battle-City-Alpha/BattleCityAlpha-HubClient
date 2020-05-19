@@ -49,13 +49,14 @@ namespace hub_client.WindowsAdministrator
                 Quantity = quantity
             });
         }
-        public void BuyBrocanteCard(BrocanteCard card)
+        public void BuyBrocanteCard(BrocanteCard card, int n)
         {
             if (card == null)
                 return;
             Client.Send(PacketType.BuyBrocanteCard, new StandardClientBuyBrocanteCard
             {
-                BcId = card.BCId
+                BcId = card.BCId,
+                Number = n
             });
         }
     }

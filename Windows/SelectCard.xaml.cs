@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace hub_client.Windows
 {
@@ -21,6 +22,8 @@ namespace hub_client.Windows
 
         public event Action<PlayerCard, int, int> SelectedCard;
 
+        private DispatcherTimer _popupTimer;
+
         public SelectCard(SelectCardAdministrator admin)
         {
             InitializeComponent();
@@ -31,11 +34,21 @@ namespace hub_client.Windows
 
             Collection.GetListview().SelectionChanged += SelectCard_SelectionChanged;
 
+            _popupTimer = new DispatcherTimer();
+            _popupTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            _popupTimer.Tick += _popupTimer_Tick;
+            _popupTimer.IsEnabled = false;
+
             Closed += SelectCard_Closed;
 
             LoadStyle();
 
             this.MouseDown += Window_MouseDown;
+        }
+        private void _popupTimer_Tick(object sender, EventArgs e)
+        {
+            sell_card_popup.IsOpen = false;
+            _popupTimer.IsEnabled = false;
         }
 
         private void SelectCard_Closed(object sender, EventArgs e)
@@ -44,9 +57,14 @@ namespace hub_client.Windows
             Collection.GetListview().SelectionChanged -= SelectCard_SelectionChanged;
         }
 
-        private void _admin_LoadSelectCard(Dictionary<int, PlayerCard> cards)
+        private void _admin_LoadSelectCard(Dictionary<int, PlayerCard> cards, bool cardSold)
         {
             Collection.UpdateCollection(cards);
+            if (this.IsActive)
+            {
+                this.sell_card_popup.IsOpen = true;
+                _popupTimer.IsEnabled = true;
+            }
         }
 
         private void SelectCard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,7 +82,6 @@ namespace hub_client.Windows
         {
             if (Collection.SelectedItem() == null || tb_price.Text == string.Empty || Convert.ToInt32(tb_price.Text) <= 0 || tb_quantity.Text == string.Empty || Convert.ToInt32(tb_quantity.Text) <= 0) return;
             SelectedCard?.Invoke((PlayerCard)Collection.SelectedItem(), Convert.ToInt32(tb_price.Text), Convert.ToInt32(tb_quantity.Text));
-            Close();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

@@ -48,11 +48,20 @@ namespace hub_client.Helpers
 
         public static void LaunchGame(Room room, string commandline)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png"));
+            }
+
             LaunchYgoPro(commandline);
         }
-        public static void LaunchGameAgainstBot(string deck)
+        public static void LaunchGameAgainstBot()
         {
-            _deck = deck;
             YgoproConfig.UpdateForced(false);
             UpdateAvatar(new Customization(CustomizationType.Avatar, 14, false, ""), 0);
             UpdateBorder(new Customization(CustomizationType.Border, 1, false, ""), 0);
@@ -61,9 +70,7 @@ namespace hub_client.Helpers
             UpdateBorder(_bot_border, 1);
             UpdateSleeve(_bot_sleeve, 1);
 
-            LaunchYgoPro(string.Format("-h {0} -p {1} -c", _defaultHost, _defaultPort));
-            Thread.Sleep(5000);
-            LaunchWindbot(_deck);
+            LaunchYgoPro(string.Format("-b"));
         }
 
         public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, int pos)

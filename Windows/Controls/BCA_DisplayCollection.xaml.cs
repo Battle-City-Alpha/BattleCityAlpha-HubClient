@@ -62,6 +62,8 @@ namespace hub_client.Windows.Controls
         }
         public void UpdateCollection(Dictionary<int, PlayerCard> collection)
         {
+            lv.Items.Clear();
+
             _collection = collection;
             foreach (var args in _collection)
             {

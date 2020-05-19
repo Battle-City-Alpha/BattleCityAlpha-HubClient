@@ -105,7 +105,7 @@ namespace hub_client.Network
         public event Action<List<BrocanteCard>> LoadBrocante;
         #endregion
         #region SelectCardForm Events
-        public event Action<Dictionary<int, PlayerCard>> LoadSelectCard;
+        public event Action<Dictionary<int, PlayerCard>, bool> LoadSelectCard;
         #endregion
         #region GiveCard Events
         public event Action<Dictionary<int, PlayerCard>> LoadGiveCards;
@@ -932,7 +932,7 @@ namespace hub_client.Network
             switch (packet.Reason)
             {
                 case AskCollectionReason.Brocante:
-                    Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection));
+                    Application.Current.Dispatcher.Invoke(() => LoadSelectCard?.Invoke(packet.Collection, packet.CardSold));
                     break;
                 case AskCollectionReason.GiveCard:
                     Application.Current.Dispatcher.Invoke(() => LoadGiveCards?.Invoke(packet.Collection));
@@ -957,17 +957,7 @@ namespace hub_client.Network
         }
 
         public void OnDuelStart(StandardServerDuelStart packet)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")))
-                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png"));
-                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")))
-                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png"));
-                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")))
-                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png"));
-            }
-
+        {        
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
             YgoproConfig.UpdateNickname(FormExecution.Username);
             YgoproConfig.UpdateForced(packet.Room.IsRanked());

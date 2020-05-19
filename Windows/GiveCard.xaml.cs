@@ -135,7 +135,7 @@ namespace hub_client.Windows
         {
             AppDesignConfig style = FormExecution.AppDesignConfig;
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btnAdd, btnSelect });
+            Buttons.AddRange(new[] { btnSelect });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -143,6 +143,10 @@ namespace hub_client.Windows
                 btn.Color2 = style.GetGameColor("Color2BrocanteButton");
                 btn.Update();
             }
+
+            btnAdd.Color1 = style.GetGameColor("Color1CenterBrocanteButton");
+            btnAdd.Color2 = style.GetGameColor("Color2CenterBrocanteButton");
+            btnAdd.Update();
 
             this.FontFamily = style.Font;
         }

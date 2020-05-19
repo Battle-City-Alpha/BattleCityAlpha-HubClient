@@ -32,6 +32,21 @@
                 <RowDefinition Height="12*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+
+            <Popup x:Name="sell_card_popup" Width="600" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Center" PlacementTarget="{Binding ElementName=maingrid}" AllowsTransparency="True" PopupAnimation="Scroll">
+                <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="sell_card_popup_text" FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="Votre carte a été ajoutée à la brocante !" Grid.Row="1" />
+                    </Grid>
+                </Border>
+            </Popup>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.ColumnSpan="2">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
@@ -50,8 +65,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="lbl_price" Text="Prix :"  FontSize="24" Padding="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="tb_price"  FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
-                    <TextBox x:Name="tb_quantity"  FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox"/>
+                    <TextBox x:Name="tb_price"  FontSize="24" Grid.Column="1" Margin="3" PreviewTextInput="NumberValidationTextBox" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="tb_quantity"  FontSize="24" Grid.Column="3" Margin="3" PreviewTextInput="NumberValidationTextBox" VerticalContentAlignment="Center"/>
                     <TextBlock Text="Quantité :"  FontSize="24" Padding="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                 </Grid>

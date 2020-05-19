@@ -274,7 +274,15 @@ namespace hub_client.Windows
         private void btnBuy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             BrocanteCard card = (brocanteList.SelectedItem as BrocanteCard);
-            _admin.BuyBrocanteCard(card);
+
+            NumberPopBox npb = new NumberPopBox(card.Quantity, card.Price);
+            npb.SelectedNumber += (n) => Npb_SelectedNumber(n, card);
+            npb.ShowDialog();
+        }
+
+        private void Npb_SelectedNumber(int n, BrocanteCard card)
+        {
+            _admin.BuyBrocanteCard(card, n);
         }
 
         private void btnMyCards_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
