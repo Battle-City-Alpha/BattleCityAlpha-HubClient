@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -11,9 +12,38 @@ namespace hub_client.Assets
         private string path;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public Dictionary<string, System.Windows.Controls.Image> Smileys;
+
         public AssetsManager()
         {
             path = FormExecution.path;
+
+            LoadSmileys();
+        }
+        public System.Windows.Controls.Image CheckSmiley(string word)
+        {
+            if (!Smileys.ContainsKey(word))
+                return null;
+            return Smileys[word];
+        }
+        private void LoadSmileys()
+        {
+        Smileys = new Dictionary<string, System.Windows.Controls.Image>();
+            List<string> smileys = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "Assets", "smileys")));
+            smileys.Sort();
+            foreach (string smiley in smileys)
+            {
+                if (!smiley.EndsWith(".png"))
+                    continue;
+                string[] name = smiley.Split('\\');
+                Smileys.Add(name[name.Length - 1].Split('.')[0], CreateSmileyImage(name[name.Length - 1]));
+            }
+        }
+        private System.Windows.Controls.Image CreateSmileyImage(string name)
+        {
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = GetImage(new string[] { "Smileys", name});
+            return image;
         }
 
         public BitmapImage GetImage(string directory, string img)

@@ -32,6 +32,19 @@
                 <RowDefinition Height="*" MaxHeight="65"/>
             </Grid.RowDefinitions>
 
+            <Popup x:Name="smiley_popup" Width="290" Height="320" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Mouse"  AllowsTransparency="True" PopupAnimation="Fade">
+                <Border x:Name="smiley_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Center" Margin="20,5, 20, 15" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wp_smileys" Orientation="Horizontal">
+
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Border>
+            </Popup>
+
             <Popup x:Name="profil_popup" Width="300" Height="320" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="10" Grid.RowSpan="10" Placement="Center" PlacementTarget="{Binding ElementName=maingrid}" AllowsTransparency="True" PopupAnimation="Fade">
                 <Border x:Name="popup_border" CornerRadius="15" Margin="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
                     <Border.Background>
@@ -157,7 +170,20 @@
                         <RowDefinition Height="40" MaxHeight="40"/>
                     </Grid.RowDefinitions>
                     <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,5"/>
-                    <Controls:BCA_TextBox x:Name="tbChat" Grid.Row="1" Margin="10,0,10,5" KeyUp="tbChat_KeyUp" VerticalAlignment="Center"/>
+                    <Grid Grid.Row="1" Margin="10,0,10,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Controls:BCA_TextBox x:Name="tbChat" KeyUp="tbChat_KeyUp" VerticalAlignment="Center"/>
+
+                        <Border CornerRadius="5" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                            </Border.Background>
+                            <Image Source="pack://siteoforigin:,,,/Assets/Logo/smiley_icon.png" Cursor="Hand" Margin="5" Name="smiley_icon"/>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="1">

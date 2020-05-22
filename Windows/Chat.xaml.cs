@@ -58,17 +58,23 @@ namespace hub_client.Windows
 
             _admin.SpecialChatMessage += _admin_SpecialChatMessage;
             _admin.PlayerChatMessage += _admin_PlayerChatMessage;
+            _admin.ShowSmileys += _admin_ShowSmileys;
             this.Loaded += Chat_Loaded;
             _admin.LoginComplete += _admin_LoginComplete;
             _admin.AddHubPlayer += _admin_AddHubPlayer;
             _admin.RemoveHubPlayer += _admin_RemoveHubPlayer;
             _admin.UpdateHubPlayers += _admin_UpdateHubPlayers;
+            _admin.UpdateHubPlayer += _admin_UpdateHubPlayer;
             _admin.ClearChat += _admin_ClearChat;
 
             tbUserList.TextChanged += SearchUser;
             lvUserlist.MouseDoubleClick += LvUserlist_MouseDoubleClick;
 
             tbChat.PreviewKeyDown += TbChat_PreviewKeyDown;
+
+            smiley_icon.MouseLeftButtonDown += Smiley_icon_MouseLeftButtonDown;
+            tbChat.MouseLeftButtonDown += TbChat_MouseLeftButtonDown;
+            tbChat.tbChat.GotFocus += TbChat_GotFocus;
 
             Players = new List<PlayerItem>();
             PlayersFound = new List<PlayerItem>();
@@ -80,6 +86,51 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void _admin_UpdateHubPlayer(PlayerInfo info)
+        {
+            int index = -1;
+            for (int i = 0; i < lvUserlist.Items.Count; i++)
+                if (lvUserlist.Items[i] != null && (lvUserlist.Items[i] as PlayerItem).UserId == info.UserId)
+                {
+                    index = i;
+                    break;
+                }
+
+            if (index == -1)
+                return;
+
+            PlayerItem item = (lvUserlist.Items[index] as PlayerItem);
+            _admin_RemoveHubPlayer(item, false);
+            item.Avatar = info.Avatar;
+            item.VIP = info.VIP;
+            item.ChatColorString = info.ChatColorString;
+            _admin_AddHubPlayer(item, false);
+
+            lvUserlist.Items.Refresh();
+        }
+
+        private void TbChat_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (smiley_popup.IsOpen)
+                smiley_popup.IsOpen = false;
+        }
+
+        private void TbChat_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (smiley_popup.IsOpen)
+                smiley_popup.IsOpen = false;
+        }
+
+        private void Smiley_icon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            smiley_popup.IsOpen = !smiley_popup.IsOpen;
+        }
+
+        private void _admin_ShowSmileys()
+        {
+            Dispatcher.InvokeAsync(delegate { chat.ShowSmileys(); });
         }
 
         public void Flash()
@@ -155,7 +206,7 @@ namespace hub_client.Windows
             _admin_SpecialChatMessage(style.GetGameColor("InformationMessageColor"), string.Format("Le chat a été nettoyé par {0}. Raison : {1}.", username, reason), true, true);
         }
 
-        private void _admin_RemoveHubPlayer(PlayerInfo infos)
+        private void _admin_RemoveHubPlayer(PlayerInfo infos, bool showmessage = true)
         {
             int index = -1;
             foreach (PlayerItem p in Players)
@@ -176,7 +227,7 @@ namespace hub_client.Windows
             view.GroupDescriptions.Clear();
             view.GroupDescriptions.Add(groupDescription);
 
-            if (FormExecution.ClientConfig.Connexion_Message)
+            if (FormExecution.ClientConfig.Connexion_Message && showmessage)
                 _admin_SpecialChatMessage(style.GetGameColor("LauncherMessageColor"), string.Format("{0} s'est déconnecté.", infos.Username), false, false);
             logger.Trace("{0} removed from userlist.", infos);
         }
@@ -246,6 +297,13 @@ namespace hub_client.Windows
             RefreshDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
+
+            foreach (var smiley in FormExecution.AssetsManager.Smileys)
+            {
+                BCA_Smiley uismiley = new BCA_Smiley(smiley.Value);
+                uismiley.Clicked += () => AddSmiley(smiley.Key);
+                wp_smileys.Children.Add(uismiley);
+            }
 
             logger.Trace("Style loaded.");
         }
@@ -715,6 +773,16 @@ namespace hub_client.Windows
                 _admin.RemoveBlacklistPlayer(target);
                 _admin_SpecialChatMessage(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), string.Format("••• Vous avez enlevé de votre blacklist : {0}.", target.Username), false, false);
             }
+        }
+
+        public void AddSmiley(string txt)
+        {
+            if (smiley_popup.IsOpen)
+                smiley_popup.IsOpen = false;
+
+            tbChat.SetText(tbChat.tbChat.Text + " :" + txt + ": ");
+            tbChat.tbChat.Focusable = true;
+            tbChat.tbChat.Focus();
         }
 
     }

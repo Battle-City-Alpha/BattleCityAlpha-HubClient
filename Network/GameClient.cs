@@ -50,6 +50,7 @@ namespace hub_client.Network
         public event Action<Color, PlayerInfo, string> PlayerChatMessageRecieved;
         public event Action<PlayerInfo, bool> AddHubPlayer;
         public event Action<PlayerInfo> RemoveHubPlayer;
+        public event Action<PlayerInfo> UpdateHubPlayer;
         public event Action Shutdown;
         public event Action Restart;
         public event Action<string, string> ClearChat;
@@ -271,6 +272,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.RemoveHubPlayer:
                     OnRemoveHubPlayer(JsonConvert.DeserializeObject<StandardServerRemoveHubPlayer>(packet));
+                    break;
+                case PacketType.UpdateHubPlayer:
+                    OnUpdateHubPlayer(JsonConvert.DeserializeObject<StandardServerUpdateHubPlayer>(packet));
                     break;
                 case PacketType.PlayerList:
                     OnUpdateHubPlayerList(JsonConvert.DeserializeObject<StandardServerPlayerlist>(packet));
@@ -613,6 +617,12 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => RemoveHubPlayer?.Invoke(packet.Infos));
             PlayerManager.Remove(packet.Infos);
             logger.Trace("RemoveHubPlayer - {0}", packet.Infos);
+        }
+        private void OnUpdateHubPlayer(StandardServerUpdateHubPlayer packet)
+        {
+            PlayerManager.UpdatePlayer(packet.Player);
+            Application.Current.Dispatcher.Invoke(() => UpdateHubPlayer?.Invoke(packet.Player));
+            logger.Trace("Update player - {0}", packet.Player);
         }
         private void OnUpdateHubPlayerList(StandardServerPlayerlist packet)
         {

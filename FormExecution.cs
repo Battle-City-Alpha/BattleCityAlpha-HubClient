@@ -85,7 +85,7 @@ namespace hub_client
 
         public static void Init(bool restart = false)
         {
-            if (!restart)
+           if (!restart)
             {
                 try
                 {
@@ -96,7 +96,6 @@ namespace hub_client
                     HID = "";
                 }
 
-                AssetsManager = new AssetsManager();
 
                 if (File.Exists(AppConfigPath))
                     AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
@@ -110,6 +109,8 @@ namespace hub_client
                     ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
                 else
                     ClientConfig = new ClientConfig();
+
+                AssetsManager = new AssetsManager();
 
                 //ClientConfig.TestMode = false;
 
@@ -682,6 +683,11 @@ namespace hub_client
             notes += Environment.NewLine + add;
 
             File.WriteAllText(path, notes);
+        }
+
+        public static void AddSmiley(string smileytxt)
+        {
+            _chat.AddSmiley(smileytxt);
         }
     }
 }

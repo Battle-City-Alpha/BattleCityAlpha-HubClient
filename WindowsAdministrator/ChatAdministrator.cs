@@ -21,8 +21,10 @@ namespace hub_client.WindowsAdministrator
         public event Action LoginComplete;
         public event Action<Color, string, bool, bool> SpecialChatMessage;
         public event Action<Color, PlayerInfo, string> PlayerChatMessage;
+        public event Action ShowSmileys;
         public event Action<PlayerInfo, bool> AddHubPlayer;
-        public event Action<PlayerInfo> RemoveHubPlayer;
+        public event Action<PlayerInfo, bool> RemoveHubPlayer;
+        public event Action<PlayerInfo> UpdateHubPlayer;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
 
@@ -34,11 +36,17 @@ namespace hub_client.WindowsAdministrator
             Client.LoginComplete += Client_LoginComplete;
             Client.AddHubPlayer += Client_AddHubPlayer;
             Client.RemoveHubPlayer += Client_RemoveHubPlayer;
+            Client.UpdateHubPlayer += Client_UpdateHubPlayer;
             Client.UpdateHubPlayers += Client_UpdateHubPlayers;
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_UpdateHubPlayer(PlayerInfo player)
+        {
+            UpdateHubPlayer?.Invoke(player);
         }
 
         private void Client_UpdateHubPlayers(PlayerInfo[] players, PlayerState state)
@@ -72,7 +80,7 @@ namespace hub_client.WindowsAdministrator
 
         private void Client_RemoveHubPlayer(PlayerInfo infos)
         {
-            RemoveHubPlayer?.Invoke(infos);
+            RemoveHubPlayer?.Invoke(infos, true);
         }
 
         private void Client_AddHubPlayer(PlayerInfo infos, bool showmessage)
@@ -244,6 +252,9 @@ namespace hub_client.WindowsAdministrator
                             return null;
                         case "STATS":
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Il y a " + FormExecution.GetChatWindow().Players.Count + " utilisateurs connectés.", false, false);
+                            return null;
+                        case "SMILEYS":
+                            ShowSmileys?.Invoke();
                             return null;
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);

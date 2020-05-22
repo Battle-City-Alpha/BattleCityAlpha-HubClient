@@ -39,9 +39,15 @@ namespace hub_client.Windows
                     break;
                 case BonusType.Sleeve:
                     bonus += "La sleeve n°" + gift + " !";
+                    showBonus.Height = 254;
+                    showBonus.Width = 177;
+                    showBonus.Source = FormExecution.AssetsManager.GetImage("Sleeves", Convert.ToInt32(gift).ToString());
                     break;
                 case BonusType.Border:
                     bonus += "La bordure n°" + gift + " !";
+                    showBonus.Height = 136;
+                    showBonus.Width = 306;
+                    showBonus.Source = FormExecution.AssetsManager.GetImage("Borders", Convert.ToInt32(gift).ToString());
                     break;
                 case BonusType.Title:
                     bonus += "Le titre " + gift + " !";

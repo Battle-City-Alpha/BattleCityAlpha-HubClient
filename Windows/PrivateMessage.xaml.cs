@@ -50,6 +50,7 @@ namespace hub_client.Windows
             this.rtbChat.RefreshStyle();
 
             tbChat.Focus();
+            tbChat.tbChat.Focus();
             tbChat.tbChat.Select(0, 0);
         }
 

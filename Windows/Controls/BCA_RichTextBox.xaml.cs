@@ -1,5 +1,6 @@
 ﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
+using hub_client.Assets;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows.Controls
 {
@@ -142,6 +144,9 @@ namespace hub_client.Windows.Controls
             Run txt = new Run("]: ");
             txt.Foreground = new SolidColorBrush(color);
 
+            date.BaselineAlignment = BaselineAlignment.Center;
+            pl.BaselineAlignment = BaselineAlignment.Center;
+            txt.BaselineAlignment = BaselineAlignment.Center;
             pr.Inlines.Add(date);
             pr.Inlines.Add(pl);
             pr.Inlines.Add(txt);
@@ -158,6 +163,7 @@ namespace hub_client.Windows.Controls
             foreach (string word in args)
             {
                 Run normalTxt = new Run();
+                normalTxt.BaselineAlignment = BaselineAlignment.Center;
 
                 if (bold)
                     normalTxt.FontWeight = FontWeights.Bold;
@@ -178,6 +184,15 @@ namespace hub_client.Windows.Controls
 
                     pr.Inlines.Add(textLink);
 
+                    normalTxt.Text = " ";
+                }
+                else if (word.StartsWith(":") && word.EndsWith(":") && FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length-2)) != null)
+                {
+                    Image img = new Image();
+                    img.Source = FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)).Source.Clone();
+                    img.Width = FormExecution.AppDesignConfig.FontSize + 10;
+                    img.Height = FormExecution.AppDesignConfig.FontSize + 10;
+                    pr.Inlines.Add(img);
                     normalTxt.Text = " ";
                 }
                 else if (word == "**")
@@ -251,6 +266,41 @@ namespace hub_client.Windows.Controls
             if (FormExecution.ClientConfig.Autoscroll)
                 ScrollToCarret();
         }
+        public void ShowSmileys()
+        {
+            Paragraph pr = new Paragraph();
+            Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] [");
+            date.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"));
+
+
+            Run pl = new Run("Smiley]: ");
+            pl.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"));
+
+            date.BaselineAlignment = BaselineAlignment.Center;
+            pl.BaselineAlignment = BaselineAlignment.Center;
+            pr.Inlines.Add(date);
+            pr.Inlines.Add(pl);
+
+            foreach (var info in FormExecution.AssetsManager.Smileys)
+            {
+                pr.Inlines.Add(":" + info.Key + ":");
+                pr.Inlines.Add("   -   ");
+                Image img = new Image();
+                img.Source = info.Value.Source.Clone();
+                img.Width = FormExecution.AppDesignConfig.FontSize + 10;
+                img.Height = FormExecution.AppDesignConfig.FontSize + 10;
+                pr.Inlines.Add(img);
+                pr.Inlines.Add(" | ");
+            }
+
+            pr.Margin = new Thickness(0);
+            chat.Document.Blocks.Add(pr);
+
+
+            if (FormExecution.ClientConfig.Autoscroll)
+                ScrollToCarret();
+        }
+
 
         private void TextLink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
