@@ -37,6 +37,8 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
 
             tb_captiontext.GotFocus += Tb_captiontext_GotFocus;
+
+            chb_password.Unchecked += chb_password_Checked;
         }
 
         private void Tb_captiontext_GotFocus(object sender, RoutedEventArgs e)
@@ -116,10 +118,7 @@ namespace hub_client.Windows
 
         private void chb_password_Checked(object sender, RoutedEventArgs e)
         {
-            if (chb_password.IsChecked == true)
-                tb_password.IsEnabled = true;
-            else
-                tb_password.IsEnabled = false;
+            tb_password.IsEnabled = (bool)chb_password.IsChecked;
         }
     }
 }

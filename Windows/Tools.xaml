@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Tools" Height="583.053" Width="908.459" 
+        Title="Tools" Height="583.053" Width="1010.459" 
         ResizeMode="CanResize" AllowsTransparency="True" Background="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner">
     <WindowChrome.WindowChrome>
         <WindowChrome 

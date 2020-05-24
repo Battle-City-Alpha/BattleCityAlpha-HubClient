@@ -52,7 +52,7 @@
                     </StackPanel>
                 </Grid>
                 <ScrollViewer Grid.Row="4" Grid.ColumnSpan="2">
-                    <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10"/>
+                    <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10" TextAlignment="Justify"/>
                 </ScrollViewer>
             </Grid>
             <Image x:Name="img_card" Grid.Row="0" Source="pack://siteoforigin:,,,/Assets/unknown.png" Margin="5" Grid.Column="1"/>

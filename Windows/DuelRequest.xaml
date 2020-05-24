@@ -62,8 +62,11 @@
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Master Rules :"   VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <ComboBox x:Name="cb_masterrules" Grid.Row="5" Margin="20,0" Grid.Column="4" VerticalAlignment="Center"/>
 
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Deck non mélangé :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <CheckBox x:Name="chb_shuffledeck" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Pioche par tour :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="tb_drawcount" Grid.Row="6" Grid.Column="1"  Margin="20,0" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="7" Text="Deck non mélangé :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <CheckBox x:Name="chb_shuffledeck" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                             <CheckBox.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -73,9 +76,6 @@
                                 </TransformGroup>
                             </CheckBox.RenderTransform>
                         </CheckBox>
-
-                        <TextBlock Grid.Column="0" Grid.Row="7" Text="Pioche par tour :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <TextBox x:Name="tb_drawcount" Grid.Row="7" Grid.Column="1"  Margin="20,0" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="8" Text="Mot de passe :"  VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Right"/>
                         <Grid Grid.Column="1" Grid.Row="8">
@@ -93,7 +93,7 @@
                                     </TransformGroup>
                                 </CheckBox.RenderTransform>
                             </CheckBox>
-                            <TextBox x:Name="tb_password" Grid.Row="6" Grid.Column="1"  Margin="10,0" VerticalAlignment="Center" IsEnabled="False"/>
+                            <TextBox x:Name="tb_password" Grid.Row="6" Grid.Column="1"  Margin="10,0, 21, 0" VerticalAlignment="Center" IsEnabled="False"/>
                         </Grid>
 
                         <TextBlock Grid.Column="0" Grid.Row="9" Text="Info en plus :"  VerticalAlignment="Center" HorizontalAlignment="Right"/>

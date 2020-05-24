@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
 using hub_client.Assets;
+using hub_client.Stuff;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -186,10 +187,10 @@ namespace hub_client.Windows.Controls
 
                     normalTxt.Text = " ";
                 }
-                else if (word.StartsWith(":") && word.EndsWith(":") && FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length-2)) != null)
+                else if (word.Length > 2 && word.StartsWith(":") && word.EndsWith(":") && FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length-2)) != null)
                 {
                     Image img = new Image();
-                    img.Source = FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)).Source.Clone();
+                    img.Source = FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)).Pic.Source.Clone();
                     img.Width = FormExecution.AppDesignConfig.FontSize + 10;
                     img.Height = FormExecution.AppDesignConfig.FontSize + 10;
                     pr.Inlines.Add(img);
@@ -283,14 +284,18 @@ namespace hub_client.Windows.Controls
 
             foreach (var info in FormExecution.AssetsManager.Smileys)
             {
-                pr.Inlines.Add(":" + info.Key + ":");
-                pr.Inlines.Add("   -   ");
-                Image img = new Image();
-                img.Source = info.Value.Source.Clone();
-                img.Width = FormExecution.AppDesignConfig.FontSize + 10;
-                img.Height = FormExecution.AppDesignConfig.FontSize + 10;
-                pr.Inlines.Add(img);
-                pr.Inlines.Add(" | ");
+                pr.Inlines.Add("Groupe : " + info.Key + " |");
+                foreach (Smiley s in info.Value)
+                {
+                    pr.Inlines.Add(":" + s.Name + ":");
+                    pr.Inlines.Add("   -   ");
+                    Image img = new Image();
+                    img.Source = s.Pic.Source.Clone();
+                    img.Width = FormExecution.AppDesignConfig.FontSize + 10;
+                    img.Height = FormExecution.AppDesignConfig.FontSize + 10;
+                    pr.Inlines.Add(img);
+                    pr.Inlines.Add(" | ");
+                }
             }
 
             pr.Margin = new Thickness(0);
@@ -300,7 +305,6 @@ namespace hub_client.Windows.Controls
             if (FormExecution.ClientConfig.Autoscroll)
                 ScrollToCarret();
         }
-
 
         private void TextLink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

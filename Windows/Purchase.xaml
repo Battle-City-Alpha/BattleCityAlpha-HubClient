@@ -77,7 +77,7 @@
                             </StackPanel>
                         </Grid>
                         <ScrollViewer x:Name="scrCardDesc" Grid.Row="4" Grid.ColumnSpan="2" >
-                            <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10"/>
+                            <TextBlock x:Name="tb_carddesc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10" TextAlignment="Justify"/>
                         </ScrollViewer>
                     </Grid>
                 </Border>

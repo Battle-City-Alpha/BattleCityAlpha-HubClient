@@ -76,6 +76,9 @@ namespace hub_client.Windows
             tbChat.MouseLeftButtonDown += TbChat_MouseLeftButtonDown;
             tbChat.tbChat.GotFocus += TbChat_GotFocus;
 
+            btnDiscord.MouseLeftButtonDown += BtnDiscord_MouseLeftButtonDown;
+            btnNote.MouseLeftButtonDown += BtnNote_MouseLeftButtonDown;
+
             Players = new List<PlayerItem>();
             PlayersFound = new List<PlayerItem>();
             _playersNameComparer = new PlayerItemNameComparer();
@@ -86,6 +89,20 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void BtnNote_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Notes note = new Notes(_admin.Client.NotesAdmin);
+            note.Owner = this;
+            note.Show();
+            logger.Trace("Notes clicked.");
+        }
+
+        private void BtnDiscord_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://discordapp.com/invite/EYkXU7N");
+            logger.Trace("Discord clicked.");
         }
 
         private void _admin_UpdateHubPlayer(PlayerInfo info)
@@ -298,11 +315,22 @@ namespace hub_client.Windows
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
-            foreach (var smiley in FormExecution.AssetsManager.Smileys)
+            foreach (var groups in FormExecution.AssetsManager.Smileys)
             {
-                BCA_Smiley uismiley = new BCA_Smiley(smiley.Value);
-                uismiley.Clicked += () => AddSmiley(smiley.Key);
-                wp_smileys.Children.Add(uismiley);
+                TextBlock tb = new TextBlock();
+                tb.Text = groups.Key;
+                tb.FontStyle = FontStyles.Italic;
+                tb.FontWeight = FontWeights.Bold;
+                tb.TextDecorations = TextDecorations.Underline;
+                tb.Width = smiley_popup.Width;
+                tb.Margin = new Thickness(0, 5, 0, 5);
+                wp_smileys.Children.Add(tb);
+                foreach (Smiley s in groups.Value)
+                {
+                    BCA_Smiley uismiley = new BCA_Smiley(s.Pic);
+                    uismiley.Clicked += () => AddSmiley(s.Name);
+                    wp_smileys.Children.Add(uismiley);
+                }
             }
 
             logger.Trace("Style loaded.");
@@ -352,29 +380,6 @@ namespace hub_client.Windows
             Style s = new Style(typeof(Control));
             s.Setters.Add(new Setter(Control.FontFamilyProperty, style.Font));
             Resources.Add(typeof(Control), style);
-        }
-
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            btnDiscord.ClickedAnimation();
-            System.Diagnostics.Process.Start("https://discordapp.com/invite/EYkXU7N");
-            logger.Trace("Discord clicked.");
-        }
-        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            btnDiscord.ReleasedAnimation();
-        }
-        private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
-        {
-            btnNote.ClickedAnimation();
-            Notes note = new Notes(_admin.Client.NotesAdmin);
-            note.Owner = this;
-            note.Show();
-            logger.Trace("Notes clicked.");
-        }
-        private void Image_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
-        {
-            btnNote.ReleasedAnimation();
         }
         private void btnFAQ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -701,7 +706,7 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
                 OpenFileDialog getdeck = new OpenFileDialog();
-                getdeck.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "decks");
+                getdeck.InitialDirectory = Path.Combine(FormExecution.path, "BattleCityAlpha", "deck");
                 getdeck.Filter = "Deck files (*.ydk;)|*.ydk";
                 if (getdeck.ShowDialog() == true)
                 {

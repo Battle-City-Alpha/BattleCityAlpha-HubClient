@@ -20,6 +20,8 @@ namespace hub_client.Windows
             LoadStyle();
 
             this.MouseDown += Window_MouseDown;
+
+            this.tb_text.tbChat.VerticalContentAlignment = VerticalAlignment.Center;
         }
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

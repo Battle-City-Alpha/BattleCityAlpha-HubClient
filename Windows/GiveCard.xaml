@@ -42,7 +42,7 @@
             <Controls:BCA_DisplayCollection x:Name="Collection" Grid.Row="1" Grid.RowSpan="2" Margin="5,5,5,20"/>
             <Controls:BCA_ColorButton x:Name="btnAdd" Height="Auto" ButtonText="Ajouter" ButtonTextSize="22" Padding="10" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"/>
             
-            <Controls:BCA_ColorButton x:Name="btnSelect" Grid.Row="2" Grid.Column="2" Height="Auto" ButtonText="Selectionner" ButtonTextSize="22" Padding="10" HorizontalAlignment="Center"/>
+            <Controls:BCA_ColorButton x:Name="btnSelect" Grid.Row="2" Grid.Column="2" Height="Auto" ButtonText="Confirmer" ButtonTextSize="22" Padding="10" HorizontalAlignment="Center"/>
 
             <Controls:BCA_DisplayCardInfo x:Name="DisplayCardInfo" Grid.Column="1" Grid.Row="1"/>
 

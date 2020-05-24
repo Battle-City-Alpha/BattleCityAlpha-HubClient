@@ -50,7 +50,10 @@ namespace hub_client.Windows
             _popupTimer.Tick += _popupTimer_Tick;
             _popupTimer.IsEnabled = false;
 
-
+            tb_search_card.tbChat.VerticalAlignment = VerticalAlignment.Center;
+            tb_search_max_price.tbChat.VerticalAlignment = VerticalAlignment.Center;
+            tb_search_seller.tbChat.VerticalAlignment = VerticalAlignment.Center;
+            tb__search_max_quantity.tbChat.VerticalAlignment = VerticalAlignment.Center;
 
             this.MouseDown += Window_MouseDown;
         }

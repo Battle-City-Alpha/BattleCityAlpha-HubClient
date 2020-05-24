@@ -233,7 +233,7 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
-                    <Controls:BCA_ColorButton x:Name="btnNote" Width="Auto" Height="Auto" Margin="5" Grid.Column="5" RenderTransformOrigin="0.5,0.5" ButtonTextSize="22" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
+                    <Controls:BCA_ColorButton x:Name="btnNote" Width="Auto" ButtonText="Notes" Height="Auto" Margin="5" Grid.Column="5" RenderTransformOrigin="0.5,0.5" ButtonTextSize="22" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -244,37 +244,7 @@
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
 
-                    <Image Width="35" Height="35" Grid.Column="5" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" MouseLeftButtonUp="Image_MouseLeftButtonUp_1" Source="pack://siteoforigin:,,,/Assets/Logo/Notes.png" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform x:Name="rotateTransform" Angle="0"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                        <Image.Triggers>
-                            <EventTrigger RoutedEvent="Image.MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="rotateTransform"
-                                         Storyboard.TargetProperty="Angle"
-                                         From="0" To="-3" Duration="0:0:0.4"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="Image.MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="rotateTransform"
-                                         Storyboard.TargetProperty="Angle"
-                                         From="-3" To="0" Duration="0:0:0.4"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Image.Triggers>
-                    </Image>
-                    <Controls:BCA_ColorButton x:Name="btnDiscord" Width="Auto" Height="Auto" Margin="5" Grid.Column="6" ButtonText="" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
+                    <Controls:BCA_ColorButton x:Name="btnDiscord" ButtonText="Discord" Width="Auto" Height="Auto" Margin="5" Grid.Column="6" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -284,37 +254,7 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
-                    <Image Width="35" Height="35" Grid.Column="6" Source="pack://siteoforigin:,,,/Assets/Logo/Discord.png" Margin="15" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeftButtonUp="Image_MouseLeftButtonUp" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform x:Name="rotateTransform1" Angle="0"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                        <Image.Triggers>
-                            <EventTrigger RoutedEvent="Image.MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="rotateTransform1"
-                                         Storyboard.TargetProperty="Angle"
-                                         From="0" To="-3" Duration="0:0:0.4"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="Image.MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="rotateTransform1"
-                                         Storyboard.TargetProperty="Angle"
-                                         From="-3" To="0" Duration="0:0:0.4"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Image.Triggers>
-                    </Image>
-
+                    
                     <Controls:BCA_ColorButton x:Name="btnRules" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="Règles" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="BtnRules_MouseLeftButtonDown" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>

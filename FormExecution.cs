@@ -539,7 +539,7 @@ namespace hub_client
         {
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
-            //_register.Owner = _login;
+            _register.Owner = _login;
             _register.Show();
         }
         public static void OpenArena()

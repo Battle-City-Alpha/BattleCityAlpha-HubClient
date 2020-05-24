@@ -9,6 +9,7 @@ using hub_client.Cards;
 using hub_client.Configuration;
 using hub_client.Enums;
 using hub_client.Helpers;
+using hub_client.Stuff;
 using hub_client.WindowsAdministrator;
 using Newtonsoft.Json;
 using NLog;
@@ -958,9 +959,17 @@ namespace hub_client.Network
 
         public void OnSearchCard(StandardServerSearchCard packet)
         {
-            string boosters = "La carte est disponible dans les boosters : " + string.Join("/", packet.Boosters.ToArray());
+            string boosters = "La carte est disponible dans les boosters : ";
             if (packet.Boosters.Count == 0)
                 boosters += "Aucun.";
+            else
+            {
+                foreach (string booster in packet.Boosters)
+                {
+                    BoosterInfo BoosterChoosen = BoosterManager.InitializeBooster("(" + booster + ")");
+                    boosters += Environment.NewLine + BoosterChoosen.Name + " (" + BoosterChoosen.PurchaseTag + ")";
+                }
+            }
             Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte", true));
 
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());

@@ -82,14 +82,14 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Niveau :"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_level" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Attaque :"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_attack" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Défense :"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_defence" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Nom :"  FontSize="24" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tb_name" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Nom :"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBox x:Name="tb_name" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Niveau :"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBox x:Name="tb_level" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Attaque :"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBox x:Name="tb_attack" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Défense :"  FontSize="24" VerticalAlignment="Center"/>
+                        <TextBox x:Name="tb_defence" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="tb_PreviewTextInput"  FontSize="24" VerticalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton x:Name="btn_search" Width="Auto" Height="Auto" Grid.Column="2" ButtonText="Chercher" VerticalAlignment="Center" Margin="10,0,10,0" MouseLeftButtonDown="BCA_ColorButton_MouseLeftButtonDown" Color1="#FFCD0000" Color2="#FF880D0D" />
