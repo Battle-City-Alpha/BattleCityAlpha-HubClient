@@ -27,8 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static string debug_ip = "127.0.0.1";
-        //public static string debug_ip = "185.212.225.85";
+        //public static string debug_ip = "127.0.0.1";
+        public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -144,6 +144,7 @@ namespace hub_client
             Client.Restart += Client_Restart;
             Client.CustomizationAchievement += Client_CustomizationAchievement;
             Client.LoadBoosterCollection += Client_LoadBoosterCollection;
+            Client.GetMonthlyBonus += Client_GetMonthlyBonus;
 
             _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
@@ -156,6 +157,12 @@ namespace hub_client
             }
 
             logger.Trace("FormExecution initialisation.");
+        }
+
+        private static void Client_GetMonthlyBonus(Dictionary<int, MonthlyBonus> bonus, int cnumber, int[] cards)
+        {
+            MonthlyBonusViewer viewer = new MonthlyBonusViewer(bonus, cnumber, cards);
+            viewer.Show();
         }
 
         private static void Client_LoadBoosterCollection(string tag, List<int> ids, List<int> quantities, List<CardRarity> rarities)
@@ -404,8 +411,7 @@ namespace hub_client
             box.Show();
             if (type == BonusType.Booster)
             {
-                OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster });
-                _purchase.UpdateCards(cards);
+                OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster }, cards);
             }
         }
 
@@ -591,6 +597,16 @@ namespace hub_client
             _purchase.Title = booster.Name;
             _purchase.Owner = _shop;
             _purchase.Show();
+        }
+        public static void OpenPurchase(BoosterInfo booster, int[] cards)
+        {
+            logger.Trace("Open Purchase");
+            _purchase = new Purchase(Client.PurchaseAdmin, booster);
+            _purchase.Title = booster.Name;
+            _purchase.Owner = _chat;
+            _purchase.Show();
+
+            _purchase.UpdateCards(cards);
         }
         public static void OpenTools()
         {

@@ -1,0 +1,56 @@
+﻿<Window xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.MonthlyBonusViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Bonus mensuel !" Height="662.783" Width="1086.8" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="0,50,50,0" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_monthlybonusviewer.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,40,5" Grid.Column="2">
+                    <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border Grid.Column="0" CornerRadius="10" Margin="10">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <ScrollViewer x:Name="scrv_bonus" Grid.Row="1" HorizontalScrollBarVisibility="Disabled"  HorizontalContentAlignment="Center" Margin="20,5, 20, 15" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wp_bonus" Orientation="Horizontal">
+
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+            <Controls:BCA_ColorButton x:Name="btn_get" Grid.Row="2" Grid.RowSpan="2" Padding="5" ButtonText="Obtenir le bonus du jour !" Color1="#FF175A91" Color2="#FF0FA2EE" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </Border>
+</Window>

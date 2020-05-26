@@ -46,17 +46,17 @@ namespace hub_client.Assets
                     string[] name = smiley.Split('\\');
                     if (!Smileys.ContainsKey(d))
                         Smileys.Add(d, new List<Smiley>());
-                    Smileys[d].Add(CreateSmiley(name[name.Length - 1]));
+                    Smileys[d].Add(CreateSmiley(name[name.Length - 1], d));
                 }
             }
         }
-        private Smiley CreateSmiley(string name)
+        private Smiley CreateSmiley(string name, string directory)
         {
             System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = GetImage(new string[] { "Smileys", name });
+            image.Source = GetImage(new string[] { "Smileys", directory, name });
             return new Smiley
             {
-                Name = name,
+                Name = name.Split('.')[0],
                 Pic = image
             };
         }

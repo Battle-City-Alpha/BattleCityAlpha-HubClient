@@ -41,6 +41,7 @@ namespace hub_client.Network
         public event Action<CustomizationType, string, int> CustomizationAchievement;
         public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
         public event Action<int, int, int> LoadMonthPack;
+        public event Action<Dictionary<int, MonthlyBonus>, int, int[]> GetMonthlyBonus;
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -400,6 +401,9 @@ namespace hub_client.Network
                 case PacketType.GetBonus:
                     OnGetBonus(JsonConvert.DeserializeObject<StandardServerGetBonus>(packet));
                     break;
+                case PacketType.MonthlyBonus:
+                    OnGetMonthlyBonus(JsonConvert.DeserializeObject<StandardServerGetMonthlyBonus>(packet));
+                    break;
                 case PacketType.DuelResult:
                     OnDuelResult(JsonConvert.DeserializeObject<StandardServerDuelResult>(packet));
                     break;
@@ -513,6 +517,14 @@ namespace hub_client.Network
                     break;
                 case ChatMessageType.Information:
                     c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
+                    if (packet.Message.Contains("("))
+                    {
+                        string[] parts = packet.Message.Split('(');
+                        string id = parts[1].Split(')')[0];
+                        CardInfos cd = CardManager.GetCard(Convert.ToInt32(id));
+                        if (cd != null)
+                            packet.Message = parts[0] + "(" + cd.Name + parts[1].Substring(id.Length);
+                    }
                     msg = "**[Information - " + packet.Player.Username + "]:" + packet.Message + "**";
                     bold = true;
                     break;
@@ -1040,6 +1052,11 @@ namespace hub_client.Network
         {
             Application.Current.Dispatcher.Invoke(() => LaunchBonusBox?.Invoke(packet.Type, packet.MonthlyConnectionNumber, packet.Gift, packet.Cards));
             logger.Trace("GET BONUS - Bonus Type : {0} | Monthly connection : {1} | Gift : {2}", packet.Type, packet.MonthlyConnectionNumber, packet.Gift);
+        }
+        public void OnGetMonthlyBonus(StandardServerGetMonthlyBonus packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => GetMonthlyBonus?.Invoke(packet.Bonus, packet.MonthlyConnectionNumber, packet.Cards));
+            logger.Trace("GET BONUS - Bonus Type : {0} | Monthly connection : {1}", packet.Bonus, packet.MonthlyConnectionNumber);
         }
 
         public void OnDuelResult(StandardServerDuelResult packet)
