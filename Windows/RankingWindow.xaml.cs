@@ -81,27 +81,7 @@ namespace hub_client.Windows
 
             for (int i = 0; i < 3; i++)
             {
-                if (!customs[i].IsHost)
-                    borders[i].Background = new ImageBrush(PicsManager.GetImage("Avatars", customs[i].Id.ToString()));
-                else
-                {
-                    try
-                    {
-                        using (WebClient wc = new WebClient())
-                        {
-                            wc.DownloadFile(
-                                new System.Uri(customs[i].URL),
-                                Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
-                                );
-                        }
-                        borders[i].Background = new ImageBrush(PicsManager.GetImage("Avatars", "temp"));
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex.ToString());
-                        FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                    }
-                }
+                borders[i].Background = new ImageBrush(PicsManager.GetCustom(customs[i]));                
             }
 
             this.Show();

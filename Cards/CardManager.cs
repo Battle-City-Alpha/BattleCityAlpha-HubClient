@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using static hub_client.Cards.SQLCommands;
@@ -23,6 +24,8 @@ namespace hub_client.Cards
         public static Dictionary<char, List<string>> SetCodesString = new Dictionary<char, List<string>>();
 
         private static HashSet<int> PicsID;
+        private static int progress = 0;
+        private static int total;
 
         private static void RenameKey<TKey, TValue>(this IDictionary<TKey, TValue> dic,
                               TKey fromKey, TKey toKey)
@@ -35,6 +38,8 @@ namespace hub_client.Cards
 
         private static void LoadPicsFile()
         {
+            if (!Directory.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics")))
+                Directory.CreateDirectory(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics"));
             string[] ids = Directory.GetFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "pics")).Select(file => Path.GetFileName(file).Split('.')[0]).ToArray();
 
             PicsID = new HashSet<int>();
@@ -42,7 +47,9 @@ namespace hub_client.Cards
             {
                 int i;
                 if (int.TryParse(id, out i))
+                {
                     PicsID.Add(i);
+                }
             }
         }
         public static bool LoadCDB(string dir, bool overwrite, bool clearData = false)
@@ -76,13 +83,10 @@ namespace hub_client.Cards
                 return false;
             }
 
-            int i = 0;
-            int total = datas.Count + texts.Count;
+            progress = 0;
+            total = datas.Count + texts.Count;
             foreach (string[] row in datas)
             {
-                i++;
-                Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, total));
-
                 if (overwrite)
                     CardManager.UpdateOrAddCard(new CardInfos(row));
                 else
@@ -93,11 +97,16 @@ namespace hub_client.Cards
 
                 if (!CheckPicsLoaded(Convert.ToInt32(row[0])))
                     DownloadPics(row[0]);
+                else
+                {
+                    progress++;
+                    Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(progress, total));
+                }
             }
             foreach (string[] row in texts)
             {
-                i++;
-                Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, total));
+                progress++;
+                Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(progress, total));
 
                 if (CardManager.ContainsCard(int.Parse(row[0])))
                     CardManager.GetCard(int.Parse(row[0])).SetCardText(row);
@@ -107,6 +116,8 @@ namespace hub_client.Cards
                 LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf"))));
             SetCodesStringInit();
 
+            while (progress != total)
+                Thread.Sleep(500);
             Application.Current.Dispatcher.Invoke(() => LoadingFinished?.Invoke());
 
             return true;
@@ -257,14 +268,23 @@ namespace hub_client.Cards
                         GetUri(id),
                         Path.Combine(FormExecution.path, "BattleCityAlpha", "pics", id + ".jpg")
                         );
+                    wc.DownloadFileCompleted += cardDownloaded;
                 }
             }
             catch (Exception ex)
             {
                 logger.Error("Card error when downloading : " + id + " Ex : " + ex.ToString());
+                total--;
             }
             await Task.Delay(1);
         }
+
+        private static void cardDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            progress++;
+            Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(progress, total));
+        }
+
         public static Uri GetUri(string id)
         {
             string s = "";

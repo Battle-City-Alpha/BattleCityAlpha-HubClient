@@ -190,46 +190,7 @@ namespace hub_client.Windows.Controls
 
         private BitmapImage LoadCustom(Customization custom)
         {
-            try
-            {
-                if (!custom.IsHost)
-                    return GetImage(ctypetext, custom.Id.ToString());
-                else
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFile(
-                            new System.Uri(custom.URL),
-                            Path.Combine(FormExecution.path, "Assets", ctypetext, "temp.png")
-                            );
-                    }
-                }
-                return GetImage(ctypetext, "temp");
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.ToString());
-                FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                return null;
-            }
-        }
-        private BitmapImage GetImage(string directory, string img)
-        {
-            try
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
-                image.EndInit();
-                return image;
-            }
-            catch (Exception ex)
-            {
-                logger.Error("IMAGE LOADING - {0}", ex);
-                return null;
-            }
+            return PicsManager.GetCustom(custom);           
         }
     }
 

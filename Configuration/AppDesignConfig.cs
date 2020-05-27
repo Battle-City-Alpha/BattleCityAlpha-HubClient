@@ -11,6 +11,9 @@ namespace hub_client.Configuration
         public FontFamily Font = new FontFamily("Consolas");
         public int FontSize = 22;
 
+        public double ShopWidth = -1;
+        public double ShopHeight = -1;
+
         public AppDesignConfig()
         {
             GameColors = new Dictionary<string, Color>();

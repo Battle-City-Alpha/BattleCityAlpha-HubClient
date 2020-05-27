@@ -27,8 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        //public static string debug_ip = "127.0.0.1";
-        public static string debug_ip = "185.212.225.85";
+        public static string debug_ip = "127.0.0.1";
+        //public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -336,7 +336,7 @@ namespace hub_client
 
         private static void CardManager_LoadingProgress(int i, int total)
         {
-            double progress = (i / (double)total) * 100;
+            double progress = Math.Round((i / (double)total) * 100, 1);
             _windowload.SetProgressValue(progress);
         }
 

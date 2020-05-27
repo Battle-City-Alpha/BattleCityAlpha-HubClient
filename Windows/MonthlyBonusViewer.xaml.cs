@@ -44,6 +44,8 @@ namespace hub_client.Windows
             btn_get.MouseLeftButtonDown += Btn_get_MouseLeftButtonDown;
 
             this.Loaded += MonthlyBonusViewer_Loaded;
+
+            this.MouseDown += Window_MouseDown;
         }
         private void LoadStyle()
         {

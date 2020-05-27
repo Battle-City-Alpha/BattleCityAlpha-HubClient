@@ -14,19 +14,19 @@
         </Grid.RowDefinitions>
 
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Row="0">
-            <Image x:Name="img_up" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" Width="245" Height="109"/>
+            <Image x:Name="img_up" Grid.Column="0"  Stretch="Fill" Width="245" Height="109"/>
         </Border>
 
         <Border BorderThickness="2" BorderBrush="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Row="1">
             <Grid>
                 <TextBlock x:Name="tb_customID" Text="12" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Opacity="0"/>
-                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Borders/7.png" Width="306" Height="136"/>
+                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Width="306" Height="136"/>
             </Grid>
         </Border>
 
 
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Row="2">
-            <Image x:Name="img_down" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" Width="245" Height="109"/>
+            <Image x:Name="img_down" Grid.Column="0"  Stretch="Fill" Width="245" Height="109"/>
         </Border>
     </Grid>
 </UserControl>

@@ -616,32 +616,11 @@ namespace hub_client.Windows
                 State = infos.State,
                 UserId = infos.UserId,
                 Username = infos.Username,
-                VIP = infos.VIP
+                VIP = infos.VIP,
+                AvatarPic = PicsManager.GetCustom(infos.Avatar)
             };
 
-            if (!infos.Avatar.IsHost)
-                item.AvatarPic = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileCompleted += (sender, e) => userAvatarDownloaded(sender, e, item);
-                        wc.DownloadFileAsync(
-                            new System.Uri(infos.Avatar.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.UserId + ".png")
-                            );
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
-
-            return item;
+            return item;            
         }
 
         private void userAvatarDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e, PlayerItem item)

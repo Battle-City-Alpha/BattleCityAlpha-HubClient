@@ -23,15 +23,19 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_MonthlyBonus : UserControl
     {
+        BitmapImage colorpic;
+        bool _isGray = false;
         public BCA_MonthlyBonus(MonthlyBonus bonus, int day, bool isGray, bool isToday = false)
         {
             InitializeComponent();
+            _isGray = isGray;
 
             switch (bonus.Type)
             {
                 case BonusType.BP:
                     tb_left.Text = bonus.Gift;
                     tb_right.Text = "BPs";
+                    img_bonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/BPLogo.png"));
                     break;
                 case BonusType.PP:
                     tb_left.Text = bonus.Gift;
@@ -41,17 +45,17 @@ namespace hub_client.Windows.Controls
                 case BonusType.Avatar:
                     tb_left.Text = "Avatar";
                     tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetImage("Avatars", Convert.ToInt32(bonus.Gift).ToString());
+                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, Convert.ToInt32(bonus.Gift), false, ""));
                     break;
                 case BonusType.Sleeve:
                     tb_left.Text = "Sleeve";
                     tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetImage("Sleeves", Convert.ToInt32(bonus.Gift).ToString());
+                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, Convert.ToInt32(bonus.Gift), false, ""));
                     break;
                 case BonusType.Border:
                     tb_left.Text = "Bordure";
                     tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetImage("Borders", Convert.ToInt32(bonus.Gift).ToString());
+                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, Convert.ToInt32(bonus.Gift), false, ""));
                     break;
                 case BonusType.Title:
                     tb_left.Text = "Titre";
@@ -72,6 +76,7 @@ namespace hub_client.Windows.Controls
 
             tb_day.Text = day.ToString();
 
+            colorpic = img_bonus.Source as BitmapImage;
             if (isGray)
                 img_bonus.Source = GetGrayScalePic();
 
@@ -80,7 +85,25 @@ namespace hub_client.Windows.Controls
                 bg_border.BorderThickness = new Thickness(5);
                 bg_border.BorderBrush = new SolidColorBrush(Colors.Red);
             }
+
+            img_bonus.MouseEnter += Img_bonus_MouseEnter;
+            img_bonus.MouseLeave += Img_bonus_MouseLeave;
         }
+
+        private void Img_bonus_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!_isGray)
+                return;
+            img_bonus.Source = GetGrayScalePic();
+        }
+
+        private void Img_bonus_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!_isGray)
+                return;
+            img_bonus.Source = colorpic;
+        }
+
         private FormatConvertedBitmap GetGrayScalePic()
         {
             BitmapImage img = new BitmapImage(new Uri(img_bonus.Source.ToString()));

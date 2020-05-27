@@ -80,14 +80,7 @@ namespace hub_client.Windows
 
                     try
                     {
-                        if (infos.Avatar.IsHost)
-                        {
-                            popup.Image = Image.FromFile(FormExecution.AssetsManager.GetSource("Avatars", "A_" + infos.UserId + ".png"));
-                        }
-                        else
-                        {
-                            popup.Image = Image.FromFile(FormExecution.AssetsManager.GetSource("Avatars", infos.Avatar.Id + ".png"));
-                        }
+                        popup.Image = Image.FromFile(FormExecution.AssetsManager.GetCustom(infos.Avatar).UriSource.OriginalString);                        
                     }
                     catch (Exception ex)
                     {

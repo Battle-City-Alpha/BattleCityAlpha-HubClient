@@ -1,4 +1,6 @@
-﻿using hub_client.Configuration;
+﻿using BCA.Common;
+using BCA.Common.Enums;
+using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using NLog;
@@ -27,9 +29,9 @@ namespace hub_client.Windows
 
             this.MouseDown += Window_MouseDown;
 
-            img_avatar.Source = GetImage("Avatars", avatar.ToString());
-            img_border.Source = GetImage("Borders", border.ToString());
-            img_sleeve.Source = GetImage("Sleeves", sleeve.ToString());
+            img_avatar.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, avatar, false, ""));
+            img_border.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, border, false, ""));
+            img_sleeve.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, sleeve, false, ""));
 
             btn_buy.MouseLeftButtonDown += Btn_buy_MouseLeftButtonDown;
         }

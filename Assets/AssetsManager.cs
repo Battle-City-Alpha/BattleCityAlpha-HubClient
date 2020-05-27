@@ -1,9 +1,12 @@
-﻿using hub_client.Stuff;
+﻿using BCA.Common;
+using BCA.Common.Enums;
+using hub_client.Stuff;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -128,6 +131,45 @@ namespace hub_client.Assets
             image.UriSource = new Uri(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "unknown.jpg"));
             image.EndInit();
             return image;
+        }
+
+        public BitmapImage GetCustom(Customization custom)
+        {
+            string d = "";
+            switch (custom.CustomizationType)
+            {
+                case CustomizationType.Avatar:
+                    d = "Avatars";
+                    break;
+                case CustomizationType.Sleeve:
+                    d = "Sleeves";
+                    break;
+                case CustomizationType.Border:
+                    d = "Borders";
+                    break;
+            }
+
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")))
+            {
+                string url = custom.IsHost ? custom.URL : string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/BattleCityAlpha-v2-Assets/master/{0}/{1}.png", d, custom.Id);
+                try
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFile(
+                            new System.Uri(url),
+                            Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")
+                            );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
+                }
+            }
+
+            return GetImage(d, custom.Id.ToString());
         }
     }
 }

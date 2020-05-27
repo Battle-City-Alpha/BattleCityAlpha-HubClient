@@ -57,7 +57,7 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="popup_avatar" Grid.Row="0" CornerRadius="300" Margin="10" Height="256" Width="256" VerticalAlignment="Center" BorderBrush="Black" HorizontalAlignment="Center">
                             <Border.Background>
-                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  ImageSource="pack://siteoforigin:,,,/Assets/Avatars/1.png" Stretch="UniformToFill"/>
+                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
                         <TextBlock x:Name="popup_username" FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="PSEUDO" Grid.Row="1" />

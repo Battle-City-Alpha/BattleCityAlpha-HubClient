@@ -516,15 +516,7 @@ namespace hub_client.Network
                     msg = "[Animation - " + packet.Player.Username + "]: " + packet.Message;
                     break;
                 case ChatMessageType.Information:
-                    c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
-                    if (packet.Message.Contains("("))
-                    {
-                        string[] parts = packet.Message.Split('(');
-                        string id = parts[1].Split(')')[0];
-                        CardInfos cd = CardManager.GetCard(Convert.ToInt32(id));
-                        if (cd != null)
-                            packet.Message = parts[0] + "(" + cd.Name + parts[1].Substring(id.Length);
-                    }
+                    c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");                    
                     msg = "**[Information - " + packet.Player.Username + "]:" + packet.Message + "**";
                     bold = true;
                     break;

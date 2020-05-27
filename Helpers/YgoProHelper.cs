@@ -81,80 +81,21 @@ namespace hub_client.Helpers
         }
         private static void UpdateAvatar(Customization avatar, int i)
         {
-            if (!avatar.IsHost)
-                CopyAvatarToTexturesFolder(avatar, i);
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(avatar.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, avatar, i);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id + ".png")))
+                FormExecution.AssetsManager.GetCustom(avatar);
+            CopyAvatarToTexturesFolder(avatar, i);
         }
         private static void UpdateBorder(Customization border, int i)
         {
-            if (!border.IsHost)
-                CopyBorderToTexturesFolder(border, i);
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(border.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, border, i);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Borders", border.Id + ".png")))
+                FormExecution.AssetsManager.GetCustom(border);
+            CopyBorderToTexturesFolder(border, i);
         }
         private static void UpdateSleeve(Customization sleeve, int i)
         {
-            if (!sleeve.IsHost)
-                CopySleeveToTexturesFolder(sleeve, i);
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileAsync(
-                            new System.Uri(sleeve.URL),
-                            Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")
-                            );
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, sleeve, i);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
-        }
-
-        private static void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization customitem, int i)
-        {
-
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id + ".png")))
+                FormExecution.AssetsManager.GetCustom(sleeve);
+            CopySleeveToTexturesFolder(sleeve, i);
         }
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)

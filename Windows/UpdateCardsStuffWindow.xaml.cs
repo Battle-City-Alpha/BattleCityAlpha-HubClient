@@ -44,7 +44,7 @@ namespace hub_client.Windows
 
         public void SetProgressValue(double progress)
         {
-            this.tb_maj.Text = "Chargement... " + (int)progress + "%";
+            this.tb_maj.Text = "Chargement... " + progress + "%";
             this.progressBar_update.Value = progress;
 
             if (progress == 100)

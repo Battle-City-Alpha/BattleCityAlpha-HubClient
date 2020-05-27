@@ -49,7 +49,7 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="bg_first" Grid.Row="0" CornerRadius="200" Width="140" Height="140">
                             <Border.Background>
-                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Avatars/1.png" Stretch="UniformToFill"/>
+                                <ImageBrush Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -70,7 +70,7 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="bg_second" Grid.Row="0" CornerRadius="200" Width="130" Height="130">
                             <Border.Background>
-                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Avatars/1.png" Stretch="UniformToFill"/>
+                                <ImageBrush Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -92,7 +92,7 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="bg_third" Grid.Row="0" CornerRadius="200" Width="120" Height="120">
                             <Border.Background>
-                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Avatars/1.png" Stretch="UniformToFill"/>
+                                <ImageBrush Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">

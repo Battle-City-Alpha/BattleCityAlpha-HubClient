@@ -41,34 +41,7 @@ namespace hub_client.WindowsAdministrator
                     ResultPic = r.ELO > 0 ? FormExecution.AssetsManager.GetImage("Logo", "win") : FormExecution.AssetsManager.GetImage("Logo", "lose")
                 };
 
-                if (!r.Opponent.Avatar.IsHost)
-                    item.AvatarPic = FormExecution.AssetsManager.GetImage("Avatars", r.Opponent.Avatar.Id.ToString());
-                else
-                {
-                    try
-                    {
-                        using (WebClient wc = new WebClient())
-                        {
-                            wc.DownloadFile(
-                                new System.Uri(r.Opponent.Avatar.URL),
-                                Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.Opponent + ".png")
-                                );
-                        }
-                        BitmapImage image = new BitmapImage();
-                        image.BeginInit();
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        image.UriSource = new Uri(Path.Combine(FormExecution.path, "Assets", "Avatars", "A_" + item.Opponent + ".png"));
-                        image.EndInit();
-
-                        item.AvatarPic = image;
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex.ToString());
-                        FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                    }
-                }
+                item.AvatarPic = FormExecution.AssetsManager.GetCustom(r.Opponent.Avatar);
                 items.Add(item);
             }
 

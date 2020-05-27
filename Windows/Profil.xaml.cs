@@ -49,72 +49,9 @@ namespace hub_client.Windows
         {
             _userID = infos.UserID;
 
-            if (!infos.Avatar.IsHost)
-                img_avatar.Source = PicsManager.GetImage("Avatars", infos.Avatar.Id.ToString());
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Avatar);
-                        wc.DownloadFileAsync(
-                            new System.Uri(infos.Avatar.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png")
-                            );
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-
-            }
-
-            if (!infos.Border.IsHost)
-                img_border.Source = PicsManager.GetImage("Borders", infos.Border.Id.ToString());
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Border);
-                        wc.DownloadFileAsync(
-                            new System.Uri(infos.Border.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png")
-                            );
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
-
-            if (!infos.Sleeve.IsHost)
-                img_sleeve.Source = PicsManager.GetImage("Sleeves", infos.Sleeve.Id.ToString());
-            else
-            {
-                try
-                {
-                    using (WebClient wc = new WebClient())
-                    {
-                        wc.DownloadFileCompleted += (sender, e) => Wc_DownloadFileCompleted(sender, e, infos.Sleeve);
-                        wc.DownloadFileAsync(
-                            new System.Uri(infos.Sleeve.URL),
-                            Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png")
-                            );
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
-                }
-            }
+            img_avatar.Source = PicsManager.GetCustom(infos.Avatar);
+            img_border.Source = PicsManager.GetCustom(infos.Border);
+            img_sleeve.Source = PicsManager.GetCustom(infos.Sleeve);           
 
             tb_username.Text = infos.Username;
             tb_level.Text = infos.Level.ToString();

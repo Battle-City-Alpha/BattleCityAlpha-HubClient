@@ -16,26 +16,26 @@
             <ColumnDefinition MinWidth="138"/>
         </Grid.ColumnDefinitions>
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">
-            <Image x:Name="img_left" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="100" Height="144"/>
+            <Image x:Name="img_left" Grid.Column="0"  Stretch="Fill" Width="100" Height="144"/>
         </Border>
         
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="1">
-            <Image x:Name="img_center_left" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="128" Height="184"/>
+            <Image x:Name="img_center_left" Grid.Column="0"  Stretch="Fill" Width="128" Height="184"/>
         </Border>
 
         <Border BorderThickness="2" BorderBrush="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="2" Grid.ColumnSpan="2">
             <Grid>
                 <TextBlock x:Name="tb_customID" Text="12" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Opacity="0"/>
-                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="177" Height="256"/>
+                <Image x:Name="img_center" Grid.Column="0"  Stretch="Fill" Width="177" Height="256"/>
             </Grid>
         </Border>
 
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="4">
-            <Image x:Name="img_center_right" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="128" Height="184"/>
+            <Image x:Name="img_center_right" Grid.Column="0"  Stretch="Fill" Width="128" Height="184"/>
         </Border>
 
         <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Grid.Column="5">
-            <Image x:Name="img_right" Grid.Column="0"  Stretch="Fill" Source="pack://siteoforigin:,,,/Assets/Sleeves/1.png" Width="100" Height="144"/>
+            <Image x:Name="img_right" Grid.Column="0"  Stretch="Fill" Width="100" Height="144"/>
         </Border>
     </Grid>
 </UserControl>

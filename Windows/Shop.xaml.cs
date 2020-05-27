@@ -91,6 +91,12 @@ namespace hub_client.Windows
             }
 
             this.FontFamily = style.Font;
+
+            if (style.ShopWidth != -1)
+            {
+                this.Width = style.ShopWidth;
+                this.Height = style.ShopHeight;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -249,6 +255,9 @@ namespace hub_client.Windows
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            style.ShopWidth = this.Width;
+            style.ShopHeight = this.Height;
+            style.Save();
             FormExecution.ActivateChat();
             this.Close();
         }
