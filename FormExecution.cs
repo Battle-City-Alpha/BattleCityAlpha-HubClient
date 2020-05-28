@@ -110,7 +110,14 @@ namespace hub_client
                 else
                     ClientConfig = new ClientConfig();
 
+
                 AssetsManager = new AssetsManager();
+
+                if (!CheckCardsStuffUpdate())
+                {
+                    AssetsManager.LoadSmileys();
+                    LoadCDB();
+                }
 
                 //ClientConfig.TestMode = false;
 
@@ -119,10 +126,6 @@ namespace hub_client
                 //AppDesignConfig = new AppDesignConfig(); //To debug config
 
                 SaveConfig();
-
-                if (!CheckCardsStuffUpdate())
-                    LoadCDB();
-
             }
             Client = new GameClient();
 
@@ -243,7 +246,8 @@ namespace hub_client
             CardsUpdateDownloader.LoadingProgress -= CardsUpdateDownloader_LoadingProgress;
             CardsUpdateDownloader.UpdateCompleted -= CardsUpdateDownloader_UpdateCompleted;
 
-            LoadCDB();
+            LoadCDB(); 
+            AssetsManager.LoadSmileys();
         }
 
         private static void CardsUpdateDownloader_LoadingProgress(int i, int n)

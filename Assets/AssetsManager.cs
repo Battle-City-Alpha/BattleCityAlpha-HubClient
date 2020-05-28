@@ -22,8 +22,6 @@ namespace hub_client.Assets
         public AssetsManager()
         {
             path = FormExecution.path;
-
-            LoadSmileys();
         }
         public Smiley CheckSmiley(string word)
         {
@@ -33,7 +31,7 @@ namespace hub_client.Assets
                         return s;
             return null;
         }
-        private void LoadSmileys()
+        public void LoadSmileys()
         {
             Smileys = new Dictionary<string, List<Smiley>>();
             List<string> smileyGroups = new List<string>(Directory.EnumerateDirectories(Path.Combine(FormExecution.path, "Assets", "smileys")));
