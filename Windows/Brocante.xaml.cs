@@ -88,15 +88,30 @@ namespace hub_client.Windows
         {
             int sitem = brocanteList.SelectedIndex;
 
-            brocanteList.ItemsSource = null;
             _cards = cards;
-
             foreach (BrocanteCard card in _cards)
                 card.CardName = CardManager.GetCard(card.Id).Name;
 
-            brocanteList.ItemsSource = _cards;
+            if (!searchMyCard)
+            {
+                brocanteList.Items.Clear();
+                foreach (BrocanteCard card in _cards)
+                    if (CheckIsOwn(card))
+                        brocanteList.Items.Add(card);
 
-            //_admin.Client.OpenPopBox("Les cartes dans la brocante ont été mises à jour.", "Mise à jour brocante");
+                btnMyCards.ButtonText = "Toutes cartes";
+                btnMyCards.Update();
+            }
+            else
+            {
+                if (brocanteList.ItemsSource != null)
+                    brocanteList.ItemsSource = null;
+                brocanteList.Items.Clear();
+                brocanteList.ItemsSource = _cards;
+
+                btnMyCards.ButtonText = "Mes cartes";
+                btnMyCards.Update();
+            }
 
             if (this.IsActive)
             {
@@ -277,6 +292,8 @@ namespace hub_client.Windows
         private void btnBuy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             BrocanteCard card = (brocanteList.SelectedItem as BrocanteCard);
+            if (card == null)
+                return;
 
             NumberPopBox npb = new NumberPopBox(card.Quantity, card.Price);
             npb.SelectedNumber += (n) => Npb_SelectedNumber(n, card);
