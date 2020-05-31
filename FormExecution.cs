@@ -27,8 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static string debug_ip = "127.0.0.1";
-        //public static string debug_ip = "185.212.225.85";
+        //public static string debug_ip = "127.0.0.1";
+        public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -332,9 +332,10 @@ namespace hub_client
         {
             if (!result)
                 return;
-
-            File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
-            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk");
+            string name = sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk";
+            name = name.Replace(' ', '_');
+            File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", name), decklist);
+            YgoProHelper.LaunchYgoPro("-d " + name);
         }
 
         private static void CardManager_LoadingProgress(int i, int total)

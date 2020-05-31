@@ -1,4 +1,5 @@
-﻿using BCA.Common.Enums;
+﻿using BCA.Common;
+using BCA.Common.Enums;
 using NLog;
 using System;
 using System.Windows;
@@ -29,36 +30,18 @@ namespace hub_client.Windows
                 case CustomizationType.Avatar:
                     img_custom.Width = 256;
                     img_custom.Height = 256;
-                    img_custom.Source = GetImage("Avatars", id.ToString());
+                    img_custom.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, id, false, ""));
                     break;
                 case CustomizationType.Sleeve:
                     img_custom.Width = 177;
                     img_custom.Height = 254;
-                    img_custom.Source = GetImage("Sleeves", id.ToString());
+                    img_custom.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, id, false, ""));
                     break;
                 case CustomizationType.Border:
                     img_custom.Width = 306;
                     img_custom.Height = 136;
-                    img_custom.Source = GetImage("Borders", id.ToString());
+                    img_custom.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, id, false, ""));
                     break;
-            }
-        }
-        private BitmapImage GetImage(string directory, string img)
-        {
-            try
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new Uri(System.IO.Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
-                image.EndInit();
-                return image;
-            }
-            catch (Exception ex)
-            {
-                logger.Error("IMAGE LOADING - {0}", ex);
-                return null;
             }
         }
 
