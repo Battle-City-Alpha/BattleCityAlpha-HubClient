@@ -357,7 +357,7 @@ namespace hub_client.Windows
         public void LoadStyle()
         {
             List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
-            Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnForum });
+            Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnQuest });
 
             foreach (BCA_ColorButton btn in Buttons)
             {
@@ -519,12 +519,6 @@ namespace hub_client.Windows
         {
             System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/thread-20.html");
             logger.Trace("Rules clicked.");
-        }
-
-        private void BtnForum_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/");
-            logger.Trace("Forum clicked.");
         }
 
         private void SendBP_Click(object sender, RoutedEventArgs e)
@@ -769,5 +763,9 @@ namespace hub_client.Windows
             tbChat.tbChat.Focus();
         }
 
+        private void btnQuest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _admin.SendAskDailyQuest();
+        }
     }
 }

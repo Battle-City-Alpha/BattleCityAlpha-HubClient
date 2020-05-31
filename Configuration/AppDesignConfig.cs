@@ -42,6 +42,9 @@ namespace hub_client.Configuration
             GameColors.Add("Color1MonthlyBonusViewer", (Color)ColorConverter.ConvertFromString("#FF175A91"));
             GameColors.Add("Color2MonthlyBonusViewer", (Color)ColorConverter.ConvertFromString("#FF0FA2EE"));
 
+            GameColors.Add("Color1DailyQuest", (Color)ColorConverter.ConvertFromString("#FF175A91"));
+            GameColors.Add("Color2DailyQuest", (Color)ColorConverter.ConvertFromString("#FF0FA2EE"));
+
             GameColors.Add("Color1ArenaButton", (Color)ColorConverter.ConvertFromString("#FFF40202"));
             GameColors.Add("Color2ArenaButton", (Color)ColorConverter.ConvertFromString("#FFC20505"));
 

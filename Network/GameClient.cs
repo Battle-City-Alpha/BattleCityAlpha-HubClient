@@ -42,6 +42,11 @@ namespace hub_client.Network
         public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
         public event Action<int, int, int> LoadMonthPack;
         public event Action<Dictionary<int, MonthlyBonus>, int, int[]> GetMonthlyBonus;
+        #region Daily Quests
+        public event Action<DailyQuestType[], string[], int[]> GetDailyQuests;
+        public event Action<bool, DailyQuestType, int, bool> DailyQuestReward;
+        public event Action<bool, DailyQuestType, string> ChangeDailyQuest;
+        #endregion
         #region BonusBox Events
         public event Action<BonusType, int, string, int[]> LaunchBonusBox;
         #endregion
@@ -157,6 +162,7 @@ namespace hub_client.Network
         public GiveCardAdministrator GiveCardAdmin;
         public GamesHistoryAdministrator GamesHistoryAdmin;
         public MonthPackViewerAdministrator MonthPackViewerAdmin;
+        public DailyQuestAdministrator DailyQuestAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -197,6 +203,7 @@ namespace hub_client.Network
             GiveCardAdmin = new GiveCardAdministrator(this);
             GamesHistoryAdmin = new GamesHistoryAdministrator(this);
             MonthPackViewerAdmin = new MonthPackViewerAdministrator(this);
+            DailyQuestAdmin = new DailyQuestAdministrator(this);
         }
 
         private void InitManager()
@@ -490,6 +497,15 @@ namespace hub_client.Network
                     break;
                 case PacketType.AskMonthPack:
                     OnAskMonthPack(JsonConvert.DeserializeObject<StandardServerAskMonthPack>(packet));
+                    break;
+                case PacketType.AskDailyQuest:
+                    OnGetDailyQuests(JsonConvert.DeserializeObject<StandardServerSendDailyQuests>(packet));
+                    break;
+                case PacketType.GetDailyQuest:
+                    OnDailyQuestReward(JsonConvert.DeserializeObject<StandardServerGetDailyQuestReward>(packet));
+                    break;
+                case PacketType.ChangeDailyQuest:
+                    OnChangeDailyQuest(JsonConvert.DeserializeObject<StandardServerChangeDailyQuest>(packet));
                     break;
             }
         }
@@ -1339,6 +1355,19 @@ namespace hub_client.Network
             Application.Current.Dispatcher.InvokeAsync(() => GetGamesHistory?.Invoke(packet.Results));
 
             logger.Trace("RECIEVE GAMES HISTORY");
+        }
+
+        public void OnGetDailyQuests(StandardServerSendDailyQuests packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => GetDailyQuests?.Invoke(packet.DQTypes, packet.Quests, packet.States));
+        }
+        public void OnDailyQuestReward(StandardServerGetDailyQuestReward packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => DailyQuestReward?.Invoke(packet.Success, packet.DQType, packet.Reward, packet.AllQuests));
+        }
+        public void OnChangeDailyQuest(StandardServerChangeDailyQuest packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => ChangeDailyQuest?.Invoke(packet.Success, packet.DQType, packet.NewQuest));
         }
 
         public void OnPing(StandardServerPing packet)

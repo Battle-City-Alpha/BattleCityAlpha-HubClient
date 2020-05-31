@@ -172,6 +172,7 @@
     <Compile Include="WindowsAdministrator\BordersHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BrocanteAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ChatAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\DailyQuestAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DataRetrievalAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
     <Compile Include="WindowsAdministrator\GamesHistoryAdministrator.cs" />
@@ -274,6 +275,9 @@
     </Compile>
     <Compile Include="Windows\CustomViewer.xaml.cs">
       <DependentUpon>CustomViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DailyQuestWindow.xaml.cs">
+      <DependentUpon>DailyQuestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DataRetrievalWindow.xaml.cs">
       <DependentUpon>DataRetrievalWindow.xaml</DependentUpon>
@@ -465,6 +469,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CustomViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DailyQuestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -793,6 +801,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Logo\title_bonus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_dailyquest.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

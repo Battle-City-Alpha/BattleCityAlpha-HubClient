@@ -188,8 +188,17 @@ namespace hub_client.Windows
         }
         private void BuyVIP(object sender, MouseButtonEventArgs e)
         {
+            MonthPackViewer viewer = new MonthPackViewer(220, 21, 65);
+            viewer.Owner = this;
+            viewer.PurchaseBtnClick += VIP_BUY;
+            viewer.Show();
+        }
+
+        private void VIP_BUY()
+        {
             _admin.SendBuyVIP();
         }
+
         private void BuyMonthPack(object sender, MouseButtonEventArgs e)
         {
             _admin.SendAskMonthPack();

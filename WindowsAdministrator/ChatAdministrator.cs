@@ -270,5 +270,10 @@ namespace hub_client.WindowsAdministrator
                 return null;
             }
         }
+
+        public void SendAskDailyQuest()
+        {
+            Client.Send(PacketType.AskDailyQuest, new StandardClientAskDailyQuest { });
+        }
     }
 }

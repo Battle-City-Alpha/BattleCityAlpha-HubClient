@@ -328,14 +328,13 @@ namespace hub_client
             cpb.Topmost = true;
             cpb.Show();
         }
-
         private static void DeckCPBChoice(bool result, string[] decklist, PlayerInfo sender, string deckname)
         {
             if (!result)
                 return;
 
             File.WriteAllLines(Path.Combine(path, "BattleCityAlpha", "deck", sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk"), decklist);
-            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".yrp");
+            YgoProHelper.LaunchYgoPro("-d " + sender.Username + "_" + deckname + "_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".ydk");
         }
 
         private static void CardManager_LoadingProgress(int i, int total)

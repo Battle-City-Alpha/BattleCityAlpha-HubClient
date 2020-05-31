@@ -53,8 +53,12 @@ namespace hub_client.Windows.Controls
 
                 if (word.StartsWith("http://") || word.StartsWith("www.") || word.StartsWith("https://"))
                 {
-                    Hyperlink textLink = new Hyperlink(new Run(word));
-                    textLink.NavigateUri = new Uri(word);
+                    string url = word;
+                    if (word.EndsWith("."))
+                        url = word.Substring(0, word.Length - 2);
+
+                    Hyperlink textLink = new Hyperlink(new Run(url));
+                    textLink.NavigateUri = new Uri(url);
                     textLink.RequestNavigate += TextLink_RequestNavigate;
 
                     pr.Inlines.Add(textLink);
@@ -177,10 +181,14 @@ namespace hub_client.Windows.Controls
 
                 if (word.StartsWith("http://") || word.StartsWith("www.") || word.StartsWith("https://"))
                 {
-                    Hyperlink textLink = new Hyperlink(new Run(word));
+                    string url = word;
+                    if (word.EndsWith("."))
+                        url = word.Substring(0, word.Length - 2);
+
+                    Hyperlink textLink = new Hyperlink(new Run(url));
                     if (highlight)
                         textLink.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
-                    textLink.NavigateUri = new Uri(word);
+                    textLink.NavigateUri = new Uri(url);
                     textLink.RequestNavigate += TextLink_RequestNavigate;
 
                     pr.Inlines.Add(textLink);

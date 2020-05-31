@@ -18,14 +18,13 @@ namespace hub_client.Windows
     public partial class MonthPackViewer : Window
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private MonthPackViewerAdministrator _admin;
 
-        public MonthPackViewer(MonthPackViewerAdministrator admin, int avatar, int border, int sleeve)
+        public event Action PurchaseBtnClick;
+
+        public MonthPackViewer(int avatar, int border, int sleeve)
         {
             InitializeComponent();
             LoadStyle();
-
-            _admin = admin;
 
             this.MouseDown += Window_MouseDown;
 
@@ -38,7 +37,7 @@ namespace hub_client.Windows
 
         private void Btn_buy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _admin.SendBuyMonthPack();
+            PurchaseBtnClick?.Invoke();
             Close();
         }
 

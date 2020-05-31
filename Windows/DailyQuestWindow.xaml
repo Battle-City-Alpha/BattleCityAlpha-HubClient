@@ -1,0 +1,98 @@
+﻿<Window x:Class="hub_client.Windows.DailyQuestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        xmlns:Controls="clr-namespace:hub_client.Windows.Controls"
+        mc:Ignorable="d"
+        Title="Quêtes journalières !" Height="453.016" Width="557.276" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="50" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_dailyquest.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,40,5" Grid.Column="2">
+                    <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="border_normal" Grid.Row="0" CornerRadius="10" Margin="10">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="tbNormalQuest" Text="QUETE NORMALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="1">
+                            <Controls:BCA_ColorButton x:Name="btn_getnormal" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
+                            <Controls:BCA_ColorButton x:Name="btn_changenormal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="border_special" Grid.Row="1" CornerRadius="10" Margin="10">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="tbSpecialQuest" Text="QUETE SPECIALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="1">
+                            <Controls:BCA_ColorButton x:Name="btn_getspecial" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
+                            <Controls:BCA_ColorButton x:Name="btn_changespecial" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border x:Name="border_fun" Grid.Row="2" CornerRadius="10" Margin="10">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="tbFunQuest" Text="QUETE FUN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="1">
+                            <Controls:BCA_ColorButton x:Name="btn_getfun" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
+                            <Controls:BCA_ColorButton x:Name="btn_changefun" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

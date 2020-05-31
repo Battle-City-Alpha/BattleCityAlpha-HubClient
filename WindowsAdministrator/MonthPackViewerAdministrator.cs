@@ -18,8 +18,14 @@ namespace hub_client.WindowsAdministrator
 
         private void Client_LoadMonthPack(int avatar, int border, int sleeve)
         {
-            MonthPackViewer viewer = new MonthPackViewer(this, avatar, border, sleeve);
+            MonthPackViewer viewer = new MonthPackViewer(avatar, border, sleeve);
+            viewer.PurchaseBtnClick += MonthPack_Buy;
             viewer.Show();
+        }
+
+        private void MonthPack_Buy()
+        {
+            SendBuyMonthPack();
         }
 
         public void SendBuyMonthPack()

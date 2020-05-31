@@ -213,7 +213,7 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
-                    <Controls:BCA_ColorButton x:Name="btnFAQ" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="F.A.Q" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnFAQ_MouseLeftButtonDown" VerticalAlignment="Center">
+                    <Controls:BCA_ColorButton x:Name="btnFAQ" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" ButtonText="F.A.Q" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnFAQ_MouseLeftButtonDown" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -265,7 +265,7 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
-                    <Controls:BCA_ColorButton x:Name="btnForum" Width="Auto" Height="Auto" Margin="5" Grid.Column="3" ButtonText="Forum" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="BtnForum_MouseLeftButtonDown" VerticalAlignment="Center">
+                    <Controls:BCA_ColorButton x:Name="btnQuest" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="Quêtes" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnQuest_MouseLeftButtonDown"  VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>

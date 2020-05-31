@@ -38,7 +38,7 @@
                         <SolidColorBrush Color="White" Opacity="0.7"/>
                     </Border.Background>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Pack du mois !" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="Pack !" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </Grid>
