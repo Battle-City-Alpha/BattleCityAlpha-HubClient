@@ -649,6 +649,8 @@ namespace hub_client.Network
         {
             foreach (PlayerInfo infos in packet.Userlist)
             {
+                if (infos.Username == FormExecution.Username)
+                    FormExecution.PlayerInfos = infos;
                 PlayerManager.UpdatePlayer(infos);
                 Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(infos, false));
             }
@@ -906,13 +908,20 @@ namespace hub_client.Network
         {
             Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
             logger.Trace("Trade REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
-            if (packet.Result)
+            try
             {
-                Application.Current.Dispatcher.Invoke(() => LaunchTrade?.Invoke());
-                Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { PlayerManager.GetInfos(FormExecution.Username), packet.Player }, packet.Collections));
+                if (packet.Result)
+                {
+                    Application.Current.Dispatcher.Invoke(() => LaunchTrade?.Invoke());
+                    Application.Current.Dispatcher.Invoke(() => InitTrade?.Invoke(packet.Id, new PlayerInfo[] { FormExecution.PlayerInfos, packet.Player }, packet.Collections));
+                }
+                else
+                    Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre échange.", false, false));
             }
-            else
-                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre échange.", false, false));
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
         }
         public void OnTradeMessage(StandardServerTradeMessage packet)
         {

@@ -104,7 +104,7 @@ namespace hub_client.WindowsAdministrator
         }
         public void SendProfileAsking()
         {
-            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { UserID = Client.GetPlayerInfo(FormExecution.Username).UserId });
+            NetworkData data = new NetworkData(PacketType.Profil, new StandardClientProfilAsk { UserID = FormExecution.PlayerInfos.UserId });
             Client.Send(data);
         }
         public void SendDeck()
@@ -255,6 +255,9 @@ namespace hub_client.WindowsAdministrator
                             return null;
                         case "SMILEYS":
                             ShowSmileys?.Invoke();
+                            return null;
+                        case "LOGS":
+                            _cmdParser.OpenLogFolder();
                             return null;
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);

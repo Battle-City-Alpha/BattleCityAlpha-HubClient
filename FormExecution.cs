@@ -27,8 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        //public static string debug_ip = "127.0.0.1";
-        public static string debug_ip = "185.212.225.85";
+        public static string debug_ip = "127.0.0.1";
+        //public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -37,6 +37,7 @@ namespace hub_client
 
         public static string HID;
         public static string Username;
+        public static PlayerInfo PlayerInfos;
 
 
         public static string AppConfigPath = Path.Combine(AppDataPath, "BattleCityAlphaLauncher", "AppConfig.json");

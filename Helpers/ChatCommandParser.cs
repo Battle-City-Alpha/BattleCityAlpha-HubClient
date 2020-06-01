@@ -2,6 +2,8 @@
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Cards;
+using System.Diagnostics;
+using System.IO;
 
 namespace hub_client.Helpers
 {
@@ -369,6 +371,11 @@ namespace hub_client.Helpers
         public StandardClientNextRankingSeason AskNextRankingSeason()
         {
             return new StandardClientNextRankingSeason { };
+        }
+
+        public void OpenLogFolder()
+        {
+            Process.Start("explorer.exe", Path.Combine(FormExecution.path, "logs"));
         }
     }
 }
