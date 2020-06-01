@@ -64,6 +64,7 @@ namespace hub_client.Network
         public event Action<string, string> ClearChat;
         public event Action<string[]> Banlist;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
+        public event Action DailyQuestNotification;
         #endregion
         #region RegisterForm Events
         public event Action RegistrationComplete;
@@ -510,6 +511,9 @@ namespace hub_client.Network
                     break;
                 case PacketType.ChangeDailyQuest:
                     OnChangeDailyQuest(JsonConvert.DeserializeObject<StandardServerChangeDailyQuest>(packet));
+                    break;
+                case PacketType.DailyQuestNotification:
+                    OnDailyQuestNotification(JsonConvert.DeserializeObject<StandardServerDailyQuestNotification>(packet));
                     break;
             }
         }
@@ -1384,6 +1388,10 @@ namespace hub_client.Network
         public void OnChangeDailyQuest(StandardServerChangeDailyQuest packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => ChangeDailyQuest?.Invoke(packet.Success, packet.DQType, packet.NewQuest));
+        }
+        public void OnDailyQuestNotification(StandardServerDailyQuestNotification packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => DailyQuestNotification?.Invoke());
         }
 
         public void OnPing(StandardServerPing packet)

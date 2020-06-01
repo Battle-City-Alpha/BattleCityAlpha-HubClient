@@ -265,6 +265,8 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
+
+                    <Border x:Name="border_quest_notif" Visibility="Hidden" Grid.Column="2" Width="20" Height="20" Background="Red" BorderThickness="2" BorderBrush="White" Panel.ZIndex="1" CornerRadius="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3"/>
                     <Controls:BCA_ColorButton x:Name="btnQuest" Width="Auto" Height="Auto" Margin="5" Grid.Column="2" ButtonText="Quêtes" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="btnQuest_MouseLeftButtonDown"  VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>

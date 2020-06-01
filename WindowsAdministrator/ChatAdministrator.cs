@@ -27,6 +27,7 @@ namespace hub_client.WindowsAdministrator
         public event Action<PlayerInfo> UpdateHubPlayer;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
+        public event Action DailyQuestNotification;
 
         public ChatAdministrator(GameClient client)
         {
@@ -40,8 +41,14 @@ namespace hub_client.WindowsAdministrator
             Client.UpdateHubPlayers += Client_UpdateHubPlayers;
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
+            Client.DailyQuestNotification += Client_DailyQuestNotification;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_DailyQuestNotification()
+        {
+            DailyQuestNotification?.Invoke();
         }
 
         private void Client_UpdateHubPlayer(PlayerInfo player)

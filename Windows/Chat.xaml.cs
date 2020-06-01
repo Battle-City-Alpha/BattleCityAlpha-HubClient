@@ -66,6 +66,7 @@ namespace hub_client.Windows
             _admin.UpdateHubPlayers += _admin_UpdateHubPlayers;
             _admin.UpdateHubPlayer += _admin_UpdateHubPlayer;
             _admin.ClearChat += _admin_ClearChat;
+            _admin.DailyQuestNotification += _admin_DailyQuestNotification;
 
             tbUserList.TextChanged += SearchUser;
             lvUserlist.MouseDoubleClick += LvUserlist_MouseDoubleClick;
@@ -89,6 +90,11 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void _admin_DailyQuestNotification()
+        {
+            border_quest_notif.Visibility = Visibility.Visible;
         }
 
         private void BtnNote_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -765,6 +771,7 @@ namespace hub_client.Windows
 
         private void btnQuest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            border_quest_notif.Visibility = Visibility.Hidden;
             _admin.SendAskDailyQuest();
         }
     }
