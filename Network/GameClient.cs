@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using BCA.Network;
+using BCA.Network.Helpers;
 using BCA.Network.Packets;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
@@ -248,7 +249,9 @@ namespace hub_client.Network
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
                     writer.Write((short)packetId);
-                    writer.Write(JsonConvert.SerializeObject(packet));
+                    byte[] toSend = CompressHelper.Zip(JsonConvert.SerializeObject(packet));
+                    writer.Write((int)toSend.Length);
+                    writer.Write(toSend);
                 }
                 Send(stream.ToArray());
             }
@@ -261,7 +264,8 @@ namespace hub_client.Network
         private void GameClient_PacketReceived(BinaryReader reader)
         {
             PacketType packetType = (PacketType)reader.ReadInt16();
-            string packet = reader.ReadString();
+            int size = reader.ReadInt32();
+            string packet = CompressHelper.Unzip(reader.ReadBytes(size));
 
             logger.Trace("PACKET RECEIVED - {0} : {1}", packetType, packet);
 
@@ -798,7 +802,10 @@ namespace hub_client.Network
 
         public void OnUpdateCollection(StandardServerUpdateCollection packet)
         {
-            PlayerManager.UpdateCollection(packet.Collection);
+            if (packet.Collection != null)
+                PlayerManager.UpdateCollection(packet.Collection);
+            else
+                return;
 
             string arg = "-j";
 

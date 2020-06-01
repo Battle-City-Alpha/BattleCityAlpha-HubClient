@@ -97,7 +97,7 @@ namespace hub_client.Windows
             catch (Exception ex)
             {
                 logger.Error("ERROR WHEN LOADING CUSTOM CUSTOMIZATION {0}", ex.ToString());
-                tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL";
+                tb_url.Text = "Une erreur s'est produite lors du téléchargement de l'URL... ";
             }
         }
 
