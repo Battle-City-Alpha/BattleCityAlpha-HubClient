@@ -657,7 +657,7 @@ namespace hub_client.Network
         {
             foreach (PlayerInfo infos in packet.Userlist)
             {
-                if (infos.Username == FormExecution.Username)
+                if (infos.Username.ToUpper() == FormExecution.Username.ToUpper())
                     FormExecution.PlayerInfos = infos;
                 PlayerManager.UpdatePlayer(infos);
                 Application.Current.Dispatcher.Invoke(() => AddHubPlayer?.Invoke(infos, false));

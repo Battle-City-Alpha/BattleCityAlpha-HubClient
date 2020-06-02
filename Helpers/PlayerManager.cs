@@ -32,7 +32,7 @@ namespace hub_client.Helpers
         public PlayerInfo GetInfos(string username)
         {
             foreach (var info in Players)
-                if (info.Value.Username == username)
+                if (info.Value.Username.ToUpper() == username.ToUpper())
                     return info.Value;
             return null;
         }
