@@ -184,7 +184,6 @@ namespace hub_client.WindowsAdministrator
             });
         }
 
-
         private NetworkData ParseMessage(string txt)
         {
             try
@@ -250,6 +249,10 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.Maintenance, _cmdParser.AskMaintenance(txt.Substring(cmd.Length + 1)));
                         case "MAINTENANCESTOP":
                             return new NetworkData(PacketType.StopMaintenance, _cmdParser.StopMaintenance());
+                        case "DUELSERVERSTOP":
+                            return new NetworkData(PacketType.DuelServerStop, _cmdParser.DuelServerStop(txt.Substring(cmd.Length + 1)));
+                        case "DUELSERVERRESTART":
+                            return new NetworkData(PacketType.DuelServerRestart, _cmdParser.DuelServerRestart());
                         case "NEXTRANKINGSEASON":
                             return new NetworkData(PacketType.NextRankingSeason, _cmdParser.AskNextRankingSeason());
                         case "BLACKLIST":

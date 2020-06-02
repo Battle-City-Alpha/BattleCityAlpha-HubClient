@@ -515,6 +515,9 @@ namespace hub_client.Network
                 case PacketType.DailyQuestNotification:
                     OnDailyQuestNotification(JsonConvert.DeserializeObject<StandardServerDailyQuestNotification>(packet));
                     break;
+                case PacketType.DuelServerStop:
+                    OnDuelServerStop(JsonConvert.DeserializeObject<StandardServerDuelServerStop>(packet));
+                    break;
             }
         }
 
@@ -1392,6 +1395,11 @@ namespace hub_client.Network
         public void OnDailyQuestNotification(StandardServerDailyQuestNotification packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => DailyQuestNotification?.Invoke());
+        }
+
+        public void OnDuelServerStop(StandardServerDuelServerStop packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté", true));
         }
 
         public void OnPing(StandardServerPing packet)

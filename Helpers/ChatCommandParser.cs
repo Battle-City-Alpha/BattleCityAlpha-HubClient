@@ -377,5 +377,17 @@ namespace hub_client.Helpers
         {
             Process.Start("explorer.exe", Path.Combine(FormExecution.path, "logs"));
         }
+
+        public StandardClientDuelServerStop DuelServerStop(string txt)
+        {
+            return new StandardClientDuelServerStop
+            {
+                Reason = txt
+            };
+        }
+        public StandardClientDuelServerRestart DuelServerRestart()
+        {
+            return new StandardClientDuelServerRestart { };
+        }
     }
 }
