@@ -48,12 +48,12 @@
                         <SolidColorBrush Color="White" Opacity="0.7"/>
                     </Border.Background>
                     <StackPanel Orientation="Horizontal">
-                        <Label x:Name="label_booster_name" Content="LOB : La légende du Dragon Blanc aux Yeux Bleus" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Label Content="|" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Label x:Name="player_count" Content="126" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <Label Content="/" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <Label x:Name="total_count" Content="126" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <Label Content="cartes" FontSize="20" FontFamily="Dosis" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label x:Name="label_booster_name" Content="LOB : La légende du Dragon Blanc aux Yeux Bleus" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Label Content="|" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Label x:Name="player_count" Content="126" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label Content="/" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label x:Name="total_count" Content="126" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label Content="cartes" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </StackPanel>
                 </Border>
             </Grid>

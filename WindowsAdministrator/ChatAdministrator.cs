@@ -28,6 +28,7 @@ namespace hub_client.WindowsAdministrator
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
         public event Action DailyQuestNotification;
+        public event Action<bool> AnimationNotification;
 
         public ChatAdministrator(GameClient client)
         {
@@ -42,8 +43,14 @@ namespace hub_client.WindowsAdministrator
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
             Client.DailyQuestNotification += Client_DailyQuestNotification;
+            Client.AnimationNotification += Client_AnimationNotification;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_AnimationNotification(bool update)
+        {
+            AnimationNotification?.Invoke(update);
         }
 
         private void Client_DailyQuestNotification()
@@ -287,6 +294,10 @@ namespace hub_client.WindowsAdministrator
         public void SendAskDailyQuest()
         {
             Client.Send(PacketType.AskDailyQuest, new StandardClientAskDailyQuest { });
+        }
+        public void SendAskAnimations()
+        {
+            Client.Send(PacketType.AskAnimations, new StandardClientAskAnimations { });
         }
     }
 }

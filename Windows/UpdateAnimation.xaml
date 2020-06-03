@@ -1,0 +1,84 @@
+﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  xmlns:Controls="clr-namespace:hub_client.Windows.Controls"  x:Class="hub_client.Windows.UpdateAnimation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+         Title="Ma collection !" FontFamily="Dosis" Height="491.411" Width="431.619" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5"
+        />
+    </WindowChrome.WindowChrome>
+    <Border x:Name="bg_border" CornerRadius="30" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_animationschedule.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,40,5" Grid.Column="2">
+                    <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
+                    <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+                </StackPanel>
+            </Grid>
+
+            <Border Grid.Column="0" CornerRadius="10" Margin="10" Grid.Row="1">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.7"/>
+                </Border.Background>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Nom de l'animation :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="tb_animation_name" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="Organisateur :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1"/>
+                    <TextBox x:Name="tb_host" Grid.Row="1" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="Date de début :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2"/>
+                    <xctk:DateTimePicker x:Name="dp_startdate" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="2" Grid.Column="1" Margin="10"/>
+                    <TextBlock Text="Durée :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3"/>
+                    <TextBox x:Name="tb_duration" Grid.Row="3" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="URL :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="4"/>
+                    <TextBox x:Name="tb_url" Grid.Row="4" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Description :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0"/>
+                        <RichTextBox x:Name="rtb_desc" Grid.Row="1" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <StackPanel Orientation="Horizontal" Name="btn_panel" Grid.Row="2" HorizontalAlignment="Center">
+                <Controls:BCA_ColorButton x:Name="btn_update" Grid.Row="2" ButtonText="Créer" ButtonTextSize="20" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center" Color1="#FF4E0000" Color2="#FF420011"/>
+                <Controls:BCA_ColorButton x:Name="btn_delete" Grid.Row="2" ButtonText="Supprimer" ButtonTextSize="20" Margin="20,0" VerticalAlignment="Center" HorizontalAlignment="Center" Color1="#FF4E0000" Color2="#FF420011"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

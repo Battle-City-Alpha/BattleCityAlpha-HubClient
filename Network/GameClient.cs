@@ -65,6 +65,7 @@ namespace hub_client.Network
         public event Action<string[]> Banlist;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action DailyQuestNotification;
+        public event Action<bool> AnimationNotification;
         #endregion
         #region RegisterForm Events
         public event Action RegistrationComplete;
@@ -137,6 +138,9 @@ namespace hub_client.Network
         #region Games History Events
         public event Action<RoomResult[]> GetGamesHistory;
         #endregion
+        #region Animations Schedule Events
+        public event Action<Dictionary<string, string>, Animation[]> LoadAnimations;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -165,6 +169,7 @@ namespace hub_client.Network
         public GamesHistoryAdministrator GamesHistoryAdmin;
         public MonthPackViewerAdministrator MonthPackViewerAdmin;
         public DailyQuestAdministrator DailyQuestAdmin;
+        public AnimationsScheduleAdministrator AnimationsScheduleAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -206,6 +211,7 @@ namespace hub_client.Network
             GamesHistoryAdmin = new GamesHistoryAdministrator(this);
             MonthPackViewerAdmin = new MonthPackViewerAdministrator(this);
             DailyQuestAdmin = new DailyQuestAdministrator(this);
+            AnimationsScheduleAdmin = new AnimationsScheduleAdministrator(this);
         }
 
         private void InitManager()
@@ -517,6 +523,12 @@ namespace hub_client.Network
                     break;
                 case PacketType.DuelServerStop:
                     OnDuelServerStop(JsonConvert.DeserializeObject<StandardServerDuelServerStop>(packet));
+                    break;
+                case PacketType.AskAnimations:
+                    OnGetAnimations(JsonConvert.DeserializeObject<StandardServerGetAnimations>(packet));
+                    break;
+                case PacketType.AnimationNotification:
+                    OnAnimationNotification(JsonConvert.DeserializeObject<StandardServerAnimationNotification>(packet));
                     break;
             }
         }
@@ -1400,6 +1412,15 @@ namespace hub_client.Network
         public void OnDuelServerStop(StandardServerDuelServerStop packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté", true));
+        }
+
+        public void OnGetAnimations(StandardServerGetAnimations packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => LoadAnimations?.Invoke(packet.Colors, packet.Animations));
+        }
+        public void OnAnimationNotification(StandardServerAnimationNotification packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => AnimationNotification?.Invoke(packet.Update));
         }
 
         public void OnPing(StandardServerPing packet)

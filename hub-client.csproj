@@ -167,6 +167,7 @@
     <Compile Include="Stuff\PlayerItem.cs" />
     <Compile Include="Stuff\RankingPlayerItem.cs" />
     <Compile Include="Stuff\Smiley.cs" />
+    <Compile Include="WindowsAdministrator\AnimationsScheduleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
     <Compile Include="WindowsAdministrator\AvatarsHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\BordersHandleAdministrator.cs" />
@@ -194,6 +195,9 @@
     <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
+    <Compile Include="Windows\AnimationsSchedule.xaml.cs">
+      <DependentUpon>AnimationsSchedule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Arena.xaml.cs">
       <DependentUpon>Arena.xaml</DependentUpon>
     </Compile>
@@ -222,6 +226,9 @@
     </Compile>
     <Compile Include="Windows\ColorPickerWindow.xaml.cs">
       <DependentUpon>ColorPickerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_Animation.xaml.cs">
+      <DependentUpon>BCA_Animation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_AvatarChoice.xaml.cs">
       <DependentUpon>BCA_AvatarChoice.xaml</DependentUpon>
@@ -369,9 +376,16 @@
     <Compile Include="Windows\Trade.xaml.cs">
       <DependentUpon>Trade.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UpdateAnimation.xaml.cs">
+      <DependentUpon>UpdateAnimation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\UpdateCardsStuffWindow.xaml.cs">
       <DependentUpon>UpdateCardsStuffWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\AnimationsSchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Arena.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -401,6 +415,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ColorPickerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_Animation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -593,6 +611,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Trade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UpdateAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -804,6 +826,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_dailyquest.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_animationschedule.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

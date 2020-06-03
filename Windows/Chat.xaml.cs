@@ -67,6 +67,7 @@ namespace hub_client.Windows
             _admin.UpdateHubPlayer += _admin_UpdateHubPlayer;
             _admin.ClearChat += _admin_ClearChat;
             _admin.DailyQuestNotification += _admin_DailyQuestNotification;
+            _admin.AnimationNotification += _admin_AnimationNotification;
 
             tbUserList.TextChanged += SearchUser;
             lvUserlist.MouseDoubleClick += LvUserlist_MouseDoubleClick;
@@ -90,6 +91,16 @@ namespace hub_client.Windows
             this.MouseDown += Chat_MouseDown;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void _admin_AnimationNotification(bool update)
+        {
+            if (update)
+                animation_notif.Background = new SolidColorBrush(style.GetGameColor("NotificationColor"));
+            else
+                animation_notif.Background = new SolidColorBrush(style.GetGameColor("AnimationSoonColor"));
+
+            animation_notif.Visibility = Visibility.Visible;
         }
 
         private void _admin_DailyQuestNotification()
@@ -362,7 +373,9 @@ namespace hub_client.Windows
 
         public void LoadStyle()
         {
-            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            border_quest_notif.Background = new SolidColorBrush(style.GetGameColor("NotificationColor"));
+
+            List <BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
             Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnQuest });
 
             foreach (BCA_ColorButton btn in Buttons)
@@ -466,7 +479,11 @@ namespace hub_client.Windows
         }
         private void btnAnimations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/forum-25.html");
+            //System.Diagnostics.Process.Start("https://forum.battlecityalpha.xyz/forum-25.html");
+
+            _admin.SendAskAnimations();
+            animation_notif.Visibility = Visibility.Hidden;
+
             logger.Trace("Animations clicked.");
         }
         private void btnTools_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

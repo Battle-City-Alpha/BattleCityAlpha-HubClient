@@ -32,6 +32,9 @@ namespace hub_client.Configuration
             GameColors.Add("PopupPMTitleColor", Colors.Yellow);
             GameColors.Add("PopupPMHeaderColor", (Color)ColorConverter.ConvertFromString("#FFa57daf"));
 
+            GameColors.Add("NotificationColor", Colors.Red);
+            GameColors.Add("AnimationSoonColor", Colors.Blue);
+
             GameColors.Add("HighlighMessageColor", (Color)ColorConverter.ConvertFromString("#AAf5f314"));
 
             GameColors.Add("CaptionDuelTextColor", (Color)ColorConverter.ConvertFromString("#ff0000ff"));
@@ -85,6 +88,9 @@ namespace hub_client.Configuration
 
             GameColors.Add("Color1DataRetrievalButton", (Color)ColorConverter.ConvertFromString("#FF4F163F"));
             GameColors.Add("Color2DataRetrievalButton", (Color)ColorConverter.ConvertFromString("#FF1F1429"));
+
+            GameColors.Add("Color1AnimationPlanning", (Color)ColorConverter.ConvertFromString("#FF4E0000"));
+            GameColors.Add("Color2AnimationPlanning", (Color)ColorConverter.ConvertFromString("#FF420011"));
         }
 
         public Color GetGameColor(string propertyName)

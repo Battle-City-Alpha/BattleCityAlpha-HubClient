@@ -82,6 +82,7 @@
                 <Controls:BCA_ColorButton x:Name="btnArene" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="0" ButtonText="Arène" MouseLeftButtonDown="btnArene_MouseLeftButtonDown" VerticalAlignment="Center"/>
                 <Controls:BCA_ColorButton x:Name="btnShop" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="1" ButtonText="Boutique" MouseLeftButtonDown="btnShop_MouseLeftButtonDown" VerticalAlignment="Center"/>
                 <Controls:BCA_ColorButton x:Name="btnDecks" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="2" ButtonText="Decks" MouseLeftButtonDown="btnDecks_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                <Border x:Name="animation_notif" Visibility="Hidden" Grid.Column="3" Width="20" Height="20" Background="Red" BorderThickness="2" BorderBrush="White" Panel.ZIndex="1" CornerRadius="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3"/>
                 <Controls:BCA_ColorButton x:Name="btnAnimations" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="3" ButtonText="Animations" MouseLeftButtonDown="btnAnimations_MouseLeftButtonDown" VerticalAlignment="Center"/>
                 <Controls:BCA_ColorButton x:Name="btnTools" Width="Auto" Height="Auto" Margin="5,0,5,5" Grid.Column="4" ButtonText="Options" MouseLeftButtonDown="btnTools_MouseLeftButtonDown" VerticalAlignment="Center"/>
             </Grid>

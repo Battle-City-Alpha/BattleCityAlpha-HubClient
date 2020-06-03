@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,10 +19,35 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_Chat : UserControl
     {
+        Popup smiley_popup;
         public BCA_Chat()
         {
             InitializeComponent();
             Clear();
+
+            smiley_popup = new Popup();
+            smiley_popup.AllowsTransparency = true;
+            smiley_popup.Placement = PlacementMode.MousePoint;
+            smiley_popup.Margin = new Thickness(0, 0, 0, 0);
+            smiley_popup.PopupAnimation = PopupAnimation.Fade;
+
+            Border popup_border = new Border();
+            popup_border.CornerRadius = new CornerRadius(5);
+            popup_border.Margin = new Thickness(0);
+            popup_border.Padding = new Thickness(3);
+            popup_border.BorderThickness = new Thickness(1);
+            popup_border.BorderBrush = new SolidColorBrush(Colors.Black);
+            popup_border.Background = new SolidColorBrush(Colors.White);
+            popup_border.Background.Opacity = 0.9;
+
+            TextBlock smiley_text = new TextBlock();
+            smiley_text.FontSize = FormExecution.AppDesignConfig.FontSize; 
+            smiley_text.FontFamily = FormExecution.AppDesignConfig.Font;
+            smiley_text.TextAlignment = TextAlignment.Center;
+
+            popup_border.Child = smiley_text;
+
+            smiley_popup.Child = popup_border;
         }
         public void RefreshStyle()
         {
@@ -201,6 +227,8 @@ namespace hub_client.Windows.Controls
                     img.Source = FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)).Pic.Source.Clone();
                     img.Width = FormExecution.AppDesignConfig.FontSize + 10;
                     img.Height = FormExecution.AppDesignConfig.FontSize + 10;
+                    img.MouseEnter += (sender, e) => Smiley_Hover(sender, e, word);
+                    img.MouseLeave += Smiley_Leave;
                     pr.Inlines.Add(img);
                     normalTxt.Text = " ";
                 }
@@ -275,6 +303,18 @@ namespace hub_client.Windows.Controls
             if (FormExecution.ClientConfig.Autoscroll)
                 ScrollToCarret();
         }
+
+        private void Smiley_Leave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            smiley_popup.IsOpen = false;
+        }
+
+        private void Smiley_Hover(object sender, System.Windows.Input.MouseEventArgs e, string txt)
+        {
+            ((smiley_popup.Child as Border).Child as TextBlock).Text = txt;
+            smiley_popup.IsOpen = true;
+        }
+
         public void ShowSmileys()
         {
             Paragraph pr = new Paragraph();
