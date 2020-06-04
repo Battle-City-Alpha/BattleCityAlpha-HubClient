@@ -24,7 +24,7 @@
                         <TextBlock x:Name="tb_popup_anim_name" Text="NOM DE L'ANIMATION" FontSize="20"/>
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
-                        <TextBlock Text="Organisateur :" FontSize="20"/>
+                        <TextBlock Text="Organisateur : " FontSize="20"/>
                         <TextBlock x:Name="tb_popup_host" Text="???" FontSize="20"/>
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
@@ -39,7 +39,7 @@
                         <TextBlock Text="Durée : "  FontSize="20"/>
                         <TextBlock x:Name="tb_popup_duration" Text="???" FontSize="20"/>
                     </StackPanel>
-                    <ScrollViewer Grid.Row="5">
+                    <ScrollViewer x:Name="scr_desc" Grid.Row="5" >
                         <TextBlock x:Name="tb_popup_desc" Text="???" FontSize="18" TextWrapping="Wrap" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="10" TextAlignment="Justify"/>
                     </ScrollViewer>
                 </Grid>

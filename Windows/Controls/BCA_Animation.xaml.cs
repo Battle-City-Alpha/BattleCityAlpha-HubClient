@@ -53,6 +53,23 @@ namespace hub_client.Windows.Controls
             _timer = new DispatcherTimer();
             _timer.Tick += _timer_Tick;
             _timer.Interval = TimeSpan.FromSeconds(1);
+
+            this.animation_border.PreviewMouseWheel += Animation_border_PreviewMouseWheel;
+        }
+
+        private void Animation_border_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double scrollPos = scr_desc.VerticalOffset - e.Delta;
+            if (scrollPos < 0)
+                scrollPos = 0;
+            if (scrollPos > scr_desc.ScrollableHeight)
+                scrollPos = (int)scr_desc.ScrollableHeight;
+
+            if (this.anim_popup.IsOpen)
+            {
+                scr_desc.ScrollToVerticalOffset(scrollPos);
+                e.Handled = true;
+            }
         }
 
         private void Animation_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

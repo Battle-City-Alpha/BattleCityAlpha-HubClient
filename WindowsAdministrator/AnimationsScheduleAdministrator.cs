@@ -24,7 +24,7 @@ namespace hub_client.WindowsAdministrator
 
         private void Client_LoadAnimations(Dictionary<string, string> colors, Animation[] animations)
         {
-            if (_window == null)
+            if (_window == null || !_window.IsVisible)
             {
                 _window = new AnimationsSchedule(this, animations, colors);
                 _window.Show();

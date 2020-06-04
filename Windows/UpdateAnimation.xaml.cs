@@ -38,6 +38,8 @@ namespace hub_client.Windows
                 tb_url.Text = anim.URL;
                 dp_startdate.Value = anim.StartDate;
                 rtb_desc.AppendText(anim.Description);
+                btn_update.ButtonText = "Modifier";
+                btn_update.Update();
             }
             else
             {

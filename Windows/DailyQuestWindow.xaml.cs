@@ -156,8 +156,26 @@ namespace hub_client.Windows
 
             if (state < 0)
             {
-                bd.BorderBrush = new SolidColorBrush(Colors.Green);
-                bd.Background = new SolidColorBrush(Colors.LightGreen);
+                if (bd.BorderBrush != null)
+                {
+                    ColorAnimation border;
+                    border = new ColorAnimation();
+                    border.From = ((SolidColorBrush)bd.BorderBrush).Color;
+                    border.To = Colors.Green;
+                    border.Duration = new Duration(TimeSpan.FromMilliseconds(200));
+                    bd.BorderBrush.BeginAnimation(SolidColorBrush.ColorProperty, border);
+                    ColorAnimation background;
+                    background = new ColorAnimation();
+                    background.From = ((SolidColorBrush)bd.Background).Color;
+                    background.To = Colors.LightGreen;
+                    background.Duration = new Duration(TimeSpan.FromSeconds(1));
+                    bd.Background.BeginAnimation(SolidColorBrush.ColorProperty, background);
+                }
+                else
+                {
+                    bd.BorderBrush = new SolidColorBrush(Colors.Green);
+                    bd.Background = new SolidColorBrush(Colors.LightGreen);
+                }
                 Grid.SetColumnSpan(tb, 2);
             }
             else

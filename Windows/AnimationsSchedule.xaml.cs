@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -67,6 +68,7 @@ namespace hub_client.Windows
                 return;
 
             UpdateAnimation control = new UpdateAnimation(null);
+            control.Owner = this;
             control.Show();
             control.SendUpdate += Control_SendUpdate;
         }
@@ -103,8 +105,12 @@ namespace hub_client.Windows
             for (int i = 0; i < planning.Children.Count; i++)
                 if (planning.Children[i] is BCA_Animation)
                     toRemove.Add(i);
+            int offset = 0;
             foreach (int elem in toRemove)
-                planning.Children.RemoveAt(elem);
+            {
+                planning.Children.RemoveAt(elem - offset);
+                offset++;
+            }
 
             foreach (Animation anim in anims)
             {
@@ -114,8 +120,30 @@ namespace hub_client.Windows
                 BCA_Animation widget = new BCA_Animation(anim, _admin);
                 planning.Children.Add(widget);
                 Grid.SetColumn(widget, dayofweek);
-                Grid.SetRow(widget, anim.StartDate.Hour - 12);
-                Grid.SetRowSpan(widget, anim.Duration + 1);
+                Grid.SetRow(widget, anim.StartDate.Hour - 14);
+                Grid.SetRowSpan(widget, anim.Duration);
+
+                Storyboard storyboard = new Storyboard();
+
+                ScaleTransform scale = new ScaleTransform(0.0, 0.0);
+                widget.RenderTransformOrigin = new Point(0.5, 0.5);
+                widget.RenderTransform = scale;
+
+                DoubleAnimation growAnimationOpenX = new DoubleAnimation();
+                growAnimationOpenX.Duration = TimeSpan.FromMilliseconds(200);
+                growAnimationOpenX.From = 0.0;
+                growAnimationOpenX.To = 1.0;
+                DoubleAnimation growAnimationOpenY = new DoubleAnimation();
+                growAnimationOpenY.Duration = TimeSpan.FromMilliseconds(200);
+                growAnimationOpenY.From = 0.0;
+                growAnimationOpenY.To = 1.0;
+                storyboard.Children.Add(growAnimationOpenX);
+                storyboard.Children.Add(growAnimationOpenY);
+                Storyboard.SetTargetProperty(growAnimationOpenX, new PropertyPath("RenderTransform.ScaleX"));
+                Storyboard.SetTargetProperty(growAnimationOpenY, new PropertyPath("RenderTransform.ScaleY"));
+                Storyboard.SetTarget(growAnimationOpenX, widget);
+                Storyboard.SetTarget(growAnimationOpenY, widget);
+                storyboard.Begin();
             }
         }
 
