@@ -244,6 +244,8 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.GiveBorder, _cmdParser.GiveBorder(txt.Substring(cmd.Length + 1)));
                         case "GIVESLEEVE":
                             return new NetworkData(PacketType.GiveSleeve, _cmdParser.GiveSleeve(txt.Substring(cmd.Length + 1)));
+                        case "GIVEPARTNER":
+                            return new NetworkData(PacketType.GivePartner, _cmdParser.GivePartner(txt.Substring(cmd.Length + 1)));
                         case "GIVETITLE":
                             return new NetworkData(PacketType.GiveTitle, _cmdParser.GiveTitle(txt.Substring(cmd.Length + 1)));
                         case "ENABLED":

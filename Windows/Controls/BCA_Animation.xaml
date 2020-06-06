@@ -27,16 +27,17 @@
                         <TextBlock Text="Organisateur : " FontSize="20"/>
                         <TextBlock x:Name="tb_popup_host" Text="???" FontSize="20"/>
                     </StackPanel>
+                    <TextBlock x:Name="tb_perma_anim" Text="Animation permanente" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
                     <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
-                        <TextBlock Text="Date : "  FontSize="20"/>
+                        <TextBlock x:Name="tb_title_date" Text="Date : "  FontSize="20"/>
                         <TextBlock x:Name="tb_popup_date" Text="???" FontSize="20"/>
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
-                        <TextBlock Text="Heure de début : "  FontSize="20"/>
+                        <TextBlock x:Name="tb_title_starthour" Text="Heure de début : "  FontSize="20"/>
                         <TextBlock x:Name="tb_popup_starthour" Text="???" FontSize="20"/>
                     </StackPanel>
                     <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4">
-                        <TextBlock Text="Durée : "  FontSize="20"/>
+                        <TextBlock x:Name="tb_title_duration" Text="Durée : "  FontSize="20"/>
                         <TextBlock x:Name="tb_popup_duration" Text="???" FontSize="20"/>
                     </StackPanel>
                     <ScrollViewer x:Name="scr_desc" Grid.Row="5" >

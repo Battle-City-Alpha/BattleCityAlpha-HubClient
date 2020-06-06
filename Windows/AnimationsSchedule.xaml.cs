@@ -112,6 +112,7 @@ namespace hub_client.Windows
                 offset++;
             }
 
+            int permaAnimPos = 1;
             foreach (Animation anim in anims)
             {
                 int dayofweek = (int)anim.StartDate.DayOfWeek;
@@ -119,9 +120,21 @@ namespace hub_client.Windows
                     dayofweek = 7;
                 BCA_Animation widget = new BCA_Animation(anim, _admin);
                 planning.Children.Add(widget);
-                Grid.SetColumn(widget, dayofweek);
-                Grid.SetRow(widget, anim.StartDate.Hour - 14);
-                Grid.SetRowSpan(widget, anim.Duration);
+
+                if (anim.Duration == -1)
+                {
+                    if (permaAnimPos >= 7)
+                        return;
+                    Grid.SetColumn(widget, permaAnimPos);
+                    permaAnimPos++;
+                    Grid.SetRow(widget, 1);
+                }
+                else
+                {
+                    Grid.SetColumn(widget, dayofweek);
+                    Grid.SetRow(widget, anim.StartDate.Hour - 14);
+                    Grid.SetRowSpan(widget, anim.Duration);
+                }
 
                 Storyboard storyboard = new Storyboard();
 

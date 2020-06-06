@@ -264,6 +264,21 @@ namespace hub_client.Helpers
                 Sleeve = id
             };
         }
+        public StandardClientGivePartner GivePartner(string txt)
+        {
+            string[] args = txt.Split(' ');
+            string target = args[0];
+            int id = -1;
+            int.TryParse(args[1], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientGivePartner
+            {
+                Target = target,
+                Partner = id
+            };
+        }
         public StandardClientGiveCard GiveCard(string txt)
         {
             string[] args = txt.Split(' ');

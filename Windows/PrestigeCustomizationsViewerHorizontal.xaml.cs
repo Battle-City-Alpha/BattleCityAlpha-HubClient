@@ -126,6 +126,9 @@ namespace hub_client.Windows
                     case CustomizationType.Sleeve:
                         _admin.ChangeSleeve(custom.Id);
                         break;
+                    case CustomizationType.Partner:
+                        _admin.ChangePartner(custom.Id);
+                        break;
                 }
             }
 

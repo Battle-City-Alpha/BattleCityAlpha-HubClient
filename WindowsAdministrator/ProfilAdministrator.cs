@@ -34,6 +34,14 @@ namespace hub_client.WindowsAdministrator
             viewer.Owner = window;
             viewer.Show();
         }
+        public void OpenPartnersForm(Profil window)
+        {
+            Client.Send(PacketType.LoadPartner, new StandardClientLoadPartners());
+
+            PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
+            viewer.Owner = window;
+            viewer.Show();
+        }
         public void OpenTitlesForm(Profil window)
         {
             Client.Send(PacketType.AskTitle, new StandardClientAskTitles());

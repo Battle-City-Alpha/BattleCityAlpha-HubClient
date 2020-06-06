@@ -88,12 +88,24 @@
                             </Grid>
                         </Grid>
                     </Border>
-                    <Border BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-                        </Border.Background>
-                        <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
-                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="Black" Visibility="Visible" Margin="10" CornerRadius="10" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                            </Border.Background>
+                            <Image x:Name="img_partner" Cursor="Hand" Grid.Column="2" Margin="0"  Stretch="Fill" Width="136" Height="136" Source="pack://siteoforigin:,,,/Assets/Partner/75.png"/>
+                        </Border>
+                        <Border BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                            </Border.Background>
+                            <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="3" Margin="10">

@@ -43,6 +43,15 @@ namespace hub_client.Windows
             this.FontFamily = FormExecution.AppDesignConfig.Font;
 
             this.MouseDown += Window_MouseDown;
+
+            img_partner.MouseLeftButtonDown += Img_partner_MouseLeftButtonDown;
+        }
+
+        private void Img_partner_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!this.IsMine())
+                return;
+            _admin.OpenPartnersForm(this);
         }
 
         private void _admin_UpdateProfil(StandardServerProfilInfo infos)
@@ -51,7 +60,8 @@ namespace hub_client.Windows
 
             img_avatar.Source = PicsManager.GetCustom(infos.Avatar);
             img_border.Source = PicsManager.GetCustom(infos.Border);
-            img_sleeve.Source = PicsManager.GetCustom(infos.Sleeve);           
+            img_sleeve.Source = PicsManager.GetCustom(infos.Sleeve);
+            img_partner.Source = PicsManager.GetCustom(infos.Partner);
 
             tb_username.Text = infos.Username;
             tb_level.Text = infos.Level.ToString();
@@ -74,22 +84,6 @@ namespace hub_client.Windows
             tb_title.Text = infos.Title;
 
             this.Show();
-        }
-
-        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, Customization item)
-        {
-            switch (item.CustomizationType)
-            {
-                case CustomizationType.Avatar:
-                    img_avatar.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Avatars", "temp.png"));
-                    break;
-                case CustomizationType.Border:
-                    img_border.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Borders", "temp.png"));
-                    break;
-                case CustomizationType.Sleeve:
-                    img_sleeve.Source = GetImage(Path.Combine(FormExecution.path, "Assets", "Sleeves", "temp.png"));
-                    break;
-            }
         }
 
         private BitmapImage GetImage(string path)

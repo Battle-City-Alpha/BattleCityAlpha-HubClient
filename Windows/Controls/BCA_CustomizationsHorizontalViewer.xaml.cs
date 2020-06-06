@@ -101,6 +101,20 @@ namespace hub_client.Windows.Controls
                     img_right.Width = 100;
                     img_right.Height = 100;
                     break;
+                case CustomizationType.Partner:
+                    ctypetext = "Partenaires";
+
+                    img_center.Width = 256;
+                    img_center.Height = 256;
+                    img_center_left.Width = 128;
+                    img_center_left.Height = 128;
+                    img_center_right.Width = 128;
+                    img_center_right.Height = 128;
+                    img_left.Width = 100;
+                    img_left.Height = 100;
+                    img_right.Width = 100;
+                    img_right.Height = 100;
+                    break;
                 case CustomizationType.Border:
                     ctypetext = "Borders";
                     break;

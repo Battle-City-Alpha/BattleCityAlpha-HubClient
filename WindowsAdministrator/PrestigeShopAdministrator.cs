@@ -76,7 +76,7 @@ namespace hub_client.WindowsAdministrator
         public void SendAskPrestigeCustomizations(CustomizationType ctype)
         {
             Client.Send(PacketType.AskPrestigeCustoms, new StandardClientAskPrestigeCustomizations { Ctype = ctype });
-            if (ctype == CustomizationType.Avatar || ctype == CustomizationType.Sleeve)
+            if (ctype == CustomizationType.Avatar || ctype == CustomizationType.Sleeve || ctype == CustomizationType.Partner)
                 FormExecution.OpenPrestigeCustomizationsViewer();
             else if (ctype == CustomizationType.Title)
                 FormExecution.OpenPrestigeTitleViewer();

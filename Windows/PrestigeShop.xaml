@@ -143,9 +143,9 @@
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
-                        <Controls:BCA_PurchaseShopItem x:Name="TitleList_Item" Grid.Column="0"/>
-                        <Controls:BCA_PurchaseShopItem x:Name="Greet_Item" Grid.Column="1"/>
-                        <Controls:BCA_PurchaseShopItem x:Name="ChangeUsername_Item" Grid.Column="2"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="PartnerList_Item" Grid.Column="0"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="TitleList_Item" Grid.Column="1"/>
+                        <Controls:BCA_PurchaseShopItem x:Name="Greet_Item" Grid.Column="2"/>
                     </Grid>
 
                     <Grid>
@@ -157,6 +157,7 @@
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="ChangeUsername_Item" Grid.Column="0"/>
                         <Controls:BCA_PurchaseShopItem x:Name="ResetStat_Item" Grid.Column="1"/>
                     </Grid>
                 </StackPanel>

@@ -145,6 +145,9 @@ namespace hub_client.Assets
                 case CustomizationType.Border:
                     d = "Borders";
                     break;
+                case CustomizationType.Partner:
+                    d = "Partners";
+                    break;
             }
 
             if (!File.Exists(Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")))

@@ -21,11 +21,12 @@ namespace hub_client.WindowsAdministrator
             Client.LoadSleeves += Client_LoadPrestigeCustomizations;
             Client.LoadBorders += Client_LoadPrestigeCustomizations;
             Client.LoadAvatars += Client_LoadPrestigeCustomizations;
+            Client.LoadPartners += Client_LoadPrestigeCustomizations;
         }
 
         private void Client_LoadPrestigeCustomizations(Customization[] customs)
         {
-            if (customs[0].CustomizationType != CustomizationType.Avatar && customs[0].CustomizationType != CustomizationType.Border && customs[0].CustomizationType != CustomizationType.Sleeve)
+            if (customs[0].CustomizationType != CustomizationType.Avatar && customs[0].CustomizationType != CustomizationType.Border && customs[0].CustomizationType != CustomizationType.Sleeve && customs[0].CustomizationType != CustomizationType.Partner)
                 return;
             LoadPrestigeCustomizations?.Invoke(customs);
         }
@@ -42,6 +43,11 @@ namespace hub_client.WindowsAdministrator
         {
             StandardClientChangeAvatar packet = new StandardClientChangeAvatar { Id = id };
             Client.Send(PacketType.ChangeAvatar, packet);
+        }
+        public void ChangePartner(int id)
+        {
+            StandardClientChangePartner packet = new StandardClientChangePartner { Id = id };
+            Client.Send(PacketType.ChangePartner, packet);
         }
         public void ChangeSleeve(int id)
         {

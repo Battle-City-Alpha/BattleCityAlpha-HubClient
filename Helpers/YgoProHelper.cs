@@ -17,6 +17,7 @@ namespace hub_client.Helpers
         private static Customization _bot_avatar = new Customization(CustomizationType.Avatar, 406, false, "");
         private static Customization _bot_border = new Customization(CustomizationType.Border, 26, false, "");
         private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 64, false, "");
+        private static Customization _bot_partner = new Customization(CustomizationType.Partner, 127, false, "");
         private static string _deck = "";
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
@@ -66,18 +67,21 @@ namespace hub_client.Helpers
             UpdateAvatar(new Customization(CustomizationType.Avatar, 14, false, ""), 0);
             UpdateBorder(new Customization(CustomizationType.Border, 1, false, ""), 0);
             UpdateSleeve(new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
+            UpdateSleeve(new Customization(CustomizationType.Partner, 75, false, ""), 0);
             UpdateAvatar(_bot_avatar, 1);
             UpdateBorder(_bot_border, 1);
             UpdateSleeve(_bot_sleeve, 1);
+            UpdateSleeve(_bot_partner, 1);
 
             LaunchYgoPro(string.Format("-b"));
         }
 
-        public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, int pos)
+        public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, Customization partner, int pos)
         {
             UpdateAvatar(avatar, pos);
             UpdateBorder(border, pos);
             UpdateSleeve(sleeve, pos);
+            UpdatePartner(partner, pos);
         }
         private static void UpdateAvatar(Customization avatar, int i)
         {
@@ -97,6 +101,12 @@ namespace hub_client.Helpers
                 FormExecution.AssetsManager.GetCustom(sleeve);
             CopySleeveToTexturesFolder(sleeve, i);
         }
+        private static void UpdatePartner(Customization partner, int i)
+        {
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Partners", partner.Id + ".png")))
+                FormExecution.AssetsManager.GetCustom(partner);
+            CopyPartnerToTexturesFolder(partner, i);
+        }
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
         {
@@ -109,6 +119,12 @@ namespace hub_client.Helpers
         private static void CopySleeveToTexturesFolder(Customization sleeve, int index)
         {
             File.Copy(Path.Combine(FormExecution.path, "Assets", "Sleeves", sleeve.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + index.ToString() + ".png"), true);
+        }
+        private static void CopyPartnerToTexturesFolder(Customization partner, int index)
+        {
+            if (!Directory.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners")))
+                Directory.CreateDirectory(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners"));
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Partners", partner.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + index.ToString() + ".png"), true);
         }
     }
 }

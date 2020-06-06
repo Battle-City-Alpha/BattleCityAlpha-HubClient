@@ -32,6 +32,11 @@ namespace hub_client.Windows
                     img_custom.Height = 256;
                     img_custom.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, id, false, ""));
                     break;
+                case CustomizationType.Partner:
+                    img_custom.Width = 256;
+                    img_custom.Height = 256;
+                    img_custom.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Partner, id, false, ""));
+                    break;
                 case CustomizationType.Sleeve:
                     img_custom.Width = 177;
                     img_custom.Height = 254;

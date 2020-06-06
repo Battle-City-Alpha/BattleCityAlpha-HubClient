@@ -27,8 +27,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        //public static string debug_ip = "127.0.0.1";
-        public static string debug_ip = "185.212.225.85";
+        public static string debug_ip = "127.0.0.1";
+        //public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -382,9 +382,9 @@ namespace hub_client
             Client.SendRoomNeedPassword(id, pass, type);
         }
 
-        private static void Client_LoadPlayerCustomizations(Customization avatar, Customization border, Customization sleeve, int pos)
+        private static void Client_LoadPlayerCustomizations(Customization avatar, Customization border, Customization sleeve, Customization partner, int pos)
         {
-            YgoProHelper.LoadCustomization(avatar, border, sleeve, pos);
+            YgoProHelper.LoadCustomization(avatar, border, sleeve, partner, pos);
         }
 
         private static void Client_LaunchYGOProWithoutRoom(string arg)

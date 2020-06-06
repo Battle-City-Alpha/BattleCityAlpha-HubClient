@@ -79,10 +79,11 @@ namespace hub_client.Windows
             BorderList_Item.Initialize("Acheter une bordure", "250 PP", "borderList", "Permet de choisir une bordure prestigieuse et rare parmis une liste pour ensuite l'utiliser.");
             SleeveList_Item.Initialize("Acheter une sleeve", "250 PP", "sleeveList", "Permet de choisir une sleeve prestigieuse et rare parmis une liste pour ensuite l'utiliser.");
 
+            PartnerList_Item.Initialize("Acheter un partenaire", "250 PP", "partnerList", "Permet de choisir un partenaire prestigieux et rare parmis une liste pour ensuite l'utiliser en duel.");
             TitleList_Item.Initialize("Acheter un titre", "100 PP", "titleList", "Permet de choisir un titre prestigieux et rare parmis une liste pour ensuite l'utiliser.");
             Greet_Item.Initialize("Greets illimités", "100 PP", "greet", "Une fois achetée, permet de changer de greets à l'infini !");
+            
             ChangeUsername_Item.Initialize("Changer de pseudo", "300 PP", "change_username", "Permet de changer de pseudo");
-
             ResetStat_Item.Initialize("Réinitialiser les statistiques", "50 PP", "reset_stats", "Permet de réinitialiser les statistiques");
 
             btn_get_PP.MouseLeftButtonDown += PP_Item_MouseLeftButtonDown;
@@ -102,11 +103,17 @@ namespace hub_client.Windows
             BorderList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeBorder;
             SleeveList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeSleeve;
 
+            PartnerList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigePartner;
             TitleList_Item.btn_purchase.MouseLeftButtonDown += BuyPrestigeTitle;
             Greet_Item.btn_purchase.MouseLeftButtonDown += BuyGreetItem;
-            ChangeUsername_Item.btn_purchase.MouseLeftButtonDown += BuyChangeUsername;
 
+            ChangeUsername_Item.btn_purchase.MouseLeftButtonDown += BuyChangeUsername;
             ResetStat_Item.btn_purchase.MouseLeftButtonDown += BuyResetStats;
+        }
+
+        private void BuyPrestigePartner(object sender, MouseButtonEventArgs e)
+        {
+            _admin.SendAskPrestigeCustomizations(CustomizationType.Partner);
         }
 
         private void BuyResetStats(object sender, MouseButtonEventArgs e)

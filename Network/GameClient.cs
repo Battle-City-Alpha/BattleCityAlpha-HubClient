@@ -33,7 +33,7 @@ namespace hub_client.Network
         public event Action<int, RoomType> RoomNeedPassword;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
-        public event Action<Customization, Customization, Customization, int> LoadPlayerCustomizations;
+        public event Action<Customization, Customization, Customization, Customization, int> LoadPlayerCustomizations;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
         public event Action<int, int, bool> LaunchDuelResultBox;
@@ -108,6 +108,9 @@ namespace hub_client.Network
         #endregion
         #region SleevesHandleForm Events
         public event Action<Customization[]> LoadSleeves;
+        #endregion
+        #region PartnerHandleForm Events
+        public event Action<Customization[]> LoadPartners;
         #endregion
         #region TitlesHandleForm Events
         public event Action<Dictionary<int, string>> LoadTitles;
@@ -530,6 +533,12 @@ namespace hub_client.Network
                 case PacketType.AnimationNotification:
                     OnAnimationNotification(JsonConvert.DeserializeObject<StandardServerAnimationNotification>(packet));
                     break;
+                case PacketType.GivePartner:
+                    OnGivePartner(JsonConvert.DeserializeObject<StandardServerGetPartner>(packet));
+                    break;
+                case PacketType.LoadPartner:
+                    OnLoadPartners(JsonConvert.DeserializeObject<StandardServerLoadPartners>(packet));
+                    break;
             }
         }
 
@@ -718,6 +727,15 @@ namespace hub_client.Network
                 case CommandErrorType.AvatarNotOwned:
                     msg = "••• Tu ne possèdes pas cet avatar !";
                     break;
+                case CommandErrorType.BorderNotOwned:
+                    msg = "••• Tu ne possèdes pas cette bordure !";
+                    break;
+                case CommandErrorType.SleeveNotOwned:
+                    msg = "••• Tu ne possèdes pas cette sleeve !";
+                    break;
+                case CommandErrorType.PartnerNotOwned:
+                    msg = "••• Tu ne possèdes pas ce partenaire !";
+                    break;
                 case CommandErrorType.TitleNotOwned:
                     msg = "••• Tu ne possèdes pas ce titre !";
                     break;
@@ -896,18 +914,22 @@ namespace hub_client.Network
         }
         public void OnGiveAvatar(StandardServerGetAvatar packet)
         {
-            OpenPopBox("Vous avez reçu l'avatar : " + packet.Id + " de la part de " + packet.Player.Username, "Réception d'avatar");
+            Application.Current.Dispatcher.Invoke(() => CustomizationAchievement?.Invoke(CustomizationType.Avatar, "Vous avez reçu l'avatar : " + packet.Id + " de la part de " + packet.Player.Username, packet.Id));
             logger.Trace("GET AVATAR - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
         }
         public void OnGiveBorder(StandardServerGetBorder packet)
         {
-            OpenPopBox("Vous avez reçu la bordure : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de bordure");
+            Application.Current.Dispatcher.Invoke(() => CustomizationAchievement?.Invoke(CustomizationType.Border, "Vous avez reçu la bordure : " + packet.Id + " de la part de " + packet.Player.Username, packet.Id));
             logger.Trace("GET BORDER - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
         }
         public void OnGiveSleeve(StandardServerGetSleeve packet)
         {
-            OpenPopBox("Vous avez reçu la sleeve : " + packet.Id + " de la part de " + packet.Player.Username, "Réception de sleeve");
+            Application.Current.Dispatcher.Invoke(() => CustomizationAchievement?.Invoke(CustomizationType.Sleeve, "Vous avez reçu la sleeve : " + packet.Id + " de la part de " + packet.Player.Username, packet.Id));
             logger.Trace("GET SLEEVE - From : {0} | Id : {1}", packet.Player.Username, packet.Id);
+        }
+        public void OnGivePartner(StandardServerGetPartner packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => CustomizationAchievement?.Invoke(CustomizationType.Partner, "Vous avez reçu le partenaire : " + packet.Id + " de la part de " + packet.Player.Username, packet.Id));
         }
         public void OnCardDonation(StandardServerCardDonation packet)
         {
@@ -985,6 +1007,11 @@ namespace hub_client.Network
         {
             logger.Trace("LOAD SLEEVES - Ids : {0}", packet.Sleeves);
             Application.Current.Dispatcher.Invoke(() => LoadSleeves?.Invoke(packet.Sleeves));
+        }
+        public void OnLoadPartners(StandardServerLoadPartners packet)
+        {
+            logger.Trace("LOAD PARTNERS - Ids : {0}", packet.Partners);
+            Application.Current.Dispatcher.Invoke(() => LoadPartners?.Invoke(packet.Partners));
         }
 
         public void OnLoadBrocante(StandardServerLoadBrocante packet)
@@ -1087,7 +1114,7 @@ namespace hub_client.Network
 
         public void OnLoadPlayerCustomizationTextures(StandardServerLoadPlayerCustomizationTextures packet)
         {
-            Application.Current.Dispatcher.Invoke(() => LoadPlayerCustomizations?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Pos));
+            Application.Current.Dispatcher.Invoke(() => LoadPlayerCustomizations?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Partner, packet.Pos));
             logger.Trace("LOAD PLAYER CUSTOMIZATION TEXTURES");
         }
 
@@ -1235,6 +1262,9 @@ namespace hub_client.Network
                 case CustomizationType.Sleeve:
                     txt += "La sleeve n°";
                     break;
+                case CustomizationType.Partner:
+                    txt += "Le partenaire n°";
+                    break;
                 case CustomizationType.Title:
                     txt += "Le titre n°";
                     break;
@@ -1336,6 +1366,7 @@ namespace hub_client.Network
                 case CustomizationType.Avatar:
                 case CustomizationType.Sleeve:
                 case CustomizationType.Border:
+                case CustomizationType.Partner:
                 case CustomizationType.Title:
                     Application.Current.Dispatcher.Invoke(() => LoadPrestigeCustomizations?.Invoke(packet.Customizations));
                     break;

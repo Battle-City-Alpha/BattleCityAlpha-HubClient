@@ -32,12 +32,17 @@ namespace hub_client.Windows
             if (anim != null)
             {
                 id = anim.ID;
-                tb_animation_name.Text = anim.Name;
+                tb_animation_name.Text = anim.Name;                
                 tb_duration.Text = anim.Duration.ToString();
                 tb_host.Text = anim.Host;
                 tb_url.Text = anim.URL;
                 dp_startdate.Value = anim.StartDate;
                 rtb_desc.AppendText(anim.Description);
+                chk_perma.IsChecked = anim.Duration == -1;
+
+                tb_duration.IsEnabled = chk_perma.IsChecked == false;
+                dp_startdate.IsEnabled = chk_perma.IsChecked == false;
+
                 btn_update.ButtonText = "Modifier";
                 btn_update.Update();
             }
@@ -53,9 +58,24 @@ namespace hub_client.Windows
             this.btn_update.MouseLeftButtonDown += Btn_update_MouseLeftButtonDown;
             this.btn_delete.MouseLeftButtonDown += Btn_delete_MouseLeftButtonDown;
 
+            this.chk_perma.Checked += Chk_perma_Checked;
+            this.chk_perma.Unchecked += Chk_perma_Unchecked;
+
             this.tb_duration.PreviewTextInput += NumberValidationTextBox;
 
             LoadStyle();
+        }
+
+        private void Chk_perma_Unchecked(object sender, RoutedEventArgs e)
+        {
+            tb_duration.IsEnabled = true;
+            dp_startdate.IsEnabled = true;
+        }
+
+        private void Chk_perma_Checked(object sender, RoutedEventArgs e)
+        {
+            tb_duration.IsEnabled = false;
+            dp_startdate.IsEnabled = false;
         }
 
         public void LoadStyle()
@@ -80,10 +100,10 @@ namespace hub_client.Windows
                 ID = id,
                 Host = tb_host.Text,
                 Name = tb_animation_name.Text,
-                Duration = Convert.ToInt32(tb_duration.Text),
+                Duration = chk_perma.IsChecked == true ? -1 : Convert.ToInt32(tb_duration.Text),
                 Description = new TextRange(rtb_desc.Document.ContentStart, rtb_desc.Document.ContentEnd).Text,
                 URL = tb_url.Text,
-                StartDate = (DateTime)dp_startdate.Value
+                StartDate = chk_perma.IsChecked == true ? DateTime.Now :(DateTime)dp_startdate.Value
             }, true);
             Close();
         }
@@ -95,10 +115,10 @@ namespace hub_client.Windows
                 ID = id,
                 Host = tb_host.Text,
                 Name = tb_animation_name.Text,
-                Duration = Convert.ToInt32(tb_duration.Text),
+                Duration = chk_perma.IsChecked == true ? -1 : Convert.ToInt32(tb_duration.Text),
                 Description = new TextRange(rtb_desc.Document.ContentStart, rtb_desc.Document.ContentEnd).Text,
                 URL = tb_url.Text,
-                StartDate = (DateTime)dp_startdate.Value
+                StartDate = chk_perma.IsChecked == true ? DateTime.Now : (DateTime)dp_startdate.Value
             }, false);
             Close();
         }

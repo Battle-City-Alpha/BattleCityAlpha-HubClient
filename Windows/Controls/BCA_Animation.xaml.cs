@@ -36,9 +36,24 @@ namespace hub_client.Windows.Controls
             _admin = admin;
 
             this.tb_popup_anim_name.Text = _anim.Name;
-            this.tb_popup_date.Text = _anim.StartDate.ToString("dd/MM");
-            this.tb_popup_starthour.Text = _anim.StartDate.Hour + "h";
-            this.tb_popup_duration.Text = _anim.Duration + "h";
+            if (anim.Duration == -1)
+            {
+                this.tb_popup_date.Visibility = Visibility.Hidden;
+                this.tb_popup_starthour.Visibility = Visibility.Hidden;
+                this.tb_popup_duration.Visibility = Visibility.Hidden;
+                this.tb_title_date.Visibility = Visibility.Hidden;
+                this.tb_title_duration.Visibility = Visibility.Hidden;
+                this.tb_title_starthour.Visibility = Visibility.Hidden;
+                this.tb_perma_anim.Visibility = Visibility.Visible;
+                Grid.SetRow(this.scr_desc, 3);
+                Grid.SetRowSpan(this.scr_desc, 3);
+            }
+            else
+            {
+                this.tb_popup_date.Text = _anim.StartDate.ToString("dd/MM");
+                this.tb_popup_starthour.Text = _anim.StartDate.Hour + "h";
+                this.tb_popup_duration.Text = _anim.Duration + "h";
+            }
             this.tb_popup_host.Text = _anim.Host;
             this.tb_popup_desc.Text = _anim.Description;
 
