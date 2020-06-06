@@ -83,6 +83,18 @@ namespace hub_client.Windows
             btnBuy.Update();
             this.FontFamily = style.Font;
         }
+        private ScrollViewer FindScrollViewer(DependencyObject d)
+        {
+            if (d is ScrollViewer)
+                return d as ScrollViewer;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                var sw = FindScrollViewer(VisualTreeHelper.GetChild(d, i));
+                if (sw != null) return sw;
+            }
+            return null;
+        }
 
         private void _admin_LoadBrocante(List<BrocanteCard> cards)
         {
@@ -92,9 +104,9 @@ namespace hub_client.Windows
             foreach (BrocanteCard card in _cards)
                 card.CardName = CardManager.GetCard(card.Id).Name;
 
+            brocanteList.Items.Clear();
             if (!searchMyCard)
             {
-                brocanteList.Items.Clear();
                 foreach (BrocanteCard card in _cards)
                     if (CheckIsOwn(card))
                         brocanteList.Items.Add(card);
@@ -104,10 +116,8 @@ namespace hub_client.Windows
             }
             else
             {
-                if (brocanteList.ItemsSource != null)
-                    brocanteList.ItemsSource = null;
-                brocanteList.Items.Clear();
-                brocanteList.ItemsSource = _cards;
+                foreach (BrocanteCard card in _cards)
+                    brocanteList.Items.Add(card);
 
                 btnMyCards.ButtonText = "Mes cartes";
                 btnMyCards.Update();
@@ -120,7 +130,9 @@ namespace hub_client.Windows
             }
 
             if (sitem != -1 && brocanteList.Items.Count > sitem)
+            {
                 brocanteList.SelectedItem = sitem;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -165,11 +177,7 @@ namespace hub_client.Windows
             int research;
             if (int.TryParse(tb__search_max_quantity.GetText(), out research))
             {
-
-                if (brocanteList.ItemsSource != null)
-                    brocanteList.ItemsSource = null;
-                else
-                    brocanteList.Items.Clear();
+                brocanteList.Items.Clear();
 
                 if (research.ToString() != string.Empty)
                 {
@@ -178,7 +186,7 @@ namespace hub_client.Windows
                             brocanteList.Items.Add(card);
                 }
                 else
-                    brocanteList.ItemsSource = _cards;
+                    _admin_LoadBrocante(_cards);
             }
         }
 
@@ -187,11 +195,7 @@ namespace hub_client.Windows
             int research;
             if (int.TryParse(tb_search_max_price.GetText(), out research))
             {
-
-                if (brocanteList.ItemsSource != null)
-                    brocanteList.ItemsSource = null;
-                else
-                    brocanteList.Items.Clear();
+                brocanteList.Items.Clear();
 
                 if (research.ToString() != string.Empty)
                 {
@@ -200,18 +204,15 @@ namespace hub_client.Windows
                             brocanteList.Items.Add(card);
                 }
                 else
-                    brocanteList.ItemsSource = _cards;
+                    _admin_LoadBrocante(_cards);
             }
         }
 
         private void TbChat_Seller_SelectionChanged(object sender, RoutedEventArgs e)
         {
             string research = tb_search_seller.GetText().ToUpper();
-
-            if (brocanteList.ItemsSource != null)
-                brocanteList.ItemsSource = null;
-            else
-                brocanteList.Items.Clear();
+            
+            brocanteList.Items.Clear();
 
             if (research != string.Empty)
             {
@@ -220,7 +221,7 @@ namespace hub_client.Windows
                         brocanteList.Items.Add(card);
             }
             else
-                brocanteList.ItemsSource = _cards;
+                _admin_LoadBrocante(_cards);
         }
 
         private void TbChat_Card_SelectionChanged(object sender, RoutedEventArgs e)
@@ -229,10 +230,7 @@ namespace hub_client.Windows
             {
                 string research = tb_search_card.GetText().ToUpper();
 
-                if (brocanteList.ItemsSource != null)
-                    brocanteList.ItemsSource = null;
-                else
-                    brocanteList.Items.Clear();
+                brocanteList.Items.Clear();
 
                 if (research != string.Empty)
                 {
@@ -244,7 +242,7 @@ namespace hub_client.Windows
                     }
                 }
                 else
-                    brocanteList.ItemsSource = _cards;
+                    _admin_LoadBrocante(_cards);
             }
             catch (Exception ex)
             {
@@ -307,28 +305,8 @@ namespace hub_client.Windows
 
         private void btnMyCards_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (searchMyCard)
-            {
-                brocanteList.ItemsSource = null;
-                foreach (BrocanteCard card in _cards)
-                    if (CheckIsOwn(card))
-                        brocanteList.Items.Add(card);
-
-                searchMyCard = !searchMyCard;
-                btnMyCards.ButtonText = "Toutes cartes";
-                btnMyCards.Update();
-            }
-            else
-            {
-                if (brocanteList.ItemsSource != null)
-                    brocanteList.ItemsSource = null;
-                brocanteList.Items.Clear();
-                brocanteList.ItemsSource = _cards;
-
-                searchMyCard = !searchMyCard;
-                btnMyCards.ButtonText = "Mes cartes";
-                btnMyCards.Update();
-            }
+            searchMyCard = !searchMyCard;
+            _admin_LoadBrocante(_cards);
         }
         private bool CheckIsOwn(BrocanteCard card)
         {
