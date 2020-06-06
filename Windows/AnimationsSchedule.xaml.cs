@@ -127,7 +127,7 @@ namespace hub_client.Windows
                         return;
                     Grid.SetColumn(widget, permaAnimPos);
                     permaAnimPos++;
-                    Grid.SetRow(widget, 1);
+                    Grid.SetRow(widget, 0);
                 }
                 else
                 {

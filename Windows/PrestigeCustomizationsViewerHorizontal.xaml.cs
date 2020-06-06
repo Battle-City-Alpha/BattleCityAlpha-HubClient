@@ -38,8 +38,10 @@ namespace hub_client.Windows
         {
             if (_customs[0].CustomizationType == CustomizationType.Avatar)
                 System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/avatars.php");
-            else
+            else if (_customs[0].CustomizationType == CustomizationType.Sleeve)
                 System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/sleeves.php");
+            else if (_customs[0].CustomizationType == CustomizationType.Partner)
+                System.Diagnostics.Process.Start("https://battlecityalpha.xyz/customizations/partners.php");
         }
 
         private void PrestigeCustomizationsViewer_Closed(object sender, EventArgs e)

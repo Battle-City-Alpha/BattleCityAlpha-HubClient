@@ -57,6 +57,8 @@ namespace hub_client.Helpers
                     File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "borders", "b_" + i + ".png"));
                 if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png")))
                     File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + i + ".png"));
             }
 
             LaunchYgoPro(commandline);
@@ -110,7 +112,7 @@ namespace hub_client.Helpers
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
         {
-            File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + index.ToString() + ".png"), true);
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha","textures", "avatars", "a_" + index.ToString() + ".png"), true);
         }
         private static void CopyBorderToTexturesFolder(Customization border, int index)
         {
