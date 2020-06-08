@@ -31,23 +31,23 @@ namespace hub_client.WindowsAdministrator
             /*AvatarsHandle form = new AvatarsHandle(Client.AvatarsHandleAdmin);
             form.Show();*/
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
-            viewer.Owner = window;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public void OpenPartnersForm(Profil window)
         {
             Client.Send(PacketType.LoadPartner, new StandardClientLoadPartners());
 
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
-            viewer.Owner = window;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public void OpenTitlesForm(Profil window)
         {
             Client.Send(PacketType.AskTitle, new StandardClientAskTitles());
             TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin, false);
-            form.Owner = window;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public void OpenBordersForm(Profil window)
         {
@@ -56,8 +56,8 @@ namespace hub_client.WindowsAdministrator
             form.Show();*/
 
             PrestigeCustomizationViewerVertical viewer = new PrestigeCustomizationViewerVertical(Client.PrestigeCustomizationsViewerAdmin, false);
-            viewer.Owner = window;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public void OpenSleevesForm(Profil window)
         {
@@ -66,8 +66,8 @@ namespace hub_client.WindowsAdministrator
             form.Show();*/
 
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, false);
-            viewer.Owner = window;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
 
         public void SendAskGamesHistory(int userID)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-         Title="Ma collection !" FontFamily="Dosis" Height="491.411" Width="431.619" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
+         Title="Ma collection !" FontFamily="Dosis" Height="552.211" Width="490.819" Icon="/hub-client;component/Assets/Icon/BCA.ico" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize">
     <WindowChrome.WindowChrome>
         <WindowChrome 
         CaptionHeight="0"
@@ -57,26 +57,18 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Nom de l'animation :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBox x:Name="tb_animation_name" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="tb_animation_name" Grid.Column="1" Margin="10,3" VerticalContentAlignment="Center"/>
                     <TextBlock Text="Organisateur :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1"/>
-                    <TextBox x:Name="tb_host" Grid.Row="1" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="tb_host" Grid.Row="1" Grid.Column="1" Margin="10,3" VerticalContentAlignment="Center"/>
                     <TextBlock Text="Anim permanente :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2"/>
-                    <CheckBox x:Name="chk_perma" Grid.Row="2" Grid.Column="1" Margin="10" VerticalContentAlignment="Center" TextBlock.TextAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                        <CheckBox.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </CheckBox.RenderTransform>
-                    </CheckBox>
+                    <CheckBox x:Name="chk_perma" Grid.Row="2" Grid.Column="1" Margin="10,3" VerticalContentAlignment="Center" TextBlock.TextAlignment="Center" HorizontalAlignment="Center"/>
+
                     <TextBlock Text="Date de début :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3"/>
-                    <xctk:DateTimePicker x:Name="dp_startdate" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" Margin="10"/>
+                    <xctk:DateTimePicker x:Name="dp_startdate" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" Margin="10,3"/>
                     <TextBlock Text="Durée :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="4"/>
-                    <TextBox x:Name="tb_duration" Grid.Row="4" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="tb_duration" Grid.Row="4" Grid.Column="1" Margin="10,3" VerticalContentAlignment="Center"/>
                     <TextBlock Text="URL :" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="5"/>
-                    <TextBox x:Name="tb_url" Grid.Row="5" Grid.Column="1" Margin="10" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="tb_url" Grid.Row="5" Grid.Column="1" Margin="10,3" VerticalContentAlignment="Center"/>
                     <Grid Grid.Row="6" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>

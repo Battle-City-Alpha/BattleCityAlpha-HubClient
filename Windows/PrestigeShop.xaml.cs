@@ -125,8 +125,8 @@ namespace hub_client.Windows
             InputText form = new InputText();
             form.Title = "Nouveau pseudo";
             form.SelectedText += ChangeUsernameSelectedText;
-            form.Owner = this;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
         }
         private void ChangeUsernameSelectedText(string newusername)
         {
@@ -156,22 +156,22 @@ namespace hub_client.Windows
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Sleeve);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Sleeve);
-            window.Owner = this;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         private void BuyCustomBorder(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Border);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Border);
-            window.Owner = this;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         private void BuyCustomAvatar(object sender, MouseButtonEventArgs e)
         {
             CustomCustomizationWindow window = new CustomCustomizationWindow(CustomizationType.Avatar);
             window.SelectedURL += (url) => SendCustomCustomizationURL(url, CustomizationType.Avatar);
-            window.Owner = this;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         private void SendCustomCustomizationURL(string url, CustomizationType ctype)
         {
@@ -181,8 +181,8 @@ namespace hub_client.Windows
         {
             ColorPickerWindow window = new ColorPickerWindow();
             window.SelectedColor += SendUsernameColor;
-            window.Owner = this;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         private void SendUsernameColor(string color)
         {
@@ -196,9 +196,9 @@ namespace hub_client.Windows
         private void BuyVIP(object sender, MouseButtonEventArgs e)
         {
             MonthPackViewer viewer = new MonthPackViewer(220, 21, 65);
-            viewer.Owner = this;
             viewer.PurchaseBtnClick += VIP_BUY;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
 
         private void VIP_BUY()

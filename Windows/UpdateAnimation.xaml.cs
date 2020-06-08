@@ -28,6 +28,7 @@ namespace hub_client.Windows
         public UpdateAnimation(Animation anim)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             if (anim != null)
             {

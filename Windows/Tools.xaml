@@ -53,17 +53,29 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <Border Grid.Row="1" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
                             <Border.Background>
                                 <SolidColorBrush Color="White" Opacity="0.9"/>
                             </Border.Background>
-                            <CheckBox x:Name="cb_greet" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les greets" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                            </Border.Background>
-                            <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <CheckBox x:Name="cb_backgroundchatpic" Grid.Row="0" Grid.Column="0" Margin="10" Content="Utiliser une image comme fond du chat" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
                         <Border Grid.Row="2" Grid.Column="2" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
                             <Border.Background>
@@ -89,12 +101,24 @@
                                 <CheckBox x:Name="cb_customduelrequest" Grid.Row="0" Grid.Column="0" Margin="10" Content="Ignorer les demandes de duels custom" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Border Grid.Row="4" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                            </Border.Background>
-                            <CheckBox x:Name="cb_autoscroll" Grid.Row="0" Grid.Column="0" Margin="10" Content="Activer l'autoscroll" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_autoscroll" Grid.Row="0" Grid.Column="0" Margin="10" Content="Activer l'autoscroll" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Row="4" Grid.Column="1" CornerRadius="15" Margin="25,0" VerticalAlignment="Center" Visibility="Hidden">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_showmpall" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les mpalls au premier plan" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </Grid>
 
                         <Border Grid.Row="5" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
                             <Border.Background>

@@ -23,6 +23,7 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             LoadStyle();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             this.label_booster_name.Content = "[" + info.PurchaseTag + "] " + info.Name;
             this.total_count.Content = ids.Count();

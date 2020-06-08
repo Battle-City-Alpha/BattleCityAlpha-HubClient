@@ -111,8 +111,8 @@ namespace hub_client.Windows
         private void BtnNote_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Notes note = new Notes(_admin.Client.NotesAdmin);
-            note.Owner = this;
             note.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => note.Activate()));
             logger.Trace("Notes clicked.");
         }
 
@@ -319,7 +319,6 @@ namespace hub_client.Windows
             Storyboard.SetTarget(scaley, this);
 
             storyboard.Begin();
-
             Show();
         }
 
@@ -399,6 +398,28 @@ namespace hub_client.Windows
             Style s = new Style(typeof(Control));
             s.Setters.Add(new Setter(Control.FontFamilyProperty, style.Font));
             Resources.Add(typeof(Control), style);
+
+            if (!FormExecution.ClientConfig.ChatBackgroundIsPic)
+            {
+                this.chat.border_chat.Background = new SolidColorBrush(style.GetGameColor("ChatBackgroundColor"));
+                this.chat.border_chat.Background.Opacity = 0.95;
+            }
+            else
+            {
+                ImageBrush bg = (ImageBrush)PicsManager.GetBrush("background", "bg_userchat.jpg");
+                bg.Stretch = Stretch.UniformToFill;
+                this.chat.border_chat.Background = bg;
+            }
+            this.tbChat.border_tbBCA.Background = new SolidColorBrush(style.GetGameColor("ChatInputBackgroundColor"));
+            this.tbChat.border_tbBCA.Background.Opacity = 0.95;
+            this.border_smiley.Background = new SolidColorBrush(style.GetGameColor("ChatInputBackgroundColor"));
+            this.border_smiley.Background.Opacity = 0.95;
+            this.border_listbox.Background = new SolidColorBrush(style.GetGameColor("UserlistBackgroundColor"));
+            this.border_listbox.Background.Opacity = 0.95;
+            this.border_searchUser.Background = new SolidColorBrush(style.GetGameColor("UserlistBackgroundColor"));
+            this.border_searchUser.Background.Opacity = 0.95;
+            this.cb_defaultdeck.Background = new SolidColorBrush(style.GetGameColor("UserlistBackgroundColor"));
+            this.cb_defaultdeck.Background.Opacity = 0.95;
         }
         private void btnFAQ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -471,7 +492,7 @@ namespace hub_client.Windows
         }
         private void btnArene_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            FormExecution.OpenArena();
+            Application.Current.Dispatcher.Invoke(() => FormExecution.OpenArena());
         }
         private void btnShop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -554,8 +575,8 @@ namespace hub_client.Windows
                 InputText form = new InputText();
                 form.Title = "Don de BP à " + target.Username;
                 form.SelectedText += (obj) => BpInputForm_SelectedText(obj, target);
-                form.Owner = this;
                 form.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
             }
         }
         private void BpInputForm_SelectedText(string obj, PlayerInfo target)

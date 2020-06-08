@@ -49,6 +49,7 @@ namespace hub_client.Windows
 
             this.rtbChat.RefreshStyle();
 
+            tbChat.tbChat.MaxLength = 255;
             tbChat.Focus();
             tbChat.tbChat.Focus();
             tbChat.tbChat.Select(0, 0);
@@ -63,7 +64,7 @@ namespace hub_client.Windows
         private void _admin_MessageRecieved(PlayerInfo infos, string message)
         {
             Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message, true); });
-            Dispatcher.InvokeAsync(delegate { Show(); });
+            //Dispatcher.InvokeAsync(delegate { Show(); });
 
             if (!this.IsActive)
             {

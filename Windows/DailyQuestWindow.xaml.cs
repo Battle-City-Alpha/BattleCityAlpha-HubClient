@@ -28,6 +28,7 @@ namespace hub_client.Windows
         public DailyQuestWindow(DailyQuestAdministrator admin , DailyQuestType[] dqtype, string[] quests, int[] states)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
             _admin.ChangeQuestState += _admin_ChangeQuestState;

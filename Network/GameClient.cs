@@ -949,7 +949,7 @@ namespace hub_client.Network
                 return;
             }
 
-            Application.Current.Dispatcher.InvokeAsync(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), ChoiceBoxType.Trade, ""));
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, new RoomConfig(), ChoiceBoxType.Trade, ""));
             logger.Trace("Trade REQUEST - From {0}", packet.Player.Username);
         }
         public void OnTradeRequestAnswer(StandardServerTradeRequestAnswer packet)
@@ -1397,7 +1397,7 @@ namespace hub_client.Network
             if (BlacklistManager.CheckBlacklist(packet.Sender))
                 return;
 
-            Application.Current.Dispatcher.InvokeAsync(() => RecieveDeck?.Invoke(packet.Sender, packet.Deckfile, packet.Deckname));
+            Application.Current.Dispatcher.Invoke(() => RecieveDeck?.Invoke(packet.Sender, packet.Deckfile, packet.Deckname));
             logger.Trace("Recieve deck - From : {0}", packet.Sender);
         }
         public void OnShareReplay(StandardServerShareReplay packet)
@@ -1405,49 +1405,49 @@ namespace hub_client.Network
             if (BlacklistManager.CheckBlacklist(packet.Sender))
                 return;
 
-            Application.Current.Dispatcher.InvokeAsync(() => RecieveReplay?.Invoke(packet.Sender, packet.ReplayFile, packet.ReplayName));
+            Application.Current.Dispatcher.Invoke(() => RecieveReplay?.Invoke(packet.Sender, packet.ReplayFile, packet.ReplayName));
             logger.Trace("Recieve replay - From : {0}", packet.Sender);
         }
 
         public void OnGetRanking(StandardServerGetRanking packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => ShowRanking?.Invoke(packet.Rankings, packet.PodiumCustoms));
+            Application.Current.Dispatcher.Invoke(() => ShowRanking?.Invoke(packet.Rankings, packet.PodiumCustoms));
 
             logger.Trace("RECIEVE RANKING");
 
         }
         public void OnGetGamesHistory(StandardServerGamesHistory packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => GetGamesHistory?.Invoke(packet.Results));
+            Application.Current.Dispatcher.Invoke(() => GetGamesHistory?.Invoke(packet.Results));
 
             logger.Trace("RECIEVE GAMES HISTORY");
         }
 
         public void OnGetDailyQuests(StandardServerSendDailyQuests packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => GetDailyQuests?.Invoke(packet.DQTypes, packet.Quests, packet.States));
+            Application.Current.Dispatcher.Invoke(() => GetDailyQuests?.Invoke(packet.DQTypes, packet.Quests, packet.States));
         }
         public void OnDailyQuestReward(StandardServerGetDailyQuestReward packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => DailyQuestReward?.Invoke(packet.Success, packet.DQType, packet.Reward, packet.AllQuests));
+            Application.Current.Dispatcher.Invoke(() => DailyQuestReward?.Invoke(packet.Success, packet.DQType, packet.Reward, packet.AllQuests));
         }
         public void OnChangeDailyQuest(StandardServerChangeDailyQuest packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => ChangeDailyQuest?.Invoke(packet.Success, packet.DQType, packet.NewQuest));
+            Application.Current.Dispatcher.Invoke(() => ChangeDailyQuest?.Invoke(packet.Success, packet.DQType, packet.NewQuest));
         }
         public void OnDailyQuestNotification(StandardServerDailyQuestNotification packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => DailyQuestNotification?.Invoke());
+            Application.Current.Dispatcher.Invoke(() => DailyQuestNotification?.Invoke());
         }
 
         public void OnDuelServerStop(StandardServerDuelServerStop packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté", true));
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté", true));
         }
 
         public void OnGetAnimations(StandardServerGetAnimations packet)
         {
-            Application.Current.Dispatcher.InvokeAsync(() => LoadAnimations?.Invoke(packet.Colors, packet.Animations));
+            Application.Current.Dispatcher.Invoke(() => LoadAnimations?.Invoke(packet.Colors, packet.Animations));
         }
         public void OnAnimationNotification(StandardServerAnimationNotification packet)
         {

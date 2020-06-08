@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hub_client.Windows.Controls"
              mc:Ignorable="d" >
-    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" FocusManager.FocusedElement="{Binding ElementName=tbChat}">
+    <Border x:Name="border_tbBCA" CornerRadius="5" BorderBrush="Black" BorderThickness="1" FocusManager.FocusedElement="{Binding ElementName=tbChat}">
         <Border.Background>
             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
         </Border.Background>

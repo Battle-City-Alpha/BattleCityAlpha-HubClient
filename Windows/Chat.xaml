@@ -8,7 +8,7 @@
         Title="Battle City Alpha - Royaume des duels" Height="556.939" Width="1058.656" WindowStartupLocation="CenterScreen" Icon="/hub-client;component/Assets/Icon/bca.ico" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" ResizeMode="CanResize"
         Closed="Window_Closed">
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />        
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -96,7 +96,7 @@
                         <RowDefinition Height="349*"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <Border CornerRadius="15" Margin="10,5" BorderBrush="Black" BorderThickness="1">
+                    <Border CornerRadius="15" Margin="10,5" BorderBrush="Black" BorderThickness="1" Name="border_listbox">
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.9"/>
                         </Border.Background>
@@ -156,7 +156,7 @@
                         </ListView>
                     </Border>
 
-                    <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Margin="10,0,10,5" VerticalAlignment="Center">
+                    <Border x:Name="border_searchUser" CornerRadius="5" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Margin="10,0,10,5" VerticalAlignment="Center">
                         <Border.Background>
                             <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                         </Border.Background>
@@ -170,7 +170,7 @@
                         <RowDefinition Height="349*"/>
                         <RowDefinition Height="40" MaxHeight="40"/>
                     </Grid.RowDefinitions>
-                    <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10,5"/>
+                    <Controls:BCA_Chat x:Name="chat" Grid.Row="0" Margin="10, 5, 15, 5"/>
                     <Grid Grid.Row="1" Margin="10,0,10,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="20*"/>
@@ -178,7 +178,7 @@
                         </Grid.ColumnDefinitions>
                         <Controls:BCA_TextBox x:Name="tbChat" KeyUp="tbChat_KeyUp" VerticalAlignment="Center"/>
 
-                        <Border CornerRadius="5" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Border x:Name="border_smiley" CornerRadius="5" Margin="3" BorderBrush="Black" BorderThickness="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border.Background>
                                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                             </Border.Background>
@@ -189,12 +189,13 @@
             </Grid>
             <Grid Grid.Row="3" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="209*"/>
+                    <ColumnDefinition Width="146*"/>
+                    <ColumnDefinition Width="586*"/>
+                    <ColumnDefinition Width="105*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Name="cb_defaultdeck" Margin="25, 10, 0 ,10" SelectionChanged="cb_defaultdeck_SelectionChanged" FontSize="22" VerticalAlignment="Center"/>
-                <Grid Grid.Column="1" Margin="20,0,20,-0.2" Grid.ColumnSpan="2">
+                <ComboBox Name="cb_defaultdeck" Margin="25, 5, 0, 5" SelectionChanged="cb_defaultdeck_SelectionChanged" FontSize="22" VerticalAlignment="Center" Grid.ColumnSpan="1"/>
+                <Grid Grid.Column="1" Margin="20.2,0,19.6,0" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -255,7 +256,7 @@
                             </TransformGroup>
                         </Controls:BCA_ColorButton.RenderTransform>
                     </Controls:BCA_ColorButton>
-                    
+
                     <Controls:BCA_ColorButton x:Name="btnRules" Width="Auto" Height="Auto" Margin="5" Grid.Column="4" ButtonText="Règles" ButtonTextSize="22" RenderTransformOrigin="0.5,0.5" Color1="#FF280E69" Color2="#FF410951" MouseLeftButtonDown="BtnRules_MouseLeftButtonDown" VerticalAlignment="Center">
                         <Controls:BCA_ColorButton.RenderTransform>
                             <TransformGroup>

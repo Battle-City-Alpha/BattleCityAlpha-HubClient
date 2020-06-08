@@ -26,7 +26,7 @@ namespace hub_client.Windows
         BrocanteAdministrator _admin;
 
         List<BrocanteCard> _cards;
-        bool searchMyCard = true;
+        bool searchMyCard = false;
 
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
@@ -39,7 +39,7 @@ namespace hub_client.Windows
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             _admin = admin;
 
-            _admin.LoadBrocante += _admin_LoadBrocante;
+            _admin.LoadBrocante += (cards) => _admin_LoadBrocante(cards, true);
 
             LoadStyle();
 
@@ -96,16 +96,19 @@ namespace hub_client.Windows
             return null;
         }
 
-        private void _admin_LoadBrocante(List<BrocanteCard> cards)
+        private void _admin_LoadBrocante(List<BrocanteCard> cards, bool reload = true)
         {
             int sitem = brocanteList.SelectedIndex;
 
-            _cards = cards;
-            foreach (BrocanteCard card in _cards)
-                card.CardName = CardManager.GetCard(card.Id).Name;
+            if (reload)
+            {
+                _cards = cards;
+                foreach (BrocanteCard card in _cards)
+                    card.CardName = CardManager.GetCard(card.Id).Name;
+            }
 
             brocanteList.Items.Clear();
-            if (!searchMyCard)
+            if (searchMyCard)
             {
                 foreach (BrocanteCard card in _cards)
                     if (CheckIsOwn(card))
@@ -122,6 +125,8 @@ namespace hub_client.Windows
                 btnMyCards.ButtonText = "Mes cartes";
                 btnMyCards.Update();
             }
+
+            DoSearch();
 
             if (this.IsActive)
             {
@@ -159,10 +164,6 @@ namespace hub_client.Windows
 
         private void TbChat_GotFocus(object sender, RoutedEventArgs e)
         {
-            tb_search_seller.SetText("Vendeur...");
-            tb_search_card.SetText("Carte...");
-            tb_search_max_price.SetText("Prix max...");
-            tb__search_max_quantity.SetText("Quantité max...");
             ((TextBox)sender).Text = "";
         }
 
@@ -174,80 +175,66 @@ namespace hub_client.Windows
 
         private void TbChat_MaxQuantity_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            int research;
-            if (int.TryParse(tb__search_max_quantity.GetText(), out research))
-            {
-                brocanteList.Items.Clear();
-
-                if (research.ToString() != string.Empty)
-                {
-                    foreach (BrocanteCard card in _cards)
-                        if (card.Quantity <= research)
-                            brocanteList.Items.Add(card);
-                }
-                else
-                    _admin_LoadBrocante(_cards);
-            }
+            DoSearch();
         }
 
         private void TbChat_MaxPrice_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            int research;
-            if (int.TryParse(tb_search_max_price.GetText(), out research))
-            {
-                brocanteList.Items.Clear();
-
-                if (research.ToString() != string.Empty)
-                {
-                    foreach (BrocanteCard card in _cards)
-                        if (card.Price <= research)
-                            brocanteList.Items.Add(card);
-                }
-                else
-                    _admin_LoadBrocante(_cards);
-            }
+            DoSearch();
         }
 
         private void TbChat_Seller_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            string research = tb_search_seller.GetText().ToUpper();
-            
-            brocanteList.Items.Clear();
-
-            if (research != string.Empty)
-            {
-                foreach (BrocanteCard card in _cards)
-                    if (card.SellerName.ToUpper().StartsWith(research))
-                        brocanteList.Items.Add(card);
-            }
-            else
-                _admin_LoadBrocante(_cards);
+            DoSearch();
         }
 
         private void TbChat_Card_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string research = tb_search_card.GetText().ToUpper();
+            DoSearch();
+        }
 
-                brocanteList.Items.Clear();
+        private void DoSearch()
+        {
+            List<BrocanteCard> cardsFound = new List<BrocanteCard>();
 
-                if (research != string.Empty)
-                {
-                    foreach (BrocanteCard card in _cards)
-                    {
-                        logger.Trace(card.CardName);
-                        if (card.CardName.ToUpper().StartsWith(research))
-                            brocanteList.Items.Add(card);
-                    }
-                }
-                else
-                    _admin_LoadBrocante(_cards);
-            }
-            catch (Exception ex)
+            foreach (BrocanteCard card in _cards)
+                if (CheckCardWithSearch(card))
+                    if ((searchMyCard && CheckIsOwn(card)) || !searchMyCard)
+                        cardsFound.Add(card);
+
+
+            brocanteList.Items.Clear();
+            foreach (BrocanteCard card in cardsFound)
+                brocanteList.Items.Add(card);
+        }
+        private bool CheckCardWithSearch(BrocanteCard card)
+        {
+            int research;
+            if (int.TryParse(tb__search_max_quantity.GetText(), out research))
             {
-                logger.Error(ex.ToString());
+                if (card.Quantity > research)
+                    return false;
             }
+            if (int.TryParse(tb_search_max_price.GetText(), out research))
+            {
+                if (card.Price > research)
+                    return false;
+            }
+
+            string seller = tb_search_seller.GetText().ToUpper();
+            if (seller != string.Empty && seller != "Vendeur...".ToUpper())
+            {
+                if (!card.SellerName.ToUpper().StartsWith(tb_search_seller.GetText().ToUpper()))
+                    return false;
+            }
+            string cardname = tb_search_card.GetText().ToUpper();
+            if (cardname != string.Empty && cardname != "Carte...".ToUpper())
+            {
+                if (!card.CardName.ToUpper().StartsWith(tb_search_card.GetText().ToUpper()))
+                    return false;
+            }
+
+            return true;
         }
 
         private void brocanteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -270,16 +257,16 @@ namespace hub_client.Windows
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _admin.CloseBrocante();
-            _admin.LoadBrocante -= _admin_LoadBrocante;
+            _admin.LoadBrocante -= (cards) => _admin_LoadBrocante(cards, true);
         }
 
         private void btnSell_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _admin.AskSelectCard();
             SelectCard form = new SelectCard(_admin.Client.SelectCardAdmin);
-            form.Owner = this;
             form.SelectedCard += Form_SelectedCard;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
         }
 
         private void Form_SelectedCard(PlayerCard card, int price, int quantity)
@@ -306,7 +293,7 @@ namespace hub_client.Windows
         private void btnMyCards_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             searchMyCard = !searchMyCard;
-            _admin_LoadBrocante(_cards);
+            _admin_LoadBrocante(_cards, false);
         }
         private bool CheckIsOwn(BrocanteCard card)
         {

@@ -7,20 +7,21 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Windows;
 
 namespace hub_client
 {
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 2122;
-        public static string VERSION = "2.1.2.2";
+        private static int CLIENT_VERSION = 21261;
+        public static string VERSION = "2.1.2.6";
 
         public Main()
         {
             try
             {
-                FormExecution.Init();
+                Application.Current.Dispatcher.Invoke(() => FormExecution.Init());
                 CheckClientUpdate();
             }
             catch (Exception ex)

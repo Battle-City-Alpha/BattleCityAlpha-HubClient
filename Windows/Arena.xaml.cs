@@ -34,6 +34,7 @@ namespace hub_client.Windows
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
             _admin = admin;
 
             foreach (var room in _admin.WaitingRooms)
@@ -168,9 +169,9 @@ namespace hub_client.Windows
                     InputText form = new InputText();
                     form.Title = "Mot de passe";
                     form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);
-                    form.Owner = this;
                     form.Topmost = true;
                     form.Show();
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
                 }
             }
         }

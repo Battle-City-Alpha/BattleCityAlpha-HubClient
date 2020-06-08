@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -124,7 +125,9 @@ namespace hub_client
 
                 BoosterManager.LoadList();
                 LoadBanlist();
-                //AppDesignConfig = new AppDesignConfig(); //To debug config
+#if DEBUG
+                AppDesignConfig = new AppDesignConfig(); //To debug config
+#endif
 
                 SaveConfig();
             }
@@ -150,7 +153,6 @@ namespace hub_client
             Client.LoadBoosterCollection += Client_LoadBoosterCollection;
             Client.GetMonthlyBonus += Client_GetMonthlyBonus;
 
-            _chat = new Chat(Client.ChatAdmin);
             _login = new Login(Client.LoginAdmin);
             if (restart)
             {
@@ -223,7 +225,7 @@ namespace hub_client
         {
             _windowload = new UpdateCardsStuffWindow(false);
             _windowload.Show();
-            FormExecution.Client_PopMessageBox("Un mise à jour au niveau des cartes et des boosters est disponible !", "Mise à jour", true);
+            FormExecution.Client_PopMessageBox("Un mise à jour mineure est disponible !", "Mise à jour", true);
 
             List<string> updatesToDo = new List<string>();
 
@@ -344,7 +346,6 @@ namespace hub_client
             double progress = Math.Round((i / (double)total) * 100, 1);
             _windowload.SetProgressValue(progress);
         }
-
         private static void CardManager_LoadingFinished()
         {
             logger.Trace("CDB Loaded.");
@@ -357,6 +358,8 @@ namespace hub_client
 
             CardManager.LoadingProgress -= CardManager_LoadingProgress;
             CardManager.LoadingFinished -= CardManager_LoadingFinished;
+
+            _chat = new Chat(Client.ChatAdmin);
         }
 
         public static void HideLogin()
@@ -372,7 +375,6 @@ namespace hub_client
         {
             InputText form = new InputText();
             form.Title = "Mot de passe";
-            form.Owner = _arena;
             form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
             form.Topmost = true;
             form.Show();
@@ -395,25 +397,25 @@ namespace hub_client
         private static void Client_LoadOfflineMessages(OfflineMessage[] messages)
         {
             OfflineMessagesBox box = new OfflineMessagesBox();
-            box.Owner = _chat;
             box.LoadMessages(messages);
             box.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
         }
 
         private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
         {
             DuelResult box = new DuelResult(bps, exps, win);
-            box.Owner = _chat;
             box.Topmost = true;
             box.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
         }
 
         private static void Client_LaunchBonusBox(BonusType type, int numberconnexion, string gift, int[] cards)
         {
             BonusBox box = new BonusBox(type, numberconnexion, gift);
-            box.Owner = _chat;
             box.Topmost = true;
             box.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
             if (type == BonusType.Booster)
             {
                 OpenPurchase(new BoosterInfo { Name = gift, Type = PurchaseType.Booster }, cards);
@@ -431,16 +433,16 @@ namespace hub_client
         private static void Client_LaunchTrade()
         {
             Trade trade = new Trade(Client.TradeAdmin);
-            trade.Owner = _chat;
             trade.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => trade.Activate()));
         }
 
         private static void Client_ChoicePopBox(PlayerInfo player, RoomConfig config, ChoiceBoxType type, string pass)
         {
             ChoicePopBox box = new ChoicePopBox(player, config, type, pass);
-            box.Owner = _chat;
             box.Topmost = true;
             box.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
         }
 
         public static void Client_LaunchYGOPro(Room room, string arg)
@@ -475,9 +477,7 @@ namespace hub_client
             PrivateMessageAdministrator admin = new PrivateMessageAdministrator(Client);
             PrivateMessage form = new PrivateMessage(username, admin);
             PrivateForms.Add(user.UserId, admin);
-            form.Owner = _chat;
             form.Show();
-            form.Activate();
             form.Closed += (sender, e) => PMClosed(sender, e, user.UserId);
         }
 
@@ -494,13 +494,6 @@ namespace hub_client
         private static void Client_Shutdown()
         {
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
-        }
-
-        public static bool CanCloseApp()
-        {
-            if (_chat == null)
-                return true;
-            return false;
         }
 
         public static void Client_PopMessageBox(string text, string title, bool showDialog)
@@ -550,66 +543,66 @@ namespace hub_client
         {
             logger.Trace("Open register form");
             _register = new Register(Client.RegisterAdmin);
-            _register.Owner = _login;
             _register.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _register.Activate()));
         }
         public static void OpenArena()
         {
             logger.Trace("Open arena");
             _arena = new Arena(Client.ArenaAdmin);
-            _arena.Owner = _chat;
             _arena.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _arena.Activate()));
         }
         public static void OpenShop()
         {
             logger.Trace("Open Shop");
             _shop = new Shop(Client.ShopAdmin);
-            _shop.Owner = _chat;
             _shop.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _shop.Activate()));
         }
         public static void OpenPrestigeShop()
         {
             logger.Trace("Open Prestige Shop");
             _pshop = new PrestigeShop(Client.PrestigeShopAdmin);
             Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
-            _pshop.Owner = _shop;
             _pshop.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _pshop.Activate()));
         }
         public static void OpenPrestigeCustomizationsViewer()
         {
             logger.Trace("Open Prestige Customizations viewer");
             PrestigeCustomizationsViewerHorizontal viewer = new PrestigeCustomizationsViewerHorizontal(Client.PrestigeCustomizationsViewerAdmin, true);
-            viewer.Owner = _pshop;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
         public static void OpenPrestigeCustomizationsVerticalViewer()
         {
             logger.Trace("Open Prestige Customizations vertical viewer");
             PrestigeCustomizationViewerVertical viewer = new PrestigeCustomizationViewerVertical(Client.PrestigeCustomizationsViewerAdmin, true);
-            viewer.Owner = _pshop;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
         public static void OpenPrestigeTitleViewer()
         {
             TitlesHandle form = new TitlesHandle(Client.TitlesHandleAdmin, true);
-            form.Owner = _pshop;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
         }
         public static void OpenPurchase(BoosterInfo booster)
         {
             logger.Trace("Open Purchase");
             _purchase = new Purchase(Client.PurchaseAdmin, booster);
             _purchase.Title = booster.Name;
-            _purchase.Owner = _shop;
             _purchase.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
         }
         public static void OpenPurchase(BoosterInfo booster, int[] cards)
         {
             logger.Trace("Open Purchase");
             _purchase = new Purchase(Client.PurchaseAdmin, booster);
             _purchase.Title = booster.Name;
-            _purchase.Owner = _chat;
             _purchase.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
 
             _purchase.UpdateCards(cards);
         }
@@ -617,8 +610,8 @@ namespace hub_client
         {
             logger.Trace("Open Tools");
             _tools = new Tools(Client.ToolsAdmin);
-            _tools.Owner = _chat;
             _tools.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _tools.Activate()));
         }
         public static void OpenBrocante()
         {
@@ -635,8 +628,9 @@ namespace hub_client
                 _brocante.Activate();
 
             _brocante = new Brocante(Client.BrocanteAdmin);
-            _brocante.Owner = _shop;
             _brocante.Show();
+
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _brocante.Activate()));
         }
         public static void OpenDuelRequest(int id)
         {
@@ -651,20 +645,20 @@ namespace hub_client
             logger.Trace("Open Solo mode");
 
             SoloMode sm = new SoloMode();
-            sm.Owner = _arena;
             sm.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sm.Activate()));
         }
         public static void OpenDatasRetrievalWindow()
         {
             DataRetrievalWindow window = new DataRetrievalWindow(Client.DataRetrievalAdmin);
-            window.Owner = _tools;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public static void OpenChangePicsWindow()
         {
             ChangePicsStyle window = new ChangePicsStyle();
-            window.Owner = _tools;
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
         public static void OpenRankingWindow()
         {

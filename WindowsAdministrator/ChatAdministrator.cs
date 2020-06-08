@@ -6,6 +6,7 @@ using hub_client.Network;
 using hub_client.Windows;
 using NLog;
 using System;
+using System.Windows;
 using System.Windows.Media;
 
 namespace hub_client.WindowsAdministrator
@@ -225,8 +226,8 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
                         case "PANEL":
                             Panel panel = new Panel(Client.PanelAdmin);
-                            panel.Owner = FormExecution.GetChatWindow();
                             panel.Show();
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => panel.Activate()));
                             return null;
                         case "BANLIST":
                             return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
@@ -266,8 +267,8 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.NextRankingSeason, _cmdParser.AskNextRankingSeason());
                         case "BLACKLIST":
                             Blacklist blacklist = new Blacklist(Client.BlacklistManager);
-                            blacklist.Owner = FormExecution.GetChatWindow();
                             blacklist.Show();
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => blacklist.Activate()));
                             return null;
                         case "STATS":
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Il y a " + FormExecution.GetChatWindow().Players.Count + " utilisateurs connectés.", false, false);
@@ -299,7 +300,7 @@ namespace hub_client.WindowsAdministrator
         }
         public void SendAskAnimations()
         {
-            Client.Send(PacketType.AskAnimations, new StandardClientAskAnimations { });
+            Client.Send(PacketType.AskAnimations, new StandardClientAskAnimations { Offset = Client.AnimationsScheduleAdmin.AnimationOffset });
         }
     }
 }

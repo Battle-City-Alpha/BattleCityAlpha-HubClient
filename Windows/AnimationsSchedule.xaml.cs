@@ -2,6 +2,7 @@
 using BCA.Network.Packets.Enums;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,14 @@ namespace hub_client.Windows
     /// </summary>
     public partial class AnimationsSchedule : Window
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         AnimationsScheduleAdministrator _admin;
         public AnimationsSchedule(AnimationsScheduleAdministrator admin, Animation[] animations, Dictionary<string, string> colors)
         {
             InitializeComponent();
 
             _admin = admin;
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             this.MouseDown += Window_MouseDown;
 
@@ -45,6 +48,21 @@ namespace hub_client.Windows
                 btn_create.Visibility = Visibility.Hidden;
 
             LoadStyle();
+
+            img_left.MouseLeftButtonDown += previousWeek;
+            img_right.MouseLeftButtonDown += nextWeek;
+        }
+
+        private void nextWeek(object sender, MouseButtonEventArgs e)
+        {
+            _admin.AnimationOffset++;
+            _admin.SendAskAnimations();
+        }
+
+        private void previousWeek(object sender, MouseButtonEventArgs e)
+        {
+            _admin.AnimationOffset--;
+            _admin.SendAskAnimations();
         }
 
         public void LoadStyle()
@@ -68,9 +86,9 @@ namespace hub_client.Windows
                 return;
 
             UpdateAnimation control = new UpdateAnimation(null);
-            control.Owner = this;
             control.Show();
             control.SendUpdate += Control_SendUpdate;
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => control.Activate()));
         }
 
         private void Control_SendUpdate(Animation anim, bool remove)
@@ -101,6 +119,16 @@ namespace hub_client.Windows
         }
         public void LoadAnims(Animation[] anims)
         {
+            DateTime monday = DateTime.Now.AddDays((int)DayOfWeek.Monday - (int)DateTime.Now.DayOfWeek);
+            if ((int)DateTime.Now.DayOfWeek == (int)DayOfWeek.Sunday)
+                monday = DateTime.Now.AddDays(-6);
+
+            monday = new DateTime(monday.Year, monday.Month, monday.Day, 0, 0, 0);
+            monday = monday.AddDays(7 * _admin.AnimationOffset);
+
+            lblDateStart.Content = monday.ToString("dd/MM");
+            lblDateEnd.Content = monday.AddDays(7).ToString("dd/MM");
+
             List<int> toRemove = new List<int>();
             for (int i = 0; i < planning.Children.Count; i++)
                 if (planning.Children[i] is BCA_Animation)
@@ -131,9 +159,16 @@ namespace hub_client.Windows
                 }
                 else
                 {
-                    Grid.SetColumn(widget, dayofweek);
-                    Grid.SetRow(widget, anim.StartDate.Hour - 14);
-                    Grid.SetRowSpan(widget, anim.Duration);
+                    try
+                    {
+                        Grid.SetColumn(widget, dayofweek);
+                        Grid.SetRow(widget, anim.StartDate.Hour - 14);
+                        Grid.SetRowSpan(widget, anim.Duration);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Warn(ex.ToString());
+                    }
                 }
 
                 Storyboard storyboard = new Storyboard();

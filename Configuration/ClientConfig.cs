@@ -21,8 +21,11 @@ namespace hub_client.Configuration
         public bool PMEndDuel = true;
         public bool ShowChatScrollbar = false;
         public bool UserlistScrollbar = false;
+        public bool ShowPMAll = true;
 
         public bool BCA_Card_Design = false;
+
+        public bool ChatBackgroundIsPic = false;
 
         public int CardsStuffVersion = 0;
 

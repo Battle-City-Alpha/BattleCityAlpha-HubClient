@@ -86,9 +86,9 @@ namespace hub_client.Windows
         {
             string s = "";
             if (base_design.IsChecked == true)
-                s = string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/base_design/{0}.jpg", id);
+                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/base_design/{0}.jpg", id);
             else
-                s = string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/Pics_BCA/master/bca_design/{0}.jpg", id);
+                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/bca_design/{0}.jpg", id);
 
             return new Uri(s);
         }

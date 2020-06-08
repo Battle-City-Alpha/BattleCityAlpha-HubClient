@@ -19,13 +19,16 @@ namespace hub_client.Windows.Controls
     /// </summary>
     public partial class BCA_Chat : UserControl
     {
-        Popup smiley_popup;
+        Popup smiley_popup = new Popup();
         public BCA_Chat()
         {
             InitializeComponent();
             Clear();
+            LoadPopup();
+        }
 
-            smiley_popup = new Popup();
+        public void LoadPopup()
+        {
             smiley_popup.AllowsTransparency = true;
             smiley_popup.Placement = PlacementMode.MousePoint;
             smiley_popup.Margin = new Thickness(0, 0, 0, 0);
@@ -41,7 +44,7 @@ namespace hub_client.Windows.Controls
             popup_border.Background.Opacity = 0.9;
 
             TextBlock smiley_text = new TextBlock();
-            smiley_text.FontSize = FormExecution.AppDesignConfig.FontSize; 
+            smiley_text.FontSize = FormExecution.AppDesignConfig.FontSize;
             smiley_text.FontFamily = FormExecution.AppDesignConfig.Font;
             smiley_text.TextAlignment = TextAlignment.Center;
 

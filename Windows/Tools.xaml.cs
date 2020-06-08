@@ -62,6 +62,8 @@ namespace hub_client.Windows
             cb_popupduelend.IsChecked = client_config.PMEndDuel;
             cb_showchatscrollbar.IsChecked = client_config.ShowChatScrollbar;
             cb_showuserlistscrollbar.IsChecked = client_config.UserlistScrollbar;
+            cb_backgroundchatpic.IsChecked = client_config.ChatBackgroundIsPic;
+            cb_showmpall.IsChecked = client_config.ShowPMAll;
 
             foreach (var color in style.GameColors)
                 cb_colorList.Items.Add(color.Key);
@@ -160,6 +162,8 @@ namespace hub_client.Windows
             client_config.PMEndDuel = (bool)cb_popupduelend.IsChecked;
             client_config.ShowChatScrollbar = (bool)cb_showchatscrollbar.IsChecked;
             client_config.UserlistScrollbar = (bool)cb_showuserlistscrollbar.IsChecked;
+            client_config.ChatBackgroundIsPic = (bool)cb_backgroundchatpic.IsChecked;
+            client_config.ShowPMAll = (bool)cb_showmpall.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
             if (style.Font == null)

@@ -107,7 +107,21 @@ namespace hub_client.Assets
 
         public Brush GetBrush(string directory, string img)
         {
-            return new ImageBrush(new BitmapImage(new Uri(Path.Combine(path, "Assets", directory, img + ".png"))));
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new Uri(Path.Combine(path, "Assets", directory, img));
+                image.EndInit();
+                return new ImageBrush(image);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("IMAGE LOADING - {0}", ex);
+                return null;
+            }
         }
 
         public Brush GetBrush(string directory, string img, string extension)
@@ -152,7 +166,7 @@ namespace hub_client.Assets
 
             if (!File.Exists(Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")))
             {
-                string url = custom.IsHost ? custom.URL : string.Format("http://raw.githubusercontent.com/Tic-Tac-Toc/BattleCityAlpha-v2-Assets/master/{0}/{1}.png", d, custom.Id);
+                string url = custom.IsHost ? custom.URL : string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/BattleCityAlpha-v2-Assets/master/{0}/{1}.png", d, custom.Id);
                 try
                 {
                     using (WebClient wc = new WebClient())

@@ -45,14 +45,27 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Controls:BCA_ColorButton x:Name="btn_create" Grid.Row="2" ButtonText="Créer" ButtonTextSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Color1="#FF4E0000" Color2="#FF420011"/>
+                <Controls:BCA_ColorButton x:Name="btn_create" Grid.Row="2" ButtonText="Créer" ButtonTextSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" Color1="#FF4E0000" Color2="#FF420011"/>
 
-                <Border Grid.Column="1" CornerRadius="10" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="3">
+                <Border Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="10" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="3">
                     <Border.Background>
                         <SolidColorBrush Color="White" Opacity="0.7"/>
                     </Border.Background>
                     <StackPanel Orientation="Horizontal" Name="colors_panel">
                         
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" CornerRadius="10" Margin="5" Grid.Row="0">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.7"/>
+                    </Border.Background>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image x:Name="img_left" Margin="5,10" Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png"/>
+                        <Label x:Name="lblDateStart" Content="date1" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                        <Label Content="-" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                        <Label x:Name="lblDateEnd" Content="date2" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                        <Image x:Name="img_right" Margin="5,10" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png"/>
                     </StackPanel>
                 </Border>
             </Grid>

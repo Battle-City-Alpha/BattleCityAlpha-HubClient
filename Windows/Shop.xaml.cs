@@ -235,8 +235,8 @@ namespace hub_client.Windows
         private void btn_searchcard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SearchCard form = new SearchCard();
-            form.Owner = this;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
         }
         private void btn_brocante_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

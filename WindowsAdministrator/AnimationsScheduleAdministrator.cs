@@ -16,10 +16,14 @@ namespace hub_client.WindowsAdministrator
         public GameClient Client;
         private AnimationsSchedule _window;
 
+        public int AnimationOffset;
+
         public AnimationsScheduleAdministrator(GameClient client)
         {
             Client = client;
             Client.LoadAnimations += Client_LoadAnimations;
+
+            AnimationOffset = 0;
         }
 
         private void Client_LoadAnimations(Dictionary<string, string> colors, Animation[] animations)
@@ -38,7 +42,15 @@ namespace hub_client.WindowsAdministrator
             Client.Send(PacketType.UpdateAnimation, new StandardClientUpdateAnimation
             {
                 Animation = anim,
+                Offset = AnimationOffset,
                 Remove = remove
+            });
+        }
+        public void SendAskAnimations()
+        {
+            Client.Send(PacketType.AskAnimations, new StandardClientAskAnimations
+            {
+                Offset = AnimationOffset
             });
         }
     }

@@ -8,8 +8,8 @@ namespace hub_client.Configuration
     public class AppDesignConfig
     {
         public Dictionary<string, Color> GameColors;
-        public FontFamily Font = new FontFamily("Consolas");
-        public int FontSize = 22;
+        public FontFamily Font = new FontFamily("Arial");
+        public int FontSize = 15;
 
         public double ShopWidth = -1;
         public double ShopHeight = -1;
@@ -26,6 +26,10 @@ namespace hub_client.Configuration
             GameColors.Add("StaffMessageColor", Colors.Red);
 
             GameColors.Add("CustomRoomColor", Colors.Red);
+
+            GameColors.Add("ChatBackgroundColor", Colors.White);
+            GameColors.Add("ChatInputBackgroundColor", Colors.White);
+            GameColors.Add("UserlistBackgroundColor", Colors.White);
 
             GameColors.Add("PopupPMBackgroundColor", (Color)ColorConverter.ConvertFromString("#FF341c4d"));
             GameColors.Add("PopupPMContentColor", Colors.White);
