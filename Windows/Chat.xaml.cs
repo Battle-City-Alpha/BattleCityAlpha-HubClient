@@ -89,8 +89,14 @@ namespace hub_client.Windows
             _last_messages = new List<string>();
 
             this.MouseDown += Chat_MouseDown;
+            this.Closed += Chat_Closed;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void Chat_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
         private void _admin_AnimationNotification(bool update)
@@ -328,6 +334,7 @@ namespace hub_client.Windows
 
             cb_defaultdeck.PreviewMouseLeftButtonDown += cb_defaultdeck_click;
             RefreshDeck();
+            cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
@@ -358,16 +365,15 @@ namespace hub_client.Windows
         }
         private void RefreshDeck()
         {
-            cb_defaultdeck.Items.Clear();
             List<string> Deck = new List<string>(Directory.EnumerateFiles(Path.Combine(FormExecution.path, "BattleCityAlpha", "deck")));
             Deck.Sort();
             foreach (string deck in Deck)
             {
                 string[] name = deck.Split('\\');
                 string[] nomFinal = name[name.Length - 1].Split('.');
-                cb_defaultdeck.Items.Add(nomFinal[0]);
+                if (!cb_defaultdeck.Items.Contains(nomFinal[0]))
+                    cb_defaultdeck.Items.Add(nomFinal[0]);
             }
-            cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
         }
 
         public void LoadStyle()

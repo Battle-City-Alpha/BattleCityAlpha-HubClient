@@ -21,7 +21,8 @@ namespace hub_client.Configuration
         public bool PMEndDuel = true;
         public bool ShowChatScrollbar = false;
         public bool UserlistScrollbar = false;
-        public bool ShowPMAll = true;
+        public bool TradeScrollBar = false;
+        public bool ShowArenaWaitingRoomMessage = true;
 
         public bool BCA_Card_Design = false;
 

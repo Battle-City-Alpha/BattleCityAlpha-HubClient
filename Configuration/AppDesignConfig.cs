@@ -24,6 +24,7 @@ namespace hub_client.Configuration
             GameColors.Add("LauncherMessageColor", Colors.DarkViolet);
             GameColors.Add("GreetMessageColor", Colors.ForestGreen);
             GameColors.Add("StaffMessageColor", Colors.Red);
+            GameColors.Add("DuelArenaMessageColor", Colors.Orange);
 
             GameColors.Add("CustomRoomColor", Colors.Red);
 

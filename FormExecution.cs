@@ -120,8 +120,9 @@ namespace hub_client
                     AssetsManager.LoadSmileys();
                     LoadCDB();
                 }
-
-                //ClientConfig.TestMode = false;
+#if DEBUG
+                ClientConfig.TestMode = false;
+#endif
 
                 BoosterManager.LoadList();
                 LoadBanlist();

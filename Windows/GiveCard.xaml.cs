@@ -27,6 +27,7 @@ namespace hub_client.Windows
         public GiveCard(GiveCardAdministrator admin, PlayerInfo target)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
 
             _cards = new Dictionary<int, PlayerCard>();

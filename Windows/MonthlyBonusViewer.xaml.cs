@@ -30,6 +30,7 @@ namespace hub_client.Windows
         public MonthlyBonusViewer(Dictionary<int, MonthlyBonus> bonus, int connectionnumber, int[] cards)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             cnumber = connectionnumber;
 
             foreach (var b in bonus)

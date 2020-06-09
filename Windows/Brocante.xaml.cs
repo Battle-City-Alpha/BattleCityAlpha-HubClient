@@ -136,7 +136,7 @@ namespace hub_client.Windows
 
             if (sitem != -1 && brocanteList.Items.Count > sitem)
             {
-                brocanteList.SelectedItem = sitem;
+                brocanteList.SelectedIndex = sitem;
             }
         }
 

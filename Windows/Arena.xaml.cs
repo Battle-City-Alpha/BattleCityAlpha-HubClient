@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Configuration;
+using hub_client.Enums;
 using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using hub_client.Windows.Controls.Controls_Stuff;
@@ -328,13 +329,23 @@ namespace hub_client.Windows
             }
             else
             {
-                _admin.SendPlayRanked();
-
-                _rankedTimerCounter = 0;
-                RankedTimer.IsEnabled = true;
-                btn_playranked.MouseEnter += Btn_playranked_MouseEnter;
-                btn_playranked.MouseLeave += Btn_playranked_MouseLeave;
+                ChoicePopBox cpb = new ChoicePopBox(FormExecution.PlayerInfos, new RoomConfig(), ChoiceBoxType.DeckChoiceRanked, "", YgoproConfig.GetDefaultDeck());
+                cpb.Choice += Cpb_Choice;
+                cpb.ShowDialog();                
             }
+        }
+
+        private void Cpb_Choice(bool result)
+        {
+            if (!result)
+                return;
+
+            _admin.SendPlayRanked();
+
+            _rankedTimerCounter = 0;
+            RankedTimer.IsEnabled = true;
+            btn_playranked.MouseEnter += Btn_playranked_MouseEnter;
+            btn_playranked.MouseLeave += Btn_playranked_MouseLeave;
         }
 
         private void RankedTimer_Tick(object sender, EventArgs e)

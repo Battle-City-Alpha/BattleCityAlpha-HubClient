@@ -66,6 +66,9 @@ namespace hub_client.Windows
             Dispatcher.InvokeAsync(delegate { rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), infos, message, true); });
             //Dispatcher.InvokeAsync(delegate { Show(); });
 
+            WindowInteropHelper wih = new WindowInteropHelper(this);
+            FlashWindow(wih.Handle, true);
+
             if (!this.IsActive)
             {
                 if (FormExecution.ClientConfig.PMPopup)
@@ -93,9 +96,6 @@ namespace hub_client.Windows
 
                     popup.Popup();
                 }
-
-                WindowInteropHelper wih = new WindowInteropHelper(this);
-                FlashWindow(wih.Handle, true);
             }
         }
 

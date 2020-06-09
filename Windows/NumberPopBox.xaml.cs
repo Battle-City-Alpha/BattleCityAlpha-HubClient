@@ -26,6 +26,7 @@ namespace hub_client.Windows
         public NumberPopBox(int maxNumber, int price)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             for (int i = 1; i <= maxNumber; i++)
                 cbNumber.Items.Add(i);

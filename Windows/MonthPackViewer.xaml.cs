@@ -24,6 +24,7 @@ namespace hub_client.Windows
         public MonthPackViewer(int avatar, int border, int sleeve)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
 
             this.MouseDown += Window_MouseDown;

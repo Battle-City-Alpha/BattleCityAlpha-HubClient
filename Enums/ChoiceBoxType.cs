@@ -5,6 +5,7 @@
         Duel,
         Trade,
         Deck,
-        Replay
+        Replay,
+        DeckChoiceRanked
     }
 }

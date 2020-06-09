@@ -325,6 +325,17 @@ namespace hub_client.Windows
             btnValidate.Update();
 
             this.FontFamily = style.Font;
+
+            if (FormExecution.ClientConfig.TradeScrollBar)
+            {
+                this.CollectionJ1.GetListview().SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+                this.CollectionJ2.GetListview().SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+            }
+            else
+            {
+                this.CollectionJ1.GetListview().SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+                this.CollectionJ2.GetListview().SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+            }
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

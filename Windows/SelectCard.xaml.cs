@@ -65,6 +65,11 @@ namespace hub_client.Windows
                 this.sell_card_popup.IsOpen = true;
                 _popupTimer.IsEnabled = true;
             }
+
+            if (selected_index != -1 && Collection.GetListview().Items.Count > selected_index)
+            {
+                Collection.GetListview().SelectedIndex = selected_index;
+            }
         }
 
         private void SelectCard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -81,6 +86,7 @@ namespace hub_client.Windows
         private void BCA_ColorButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Collection.SelectedItem() == null || tb_price.Text == string.Empty || Convert.ToInt32(tb_price.Text) <= 0 || tb_quantity.Text == string.Empty || Convert.ToInt32(tb_quantity.Text) <= 0) return;
+            selected_index = Collection.SelectedIndex();
             SelectedCard?.Invoke((PlayerCard)Collection.SelectedItem(), Convert.ToInt32(tb_price.Text), Convert.ToInt32(tb_quantity.Text));
         }
 

@@ -17,6 +17,7 @@ namespace hub_client.Windows
         public CustomViewer(CustomizationType ctype, string text, int id)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             this.MouseDown += Window_MouseDown;
 

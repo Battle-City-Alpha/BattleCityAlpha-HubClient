@@ -43,6 +43,7 @@ namespace hub_client.Network
         public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
         public event Action<int, int, int> LoadMonthPack;
         public event Action<Dictionary<int, MonthlyBonus>, int, int[]> GetMonthlyBonus;
+        public event Action<Room> RecieveRoomIsWaiting;
         #region Daily Quests
         public event Action<DailyQuestType[], string[], int[]> GetDailyQuests;
         public event Action<bool, DailyQuestType, int, bool> DailyQuestReward;
@@ -279,266 +280,276 @@ namespace hub_client.Network
 
             logger.Trace("PACKET RECEIVED - {0} : {1}", packetType, packet);
 
-            switch (packetType)
+            try
             {
-                case PacketType.ChatMessage:
-                    OnChatMessage(JsonConvert.DeserializeObject<StandardServerChatMessage>(packet));
-                    break;
-                case PacketType.Register:
-                    OnRegister(JsonConvert.DeserializeObject<StandardServerRegister>(packet));
-                    break;
-                case PacketType.Login:
-                    OnLogin(JsonConvert.DeserializeObject<StandardServerLogin>(packet));
-                    break;
-                case PacketType.AddHubPlayer:
-                    OnAddHubPlayer(JsonConvert.DeserializeObject<StandardServerAddHubPlayer>(packet));
-                    break;
-                case PacketType.RemoveHubPlayer:
-                    OnRemoveHubPlayer(JsonConvert.DeserializeObject<StandardServerRemoveHubPlayer>(packet));
-                    break;
-                case PacketType.UpdateHubPlayer:
-                    OnUpdateHubPlayer(JsonConvert.DeserializeObject<StandardServerUpdateHubPlayer>(packet));
-                    break;
-                case PacketType.PlayerList:
-                    OnUpdateHubPlayerList(JsonConvert.DeserializeObject<StandardServerPlayerlist>(packet));
-                    break;
-                case PacketType.CommandError:
-                    OnCommandError(JsonConvert.DeserializeObject<StandardServerCommandError>(packet));
-                    break;
-                case PacketType.Kick:
-                    OnKick(JsonConvert.DeserializeObject<StandardServerKick>(packet));
-                    break;
-                case PacketType.Ban:
-                    OnBan(JsonConvert.DeserializeObject<StandardServerBan>(packet));
-                    break;
-                case PacketType.Mute:
-                    OnMute(JsonConvert.DeserializeObject<StandardServerMute>(packet));
-                    break;
-                case PacketType.Muted:
-                    OnMuted(JsonConvert.DeserializeObject<StandardServerMuted>(packet));
-                    break;
-                case PacketType.Unmute:
-                    OnUnmute(JsonConvert.DeserializeObject<StandardServerUnmute>(packet));
-                    break;
-                case PacketType.DisabledAccount:
-                    OnDisabled(JsonConvert.DeserializeObject<StandardServerDisabledAccount>(packet));
-                    break;
-                case PacketType.PrivateMessage:
-                    OnPrivateMessage(JsonConvert.DeserializeObject<StandardServerPrivateMessage>(packet));
-                    break;
-                case PacketType.Profil:
-                    OnProfilUpdate(JsonConvert.DeserializeObject<StandardServerProfilInfo>(packet));
-                    break;
-                case PacketType.UpdateCollection:
-                    OnUpdateCollection(JsonConvert.DeserializeObject<StandardServerUpdateCollection>(packet));
-                    break;
-                case PacketType.AskBooster:
-                    OnAskBooster(JsonConvert.DeserializeObject<StandardServerAskBooster>(packet));
-                    break;
-                case PacketType.PurchaseItem:
-                    OnPurchaseItem(JsonConvert.DeserializeObject<StandardServerPurchaseItem>(packet));
-                    break;
-                case PacketType.Clear:
-                    OnClearChat(JsonConvert.DeserializeObject<StandardServerClear>(packet));
-                    break;
-                case PacketType.PanelUpdate:
-                    OnPanelUpdateProfile(JsonConvert.DeserializeObject<StandardServerPanelUpdateProfile>(packet));
-                    break;
-                case PacketType.PanelUserlist:
-                    OnPanelUserlist(JsonConvert.DeserializeObject<StandardServerPanelUserlist>(packet));
-                    break;
-                case PacketType.Banlist:
-                    OnBanlist(JsonConvert.DeserializeObject<StandardServerBanlist>(packet));
-                    break;
-                case PacketType.GivePoints:
-                    OnGivePoints(JsonConvert.DeserializeObject<StandardServerGetPoints>(packet));
-                    break;
-                case PacketType.GiveCard:
-                    OnGiveCard(JsonConvert.DeserializeObject<StandardServerGetCard>(packet));
-                    break;
-                case PacketType.CardDonation:
-                    OnCardDonation(JsonConvert.DeserializeObject<StandardServerCardDonation>(packet));
-                    break;
-                case PacketType.GiveAvatar:
-                    OnGiveAvatar(JsonConvert.DeserializeObject<StandardServerGetAvatar>(packet));
-                    break;
-                case PacketType.TradeRequest:
-                    OnTradeRequest(JsonConvert.DeserializeObject<StandardServerTradeRequest>(packet));
-                    break;
-                case PacketType.TradeRequestAnswer:
-                    OnTradeRequestAnswer(JsonConvert.DeserializeObject<StandardServerTradeRequestAnswer>(packet));
-                    break;
-                case PacketType.TradeMessage:
-                    OnTradeMessage(JsonConvert.DeserializeObject<StandardServerTradeMessage>(packet));
-                    break;
-                case PacketType.TradeProposition:
-                    OnTradeProposition(JsonConvert.DeserializeObject<StandardServerTradeProposition>(packet));
-                    break;
-                case PacketType.TradeExit:
-                    OnTradeExit(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
-                    break;
-                case PacketType.TradeEnd:
-                    OnTradeEnd(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
-                    break;
-                case PacketType.LoadAvatar:
-                    OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
-                    break;
-                case PacketType.LoadBorders:
-                    OnLoadBorders(JsonConvert.DeserializeObject<StandardServerLoadBorders>(packet));
-                    break;
-                case PacketType.LoadSleeves:
-                    OnLoadSleeves(JsonConvert.DeserializeObject<StandardServerLoadSleeves>(packet));
-                    break;
-                case PacketType.LoadBrocante:
-                    OnLoadBrocante(JsonConvert.DeserializeObject<StandardServerLoadBrocante>(packet));
-                    break;
-                case PacketType.AskSelectCard:
-                    OnLoadSelectCard(JsonConvert.DeserializeObject<StandardServerLoadSelectCard>(packet));
-                    break;
-                case PacketType.SearchCard:
-                    OnSearchCard(JsonConvert.DeserializeObject<StandardServerSearchCard>(packet));
-                    break;
-                case PacketType.CloseBrocante:
-                    OnCloseBrocante(JsonConvert.DeserializeObject<StandardServerCloseBrocante>(packet));
-                    break;
-                case PacketType.DuelRequest:
-                    OnDuelRequest(JsonConvert.DeserializeObject<StandardServerDuelRequest>(packet));
-                    break;
-                case PacketType.DuelRequestAnswer:
-                    OnDuelRequestAnswer(JsonConvert.DeserializeObject<StandardServerDuelRequestResult>(packet));
-                    break;
-                case PacketType.UpdateRoom:
-                    OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
-                    break;
-                case PacketType.DuelStart:
-                    OnDuelStart(JsonConvert.DeserializeObject<StandardServerDuelStart>(packet));
-                    break;
-                case PacketType.SpectatePlayer:
-                    OnDuelSpectate(JsonConvert.DeserializeObject<StandardServerDuelSpectate>(packet));
-                    break;
-                case PacketType.NeedRoomPassword:
-                    OnRoomNeedPassword(JsonConvert.DeserializeObject<StandardServerNeedRoomPassword>(packet));
-                    break;
-                case PacketType.GetBonus:
-                    OnGetBonus(JsonConvert.DeserializeObject<StandardServerGetBonus>(packet));
-                    break;
-                case PacketType.MonthlyBonus:
-                    OnGetMonthlyBonus(JsonConvert.DeserializeObject<StandardServerGetMonthlyBonus>(packet));
-                    break;
-                case PacketType.DuelResult:
-                    OnDuelResult(JsonConvert.DeserializeObject<StandardServerDuelResult>(packet));
-                    break;
-                case PacketType.GiveTitle:
-                    OnGetTitle(JsonConvert.DeserializeObject<StandardServerGetTitle>(packet));
-                    break;
-                case PacketType.GiveBorder:
-                    OnGiveBorder(JsonConvert.DeserializeObject<StandardServerGetBorder>(packet));
-                    break;
-                case PacketType.GiveSleeve:
-                    OnGiveSleeve(JsonConvert.DeserializeObject<StandardServerGetSleeve>(packet));
-                    break;
-                case PacketType.AskTitle:
-                    OnLoadTitles(JsonConvert.DeserializeObject<StandardServerLoadTitles>(packet));
-                    break;
-                case PacketType.Maintenance:
-                    OnMaintenance(JsonConvert.DeserializeObject<StandardServerMaintenance>(packet));
-                    break;
-                case PacketType.OfflineMessages:
-                    OnOfflineMessages(JsonConvert.DeserializeObject<StandardServerOfflineMessages>(packet));
-                    break;
-                case PacketType.LoadPlayerCustomization:
-                    OnLoadPlayerCustomizationTextures(JsonConvert.DeserializeObject<StandardServerLoadPlayerCustomizationTextures>(packet));
-                    break;
-                case PacketType.ResetStats:
-                    OnResetStat(JsonConvert.DeserializeObject<StandardServerResetStat>(packet));
-                    break;
-                case PacketType.ChangeUsername:
-                    OnChangeUsername(JsonConvert.DeserializeObject<StandardServerChangeUsername>(packet));
-                    break;
-                case PacketType.UsernameColor:
-                    OnChangeChatColor(JsonConvert.DeserializeObject<StandardServerUsernameColor>(packet));
-                    break;
-                case PacketType.BuyVIP:
-                    OnBuyVIP(JsonConvert.DeserializeObject<StandardServerBuyVIP>(packet));
-                    break;
-                case PacketType.BuyDoubleBP:
-                    OnBuyDoubleBP(JsonConvert.DeserializeObject<StandardServerDoubleBP>(packet));
-                    break;
-                case PacketType.BuyOwnCustom:
-                    OnBuyOwnCustomization(JsonConvert.DeserializeObject<StandardServerBuyOwnCustomization>(packet));
-                    break;
-                case PacketType.BuyPrestigeCustom:
-                    OnBuyPrestigeCustomization(JsonConvert.DeserializeObject<StandardServerBuyPrestigeCustomization>(packet));
-                    break;
-                case PacketType.BuyGreet:
-                    OnBuyInfiniteGreet(JsonConvert.DeserializeObject<StandardServerGreetInfinite>(packet));
-                    break;
-                case PacketType.BuyMonthPack:
-                    OnBuyMonthPack(JsonConvert.DeserializeObject<StandardServerBuyMonthPack>(packet));
-                    break;
-                case PacketType.OpenPrestigeShop:
-                    OnOpenPrestigeShop(JsonConvert.DeserializeObject<StandardServerOpenPrestigeShop>(packet));
-                    break;
-                case PacketType.GetCustomizationAchievement:
-                    OnCustomizationAchievement(JsonConvert.DeserializeObject<StandardServerGetCustomizationAchievement>(packet));
-                    break;
-                case PacketType.AskPrestigeCustoms:
-                    OnLoadPrestigeCustomizations(JsonConvert.DeserializeObject<StandardServerLoadPrestigeCustomizations>(packet));
-                    break;
-                case PacketType.DataRetrieval:
-                    OnDataRetrievalInfos(JsonConvert.DeserializeObject<StandardServerDataRetrieval>(packet));
-                    break;
-                case PacketType.NextRankingSeason:
-                    OnNextRankingSeason(JsonConvert.DeserializeObject<StandardServerNextRankingSeason>(packet));
-                    break;
-                case PacketType.ShareDeck:
-                    OnShareDeck(JsonConvert.DeserializeObject<StandardServerSendDeck>(packet));
-                    break;
-                case PacketType.ShareReplay:
-                    OnShareReplay(JsonConvert.DeserializeObject<StandardServerShareReplay>(packet));
-                    break;
-                case PacketType.GetRanking:
-                    OnGetRanking(JsonConvert.DeserializeObject<StandardServerGetRanking>(packet));
-                    break;
-                case PacketType.Ping:
-                    OnPing(JsonConvert.DeserializeObject<StandardServerPing>(packet));
-                    break;
-                case PacketType.AskGamesHistory:
-                    OnGetGamesHistory(JsonConvert.DeserializeObject<StandardServerGamesHistory>(packet));
-                    break;
-                case PacketType.AskBoosterCollection:
-                    OnAskBoosterCollection(JsonConvert.DeserializeObject<StandardServerBoosterCollection>(packet));
-                    break;
-                case PacketType.AskMonthPack:
-                    OnAskMonthPack(JsonConvert.DeserializeObject<StandardServerAskMonthPack>(packet));
-                    break;
-                case PacketType.AskDailyQuest:
-                    OnGetDailyQuests(JsonConvert.DeserializeObject<StandardServerSendDailyQuests>(packet));
-                    break;
-                case PacketType.GetDailyQuest:
-                    OnDailyQuestReward(JsonConvert.DeserializeObject<StandardServerGetDailyQuestReward>(packet));
-                    break;
-                case PacketType.ChangeDailyQuest:
-                    OnChangeDailyQuest(JsonConvert.DeserializeObject<StandardServerChangeDailyQuest>(packet));
-                    break;
-                case PacketType.DailyQuestNotification:
-                    OnDailyQuestNotification(JsonConvert.DeserializeObject<StandardServerDailyQuestNotification>(packet));
-                    break;
-                case PacketType.DuelServerStop:
-                    OnDuelServerStop(JsonConvert.DeserializeObject<StandardServerDuelServerStop>(packet));
-                    break;
-                case PacketType.AskAnimations:
-                    OnGetAnimations(JsonConvert.DeserializeObject<StandardServerGetAnimations>(packet));
-                    break;
-                case PacketType.AnimationNotification:
-                    OnAnimationNotification(JsonConvert.DeserializeObject<StandardServerAnimationNotification>(packet));
-                    break;
-                case PacketType.GivePartner:
-                    OnGivePartner(JsonConvert.DeserializeObject<StandardServerGetPartner>(packet));
-                    break;
-                case PacketType.LoadPartner:
-                    OnLoadPartners(JsonConvert.DeserializeObject<StandardServerLoadPartners>(packet));
-                    break;
+                switch (packetType)
+                {
+                    case PacketType.ChatMessage:
+                        OnChatMessage(JsonConvert.DeserializeObject<StandardServerChatMessage>(packet));
+                        break;
+                    case PacketType.Register:
+                        OnRegister(JsonConvert.DeserializeObject<StandardServerRegister>(packet));
+                        break;
+                    case PacketType.Login:
+                        OnLogin(JsonConvert.DeserializeObject<StandardServerLogin>(packet));
+                        break;
+                    case PacketType.AddHubPlayer:
+                        OnAddHubPlayer(JsonConvert.DeserializeObject<StandardServerAddHubPlayer>(packet));
+                        break;
+                    case PacketType.RemoveHubPlayer:
+                        OnRemoveHubPlayer(JsonConvert.DeserializeObject<StandardServerRemoveHubPlayer>(packet));
+                        break;
+                    case PacketType.UpdateHubPlayer:
+                        OnUpdateHubPlayer(JsonConvert.DeserializeObject<StandardServerUpdateHubPlayer>(packet));
+                        break;
+                    case PacketType.PlayerList:
+                        OnUpdateHubPlayerList(JsonConvert.DeserializeObject<StandardServerPlayerlist>(packet));
+                        break;
+                    case PacketType.CommandError:
+                        OnCommandError(JsonConvert.DeserializeObject<StandardServerCommandError>(packet));
+                        break;
+                    case PacketType.Kick:
+                        OnKick(JsonConvert.DeserializeObject<StandardServerKick>(packet));
+                        break;
+                    case PacketType.Ban:
+                        OnBan(JsonConvert.DeserializeObject<StandardServerBan>(packet));
+                        break;
+                    case PacketType.Mute:
+                        OnMute(JsonConvert.DeserializeObject<StandardServerMute>(packet));
+                        break;
+                    case PacketType.Muted:
+                        OnMuted(JsonConvert.DeserializeObject<StandardServerMuted>(packet));
+                        break;
+                    case PacketType.Unmute:
+                        OnUnmute(JsonConvert.DeserializeObject<StandardServerUnmute>(packet));
+                        break;
+                    case PacketType.DisabledAccount:
+                        OnDisabled(JsonConvert.DeserializeObject<StandardServerDisabledAccount>(packet));
+                        break;
+                    case PacketType.PrivateMessage:
+                        OnPrivateMessage(JsonConvert.DeserializeObject<StandardServerPrivateMessage>(packet));
+                        break;
+                    case PacketType.Profil:
+                        OnProfilUpdate(JsonConvert.DeserializeObject<StandardServerProfilInfo>(packet));
+                        break;
+                    case PacketType.UpdateCollection:
+                        OnUpdateCollection(JsonConvert.DeserializeObject<StandardServerUpdateCollection>(packet));
+                        break;
+                    case PacketType.AskBooster:
+                        OnAskBooster(JsonConvert.DeserializeObject<StandardServerAskBooster>(packet));
+                        break;
+                    case PacketType.PurchaseItem:
+                        OnPurchaseItem(JsonConvert.DeserializeObject<StandardServerPurchaseItem>(packet));
+                        break;
+                    case PacketType.Clear:
+                        OnClearChat(JsonConvert.DeserializeObject<StandardServerClear>(packet));
+                        break;
+                    case PacketType.PanelUpdate:
+                        OnPanelUpdateProfile(JsonConvert.DeserializeObject<StandardServerPanelUpdateProfile>(packet));
+                        break;
+                    case PacketType.PanelUserlist:
+                        OnPanelUserlist(JsonConvert.DeserializeObject<StandardServerPanelUserlist>(packet));
+                        break;
+                    case PacketType.Banlist:
+                        OnBanlist(JsonConvert.DeserializeObject<StandardServerBanlist>(packet));
+                        break;
+                    case PacketType.GivePoints:
+                        OnGivePoints(JsonConvert.DeserializeObject<StandardServerGetPoints>(packet));
+                        break;
+                    case PacketType.GiveCard:
+                        OnGiveCard(JsonConvert.DeserializeObject<StandardServerGetCard>(packet));
+                        break;
+                    case PacketType.CardDonation:
+                        OnCardDonation(JsonConvert.DeserializeObject<StandardServerCardDonation>(packet));
+                        break;
+                    case PacketType.GiveAvatar:
+                        OnGiveAvatar(JsonConvert.DeserializeObject<StandardServerGetAvatar>(packet));
+                        break;
+                    case PacketType.TradeRequest:
+                        OnTradeRequest(JsonConvert.DeserializeObject<StandardServerTradeRequest>(packet));
+                        break;
+                    case PacketType.TradeRequestAnswer:
+                        OnTradeRequestAnswer(JsonConvert.DeserializeObject<StandardServerTradeRequestAnswer>(packet));
+                        break;
+                    case PacketType.TradeMessage:
+                        OnTradeMessage(JsonConvert.DeserializeObject<StandardServerTradeMessage>(packet));
+                        break;
+                    case PacketType.TradeProposition:
+                        OnTradeProposition(JsonConvert.DeserializeObject<StandardServerTradeProposition>(packet));
+                        break;
+                    case PacketType.TradeExit:
+                        OnTradeExit(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
+                        break;
+                    case PacketType.TradeEnd:
+                        OnTradeEnd(JsonConvert.DeserializeObject<StandardServerTradeExit>(packet));
+                        break;
+                    case PacketType.LoadAvatar:
+                        OnLoadAvatars(JsonConvert.DeserializeObject<StandardServerLoadAvatars>(packet));
+                        break;
+                    case PacketType.LoadBorders:
+                        OnLoadBorders(JsonConvert.DeserializeObject<StandardServerLoadBorders>(packet));
+                        break;
+                    case PacketType.LoadSleeves:
+                        OnLoadSleeves(JsonConvert.DeserializeObject<StandardServerLoadSleeves>(packet));
+                        break;
+                    case PacketType.LoadBrocante:
+                        OnLoadBrocante(JsonConvert.DeserializeObject<StandardServerLoadBrocante>(packet));
+                        break;
+                    case PacketType.AskSelectCard:
+                        OnLoadSelectCard(JsonConvert.DeserializeObject<StandardServerLoadSelectCard>(packet));
+                        break;
+                    case PacketType.SearchCard:
+                        OnSearchCard(JsonConvert.DeserializeObject<StandardServerSearchCard>(packet));
+                        break;
+                    case PacketType.CloseBrocante:
+                        OnCloseBrocante(JsonConvert.DeserializeObject<StandardServerCloseBrocante>(packet));
+                        break;
+                    case PacketType.DuelRequest:
+                        OnDuelRequest(JsonConvert.DeserializeObject<StandardServerDuelRequest>(packet));
+                        break;
+                    case PacketType.DuelRequestAnswer:
+                        OnDuelRequestAnswer(JsonConvert.DeserializeObject<StandardServerDuelRequestResult>(packet));
+                        break;
+                    case PacketType.UpdateRoom:
+                        OnUpdateRoom(JsonConvert.DeserializeObject<StandardServerUpdateRoom>(packet));
+                        break;
+                    case PacketType.DuelStart:
+                        OnDuelStart(JsonConvert.DeserializeObject<StandardServerDuelStart>(packet));
+                        break;
+                    case PacketType.SpectatePlayer:
+                        OnDuelSpectate(JsonConvert.DeserializeObject<StandardServerDuelSpectate>(packet));
+                        break;
+                    case PacketType.NeedRoomPassword:
+                        OnRoomNeedPassword(JsonConvert.DeserializeObject<StandardServerNeedRoomPassword>(packet));
+                        break;
+                    case PacketType.GetBonus:
+                        OnGetBonus(JsonConvert.DeserializeObject<StandardServerGetBonus>(packet));
+                        break;
+                    case PacketType.MonthlyBonus:
+                        OnGetMonthlyBonus(JsonConvert.DeserializeObject<StandardServerGetMonthlyBonus>(packet));
+                        break;
+                    case PacketType.DuelResult:
+                        OnDuelResult(JsonConvert.DeserializeObject<StandardServerDuelResult>(packet));
+                        break;
+                    case PacketType.GiveTitle:
+                        OnGetTitle(JsonConvert.DeserializeObject<StandardServerGetTitle>(packet));
+                        break;
+                    case PacketType.GiveBorder:
+                        OnGiveBorder(JsonConvert.DeserializeObject<StandardServerGetBorder>(packet));
+                        break;
+                    case PacketType.GiveSleeve:
+                        OnGiveSleeve(JsonConvert.DeserializeObject<StandardServerGetSleeve>(packet));
+                        break;
+                    case PacketType.AskTitle:
+                        OnLoadTitles(JsonConvert.DeserializeObject<StandardServerLoadTitles>(packet));
+                        break;
+                    case PacketType.Maintenance:
+                        OnMaintenance(JsonConvert.DeserializeObject<StandardServerMaintenance>(packet));
+                        break;
+                    case PacketType.OfflineMessages:
+                        OnOfflineMessages(JsonConvert.DeserializeObject<StandardServerOfflineMessages>(packet));
+                        break;
+                    case PacketType.LoadPlayerCustomization:
+                        OnLoadPlayerCustomizationTextures(JsonConvert.DeserializeObject<StandardServerLoadPlayerCustomizationTextures>(packet));
+                        break;
+                    case PacketType.ResetStats:
+                        OnResetStat(JsonConvert.DeserializeObject<StandardServerResetStat>(packet));
+                        break;
+                    case PacketType.ChangeUsername:
+                        OnChangeUsername(JsonConvert.DeserializeObject<StandardServerChangeUsername>(packet));
+                        break;
+                    case PacketType.UsernameColor:
+                        OnChangeChatColor(JsonConvert.DeserializeObject<StandardServerUsernameColor>(packet));
+                        break;
+                    case PacketType.BuyVIP:
+                        OnBuyVIP(JsonConvert.DeserializeObject<StandardServerBuyVIP>(packet));
+                        break;
+                    case PacketType.BuyDoubleBP:
+                        OnBuyDoubleBP(JsonConvert.DeserializeObject<StandardServerDoubleBP>(packet));
+                        break;
+                    case PacketType.BuyOwnCustom:
+                        OnBuyOwnCustomization(JsonConvert.DeserializeObject<StandardServerBuyOwnCustomization>(packet));
+                        break;
+                    case PacketType.BuyPrestigeCustom:
+                        OnBuyPrestigeCustomization(JsonConvert.DeserializeObject<StandardServerBuyPrestigeCustomization>(packet));
+                        break;
+                    case PacketType.BuyGreet:
+                        OnBuyInfiniteGreet(JsonConvert.DeserializeObject<StandardServerGreetInfinite>(packet));
+                        break;
+                    case PacketType.BuyMonthPack:
+                        OnBuyMonthPack(JsonConvert.DeserializeObject<StandardServerBuyMonthPack>(packet));
+                        break;
+                    case PacketType.OpenPrestigeShop:
+                        OnOpenPrestigeShop(JsonConvert.DeserializeObject<StandardServerOpenPrestigeShop>(packet));
+                        break;
+                    case PacketType.GetCustomizationAchievement:
+                        OnCustomizationAchievement(JsonConvert.DeserializeObject<StandardServerGetCustomizationAchievement>(packet));
+                        break;
+                    case PacketType.AskPrestigeCustoms:
+                        OnLoadPrestigeCustomizations(JsonConvert.DeserializeObject<StandardServerLoadPrestigeCustomizations>(packet));
+                        break;
+                    case PacketType.DataRetrieval:
+                        OnDataRetrievalInfos(JsonConvert.DeserializeObject<StandardServerDataRetrieval>(packet));
+                        break;
+                    case PacketType.NextRankingSeason:
+                        OnNextRankingSeason(JsonConvert.DeserializeObject<StandardServerNextRankingSeason>(packet));
+                        break;
+                    case PacketType.ShareDeck:
+                        OnShareDeck(JsonConvert.DeserializeObject<StandardServerSendDeck>(packet));
+                        break;
+                    case PacketType.ShareReplay:
+                        OnShareReplay(JsonConvert.DeserializeObject<StandardServerShareReplay>(packet));
+                        break;
+                    case PacketType.GetRanking:
+                        OnGetRanking(JsonConvert.DeserializeObject<StandardServerGetRanking>(packet));
+                        break;
+                    case PacketType.Ping:
+                        OnPing(JsonConvert.DeserializeObject<StandardServerPing>(packet));
+                        break;
+                    case PacketType.AskGamesHistory:
+                        OnGetGamesHistory(JsonConvert.DeserializeObject<StandardServerGamesHistory>(packet));
+                        break;
+                    case PacketType.AskBoosterCollection:
+                        OnAskBoosterCollection(JsonConvert.DeserializeObject<StandardServerBoosterCollection>(packet));
+                        break;
+                    case PacketType.AskMonthPack:
+                        OnAskMonthPack(JsonConvert.DeserializeObject<StandardServerAskMonthPack>(packet));
+                        break;
+                    case PacketType.AskDailyQuest:
+                        OnGetDailyQuests(JsonConvert.DeserializeObject<StandardServerSendDailyQuests>(packet));
+                        break;
+                    case PacketType.GetDailyQuest:
+                        OnDailyQuestReward(JsonConvert.DeserializeObject<StandardServerGetDailyQuestReward>(packet));
+                        break;
+                    case PacketType.ChangeDailyQuest:
+                        OnChangeDailyQuest(JsonConvert.DeserializeObject<StandardServerChangeDailyQuest>(packet));
+                        break;
+                    case PacketType.DailyQuestNotification:
+                        OnDailyQuestNotification(JsonConvert.DeserializeObject<StandardServerDailyQuestNotification>(packet));
+                        break;
+                    case PacketType.DuelServerStop:
+                        OnDuelServerStop(JsonConvert.DeserializeObject<StandardServerDuelServerStop>(packet));
+                        break;
+                    case PacketType.AskAnimations:
+                        OnGetAnimations(JsonConvert.DeserializeObject<StandardServerGetAnimations>(packet));
+                        break;
+                    case PacketType.AnimationNotification:
+                        OnAnimationNotification(JsonConvert.DeserializeObject<StandardServerAnimationNotification>(packet));
+                        break;
+                    case PacketType.GivePartner:
+                        OnGivePartner(JsonConvert.DeserializeObject<StandardServerGetPartner>(packet));
+                        break;
+                    case PacketType.LoadPartner:
+                        OnLoadPartners(JsonConvert.DeserializeObject<StandardServerLoadPartners>(packet));
+                        break;
+                    case PacketType.WaitingRoom:
+                        OnRecieveRoomIsWaiting(JsonConvert.DeserializeObject<StandardServerWaitingRoom>(packet));
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
             }
         }
 
@@ -1452,6 +1463,15 @@ namespace hub_client.Network
         public void OnAnimationNotification(StandardServerAnimationNotification packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => AnimationNotification?.Invoke(packet.Update));
+        }
+        
+        public void OnRecieveRoomIsWaiting(StandardServerWaitingRoom packet)
+        {
+            if (!FormExecution.ClientConfig.ShowArenaWaitingRoomMessage)
+                return;
+            Color c = FormExecution.AppDesignConfig.GetGameColor("DuelArenaMessageColor");
+            string msg = "⚔️" + packet.WaitingRoom.Players[0].Username + " attend un adversaire dans l'arène pour un " + packet.WaitingRoom.Config.Type + " ! ⚔️";
+            Application.Current.Dispatcher.InvokeAsync(() => SpecialChatMessageRecieved?.Invoke(c, msg, false, false));
         }
 
         public void OnPing(StandardServerPing packet)

@@ -15,6 +15,7 @@ namespace hub_client.Windows
         public GamesHistory(GamesHistoryAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
             _admin.GetGamesHistory += _admin_GetGamesHistory;

@@ -53,6 +53,9 @@ namespace hub_client.Windows
                 case ChoiceBoxType.Replay:
                     txt = "Vous avez reçu le replay " + deckname + " de la part de " + player.Username + ".";
                     break;
+                case ChoiceBoxType.DeckChoiceRanked:
+                    txt = "Vous vous apprêtez à rentrer dans la file classée avec le deck : " + deckname;
+                    break;
             }
             popText.Text = txt;
 
@@ -82,7 +85,7 @@ namespace hub_client.Windows
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_type != ChoiceBoxType.Deck && _type != ChoiceBoxType.Replay)
+            if (_type != ChoiceBoxType.Deck && _type != ChoiceBoxType.Replay && _type != ChoiceBoxType.DeckChoiceRanked)
             {
                 packet.Result = true;
                 SendAnswer();
@@ -96,7 +99,7 @@ namespace hub_client.Windows
 
         private void btnAgainst_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_type != ChoiceBoxType.Deck && _type != ChoiceBoxType.Replay)
+            if (_type != ChoiceBoxType.Deck && _type != ChoiceBoxType.Replay && _type != ChoiceBoxType.DeckChoiceRanked)
             {
                 packet.Result = false;
                 SendAnswer();

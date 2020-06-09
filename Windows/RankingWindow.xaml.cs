@@ -25,6 +25,7 @@ namespace hub_client.Windows
         public RankingWindow(RankingDisplayAdministrator admin)
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
 
