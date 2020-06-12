@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
@@ -17,7 +18,7 @@ namespace hub_client.WindowsAdministrator
             Client = client;
         }
 
-        public void SendRequest(int id, string password, RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp, int masterrules, int drawcount, bool noShuffleDeck, string captiontext)
+        public void SendRequest(int id, string password, RoomType roomtype, int banlist, RoomRules rules, int cardsbyhand, int startduellp, int masterrules, int drawcount, bool noShuffleDeck, string captiontext, Bet bet = null)
         {
             Client.Send(PacketType.DuelRequest, new StandardClientDuelRequest
             {
@@ -34,7 +35,8 @@ namespace hub_client.WindowsAdministrator
                     NoShuffleDeck = noShuffleDeck,
                     CaptionText = captiontext
                 },
-                RoomPass = password
+                RoomPass = password,
+                Bet = bet
             });
         }
         public void SendHost(RoomType roomtype, string password, int banlist, RoomRules rules, int cardsbyhand, int startduellp, int masterrules, int drawcount, bool noShuffleDeck, string captiontext)
@@ -54,6 +56,13 @@ namespace hub_client.WindowsAdministrator
                     CaptionText = captiontext
                 },
                 RoomPass = password
+            });
+        }
+        public void AskSelectCard(AskCollectionReason reason)
+        {
+            Client.Send(PacketType.AskSelectCard, new StandardClientAskSelectCard
+            {
+                Reason = reason
             });
         }
     }

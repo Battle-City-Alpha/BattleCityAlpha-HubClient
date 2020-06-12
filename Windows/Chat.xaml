@@ -106,6 +106,7 @@
                                     <MenuItem x:Name="pm" Header="Message Privé" Click="pm_Click"/>
                                     <MenuItem x:Name="profile" Header="Profil" Click="profile_Click"/>
                                     <MenuItem x:Name="duelrequest" Header="Requête de duel" Click="duelrequest_Click"/>
+                                    <MenuItem x:Name="shadowduelrequest" Header="Requête de duel des ombres" Click="shadowduelrequest_Click"/>
                                     <MenuItem x:Name="traderequest" Header="Requête d'échange" Click="traderequest_Click"/>
                                     <MenuItem x:Name="setblacklist" Header="Bloquer" Click="setblacklist_Click"/>
                                     <MenuItem x:Name="unblock" Header="Débloquer" Click="unblock_click"/>

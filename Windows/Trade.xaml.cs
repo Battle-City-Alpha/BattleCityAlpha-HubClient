@@ -326,6 +326,8 @@ namespace hub_client.Windows
 
             this.FontFamily = style.Font;
 
+            this.chat.chat.VerticalScrollBarVisibility = FormExecution.ClientConfig.TradeScrollBar ? ScrollBarVisibility.Auto : ScrollBarVisibility.Hidden;
+
             if (FormExecution.ClientConfig.TradeScrollBar)
             {
                 this.CollectionJ1.GetListview().SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);

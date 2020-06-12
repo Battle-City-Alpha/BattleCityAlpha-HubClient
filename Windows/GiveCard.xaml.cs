@@ -20,18 +20,18 @@ namespace hub_client.Windows
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private GiveCardAdministrator _admin;
 
-        private PlayerInfo _target;
         private Dictionary<int, PlayerCard> _cards;
         private List<int> _ids;
 
-        public GiveCard(GiveCardAdministrator admin, PlayerInfo target)
+        public event Action<Dictionary<int, PlayerCard>> SelectedCards;
+
+        public GiveCard(GiveCardAdministrator admin)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             LoadStyle();
 
             _cards = new Dictionary<int, PlayerCard>();
-            _target = target;
             _admin = admin;
             _ids = new List<int>();
 
@@ -100,7 +100,7 @@ namespace hub_client.Windows
 
         private void BtnSelect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _admin.SendGiveCard(_cards, _target);
+            SelectedCards?.Invoke(_cards);
             Close();
         }
 

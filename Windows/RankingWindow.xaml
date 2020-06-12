@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
-        Title="Classement" Height="568.4" Width="623.6" Icon="/hub-client;component/Assets/Icon/bca.ico" AllowsTransparency="True" ResizeMode="CanResize" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner">
+        Title="Classement" Height="617.2" Width="623.6" Icon="/hub-client;component/Assets/Icon/bca.ico" AllowsTransparency="True" ResizeMode="CanResize" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterOwner">
 
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -25,6 +25,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="200"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5">
@@ -32,6 +33,17 @@
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
             </StackPanel>
+            <Border CornerRadius="10" Margin="5" Grid.Row="2" HorizontalAlignment="Center">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.7"/>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image x:Name="img_left" Margin="5,10" Source="pack://siteoforigin:,,,/Assets/Arrows/Up.png"/>
+                    <Label Content="Saison - " FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                    <Label x:Name="lblSeason" Content="???" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0"/>
+                    <Image x:Name="img_right" Margin="5,10" Source="pack://siteoforigin:,,,/Assets/Arrows/Down.png"/>
+                </StackPanel>
+            </Border>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -102,7 +114,7 @@
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
                 <Border CornerRadius="20" Padding="5" Margin="10,5,10,10" BorderBrush="Black" BorderThickness="1">
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -54,6 +55,7 @@ namespace hub_client.WindowsAdministrator
         {
             DailyQuestWindow window = new DailyQuestWindow(this, dqtype, quests, states);
             window.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
 
         public void SendGetReward(DailyQuestType dqtype)

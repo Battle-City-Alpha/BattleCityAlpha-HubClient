@@ -27,6 +27,7 @@ namespace hub_client.Configuration
             GameColors.Add("DuelArenaMessageColor", Colors.Orange);
 
             GameColors.Add("CustomRoomColor", Colors.Red);
+            GameColors.Add("ShadowRoomColor", Colors.Violet);
 
             GameColors.Add("ChatBackgroundColor", Colors.White);
             GameColors.Add("ChatInputBackgroundColor", Colors.White);
@@ -96,6 +97,9 @@ namespace hub_client.Configuration
 
             GameColors.Add("Color1AnimationPlanning", (Color)ColorConverter.ConvertFromString("#FF4E0000"));
             GameColors.Add("Color2AnimationPlanning", (Color)ColorConverter.ConvertFromString("#FF420011"));
+
+            GameColors.Add("Color1ShadowDuel", (Color)ColorConverter.ConvertFromString("#FF1114FF"));
+            GameColors.Add("Color2ShadowDuel", (Color)ColorConverter.ConvertFromString("#FF061235"));
         }
 
         public Color GetGameColor(string propertyName)

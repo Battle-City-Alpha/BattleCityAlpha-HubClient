@@ -361,6 +361,12 @@
     <Compile Include="Windows\SelectCard.xaml.cs">
       <DependentUpon>SelectCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ShadowDuel.xaml.cs">
+      <DependentUpon>ShadowDuel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ShadowDuelRequest.xaml.cs">
+      <DependentUpon>ShadowDuelRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
@@ -591,6 +597,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SelectCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ShadowDuel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ShadowDuelRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -838,6 +852,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_userchat.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_shadowduel.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

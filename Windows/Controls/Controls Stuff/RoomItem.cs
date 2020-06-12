@@ -14,9 +14,10 @@ namespace hub_client.Windows.Controls.Controls_Stuff
         public RoomType Type { get; set; }
         public bool NeedPassword { get; set; }
         public bool IsRanked { get; set; }
+        public bool IsShadowDuel { get; set;  }
         public string CaptionText { get; set; }
         public BitmapImage Image { get { return FormExecution.AssetsManager.GetImage("Duel", Type.ToString()); } }
-        public SolidColorBrush RoomColor => (Config.Banlist != 0 || (Config.StartDuelLP != 8000 && Type != RoomType.Tag) || (Config.StartDuelLP != 16000 && Type == RoomType.Tag) || Config.CardByHand != 5 || Config.MasterRules != 5 || Config.DrawCount != 1 | Config.NoShuffleDeck == true) ? new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor")) : new SolidColorBrush(Colors.Black);
+        public SolidColorBrush RoomColor { get; set; }
         public SolidColorBrush CaptionColor => new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CaptionDuelTextColor"));
     }
 }

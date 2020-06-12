@@ -5,6 +5,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace hub_client.Windows.Controls
 {
@@ -108,8 +109,15 @@ namespace hub_client.Windows.Controls
                     Config = room.Config,
                     NeedPassword = room.NeedPassword,
                     IsRanked = room.IsRanked(),
-                    CaptionText = room.Config.CaptionText
+                    CaptionText = room.Config.CaptionText,
+                    IsShadowDuel = room.IsShadowRoom(),
+                    RoomColor = new SolidColorBrush(Colors.Black)
+
                 };
+                if (room.Config.Banlist != 0 || (room.Config.StartDuelLP != 8000 && room.Config.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Config.Type == RoomType.Tag) || room.Config.CardByHand != 5 || room.Config.MasterRules != 5 || room.Config.DrawCount != 1 | room.Config.NoShuffleDeck == true)
+                    newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+                if (room.IsShadowRoom())
+                    newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("ShadowRoomColor"));
 
                 if (item == null)
                     AddItem(newitem);

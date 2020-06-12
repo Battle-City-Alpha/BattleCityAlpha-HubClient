@@ -2,6 +2,8 @@
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using hub_client.Windows;
+using System;
+using System.Windows;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -21,6 +23,7 @@ namespace hub_client.WindowsAdministrator
             MonthPackViewer viewer = new MonthPackViewer(avatar, border, sleeve);
             viewer.PurchaseBtnClick += MonthPack_Buy;
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
 
         private void MonthPack_Buy()

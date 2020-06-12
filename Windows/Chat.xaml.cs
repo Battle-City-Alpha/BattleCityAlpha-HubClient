@@ -606,9 +606,16 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.AskSelectCard(AskCollectionReason.GiveCard);
-                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin, target);
+                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin);
+                window.SelectedCards += (obj) => Window_SelectedCards(obj, target);
                 window.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
             }
+        }
+
+        private void Window_SelectedCards(Dictionary<int, PlayerCard> cards, PlayerInfo target)
+        {
+            _admin.SendGiveCard(cards, target);
         }
 
         private void cb_defaultdeck_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -817,6 +824,16 @@ namespace hub_client.Windows
         {
             border_quest_notif.Visibility = Visibility.Hidden;
             _admin.SendAskDailyQuest();
+        }
+
+        private void shadowduelrequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvUserlist.SelectedIndex == -1) return;
+            PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
+            //if (target != null && target.Username != FormExecution.Username)
+            ShadowDuel sd = new ShadowDuel(_admin.Client.DuelRequestAdmin, target.UserId);
+            sd.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sd.Activate()));
         }
     }
 }

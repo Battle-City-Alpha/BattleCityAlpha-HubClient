@@ -112,31 +112,31 @@ namespace hub_client.Windows
                     tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
 
                     if (room.Config.Banlist != 0)
-                        tb_popup_banlist.Foreground = room.RoomColor;
+                        tb_popup_banlist.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     tb_popup_banlist.Text = FormExecution.GetBanlistValue(room.Config.Banlist);
 
                     if ((room.Config.StartDuelLP != 8000 && room.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Type == RoomType.Tag))
-                        tb_popup_lp.Foreground = room.RoomColor;
+                        tb_popup_lp.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     tb_popup_lp.Text = room.Config.StartDuelLP.ToString();
 
                     if (room.Config.MasterRules != 5)
-                        tb_popup_MR.Foreground = room.RoomColor;
+                        tb_popup_MR.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     tb_popup_MR.Text = room.Config.MasterRules.ToString();
 
                     tb_popup_players1.Text = room.Players1;
                     tb_popup_players2.Text = room.Players2;
 
                     if (room.Config.CardByHand != 5)
-                        tb_popup_starthand.Foreground = room.RoomColor;
+                        tb_popup_starthand.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     tb_popup_starthand.Text = room.Config.CardByHand.ToString();
 
                     if (room.Config.DrawCount != 1)
-                        tb_drawcount.Foreground = room.RoomColor;
+                        tb_drawcount.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     tb_drawcount.Text = room.Config.DrawCount.ToString();
 
                     if (room.Config.NoShuffleDeck)
                     {
-                        tb_shuffledeck.Foreground = room.RoomColor;
+                        tb_shuffledeck.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                         tb_shuffledeck.Text = "Deck non mélangé";
                     }
 

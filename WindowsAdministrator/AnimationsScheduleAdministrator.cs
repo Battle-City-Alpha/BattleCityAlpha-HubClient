@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace hub_client.WindowsAdministrator
 {
@@ -32,6 +33,7 @@ namespace hub_client.WindowsAdministrator
             {
                 _window = new AnimationsSchedule(this, animations, colors);
                 _window.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _window.Activate()));
             }
             else
                 _window.LoadAnims(animations);

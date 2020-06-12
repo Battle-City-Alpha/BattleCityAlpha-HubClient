@@ -84,6 +84,7 @@ namespace hub_client.Windows
             tb_title.Text = infos.Title;
 
             this.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
         }
 
         private BitmapImage GetImage(string path)

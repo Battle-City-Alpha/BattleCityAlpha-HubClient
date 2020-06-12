@@ -109,6 +109,7 @@ namespace hub_client.Windows.Controls
 
             UpdateAnimation control = new UpdateAnimation(_anim);
             control.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => control.Activate()));
             control.SendUpdate += Control_SendUpdate;
         }
 

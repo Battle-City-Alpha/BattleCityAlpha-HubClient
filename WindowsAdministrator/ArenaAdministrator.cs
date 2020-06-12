@@ -75,7 +75,7 @@ namespace hub_client.WindowsAdministrator
 
         public void SendGetRanking()
         {
-            Client.Send(PacketType.GetRanking, new StandardClientGetRanking { });
+            Client.Send(PacketType.GetRanking, new StandardClientGetRanking { SeasonOffset = 0 });
             FormExecution.OpenRankingWindow();
         }
     }

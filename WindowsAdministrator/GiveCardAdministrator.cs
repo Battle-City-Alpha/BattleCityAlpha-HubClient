@@ -24,13 +24,5 @@ namespace hub_client.WindowsAdministrator
         {
             LoadCards?.Invoke(cards);
         }
-        public void SendGiveCard(Dictionary<int, PlayerCard> cards, PlayerInfo target)
-        {
-            Client.Send(PacketType.CardDonation, new StandardClientCardDonation
-            {
-                Target = target,
-                Cards = cards
-            });
-        }
     }
 }

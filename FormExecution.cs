@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
@@ -136,6 +137,7 @@ namespace hub_client
 
             Client.PopMessageBox += Client_PopMessageBox;
             Client.ChoicePopBox += Client_ChoicePopBox;
+            Client.ShadowDuelRequest += Client_ShadowDuelRequest;
             Client.RoomNeedPassword += Client_RoomNeedPassword;
             Client.Shutdown += Client_Shutdown;
             Client.PrivateMessageReceived += Client_PrivateMessageReceived;
@@ -166,10 +168,24 @@ namespace hub_client
             logger.Trace("FormExecution initialisation.");
         }
 
+        private static void Client_ShadowDuelRequest(PlayerInfo target, RoomConfig config, Bet bet)
+        {
+            ShadowDuelRequest sdr = new ShadowDuelRequest(target, config, bet);
+            sdr.Show();
+            sdr.Results += Sdr_Results;
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sdr.Activate()));
+        }
+
+        private static void Sdr_Results(Bet bet, bool result)
+        {
+
+        }
+
         private static void Client_GetMonthlyBonus(Dictionary<int, MonthlyBonus> bonus, int cnumber, int[] cards)
         {
             MonthlyBonusViewer viewer = new MonthlyBonusViewer(bonus, cnumber, cards);
-            viewer.Show();
+            viewer.Show(); 
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
 
         private static void Client_LoadBoosterCollection(string tag, List<int> ids, List<int> quantities, List<CardRarity> rarities)
@@ -177,18 +193,21 @@ namespace hub_client
             CollectionViewer viewer = new CollectionViewer(BoosterManager.GetBoosterInfo(tag), ids, quantities, rarities);
             Task.Run(() => viewer.LoadCard());
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
 
         private static void Client_CustomizationAchievement(CustomizationType ctype, string text, int id)
         {
             CustomViewer viewer = new CustomViewer(ctype, text, id);
             viewer.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
         }
 
         public static void LoadCDB()
         {
             _windowload = new UpdateCardsStuffWindow(true);
             _windowload.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _windowload.Activate()));
 
             CardManager.LoadingFinished += CardManager_LoadingFinished;
             CardManager.LoadingProgress += CardManager_LoadingProgress;
@@ -226,6 +245,7 @@ namespace hub_client
         {
             _windowload = new UpdateCardsStuffWindow(false);
             _windowload.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _windowload.Activate()));
             FormExecution.Client_PopMessageBox("Un mise à jour mineure est disponible !", "Mise à jour", true);
 
             List<string> updatesToDo = new List<string>();
@@ -268,6 +288,7 @@ namespace hub_client
             cpb.Choice += (r) => ReplayCPBChoice(r, replay, sender, replayname);
             cpb.Topmost = true;
             cpb.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => cpb.Activate()));
         }
         private static void ReplayCPBChoice(bool result, byte[] replay, PlayerInfo sender, string replayname)
         {
@@ -331,6 +352,7 @@ namespace hub_client
             cpb.Choice += (r) => DeckCPBChoice(r, decklist, sender, deckname);
             cpb.Topmost = true;
             cpb.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => cpb.Activate()));
         }
         private static void DeckCPBChoice(bool result, string[] decklist, PlayerInfo sender, string deckname)
         {
@@ -379,6 +401,7 @@ namespace hub_client
             form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
             form.Topmost = true;
             form.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
         }
         private static void RoomPassInput_SelectedText(string pass, int id, RoomType type)
         {
@@ -505,6 +528,7 @@ namespace hub_client
                 box.ShowDialog();
             else
                 box.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
         }
 
         public static void SaveConfig()
@@ -640,6 +664,7 @@ namespace hub_client
             DuelRequest request = new DuelRequest(Client.DuelRequestAdmin, id);
             request.Topmost = true;
             request.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => request.Activate()));
         }
         public static void OpenSoloModeWindow()
         {

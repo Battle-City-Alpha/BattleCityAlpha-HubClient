@@ -21,6 +21,8 @@ namespace hub_client.Windows
         private RankingDisplayAdministrator _admin;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        private int _seasonOffset = 0;
+
         AssetsManager PicsManager = new AssetsManager();
         public RankingWindow(RankingDisplayAdministrator admin)
         {
@@ -35,6 +37,21 @@ namespace hub_client.Windows
             this.Closed += RankingWindow_Closed;
 
             this.lvRanking.MouseDoubleClick += LvRanking_MouseDoubleClick;
+
+            this.img_left.MouseLeftButtonDown += PreviousSeason;
+            this.img_right.MouseLeftButtonDown += NextSeason;
+        }
+
+        private void NextSeason(object sender, MouseButtonEventArgs e)
+        {
+            _seasonOffset++;
+            _admin.SendGetRanking(_seasonOffset);
+        }
+
+        private void PreviousSeason(object sender, MouseButtonEventArgs e)
+        {
+            _seasonOffset--;
+            _admin.SendGetRanking(_seasonOffset);
         }
 
         private void LvRanking_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -53,9 +70,18 @@ namespace hub_client.Windows
             _admin.ShowRanking -= _admin_ShowRanking;
         }
 
-        private void _admin_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs)
+        private void _admin_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs, int season)
         {
+            lblSeason.Content = season;
             lvRanking.Items.Clear();
+            Border[] borders = new Border[3] { bg_first, bg_second, bg_third };
+            TextBlock[] textblocks = new TextBlock[3] { tb_first, tb_second, tb_third };
+
+            for (int i = 0; i < 3; i++)
+            {
+                textblocks[i].Text = "NR";
+                borders[i].Background = null;
+            }
             foreach (RankingPlayerInfos info in infos)
             {
                 RankingPlayerItem item = new RankingPlayerItem
@@ -74,18 +100,14 @@ namespace hub_client.Windows
                 lvRanking.Items.Add(item);
             }
 
-            tb_first.Text = infos[0].Username;
-            tb_second.Text = infos[1].Username;
-            tb_third.Text = infos[2].Username;
-
-            Border[] borders = new Border[3] { bg_first, bg_second, bg_third };
-
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < customs.Length; i++)
             {
+                textblocks[i].Text = infos[i].Username;
                 borders[i].Background = new ImageBrush(PicsManager.GetCustom(customs[i]));                
             }
 
             this.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

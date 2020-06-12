@@ -10,7 +10,7 @@ namespace hub_client.WindowsAdministrator
     {
         public GameClient Client;
 
-        public event Action<RankingPlayerInfos[], Customization[]> ShowRanking;
+        public event Action<RankingPlayerInfos[], Customization[], int> ShowRanking;
 
         public RankingDisplayAdministrator(GameClient client)
         {
@@ -18,9 +18,9 @@ namespace hub_client.WindowsAdministrator
             Client.ShowRanking += Client_ShowRanking;
         }
 
-        private void Client_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs)
+        private void Client_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs, int season)
         {
-            ShowRanking?.Invoke(infos, customs);
+            ShowRanking?.Invoke(infos, customs, season);
         }
 
         public void SendAskProfil(int userID)
@@ -29,6 +29,10 @@ namespace hub_client.WindowsAdministrator
             {
                 UserID = userID
             });
+        }
+        public void SendGetRanking(int seasonoffset)
+        {
+            Client.Send(PacketType.GetRanking, new StandardClientGetRanking { SeasonOffset = seasonoffset });
         }
     }
 }

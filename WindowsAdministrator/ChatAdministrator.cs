@@ -6,6 +6,7 @@ using hub_client.Network;
 using hub_client.Windows;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -189,6 +190,15 @@ namespace hub_client.WindowsAdministrator
                 Target = infos,
                 ReplayFile = replayfile,
                 ReplayName = replayname
+            });
+        }
+
+        public void SendGiveCard(Dictionary<int, PlayerCard> cards, PlayerInfo target)
+        {
+            Client.Send(PacketType.CardDonation, new StandardClientCardDonation
+            {
+                Target = target,
+                Cards = cards
             });
         }
 

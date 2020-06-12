@@ -38,7 +38,8 @@ namespace hub_client.Windows
                     txt += Environment.NewLine + string.Format("Carte dans la main au départ : {0}", config.CardByHand);
                     txt += Environment.NewLine + string.Format("Pioche par tour : {0}", config.DrawCount);
                     txt += Environment.NewLine + string.Format("Info : {0}", config.CaptionText);
-                    txt += Environment.NewLine + (config.NoShuffleDeck ? "Deck non mélangé" : "Deck mélangé");
+                    txt += Environment.NewLine + (config.NoShuffleDeck ? "Deck non mélangé" : "Deck mélangé");   
+                    
                     if (pass != string.Empty)
                         txt += Environment.NewLine + "Partie privée";
                     Title = "Requête de duel";

@@ -35,7 +35,7 @@ namespace hub_client.Windows
                 gamesList.Items.Add(item);
 
             this.Show();
-            this.Activate();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

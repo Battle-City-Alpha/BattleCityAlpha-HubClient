@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using BCA.Network;
 using BCA.Network.Helpers;
@@ -30,6 +31,7 @@ namespace hub_client.Network
 
         public event Action<string, string, bool> PopMessageBox;
         public event Action<PlayerInfo, RoomConfig, ChoiceBoxType, string> ChoicePopBox;
+        public event Action<PlayerInfo, RoomConfig, Bet> ShadowDuelRequest;
         public event Action<int, RoomType> RoomNeedPassword;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
@@ -137,7 +139,7 @@ namespace hub_client.Network
         public event Action<bool, LoginFailReason, bool> DataRetrievalInfos;
         #endregion
         #region RankingDisplay Events
-        public event Action<RankingPlayerInfos[], Customization[]> ShowRanking;
+        public event Action<RankingPlayerInfos[], Customization[], int> ShowRanking;
         #endregion
         #region Games History Events
         public event Action<RoomResult[]> GetGamesHistory;
@@ -1101,7 +1103,11 @@ namespace hub_client.Network
             }
 
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
-            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
+            
+            if (packet.Bet != null)
+                Application.Current.Dispatcher.Invoke(() => ShadowDuelRequest?.Invoke(packet.Player, packet.Config, packet.Bet));
+            else 
+                Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
         }
         public void OnDuelRequestAnswer(StandardServerDuelRequestResult packet)
         {
@@ -1358,6 +1364,9 @@ namespace hub_client.Network
                 case CustomizationAchievementType.PlayerSeniority:
                     txt += " car tu as créé ton compte il y a plus de " + packet.Amount + " jours !";
                     break;
+                case CustomizationAchievementType.Ranking:
+                    txt += " car tu as terminé à la " + packet.Amount + (packet.Amount != 1 ? "ème" : "er") +  " place du classement de la saison !";
+                    break;
                 default:
                     txt += " car ... aucune idée !";
                     break;
@@ -1422,7 +1431,7 @@ namespace hub_client.Network
 
         public void OnGetRanking(StandardServerGetRanking packet)
         {
-            Application.Current.Dispatcher.Invoke(() => ShowRanking?.Invoke(packet.Rankings, packet.PodiumCustoms));
+            Application.Current.Dispatcher.Invoke(() => ShowRanking?.Invoke(packet.Rankings, packet.PodiumCustoms, packet.Season));
 
             logger.Trace("RECIEVE RANKING");
 
