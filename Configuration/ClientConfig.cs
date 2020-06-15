@@ -14,7 +14,9 @@ namespace hub_client.Configuration
         public bool IgnoreTradeRequest = false;
         public bool IgnoreDuelRequest = false;
         public bool IgnoreCustomDuelRequest = false;
+        public bool IgnoreShadowDuelRequest = false;
         public bool AllowDeckShare = true;
+        public bool AllowReplayShare = true;
         public bool Connexion_Message = true;
         public bool Autoscroll = true;
         public bool PMPopup = true;

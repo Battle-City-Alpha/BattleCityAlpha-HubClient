@@ -29,6 +29,16 @@ namespace hub_client.Windows
 
             this.MouseDown += Window_MouseDown;
             this.Closed += PrestigeCustomizationViewerVertical_Closed;
+
+            this.bg_customs.MouseWheel += Bg_customs_MouseWheel;
+        }
+
+        private void Bg_customs_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                viewer_customs.UpArrow();
+            else
+                viewer_customs.DownArrow();
         }
 
         private void PrestigeCustomizationViewerVertical_Closed(object sender, EventArgs e)

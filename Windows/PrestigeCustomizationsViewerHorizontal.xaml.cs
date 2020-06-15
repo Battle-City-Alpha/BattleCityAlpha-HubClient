@@ -32,6 +32,16 @@ namespace hub_client.Windows
             LoadStyle();
 
             this.btn_unlock.MouseLeftButtonDown += Btn_unlock_MouseLeftButtonDown;
+
+            this.bg_customs.MouseWheel += Bg_customs_MouseWheel;
+        }
+
+        private void Bg_customs_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                viewer_customs.LeftArrow();
+            else
+                viewer_customs.RightArrow();
         }
 
         private void Btn_unlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

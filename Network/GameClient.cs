@@ -547,6 +547,12 @@ namespace hub_client.Network
                     case PacketType.WaitingRoom:
                         OnRecieveRoomIsWaiting(JsonConvert.DeserializeObject<StandardServerWaitingRoom>(packet));
                         break;
+                    case PacketType.ShadowDuelRequest:
+                        OnShadowDuelRequest(JsonConvert.DeserializeObject<StandardServerShadowDuelRequest>(packet));
+                        break;
+                    case PacketType.ShadowDuelRequestAnswer:
+                        OnShadowDuelRequestAnswer(JsonConvert.DeserializeObject<StandardServerShadowDuelRequestResult>(packet));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -737,6 +743,9 @@ namespace hub_client.Network
                 case CommandErrorType.NotEnoughMoney:
                     msg = "••• Tu n'as pas assez de points !";
                     break;
+                case CommandErrorType.OpponentNotEnoughMoney:
+                    msg = "••• Malheureusement ton adversaire n'a pas assez de points !";
+                    break;
                 case CommandErrorType.AvatarNotOwned:
                     msg = "••• Tu ne possèdes pas cet avatar !";
                     break;
@@ -781,6 +790,9 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.AlreadyBanned:
                     msg = "••• Le joueur est déjà banni !";
+                    break;
+                case CommandErrorType.TimeTooLong:
+                    msg = "••• Tu ne peux pas proposer un temps aussi long !";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -1104,10 +1116,7 @@ namespace hub_client.Network
 
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
             
-            if (packet.Bet != null)
-                Application.Current.Dispatcher.Invoke(() => ShadowDuelRequest?.Invoke(packet.Player, packet.Config, packet.Bet));
-            else 
-                Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
+            Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
         }
         public void OnDuelRequestAnswer(StandardServerDuelRequestResult packet)
         {
@@ -1115,6 +1124,44 @@ namespace hub_client.Network
             logger.Trace("DUEL REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
             if (!packet.Result)
                 Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre duel.", false, false));
+        }
+        public void OnShadowDuelRequest(StandardServerShadowDuelRequest packet)
+        {
+            if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.IgnoreDuelRequest || FormExecution.ClientConfig.IgnoreShadowDuelRequest)
+            {
+                Send(PacketType.ShadowDuelRequestAnswer, new StandardClientShadowDuelAnswer { Player = packet.Player, Config = packet.Config, Result = false });
+                return;
+            }
+            if (packet.Config.IsCustom() && FormExecution.ClientConfig.IgnoreCustomDuelRequest)
+            {
+                Send(PacketType.ShadowDuelRequestAnswer, new StandardClientShadowDuelAnswer { Player = packet.Player, Config = packet.Config, Result = false });
+                return;
+            }
+
+            logger.Trace("SHADOW DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
+
+            Bet b = null;
+            switch (packet.BType)
+            {
+                case BetType.BPs:
+                    b = JsonConvert.DeserializeObject<BPsBet>(packet.BetSerealized);
+                    break;
+                case BetType.Mute:
+                case BetType.Ban:
+                    b = JsonConvert.DeserializeObject<SanctionBet>(packet.BetSerealized);
+                    break;
+            }
+            if (b == null)
+                return;
+
+            Application.Current.Dispatcher.Invoke(() => ShadowDuelRequest?.Invoke(packet.Player, packet.Config, b));
+        }
+        public void OnShadowDuelRequestAnswer(StandardServerShadowDuelRequestResult packet)
+        {
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
+            logger.Trace("DUEL REQUEST ANSWER - From {0} | Result : {1}", packet.Player.Username, packet.Result);
+            if (!packet.Result)
+                Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, "••• " + packet.Player.Username + " a refusé votre duel des ombres.", false, false));
         }
         public void OnUpdateRoom(StandardServerUpdateRoom packet)
         {

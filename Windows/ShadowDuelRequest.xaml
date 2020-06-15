@@ -23,18 +23,64 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border CornerRadius="100,100,0,0" Margin="10,10,10.2,10.2" Grid.Row="0" Grid.ColumnSpan="2" Padding="10">
+            <Border CornerRadius="100,100,0,0" Margin="10,10,10.2,10.2" Grid.Row="0" Grid.ColumnSpan="2" Padding="10" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Border.Background>
-                    <SolidColorBrush Color="White" Opacity="0.4"/>
+                    <SolidColorBrush Color="White" Opacity="0.2"/>
                 </Border.Background>
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_maintext" Text="BLABLABLABLABLA" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Mise : " HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center" TextAlignment="Center"/>
-                        <TextBlock x:Name="tb_mise" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center" TextAlignment="Center"/>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="tb_title" Text="???" FontSize="20" Foreground="White" Grid.Row="0" HorizontalAlignment="Center"/>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+                        <TextBlock Text="Type : " FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_popup_type" Text="???" FontSize="20" Foreground="White"/>
                     </StackPanel>
-                    <ListBox x:Name="lb_cards" />
-                </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                        <TextBlock Text="Master Rules : "  FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_popup_MR" Text="???" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
+                        <TextBlock Text="Banlist : "  FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_popup_banlist" Text="???" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4">
+                        <TextBlock Text="Point de vie : "  FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_popup_lp" Text="???" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5">
+                        <TextBlock Text="Nombre de cartes initial : "  FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_popup_starthand" Text="???" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6">
+                        <TextBlock Text="Cartes piochées : " FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_drawcount" Text="???" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7">
+                        <TextBlock Text="Info : " FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_captiontext" Text="????" FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8">
+                        <TextBlock x:Name="tb_shuffledeck" Text="Deck mélangé " FontSize="20" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="9">
+                        <TextBlock Text="Mise : " FontSize="20" Foreground="White"/>
+                        <TextBlock x:Name="tb_mise" Text="????" FontSize="20" Foreground="White" FontWeight="Bold" TextDecorations="Underline"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="10" x:Name="lbPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+                        <ListBox x:Name="lb_cards" />
+                    </StackPanel>
+                </Grid>        
             </Border>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -42,7 +88,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Controls:BCA_ColorButton x:Name="btnAgree" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,0" Color1="#FF1114FF" Color2="#FF061235" ButtonText="Accepter" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
-                <Controls:BCA_ColorButton Visibility="Hidden" x:Name="btnChoose" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0" Color1="#FF1114FF" Color2="#FF061235" ButtonText="Choisir la mise" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
+                <Controls:BCA_ColorButton Visibility="Hidden" Panel.ZIndex="1" x:Name="btnChoose" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,0" Color1="#FF1114FF" Color2="#FF061235" ButtonText="Choisir la mise" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
                 <Controls:BCA_ColorButton x:Name="btnDisagree" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0" Color1="#FF1114FF" Color2="#FF061235" ButtonText="Refuser" HorizontalAlignment="Center" Width="200" VerticalAlignment="Center"/>
             </Grid>
         </Grid>

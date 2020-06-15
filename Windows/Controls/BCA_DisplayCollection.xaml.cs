@@ -78,6 +78,12 @@ namespace hub_client.Windows.Controls
             }
 
             tb_search.tbChat.IsEnabled = true;
+
+            if (listViewSortCol != null)
+            {
+                SortColumn(listViewSortCol);
+                SortColumn(listViewSortCol);
+            }
         }
 
         private void TbChat_TextChanged(object sender, TextChangedEventArgs e)
@@ -135,6 +141,11 @@ namespace hub_client.Windows.Controls
         private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
+            SortColumn(column);
+            
+        }
+        private void SortColumn(GridViewColumnHeader column)
+        {
             string sortBy = column.Tag.ToString();
             if (listViewSortCol != null)
             {

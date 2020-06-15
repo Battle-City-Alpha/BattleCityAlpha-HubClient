@@ -82,7 +82,7 @@
                             <TextBlock x:Name="tb_drawcount" Text="???" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7">
-                            <TextBlock Text="Info : " FontSize="20"/>
+                            <TextBlock x:Name="tb_info"  Text="Info : " FontSize="20"/>
                             <TextBlock x:Name="tb_captiontext" Text="????" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8">

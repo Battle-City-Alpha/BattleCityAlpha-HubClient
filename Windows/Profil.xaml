@@ -35,7 +35,7 @@
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
-                    <Image x:Name="img_avatar" Width="256" Height="256" Source="pack://siteoforigin:,,,/Assets/Avatars/1.png" Margin="3" MouseLeftButtonDown="AvatarImg_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
+                    <Image x:Name="img_avatar" Margin="3" MouseLeftButtonDown="AvatarImg_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
 
                 </Border>
                 <Grid Grid.Column="1">

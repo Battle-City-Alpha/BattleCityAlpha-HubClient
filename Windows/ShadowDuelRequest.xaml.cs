@@ -1,7 +1,10 @@
 ﻿using BCA.Common;
 using BCA.Common.Bets;
+using BCA.Common.Enums;
+using BCA.Network.Packets.Enums;
 using hub_client.Cards;
 using hub_client.Windows.Controls;
+using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,44 +29,75 @@ namespace hub_client.Windows
         public event Action<Bet, bool> Results;
 
         private Bet _bet;
+        private DuelRequestAdministrator _admin;
 
-        public ShadowDuelRequest(PlayerInfo player, RoomConfig config, Bet bet)
+        public ShadowDuelRequest(PlayerInfo player, RoomConfig config, Bet bet, DuelRequestAdministrator admin)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            this.MouseDown += Window_MouseDown;
 
             LoadStyle();
 
             _bet = bet;
+            _admin = admin;
 
-            if (_bet is BPsBet)
+            btnChoose.Visibility = Visibility.Hidden;
+            btnAgree.Visibility = Visibility.Visible;
+            lbPanel.Visibility = Visibility.Hidden;
+
+            tb_popup_banlist.Foreground = new SolidColorBrush(Colors.White);
+            tb_popup_lp.Foreground = new SolidColorBrush(Colors.White);
+            tb_popup_MR.Foreground = new SolidColorBrush(Colors.White);
+            tb_popup_starthand.Foreground = new SolidColorBrush(Colors.White);
+            tb_shuffledeck.Foreground = new SolidColorBrush(Colors.White);
+            tb_drawcount.Foreground = new SolidColorBrush(Colors.White); 
+
+            if (config.Banlist != 0)
+                tb_popup_banlist.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+            tb_popup_banlist.Text = FormExecution.GetBanlistValue(config.Banlist);
+
+            if ((config.StartDuelLP != 8000 && config.Type != RoomType.Tag) || (config.StartDuelLP != 16000 && config.Type == RoomType.Tag))
+                tb_popup_lp.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+            tb_popup_lp.Text = config.StartDuelLP.ToString();
+
+            if (config.MasterRules != 5)
+                tb_popup_MR.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+            tb_popup_MR.Text = config.MasterRules.ToString();
+
+            if (config.CardByHand != 5)
+                tb_popup_starthand.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+            tb_popup_starthand.Text = config.CardByHand.ToString();
+
+            if (config.DrawCount != 1)
+                tb_drawcount.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+            tb_drawcount.Text = config.DrawCount.ToString();
+
+            if (config.NoShuffleDeck)
             {
-                btnChoose.Visibility = Visibility.Hidden;
-                btnAgree.Visibility = Visibility.Visible;
-                btnDisagree.Visibility = Visibility.Visible;
+                tb_shuffledeck.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
+                tb_shuffledeck.Text = "Deck non mélangé";
             }
-            else
+
+            tb_popup_type.Text = config.Type.ToString();
+
+            tb_captiontext.Text = config.CaptionText;
+            tb_title.Text = string.Format("Vous avez été invité en duel des ombres par {0}", player.Username);
+
+
+            switch (bet.BType)
             {
-                foreach (PlayerCard card in ((CardsBet)_bet).Cards[player.UserId])
-                    lb_cards.Items.Add(card.Name);
+                case BetType.BPs:
+                    tb_mise.Text = string.Format("{0}", ((BPsBet)bet).Amount + "BPs");
+                    break;
+                case BetType.Ban:
+                    tb_mise.Text = string.Format("{0}", "Ban - " + ((SanctionBet)bet).Time + "H");
+                    break;
+                case BetType.Mute:
+                    tb_mise.Text = string.Format("{0}", "Mute - " + ((SanctionBet)bet).Time + "H");
+                    break;
             }
 
-            string txt = string.Empty;
-            txt = string.Format("Vous avez été invité en duel des ombres par {0}. \r\nType : {1}", player.Username, config.Type);
-            txt += Environment.NewLine + string.Format("MasterRules : {0}", config.MasterRules);
-            txt += Environment.NewLine + string.Format("Banlist : {0}", FormExecution.GetBanlistValue(config.Banlist));
-            txt += Environment.NewLine + string.Format("Point de vie : {0}", config.StartDuelLP);
-            txt += Environment.NewLine + string.Format("Carte dans la main au départ : {0}", config.CardByHand);
-            txt += Environment.NewLine + string.Format("Pioche par tour : {0}", config.DrawCount);
-            txt += Environment.NewLine + string.Format("Info : {0}", config.CaptionText);
-            txt += Environment.NewLine + (config.NoShuffleDeck ? "Deck non mélangé" : "Deck mélangé");
-
-            tb_maintext.Text = txt;
-
-            txt = string.Format("Mise : {0}", bet is CardsBet ? "Des cartes" : ((BPsBet)bet).Amount + "BPs");
-            tb_mise.Text = txt;
-
-            btnChoose.MouseLeftButtonDown += ChooseCards;
             btnAgree.MouseLeftButtonDown += (sender, e) => RequestResult(sender, e, true);
             btnDisagree.MouseLeftButtonDown += (sender, e) => RequestResult(sender, e, false);
         }
@@ -82,14 +116,10 @@ namespace hub_client.Windows
             this.FontFamily = FormExecution.AppDesignConfig.Font;
         }
 
-        private void ChooseCards(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void RequestResult(object sender, MouseButtonEventArgs e, bool result)
         {
             Results?.Invoke(_bet, result);
+            Close();
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

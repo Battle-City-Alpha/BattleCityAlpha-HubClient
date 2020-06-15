@@ -87,6 +87,7 @@ namespace hub_client.Windows
         {
             if (Collection.SelectedItem() == null || tb_price.Text == string.Empty || Convert.ToInt32(tb_price.Text) <= 0 || tb_quantity.Text == string.Empty || Convert.ToInt32(tb_quantity.Text) <= 0) return;
             selected_index = Collection.SelectedIndex();
+            
             SelectedCard?.Invoke((PlayerCard)Collection.SelectedItem(), Convert.ToInt32(tb_price.Text), Convert.ToInt32(tb_quantity.Text));
         }
 

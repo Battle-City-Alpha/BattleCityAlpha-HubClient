@@ -60,6 +60,31 @@ namespace hub_client.Windows.Controls
 
             img_center.MouseEnter += Img_center_MouseEnter;
             img_center.MouseLeave += Img_center_MouseLeave;
+
+            img_left.MouseLeftButtonDown += Img_left_MouseLeftButtonDown;
+            img_right.MouseLeftButtonDown += Img_right_MouseLeftButtonDown;
+
+            this.MouseWheel += BCA_CustomizationsViewer_MouseWheel;
+        }
+
+        private void BCA_CustomizationsViewer_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                LeftArrow();
+            else
+                RightArrow();
+        }
+
+        private void Img_right_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            RightArrow();
+            RightArrow();
+        }
+
+        private void Img_left_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            LeftArrow();
+            LeftArrow();
         }
 
         private void Img_center_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

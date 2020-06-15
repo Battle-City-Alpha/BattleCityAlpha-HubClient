@@ -123,13 +123,11 @@ namespace hub_client
                 }
 #if DEBUG
                 ClientConfig.TestMode = false;
+                AppDesignConfig = new AppDesignConfig(); //To debug config
 #endif
 
                 BoosterManager.LoadList();
                 LoadBanlist();
-#if DEBUG
-                AppDesignConfig = new AppDesignConfig(); //To debug config
-#endif
 
                 SaveConfig();
             }
@@ -170,15 +168,22 @@ namespace hub_client
 
         private static void Client_ShadowDuelRequest(PlayerInfo target, RoomConfig config, Bet bet)
         {
-            ShadowDuelRequest sdr = new ShadowDuelRequest(target, config, bet);
+            ShadowDuelRequest sdr = new ShadowDuelRequest(target, config, bet, Client.DuelRequestAdmin);
             sdr.Show();
-            sdr.Results += Sdr_Results;
+            sdr.Results += (b, result) => Sdr_Results(target, config, b, result);
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sdr.Activate()));
         }
 
-        private static void Sdr_Results(Bet bet, bool result)
+        private static void Sdr_Results(PlayerInfo target, RoomConfig config, Bet bet, bool result)
         {
-
+            Client.Send(PacketType.ShadowDuelRequestAnswer, new StandardClientShadowDuelAnswer
+            {
+                Result = result,
+                BetSerealized = JsonConvert.SerializeObject(bet),
+                BType = bet.BType,
+                Config = config,
+                Player = target
+            });
         }
 
         private static void Client_GetMonthlyBonus(Dictionary<int, MonthlyBonus> bonus, int cnumber, int[] cards)
@@ -281,7 +286,7 @@ namespace hub_client
 
         private static void Client_RecieveReplay(PlayerInfo sender, byte[] replay, string replayname)
         {
-            if (!ClientConfig.AllowDeckShare)
+            if (!ClientConfig.AllowReplayShare)
                 return;
 
             ChoicePopBox cpb = new ChoicePopBox(sender, new RoomConfig(), ChoiceBoxType.Replay, "", replayname);

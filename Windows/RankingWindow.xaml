@@ -50,7 +50,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border CornerRadius="50, 50, 10, 10" Padding="5" Grid.Column="0" Margin="10,5" Width="180" Height="180" BorderBrush="Black" BorderThickness="1">
+                <Border CornerRadius="50, 50, 10, 10" Padding="5" Grid.Column="1" Margin="10,5" Width="180" Height="180" BorderBrush="Black" BorderThickness="1">
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>
@@ -71,7 +71,7 @@
                     </Grid>
                 </Border>
 
-                <Border CornerRadius="50, 50, 10, 10" Padding="5" Grid.Column="1" Margin="10,5" Width="170" Height="170" BorderBrush="Black" BorderThickness="1">
+                <Border CornerRadius="50, 50, 10, 10" Padding="5" Grid.Column="0" Margin="10,5" Width="170" Height="170" BorderBrush="Black" BorderThickness="1">
                     <Border.Background>
                         <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                     </Border.Background>

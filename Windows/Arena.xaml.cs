@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Enums;
@@ -110,6 +111,8 @@ namespace hub_client.Windows
                     tb_popup_starthand.Foreground = new SolidColorBrush(Colors.Black);
                     tb_shuffledeck.Foreground = new SolidColorBrush(Colors.Black);
                     tb_drawcount.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_info.Foreground = new SolidColorBrush(Colors.Black);
+                    tb_captiontext.Foreground = new SolidColorBrush(Colors.Black);
 
                     if (room.Config.Banlist != 0)
                         tb_popup_banlist.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
@@ -140,9 +143,31 @@ namespace hub_client.Windows
                         tb_shuffledeck.Text = "Deck non mélangé";
                     }
 
+                    if (room.IsShadowDuel)
+                    {
+                        this.tb_info.Text = "Mise : ";
+
+                        switch (room.Bet.BType)
+                        {
+                            case BetType.BPs:
+                                this.tb_captiontext.Text = ((BPsBet)room.Bet).Amount + " BPs";
+                                break;
+                            case BetType.Mute:
+                                this.tb_captiontext.Text = "Mute " + ((SanctionBet)room.Bet).Time + "h";
+                                break;
+                            case BetType.Ban:
+                                this.tb_captiontext.Text = "Ban " + ((SanctionBet)room.Bet).Time + "h";
+                                break;
+                        }
+
+                        this.tb_info.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("ShadowRoomColor"));
+                        this.tb_captiontext.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("ShadowRoomColor"));
+                    }
+                    else
+                        tb_captiontext.Text = room.Config.CaptionText;
+
                     tb_popup_type.Text = room.Type.ToString();
 
-                    tb_captiontext.Text = room.Config.CaptionText;
 
                     duel_popup.IsOpen = true;
                 }

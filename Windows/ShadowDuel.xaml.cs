@@ -28,6 +28,7 @@ namespace hub_client.Windows
     {
         private DuelRequestAdministrator _admin;
         private Bet _bet;
+        private BetType _bettype;
         private int _id;
         public ShadowDuel(DuelRequestAdministrator admin, int id)
         {
@@ -37,9 +38,15 @@ namespace hub_client.Windows
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             this.MouseDown += Window_MouseDown;
 
-            rb_BP.IsChecked = true; 
-            
-            cb_dueltype.ItemsSource = Enum.GetValues(typeof(RoomType)).Cast<RoomType>();
+            rb_BP.IsChecked = true;
+            _bettype = BetType.BPs;
+
+            rb_BP.Checked += Rb_BP_Checked;
+            rb_ban.Checked += Rb_ban_Checked;
+            rb_mute.Checked += Rb_mute_Checked;
+
+            cb_dueltype.Items.Add(RoomType.Single);
+            cb_dueltype.Items.Add(RoomType.Match);
 
             cb_masterrules.Items.Add("MR5 (Avril 2020)");
             cb_masterrules.Items.Add("MR4 (Link)");
@@ -63,6 +70,21 @@ namespace hub_client.Windows
             LoadStyle();
         }
 
+        private void Rb_BP_Checked(object sender, RoutedEventArgs e)
+        {
+            _bettype = BetType.BPs;
+        }
+
+        private void Rb_mute_Checked(object sender, RoutedEventArgs e)
+        {
+            _bettype = BetType.Mute;
+        }
+
+        private void Rb_ban_Checked(object sender, RoutedEventArgs e)
+        {
+            _bettype = BetType.Ban;
+        }
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -73,34 +95,20 @@ namespace hub_client.Windows
         {
             int MR = 5 - cb_masterrules.SelectedIndex;
             string password = string.Empty;
-            _admin.SendRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, "Duel des ombres...", _bet);
+            _admin.SendShadowDuelRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, "Duel des ombres...", _bettype, _bet);
             
             Close();
         }
 
         private void BtnChoose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if ((bool)rb_BP.IsChecked)
+            if ((bool)rb_BP.IsChecked || (bool)rb_ban.IsChecked || (bool)rb_mute.IsChecked)
             {
                 InputText form = new InputText();
                 form.Title = "Duel des ombres...";
                 form.SelectedText += BP_bet;
                 form.ShowDialog();
             }
-            else
-            {
-                _admin.AskSelectCard(AskCollectionReason.GiveCard);
-                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin);
-                window.SelectedCards += Window_SelectedCards;
-                window.Show();
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
-            }
-        }
-        private void Window_SelectedCards(Dictionary<int, PlayerCard> cards)
-        {
-            _bet = new CardsBet();
-            ((CardsBet)_bet).SetCards(cards.Values.ToArray(), FormExecution.PlayerInfos.UserId);
-            AllowToSend();
         }
         private void Cb_dueltype_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -115,10 +123,21 @@ namespace hub_client.Windows
             int pts;
             if (int.TryParse(obj, out pts))
             {
-                _bet = new BPsBet
+                switch (_bettype)
                 {
-                    Amount = pts
-                };
+                    case BetType.BPs:
+                        _bet = new BPsBet(pts);
+                        btnChoose.ButtonText = pts + " BPs";
+                        btnChoose.Update();
+                        break;
+                    case BetType.Mute:
+                    case BetType.Ban:
+                        _bet = new SanctionBet(_bettype, pts);
+                        btnChoose.ButtonText = pts + " h";
+                        btnChoose.Update();
+                        break;
+                }
+                
                 AllowToSend();
             }
             else

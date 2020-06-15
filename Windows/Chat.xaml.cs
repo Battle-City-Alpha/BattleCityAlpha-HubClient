@@ -830,10 +830,17 @@ namespace hub_client.Windows
         {
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
-            //if (target != null && target.Username != FormExecution.Username)
-            ShadowDuel sd = new ShadowDuel(_admin.Client.DuelRequestAdmin, target.UserId);
-            sd.Show();
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sd.Activate()));
+
+#if !DEBUG
+            if (target != null && target.Username != FormExecution.Username)
+            {
+#endif
+                ShadowDuel sd = new ShadowDuel(_admin.Client.DuelRequestAdmin, target.UserId);
+                sd.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sd.Activate()));
+#if !DEBUG
+        }
+#endif
         }
     }
 }

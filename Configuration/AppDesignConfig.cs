@@ -27,7 +27,7 @@ namespace hub_client.Configuration
             GameColors.Add("DuelArenaMessageColor", Colors.Orange);
 
             GameColors.Add("CustomRoomColor", Colors.Red);
-            GameColors.Add("ShadowRoomColor", Colors.Violet);
+            GameColors.Add("ShadowRoomColor", Colors.DarkViolet);
 
             GameColors.Add("ChatBackgroundColor", Colors.White);
             GameColors.Add("ChatInputBackgroundColor", Colors.White);

@@ -52,6 +52,16 @@ namespace hub_client.Windows.Controls
             fadeOutText.From = 1;
             fadeOutText.To = 0;
             fadeOutText.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            this.MouseWheel += BCA_CustomizationsVerticalViewer_MouseWheel;
+        }
+
+        private void BCA_CustomizationsVerticalViewer_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                UpArrow();
+            else
+                DownArrow();
         }
 
         private void Img_center_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

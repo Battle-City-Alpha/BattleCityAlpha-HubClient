@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,5 +20,6 @@ namespace hub_client.Windows.Controls.Controls_Stuff
         public BitmapImage Image { get { return FormExecution.AssetsManager.GetImage("Duel", Type.ToString()); } }
         public SolidColorBrush RoomColor { get; set; }
         public SolidColorBrush CaptionColor => new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CaptionDuelTextColor"));
+        public Bet Bet { get; set; }
     }
 }

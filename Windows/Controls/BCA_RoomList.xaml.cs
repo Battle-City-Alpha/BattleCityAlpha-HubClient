@@ -1,6 +1,8 @@
 ﻿using BCA.Common;
+using BCA.Common.Bets;
 using BCA.Common.Enums;
 using hub_client.Windows.Controls.Controls_Stuff;
+using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -117,7 +119,22 @@ namespace hub_client.Windows.Controls
                 if (room.Config.Banlist != 0 || (room.Config.StartDuelLP != 8000 && room.Config.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Config.Type == RoomType.Tag) || room.Config.CardByHand != 5 || room.Config.MasterRules != 5 || room.Config.DrawCount != 1 | room.Config.NoShuffleDeck == true)
                     newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                 if (room.IsShadowRoom())
+                {
+                    Bet bet = null;
+                    switch (room.BType)
+                    {
+                        case BetType.BPs:
+                            bet = JsonConvert.DeserializeObject<BPsBet>(room.BetSerealized);
+                            break;
+                        case BetType.Mute:
+                        case BetType.Ban:
+                            bet = JsonConvert.DeserializeObject<SanctionBet>(room.BetSerealized);
+                            break;
+
+                    }
+                    newitem.Bet = bet;
                     newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("ShadowRoomColor"));
+                }
 
                 if (item == null)
                     AddItem(newitem);

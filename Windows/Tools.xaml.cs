@@ -56,9 +56,11 @@ namespace hub_client.Windows
             cb_traderequest.IsChecked = client_config.IgnoreTradeRequest;
             cb_duelrequest.IsChecked = client_config.IgnoreDuelRequest;
             cb_customduelrequest.IsChecked = client_config.IgnoreCustomDuelRequest;
+            cb_shadowduelrequest.IsChecked = client_config.IgnoreShadowDuelRequest;
             cb_autoscroll.IsChecked = client_config.Autoscroll;
             cb_popuppm.IsChecked = client_config.PMPopup;
             cb_allowsharedeck.IsChecked = !client_config.AllowDeckShare;
+            cb_allowsharereplay.IsChecked = !client_config.AllowReplayShare;
             cb_popupduelend.IsChecked = client_config.PMEndDuel;
             cb_showchatscrollbar.IsChecked = client_config.ShowChatScrollbar;
             cb_showuserlistscrollbar.IsChecked = client_config.UserlistScrollbar;
@@ -155,11 +157,13 @@ namespace hub_client.Windows
             client_config.Greet = (bool)cb_greet.IsChecked;
             client_config.IgnoreDuelRequest = (bool)cb_duelrequest.IsChecked;
             client_config.IgnoreCustomDuelRequest = (bool)cb_customduelrequest.IsChecked;
+            client_config.IgnoreShadowDuelRequest = (bool)cb_shadowduelrequest.IsChecked;
             client_config.IgnoreTradeRequest = (bool)cb_traderequest.IsChecked;
             client_config.Connexion_Message = (bool)cb_connectionmsg.IsChecked;
             client_config.Autoscroll = (bool)cb_autoscroll.IsChecked;
             client_config.PMPopup = (bool)cb_popuppm.IsChecked;
             client_config.AllowDeckShare = (bool)!cb_allowsharedeck.IsChecked;
+            client_config.AllowReplayShare = (bool)!cb_allowsharereplay.IsChecked;
             client_config.PMEndDuel = (bool)cb_popupduelend.IsChecked;
             client_config.ShowChatScrollbar = (bool)cb_showchatscrollbar.IsChecked;
             client_config.UserlistScrollbar = (bool)cb_showuserlistscrollbar.IsChecked;
