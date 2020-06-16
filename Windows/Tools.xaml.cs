@@ -67,6 +67,7 @@ namespace hub_client.Windows
             cb_backgroundchatpic.IsChecked = client_config.ChatBackgroundIsPic;
             cb_showarenamessage.IsChecked = client_config.ShowArenaWaitingRoomMessage;
             cb_scrollbartrade.IsChecked = client_config.TradeScrollBar;
+            cb_alternativeshopwindow.IsChecked = client_config.AlternativePurchaseWindow;
 
             foreach (var color in style.GameColors)
                 cb_colorList.Items.Add(color.Key);
@@ -170,6 +171,7 @@ namespace hub_client.Windows
             client_config.ChatBackgroundIsPic = (bool)cb_backgroundchatpic.IsChecked;
             client_config.ShowArenaWaitingRoomMessage = (bool)cb_showarenamessage.IsChecked;
             client_config.TradeScrollBar = (bool)cb_scrollbartrade.IsChecked;
+            client_config.AlternativePurchaseWindow = (bool)cb_alternativeshopwindow.IsChecked;
 
             style.Font = (FontFamily)cb_fontFamily.SelectedItem;
             if (style.Font == null)

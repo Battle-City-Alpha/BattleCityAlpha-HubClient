@@ -9,6 +9,7 @@ namespace hub_client.Configuration
 
         public bool FirstTimeRanked = true;
         public bool FirstTimeBrocante = true;
+        public bool FirstTimeShadowDuel = true;
 
         public bool Greet = true;
         public bool IgnoreTradeRequest = false;
@@ -25,6 +26,8 @@ namespace hub_client.Configuration
         public bool UserlistScrollbar = false;
         public bool TradeScrollBar = false;
         public bool ShowArenaWaitingRoomMessage = true;
+
+        public bool AlternativePurchaseWindow = false;
 
         public bool BCA_Card_Design = false;
 

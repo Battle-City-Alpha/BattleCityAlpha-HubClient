@@ -176,6 +176,7 @@
     <Compile Include="WindowsAdministrator\DailyQuestAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DataRetrievalAdministrator.cs" />
     <Compile Include="WindowsAdministrator\DuelRequestAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\DuelResultAdministrator.cs" />
     <Compile Include="WindowsAdministrator\GamesHistoryAdministrator.cs" />
     <Compile Include="WindowsAdministrator\GiveCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\LoginAdminstrator.cs" />
@@ -235,6 +236,9 @@
     </Compile>
     <Compile Include="Windows\Controls\BCA_BlurLabel.xaml.cs">
       <DependentUpon>BCA_BlurLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\BCA_BoosterCard.xaml.cs">
+      <DependentUpon>BCA_BoosterCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\BCA_Button.xaml.cs">
       <DependentUpon>BCA_Button.xaml</DependentUpon>
@@ -349,6 +353,9 @@
     <Compile Include="Windows\Purchase.xaml.cs">
       <DependentUpon>Purchase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PurchaseAlternateWindow.xaml.cs">
+      <DependentUpon>PurchaseAlternateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RankingWindow.xaml.cs">
       <DependentUpon>RankingWindow.xaml</DependentUpon>
     </Compile>
@@ -433,6 +440,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_BlurLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_BoosterCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -581,6 +592,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Purchase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PurchaseAlternateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

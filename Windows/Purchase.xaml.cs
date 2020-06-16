@@ -27,7 +27,6 @@ namespace hub_client.Windows
         private AppDesignConfig style = FormExecution.AppDesignConfig;
         PurchaseAdministrator _admin;
         CardInfos[] cards;
-        ToolTip tip = new ToolTip();
         private BoosterInfo _infos;
         private int index_show = 0;
 

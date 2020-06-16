@@ -96,7 +96,6 @@ namespace hub_client.Windows
 
         private void Chat_Closed(object sender, EventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
         private void _admin_AnimationNotification(bool update)
@@ -627,6 +626,7 @@ namespace hub_client.Windows
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
         private void maximizeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -828,6 +828,13 @@ namespace hub_client.Windows
 
         private void shadowduelrequest_Click(object sender, RoutedEventArgs e)
         {
+            if (FormExecution.ClientConfig.FirstTimeShadowDuel)
+            {
+                FormExecution.Client_PopMessageBox(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !", true);
+                FormExecution.ClientConfig.FirstTimeShadowDuel = false;
+                FormExecution.ClientConfig.Save();
+            }
+
             if (lvUserlist.SelectedIndex == -1) return;
             PlayerInfo target = lvUserlist.SelectedItem as PlayerInfo;
 

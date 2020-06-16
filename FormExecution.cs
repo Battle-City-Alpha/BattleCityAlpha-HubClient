@@ -145,7 +145,6 @@ namespace hub_client
             Client.LaunchTrade += Client_LaunchTrade;
             Client.CloseBrocante += Client_CloseBrocante;
             Client.LaunchBonusBox += Client_LaunchBonusBox;
-            Client.LaunchDuelResultBox += Client_LaunchDuelResultBox;
             Client.LoadOfflineMessages += Client_LoadOfflineMessages;
             Client.RecieveDeck += Client_RecieveDeck;
             Client.RecieveReplay += Client_RecieveReplay;
@@ -431,14 +430,6 @@ namespace hub_client
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
         }
 
-        private static void Client_LaunchDuelResultBox(int bps, int exps, bool win)
-        {
-            DuelResult box = new DuelResult(bps, exps, win);
-            box.Topmost = true;
-            box.Show();
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
-        }
-
         private static void Client_LaunchBonusBox(BonusType type, int numberconnexion, string gift, int[] cards)
         {
             BonusBox box = new BonusBox(type, numberconnexion, gift);
@@ -621,20 +612,41 @@ namespace hub_client
         public static void OpenPurchase(BoosterInfo booster)
         {
             logger.Trace("Open Purchase");
-            _purchase = new Purchase(Client.PurchaseAdmin, booster);
-            _purchase.Title = booster.Name;
-            _purchase.Show();
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
+
+            if (ClientConfig.AlternativePurchaseWindow)
+            {
+                PurchaseAlternateWindow paw = new PurchaseAlternateWindow(Client.PurchaseAdmin, booster);
+                paw.Title = booster.Name;
+                paw.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => paw.Activate()));
+            }
+            else
+            {
+                _purchase = new Purchase(Client.PurchaseAdmin, booster);
+                _purchase.Title = booster.Name;
+                _purchase.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
+            }
         }
         public static void OpenPurchase(BoosterInfo booster, int[] cards)
         {
             logger.Trace("Open Purchase");
-            _purchase = new Purchase(Client.PurchaseAdmin, booster);
-            _purchase.Title = booster.Name;
-            _purchase.Show();
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
-
-            _purchase.UpdateCards(cards);
+            if (ClientConfig.AlternativePurchaseWindow)
+            {
+                PurchaseAlternateWindow paw = new PurchaseAlternateWindow(Client.PurchaseAdmin, booster);
+                paw.Title = booster.Name;
+                paw.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => paw.Activate()));
+                paw.UpdateCards(cards);
+            }
+            else
+            {
+                _purchase = new Purchase(Client.PurchaseAdmin, booster);
+                _purchase.Title = booster.Name;
+                _purchase.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
+                _purchase.UpdateCards(cards);
+            }
         }
         public static void OpenTools()
         {

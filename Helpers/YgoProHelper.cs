@@ -3,6 +3,7 @@ using BCA.Common.Enums;
 using hub_client.Configuration;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;

@@ -71,12 +71,24 @@
                                 <CheckBox x:Name="cb_connectionmsg" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de connexions" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Border Grid.Row="1" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                            </Border.Background>
-                            <CheckBox x:Name="cb_backgroundchatpic" Grid.Row="0" Grid.Column="0" Margin="10" Content="Utiliser une image comme fond du chat" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="15" Margin="25,0, 5, 0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_backgroundchatpic" Grid.Row="0" Grid.Column="0" Margin="10" Content="Utiliser une image comme fond du chat" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" CornerRadius="15" Margin="5,0, 25, 0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_alternativeshopwindow" Grid.Row="0" Grid.Column="0" Margin="10" Content="Utiliser la fenêtre alternative pour les achats" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </Grid>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />

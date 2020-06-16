@@ -121,14 +121,14 @@ namespace hub_client.Windows.Controls
                 if (room.IsShadowRoom())
                 {
                     Bet bet = null;
-                    switch (room.BType)
+                    switch (room.Config.BType)
                     {
                         case BetType.BPs:
-                            bet = JsonConvert.DeserializeObject<BPsBet>(room.BetSerealized);
+                            bet = JsonConvert.DeserializeObject<BPsBet>(room.Config.BetSerealized);
                             break;
                         case BetType.Mute:
                         case BetType.Ban:
-                            bet = JsonConvert.DeserializeObject<SanctionBet>(room.BetSerealized);
+                            bet = JsonConvert.DeserializeObject<SanctionBet>(room.Config.BetSerealized);
                             break;
 
                     }

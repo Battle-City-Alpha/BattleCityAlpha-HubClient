@@ -38,7 +38,8 @@ namespace hub_client.Network
         public event Action<Customization, Customization, Customization, Customization, int> LoadPlayerCustomizations;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
-        public event Action<int, int, bool> LaunchDuelResultBox;
+        public event Action<int, int, bool, int, RoomConfig, int> LaunchDuelResultBox;
+        public event Action<bool> DuelResultAnswer;
         public event Action<PlayerInfo, string[], string> RecieveDeck;
         public event Action<PlayerInfo, byte[], string> RecieveReplay;
         public event Action<CustomizationType, string, int> CustomizationAchievement;
@@ -176,6 +177,7 @@ namespace hub_client.Network
         public MonthPackViewerAdministrator MonthPackViewerAdmin;
         public DailyQuestAdministrator DailyQuestAdmin;
         public AnimationsScheduleAdministrator AnimationsScheduleAdmin;
+        public DuelResultAdministrator DuelResultAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -218,6 +220,7 @@ namespace hub_client.Network
             MonthPackViewerAdmin = new MonthPackViewerAdministrator(this);
             DailyQuestAdmin = new DailyQuestAdministrator(this);
             AnimationsScheduleAdmin = new AnimationsScheduleAdministrator(this);
+            DuelResultAdmin = new DuelResultAdministrator(this);
         }
 
         private void InitManager()
@@ -553,6 +556,9 @@ namespace hub_client.Network
                     case PacketType.ShadowDuelRequestAnswer:
                         OnShadowDuelRequestAnswer(JsonConvert.DeserializeObject<StandardServerShadowDuelRequestResult>(packet));
                         break;
+                    case PacketType.DuelResultAnswer:
+                        OnDuelResultAnswer(JsonConvert.DeserializeObject<StandardServerDuelResultAnswer>(packet));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -793,6 +799,9 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.TimeTooLong:
                     msg = "••• Tu ne peux pas proposer un temps aussi long !";
+                    break;
+                case CommandErrorType.LevelTooLow:
+                    msg = "••• Tu ne peux pas proposer un duel des ombres à un joueur qui n'est pas niveau 5 ! (Ou alors tu n'es pas niveau 5)";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -1127,6 +1136,13 @@ namespace hub_client.Network
         }
         public void OnShadowDuelRequest(StandardServerShadowDuelRequest packet)
         {
+            if (FormExecution.ClientConfig.FirstTimeShadowDuel)
+            {
+                FormExecution.Client_PopMessageBox(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !", true);
+                FormExecution.ClientConfig.FirstTimeShadowDuel = false;
+                FormExecution.ClientConfig.Save();
+            }
+
             if (BlacklistManager.CheckBlacklist(packet.Player) || FormExecution.ClientConfig.IgnoreDuelRequest || FormExecution.ClientConfig.IgnoreShadowDuelRequest)
             {
                 Send(PacketType.ShadowDuelRequestAnswer, new StandardClientShadowDuelAnswer { Player = packet.Player, Config = packet.Config, Result = false });
@@ -1196,7 +1212,7 @@ namespace hub_client.Network
         public void OnDuelResult(StandardServerDuelResult packet)
         {
             if (FormExecution.ClientConfig.PMEndDuel)
-                Application.Current.Dispatcher.Invoke(() => LaunchDuelResultBox?.Invoke(packet.PointsGain, packet.ExpGain, packet.Win));
+                Application.Current.Dispatcher.Invoke(() => LaunchDuelResultBox?.Invoke(packet.PointsGain, packet.ExpGain, packet.Win, packet.Opponent, packet.Config, packet.RoomID));
             else
             {
                 Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
@@ -1208,12 +1224,16 @@ namespace hub_client.Network
                 text += Environment.NewLine + Environment.NewLine;
 
                 text += "Tu as remporté " + packet.PointsGain.ToString() + " BPs et " + packet.ExpGain.ToString() + " points d'expériences.";
-
                 Application.Current.Dispatcher.Invoke(() => SpecialChatMessageRecieved?.Invoke(c, text, false, false));
 
+                DuelResultAdmin.SendDuelResultAnswer(false, packet.Config, packet.Opponent, packet.RoomID);
             }
 
             logger.Trace("DUEL RESULT - BPs Gain : {0} | EXPs Gain : {1} | Win : {2}", packet.PointsGain, packet.ExpGain, packet.Win);
+        }
+        public void OnDuelResultAnswer(StandardServerDuelResultAnswer packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => DuelResultAnswer?.Invoke(packet.Result));
         }
 
         public void OnGetTitle(StandardServerGetTitle packet)

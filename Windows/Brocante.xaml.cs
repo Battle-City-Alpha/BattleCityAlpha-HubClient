@@ -224,13 +224,13 @@ namespace hub_client.Windows
             string seller = tb_search_seller.GetText().ToUpper();
             if (seller != string.Empty && seller != "Vendeur...".ToUpper())
             {
-                if (!card.SellerName.ToUpper().Contains(tb_search_seller.GetText().ToUpper()))
+                if (!card.SellerName.ToUpper().Contains(seller))
                     return false;
             }
             string cardname = tb_search_card.GetText().ToUpper();
             if (cardname != string.Empty && cardname != "Carte...".ToUpper())
             {
-                if (!card.CardName.ToUpper().Contains(tb_search_card.GetText().ToUpper()))
+                if (!card.CardName.ToUpper().Contains(cardname))
                     return false;
             }
 
