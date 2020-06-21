@@ -156,6 +156,13 @@ namespace hub_client.Helpers
                 Reason = txt
             };
         }
+        public StandardClientMuteChat MuteChat(string txt)
+        {
+            return new StandardClientMuteChat
+            {
+                Reason = txt
+            };
+        }
 
         public StandardClientMPAll MPAll(string txt)
         {

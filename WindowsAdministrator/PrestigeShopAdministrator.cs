@@ -1,4 +1,5 @@
-﻿using BCA.Common.Enums;
+﻿using BCA.Common;
+using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
@@ -12,6 +13,7 @@ namespace hub_client.WindowsAdministrator
 
         public event Action<int> UpdatePrestigePoints;
         public event Action<int> UpdateProgress;
+        public event Action<CustomSpecialPack> UpdatePack;
 
         public PrestigeShopAdministrator(GameClient client)
         {
@@ -19,6 +21,12 @@ namespace hub_client.WindowsAdministrator
 
             Client.UpdatePP += Client_UpdatePP;
             Client.UpdateProgress += Client_UpdateProgress;
+            Client.UpdateSpecialPack += Client_UpdateSpecialPack;
+        }
+
+        private void Client_UpdateSpecialPack(CustomSpecialPack pack)
+        {
+            UpdatePack?.Invoke(pack);
         }
 
         private void Client_UpdateProgress(int progress)
@@ -82,6 +90,13 @@ namespace hub_client.WindowsAdministrator
                 FormExecution.OpenPrestigeTitleViewer();
             else if (ctype == CustomizationType.Border)
                 FormExecution.OpenPrestigeCustomizationsVerticalViewer();
+        }
+        public void SendBuySpecialPack(int id)
+        {
+            Client.Send(PacketType.BuySpecialPack, new StandardClientBuySpecialPack
+            {
+                Id = id
+            });
         }
     }
 }

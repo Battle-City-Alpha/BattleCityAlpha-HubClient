@@ -25,7 +25,7 @@ namespace hub_client.Windows
 
         public event Action<Dictionary<int, PlayerCard>> SelectedCards;
 
-        public GiveCard(GiveCardAdministrator admin)
+        public GiveCard(GiveCardAdministrator admin, string target)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -34,6 +34,7 @@ namespace hub_client.Windows
             _cards = new Dictionary<int, PlayerCard>();
             _admin = admin;
             _ids = new List<int>();
+            this.lbl_target.Content = target;
 
             _admin.LoadCards += _admin_LoadCards;
 

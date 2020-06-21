@@ -284,6 +284,9 @@
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
       <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CustomSpecialPackWindow.xaml.cs">
+      <DependentUpon>CustomSpecialPackWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CustomViewer.xaml.cs">
       <DependentUpon>CustomViewer.xaml</DependentUpon>
     </Compile>
@@ -500,6 +503,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CustomCustomizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CustomSpecialPackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -870,6 +877,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Background\bg_shadowduel.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Shop\specialpack.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

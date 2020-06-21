@@ -11,17 +11,32 @@ namespace hub_client.Windows
     public partial class InputText : Window
     {
         public event Action<string> SelectedText;
+        private bool _firstTime = true;
+        private string _ph = "";
 
-        public InputText()
+        public InputText(string placeholder)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             LoadStyle();
 
-            this.MouseDown += Window_MouseDown;
-
             this.tb_text.tbChat.VerticalContentAlignment = VerticalAlignment.Center;
+
+            _ph = placeholder;
+            this.tb_text.tbChat.Text = _ph;
+            this.tb_text.tbChat.SelectionChanged += DeletePlaceholder;
+
+            this.MouseDown += Window_MouseDown;
+        }
+
+        private void DeletePlaceholder(object sender, RoutedEventArgs e)
+        {
+            if (_firstTime)
+            {
+                _firstTime = false;
+                this.tb_text.tbChat.Text = "";
+            }
         }
 
         private void btnAgree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

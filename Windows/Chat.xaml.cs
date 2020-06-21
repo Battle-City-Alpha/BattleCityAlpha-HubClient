@@ -41,7 +41,6 @@ namespace hub_client.Windows
         private List<PlayerItem> PlayersFound;
         private PlayerItemNameComparer _playersNameComparer;
 
-        InputText form = new InputText();
         AssetsManager PicsManager = new AssetsManager();
 
         private List<string> _last_messages;
@@ -68,6 +67,7 @@ namespace hub_client.Windows
             _admin.ClearChat += _admin_ClearChat;
             _admin.DailyQuestNotification += _admin_DailyQuestNotification;
             _admin.AnimationNotification += _admin_AnimationNotification;
+            _admin.Mutechat += _admin_Mutechat;
 
             tbUserList.TextChanged += SearchUser;
             lvUserlist.MouseDoubleClick += LvUserlist_MouseDoubleClick;
@@ -92,6 +92,14 @@ namespace hub_client.Windows
             this.Closed += Chat_Closed;
 
             this.Title = "Battle City Alpha - " + Main.VERSION;
+        }
+
+        private void _admin_Mutechat(PlayerInfo sender, string reason, bool ismuted)
+        {
+            string txt = string.Format("{0} a rendu muet le chat. Raison : {1}", sender.Username, reason);
+            if (!ismuted)
+                txt = "Il est de nouveau possible de parler dans le chat.";
+            _admin_SpecialChatMessage(style.GetGameColor("InformationMessageColor"), txt, true, true);
         }
 
         private void Chat_Closed(object sender, EventArgs e)
@@ -577,7 +585,7 @@ namespace hub_client.Windows
 
             if (target != null && target.Username != FormExecution.Username)
             {
-                InputText form = new InputText();
+                InputText form = new InputText("don à " + target.Username + "...");
                 form.Title = "Don de BP à " + target.Username;
                 form.SelectedText += (obj) => BpInputForm_SelectedText(obj, target);
                 form.Show();
@@ -605,7 +613,7 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
                 _admin.AskSelectCard(AskCollectionReason.GiveCard);
-                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin);
+                GiveCard window = new GiveCard(_admin.Client.GiveCardAdmin, target.Username);
                 window.SelectedCards += (obj) => Window_SelectedCards(obj, target);
                 window.Show();
                 Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));

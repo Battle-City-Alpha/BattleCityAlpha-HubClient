@@ -57,24 +57,6 @@ namespace hub_client.Windows
                 btn.Update();
             }
         }
-        private BitmapImage GetImage(string directory, string img)
-        {
-            try
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new Uri(System.IO.Path.Combine(FormExecution.path, "Assets", directory, img + ".png"));
-                image.EndInit();
-                return image;
-            }
-            catch (Exception ex)
-            {
-                logger.Error("IMAGE LOADING - {0}", ex);
-                return null;
-            }
-        }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

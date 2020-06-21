@@ -66,7 +66,9 @@ namespace hub_client.Network
         public event Action Shutdown;
         public event Action Restart;
         public event Action<string, string> ClearChat;
+        public event Action<PlayerInfo, string, bool> Mutechat;
         public event Action<string[]> Banlist;
+        public event Action<string[]> Mutelist;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action DailyQuestNotification;
         public event Action<bool> AnimationNotification;
@@ -134,6 +136,7 @@ namespace hub_client.Network
         #region PrestigeShopForm Events
         public event Action<int> UpdatePP;
         public event Action<int> UpdateProgress;
+        public event Action<CustomSpecialPack> UpdateSpecialPack;
         public event Action<Customization[]> LoadPrestigeCustomizations;
         #endregion
         #region DataRetrievalWindow Events
@@ -484,6 +487,9 @@ namespace hub_client.Network
                     case PacketType.BuyMonthPack:
                         OnBuyMonthPack(JsonConvert.DeserializeObject<StandardServerBuyMonthPack>(packet));
                         break;
+                    case PacketType.BuySpecialPack:
+                        OnBuySpecialPack(JsonConvert.DeserializeObject<StandardServerBuySpecialPack>(packet));
+                        break;
                     case PacketType.OpenPrestigeShop:
                         OnOpenPrestigeShop(JsonConvert.DeserializeObject<StandardServerOpenPrestigeShop>(packet));
                         break;
@@ -558,6 +564,12 @@ namespace hub_client.Network
                         break;
                     case PacketType.DuelResultAnswer:
                         OnDuelResultAnswer(JsonConvert.DeserializeObject<StandardServerDuelResultAnswer>(packet));
+                        break;
+                    case PacketType.Mutelist:
+                        OnMutelist(JsonConvert.DeserializeObject<StandardServerMutelist>(packet));
+                        break;
+                    case PacketType.Mutechat:
+                        OnMuteChat(JsonConvert.DeserializeObject<StandardServerMutechat>(packet));
                         break;
                 }
             }
@@ -854,6 +866,10 @@ namespace hub_client.Network
 
             logger.Trace("UNMUTE - By : {0}", packet.Player.Username);
         }
+        public void OnMuteChat(StandardServerMutechat packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => Mutechat?.Invoke(packet.Sender, packet.Reason, packet.IsMuted));
+        }
 
         public void OnPrivateMessage(StandardServerPrivateMessage packet)
         {
@@ -931,6 +947,11 @@ namespace hub_client.Network
         {
             Application.Current.Dispatcher.Invoke(() => Banlist?.Invoke(packet.Players));
             logger.Trace("BANLIST - {0}", packet.Players);
+        }
+        public void OnMutelist(StandardServerMutelist packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => Mutelist?.Invoke(packet.Players));
+            logger.Trace("MUTELIST - {0}", packet.Players);
         }
 
         public void OnGivePoints(StandardServerGetPoints packet)
@@ -1324,11 +1345,19 @@ namespace hub_client.Network
             OpenPopBox("Félicitations ! Tu vas désormais pouvoir changer de greet à l'infini !", "Greet infini !", false);
             logger.Trace("BUY INIFINITE GREET");
         }
+        public void OnBuySpecialPack(StandardServerBuySpecialPack packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens d'obtenir un pack spécial disponible durant une durée limitée seulement !", "Pack special !", false);
+            logger.Trace("BUY SPECIAL PACK");
+        }
 
         public void OnOpenPrestigeShop(StandardServerOpenPrestigeShop packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
             Application.Current.Dispatcher.Invoke(() => UpdateProgress?.Invoke(packet.Progress));
+            if (packet.SpecialPack != null)
+                Application.Current.Dispatcher.Invoke(() => UpdateSpecialPack?.Invoke(packet.SpecialPack));
             logger.Trace("Open Prestige Shop");
         }
 

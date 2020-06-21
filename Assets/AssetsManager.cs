@@ -101,7 +101,7 @@ namespace hub_client.Assets
             catch (Exception ex)
             {
                 logger.Warn("PICS LOADED:" + ex.ToString());
-                return new BitmapImage(new Uri(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "unknown.png")));
+                return GetUnknownCardPic();
             }
         }
 

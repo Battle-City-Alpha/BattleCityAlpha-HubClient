@@ -85,6 +85,24 @@ namespace hub_client
         {
             return _chat;
         }
+        
+        public static void InitConfig()
+        {
+            if (File.Exists(AppConfigPath))
+                AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
+            else
+                AppConfig = new AppConfig();
+            if (File.Exists(AppDesignConfigPath))
+                AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
+            else
+                AppDesignConfig = new AppDesignConfig();
+            if (File.Exists(ClientConfigPath))
+                ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
+            else
+                ClientConfig = new ClientConfig();
+
+            AssetsManager = new AssetsManager();
+        }
 
         public static void Init(bool restart = false)
         {
@@ -99,34 +117,16 @@ namespace hub_client
                     HID = "";
                 }
 
-
-                if (File.Exists(AppConfigPath))
-                    AppConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(AppConfigPath));
-                else
-                    AppConfig = new AppConfig();
-                if (File.Exists(AppDesignConfigPath))
-                    AppDesignConfig = JsonConvert.DeserializeObject<AppDesignConfig>(File.ReadAllText(AppDesignConfigPath));
-                else
-                    AppDesignConfig = new AppDesignConfig();
-                if (File.Exists(ClientConfigPath))
-                    ClientConfig = JsonConvert.DeserializeObject<ClientConfig>(File.ReadAllText(ClientConfigPath));
-                else
-                    ClientConfig = new ClientConfig();
-
-
-                AssetsManager = new AssetsManager();
-
                 if (!CheckCardsStuffUpdate())
                 {
                     AssetsManager.LoadSmileys();
                     LoadCDB();
+                    BoosterManager.LoadList();
                 }
 #if DEBUG
                 ClientConfig.TestMode = false;
                 AppDesignConfig = new AppDesignConfig(); //To debug config
 #endif
-
-                BoosterManager.LoadList();
                 LoadBanlist();
 
                 SaveConfig();
@@ -187,9 +187,17 @@ namespace hub_client
 
         private static void Client_GetMonthlyBonus(Dictionary<int, MonthlyBonus> bonus, int cnumber, int[] cards)
         {
-            MonthlyBonusViewer viewer = new MonthlyBonusViewer(bonus, cnumber, cards);
-            viewer.Show(); 
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
+            try
+            {
+                logger.Trace("TRY TO OPEN MONTHLY BONUS");
+                MonthlyBonusViewer viewer = new MonthlyBonusViewer(bonus, cnumber, cards);
+                viewer.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex.ToString());
+            }
         }
 
         private static void Client_LoadBoosterCollection(string tag, List<int> ids, List<int> quantities, List<CardRarity> rarities)
@@ -276,6 +284,7 @@ namespace hub_client
 
             LoadCDB(); 
             AssetsManager.LoadSmileys();
+            BoosterManager.LoadList();
         }
 
         private static void CardsUpdateDownloader_LoadingProgress(int i, int n)
@@ -400,7 +409,7 @@ namespace hub_client
 
         private static void Client_RoomNeedPassword(int id, RoomType type)
         {
-            InputText form = new InputText();
+            InputText form = new InputText("mot de passe...");
             form.Title = "Mot de passe";
             form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, id, type);
             form.Topmost = true;
@@ -613,7 +622,7 @@ namespace hub_client
         {
             logger.Trace("Open Purchase");
 
-            if (ClientConfig.AlternativePurchaseWindow)
+            if (!ClientConfig.AlternativePurchaseWindow)
             {
                 PurchaseAlternateWindow paw = new PurchaseAlternateWindow(Client.PurchaseAdmin, booster);
                 paw.Title = booster.Name;
@@ -631,22 +640,12 @@ namespace hub_client
         public static void OpenPurchase(BoosterInfo booster, int[] cards)
         {
             logger.Trace("Open Purchase");
-            if (ClientConfig.AlternativePurchaseWindow)
-            {
-                PurchaseAlternateWindow paw = new PurchaseAlternateWindow(Client.PurchaseAdmin, booster);
-                paw.Title = booster.Name;
-                paw.Show();
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => paw.Activate()));
-                paw.UpdateCards(cards);
-            }
-            else
-            {
-                _purchase = new Purchase(Client.PurchaseAdmin, booster);
-                _purchase.Title = booster.Name;
-                _purchase.Show();
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
-                _purchase.UpdateCards(cards);
-            }
+
+            _purchase = new Purchase(Client.PurchaseAdmin, booster);
+            _purchase.Title = booster.Name;
+            _purchase.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
+            _purchase.UpdateCards(cards);
         }
         public static void OpenTools()
         {

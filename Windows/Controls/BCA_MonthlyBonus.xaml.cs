@@ -70,7 +70,7 @@ namespace hub_client.Windows.Controls
                 case BonusType.Booster:
                     tb_left.Text = "Booster(s)";
                     tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", bonus.Gift + ".jpg" });
+                    img_bonus.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", bonus.Gift + ".png" });
                     break;
             }
 

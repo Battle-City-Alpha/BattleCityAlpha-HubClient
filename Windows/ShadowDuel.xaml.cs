@@ -104,7 +104,7 @@ namespace hub_client.Windows
         {
             if ((bool)rb_BP.IsChecked || (bool)rb_ban.IsChecked || (bool)rb_mute.IsChecked)
             {
-                InputText form = new InputText();
+                InputText form = new InputText("mise...");
                 form.Title = "Duel des ombres...";
                 form.SelectedText += BP_bet;
                 form.ShowDialog();

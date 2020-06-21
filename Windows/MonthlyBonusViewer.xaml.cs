@@ -4,6 +4,7 @@ using hub_client.Configuration;
 using hub_client.Enums;
 using hub_client.Stuff;
 using hub_client.Windows.Controls;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class MonthlyBonusViewer : Window
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         MonthlyBonus current_bonus;
         int cnumber;
         public MonthlyBonusViewer(Dictionary<int, MonthlyBonus> bonus, int connectionnumber, int[] cards)
@@ -33,8 +35,11 @@ namespace hub_client.Windows
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             cnumber = connectionnumber;
 
+            logger.Trace("{0} | {1} | {2}", bonus, connectionnumber, cards);
+
             foreach (var b in bonus)
             {
+                logger.Trace("{0} {1}", b.Key, b.Value.Gift);
                 BCA_MonthlyBonus widget = new BCA_MonthlyBonus(b.Value, b.Key, connectionnumber < b.Key,  connectionnumber == b.Key);
                 wp_bonus.Children.Add(widget);
             }

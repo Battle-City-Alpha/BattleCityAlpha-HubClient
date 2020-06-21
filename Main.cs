@@ -14,15 +14,16 @@ namespace hub_client
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 2150;
-        public static string VERSION = "2.1.5.0";
+        private static int CLIENT_VERSION = 2156;
+        public static string VERSION = "2.1.5.6";
 
         public Main()
         {
             try
             {
-                Application.Current.Dispatcher.Invoke(() => FormExecution.Init());
-                CheckClientUpdate();
+                Application.Current.Dispatcher.Invoke(() => FormExecution.InitConfig());
+                if (!CheckClientUpdate())
+                    Application.Current.Dispatcher.Invoke(() => FormExecution.Init());
             }
             catch (Exception ex)
             {
@@ -31,7 +32,7 @@ namespace hub_client
             }
         }
 
-        public static void CheckClientUpdate()
+        public static bool CheckClientUpdate()
         {
 
             try
@@ -45,9 +46,12 @@ namespace hub_client
                     StringSplitOptions.None
                     );
                     if (FormExecution.GetLastVersion(updatefilelines) != CLIENT_VERSION)
+                    {
                         UpdateClient(updatefilelines);
+                        return true;
+                    }
                     else
-                        return;
+                        return false;
                 }
             }
             catch (Exception ex)
@@ -58,7 +62,7 @@ namespace hub_client
         }
         private static void UpdateClient(string[] updatefilelines)
         {
-            FormExecution.HideLogin();
+            //FormExecution.HideLogin();
             FormExecution.Client_PopMessageBox("Un mise à jour du jeu est disponible !", "Mise à jour", true);
             List<string> updatesToDo = new List<string>();
             int i = 0;

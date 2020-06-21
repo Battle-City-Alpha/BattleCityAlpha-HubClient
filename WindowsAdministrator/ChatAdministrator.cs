@@ -29,6 +29,7 @@ namespace hub_client.WindowsAdministrator
         public event Action<PlayerInfo> UpdateHubPlayer;
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action<string, string> ClearChat;
+        public event Action<PlayerInfo, string, bool> Mutechat;
         public event Action DailyQuestNotification;
         public event Action<bool> AnimationNotification;
 
@@ -44,10 +45,17 @@ namespace hub_client.WindowsAdministrator
             Client.UpdateHubPlayers += Client_UpdateHubPlayers;
             Client.ClearChat += Client_ClearChat;
             Client.Banlist += Client_Banlist;
+            Client.Mutelist += Client_Mutelist;
             Client.DailyQuestNotification += Client_DailyQuestNotification;
             Client.AnimationNotification += Client_AnimationNotification;
+            Client.Mutechat += Client_Mutechat;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_Mutechat(PlayerInfo sender, string reason, bool ismuted)
+        {
+            Mutechat?.Invoke(sender, reason, ismuted);
         }
 
         private void Client_AnimationNotification(bool update)
@@ -83,6 +91,14 @@ namespace hub_client.WindowsAdministrator
         private void Client_Banlist(string[] players)
         {
             string bl = "Banlist : ";
+            foreach (string player in players)
+                bl += player + ",";
+
+            SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("StaffMessageColor"), bl, false, false);
+        }
+        private void Client_Mutelist(string[] players)
+        {
+            string bl = "Mutelist : ";
             foreach (string player in players)
                 bl += player + ",";
 
@@ -232,6 +248,8 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.Unmute, _cmdParser.Unmute(txt.Substring(cmd.Length + 1)));
                         case "CLEAR":
                             return new NetworkData(PacketType.Clear, _cmdParser.ClearChat(txt.Length > cmd.Length ? txt.Substring(cmd.Length + 1) : "."));
+                        case "MUTECHAT":
+                            return new NetworkData(PacketType.Mutechat, _cmdParser.MuteChat(txt.Length > cmd.Length ? txt.Substring(cmd.Length + 1) : "."));
                         case "MPALL":
                             return new NetworkData(PacketType.MPAll, _cmdParser.MPAll(txt.Substring(cmd.Length + 1)));
                         case "PANEL":
@@ -241,6 +259,8 @@ namespace hub_client.WindowsAdministrator
                             return null;
                         case "BANLIST":
                             return new NetworkData(PacketType.Banlist, new StandardClientBanlist { });
+                        case "MUTELIST":
+                            return new NetworkData(PacketType.Mutelist, new StandardClientMutelist { });
                         case "HELP":
                             return new NetworkData(PacketType.Help, new StandardClientAskHelp { });
                         case "GIVEBATTLEPOINTS":

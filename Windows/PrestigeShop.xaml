@@ -89,6 +89,7 @@
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
+                        <Controls:BCA_PurchaseShopItem x:Name="SpecialPack_Item" Grid.Column="0" Grid.Row="0" Visibility="Hidden"/>
                         <Controls:BCA_PurchaseShopItem x:Name="MonthPack_Item" Grid.Column="1" Grid.Row="0"/>
                     </Grid>
                     

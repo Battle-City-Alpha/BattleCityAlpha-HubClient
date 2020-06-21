@@ -192,7 +192,7 @@ namespace hub_client.Windows
                     _admin.SendJoinRoom(room.Id, room.Type, "");
                 else
                 {
-                    InputText form = new InputText();
+                    InputText form = new InputText("mot de passe...");
                     form.Title = "Mot de passe";
                     form.SelectedText += (obj) => RoomPassInput_SelectedText(obj, room);
                     form.Topmost = true;

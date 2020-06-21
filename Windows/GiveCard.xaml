@@ -30,11 +30,20 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="12*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.ColumnSpan="3">
+            <Border CornerRadius="5" Margin="5" Grid.Column="1" Grid.Row="0">
+                <Border.Background>
+                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Don de carte à : " FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label x:Name="lbl_target" Content="????" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5" Grid.ColumnSpan="3" MaxHeight="25" VerticalAlignment="Top">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>

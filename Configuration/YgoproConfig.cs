@@ -10,18 +10,34 @@ namespace hub_client.Configuration
         public static void UpdateDefaultDeck(string defaultdeck)
         {
             string[] lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"));
-
-            int index = Array.FindIndex(lines, x => x.StartsWith("lastdeck"));
-            lines[index] = "lastdeck = " + defaultdeck;
+            try
+            {
+                int index = Array.FindIndex(lines, x => x.StartsWith("lastdeck"));
+                lines[index] = "lastdeck = " + defaultdeck;
+            }
+            catch (Exception)
+            {
+                List<string> newlines = lines.ToList();
+                newlines.Add("lastdeck = " + defaultdeck);
+                lines = newlines.ToArray();
+            }
 
             File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
         }
         public static void UpdateNickname(string nickname)
         {
             string[] lines = File.ReadAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"));
-
-            int index = Array.FindIndex(lines, x => x.StartsWith("nickname"));
-            lines[index] = "nickname = " + nickname;
+            try
+            {
+                int index = Array.FindIndex(lines, x => x.StartsWith("nickname"));
+                lines[index] = "nickname = " + nickname;
+            }
+            catch (Exception)
+            {
+                List<string> newlines = lines.ToList();
+                newlines.Add("nickname = " + nickname);
+                lines = newlines.ToArray();
+            }
 
             File.WriteAllLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "system.conf"), lines);
         }

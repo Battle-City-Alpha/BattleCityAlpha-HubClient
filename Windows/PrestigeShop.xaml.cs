@@ -1,4 +1,5 @@
-﻿using BCA.Common.Enums;
+﻿using BCA.Common;
+using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
@@ -15,6 +16,7 @@ namespace hub_client.Windows
     /// </summary>
     public partial class PrestigeShop : Window
     {
+        CustomSpecialPack _pack;
         PrestigeShopAdministrator _admin;
         public PrestigeShop(PrestigeShopAdministrator admin)
         {
@@ -25,12 +27,35 @@ namespace hub_client.Windows
 
             _admin.UpdatePrestigePoints += _admin_UpdatePrestigePoints;
             _admin.UpdateProgress += _admin_UpdateProgress;
+            _admin.UpdatePack += _admin_UpdatePack;
 
             InitItem();
             LoadStyle();
 
             this.MouseDown += Window_MouseDown;
             this.Loaded += PrestigeShop_Loaded;
+        }
+
+        private void _admin_UpdatePack(CustomSpecialPack pack)
+        {
+            _pack = pack; 
+            SpecialPack_Item.Initialize("Offre spéciale !", pack.Price + " PP", "specialpack", pack.Infos.Replace("\\n", Environment.NewLine));
+            SpecialPack_Item.Visibility = Visibility.Visible;
+
+            SpecialPack_Item.btn_purchase.MouseLeftButtonDown += Btn_purchase_MouseLeftButtonDown;
+        }
+
+        private void Btn_purchase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            CustomSpecialPackWindow window = new CustomSpecialPackWindow(_pack);
+            window.Show();
+            window.PurchaseBtnClick += Window_PurchaseBtnClick; 
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
+        }
+
+        private void Window_PurchaseBtnClick()
+        {
+            _admin.SendBuySpecialPack(_pack.Id);
         }
 
         private void _admin_UpdateProgress(int progress)
@@ -122,7 +147,7 @@ namespace hub_client.Windows
         }
         private void BuyChangeUsername(object sender, MouseButtonEventArgs e)
         {
-            InputText form = new InputText();
+            InputText form = new InputText("nouveau pseudo...");
             form.Title = "Nouveau pseudo";
             form.SelectedText += ChangeUsernameSelectedText;
             form.Show();
