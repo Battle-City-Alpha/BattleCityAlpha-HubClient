@@ -53,7 +53,9 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbNormalQuest" Text="QUETE NORMALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="0" Name="normalQuestArea">
+                            <TextBlock x:Name="tbNormalQuest" Text="QUETE NORMALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        </Grid>
                         <Grid Grid.Column="1">
                             <Controls:BCA_ColorButton x:Name="btn_getnormal" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
                             <Controls:BCA_ColorButton x:Name="btn_changenormal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>
@@ -69,7 +71,9 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbSpecialQuest" Text="QUETE SPECIALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="0" Name="specialQuestArea">
+                            <TextBlock x:Name="tbSpecialQuest" Text="QUETE SPECIALE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        </Grid>
                         <Grid Grid.Column="1">
                             <Controls:BCA_ColorButton x:Name="btn_getspecial" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
                             <Controls:BCA_ColorButton x:Name="btn_changespecial" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>
@@ -85,7 +89,9 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbFunQuest" Text="QUETE FUN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        <Grid Grid.Column="0" Name="funQuestArea">
+                            <TextBlock x:Name="tbFunQuest" Text="QUETE FUN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap"/>
+                        </Grid>
                         <Grid Grid.Column="1">
                             <Controls:BCA_ColorButton x:Name="btn_getfun" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Récupérer" Color1="#FF175A91" Color2="#FF0FA2EE" Panel.ZIndex="1"/>
                             <Controls:BCA_ColorButton x:Name="btn_changefun" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="15,0" VerticalAlignment="Center" ButtonText="Changer" Color1="#FF175A91" Color2="#FF0FA2EE"/>

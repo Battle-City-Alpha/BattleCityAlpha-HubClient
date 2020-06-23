@@ -35,6 +35,8 @@ namespace hub_client.Configuration
 
         public int CardsStuffVersion = 0;
 
+        public bool DoTutoChat = true;
+
         public void Save()
         {
             File.WriteAllText(FormExecution.ClientConfigPath, JsonConvert.SerializeObject(this, Formatting.Indented));

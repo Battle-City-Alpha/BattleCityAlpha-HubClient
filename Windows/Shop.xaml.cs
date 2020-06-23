@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -106,6 +108,8 @@ namespace hub_client.Windows
                 lb_booster.Items.Add(item);
 
             img_booster.MouseLeftButtonDown += Img_booster_MouseLeftButtonDown;
+
+            lb_booster.SelectedIndex = 0;
         }
 
         private void Img_booster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -158,13 +162,53 @@ namespace hub_client.Windows
         {
             try
             {
-                LoadPurchase(lb_booster.SelectedItem.ToString());
+                Storyboard storyboard = new Storyboard();
+
+                ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+                img_booster.RenderTransformOrigin = new Point(0.5, 0.5);
+                img_booster.RenderTransform = scale;
+
+                DoubleAnimation growAnimationClose = new DoubleAnimation();
+                growAnimationClose.Duration = TimeSpan.FromMilliseconds(100);
+                growAnimationClose.From = 1.0;
+                growAnimationClose.To = 0.0;
+                storyboard.Children.Add(growAnimationClose);
+
+                Storyboard.SetTargetProperty(growAnimationClose, new PropertyPath("RenderTransform.ScaleX"));
+                Storyboard.SetTarget(growAnimationClose, img_booster);
+
+                storyboard.Completed += Storyboard_Completed;
+                storyboard.Begin();
             }
             catch (Exception ex)
             {
                 logger.Warn("SHOP WARNING - {0}", ex.ToString());
                 return;
             }
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+            if (lb_booster.SelectedItem == null)
+                return;
+
+            LoadPurchase(lb_booster.SelectedItem.ToString()); 
+            
+            Storyboard storyboard = new Storyboard();
+
+            ScaleTransform scale = new ScaleTransform(1.0, 1.0);
+            img_booster.RenderTransformOrigin = new Point(0.5, 0.5);
+            img_booster.RenderTransform = scale;
+
+            DoubleAnimation growAnimationOpen = new DoubleAnimation();
+            growAnimationOpen.Duration = TimeSpan.FromMilliseconds(100);
+            growAnimationOpen.From = 0.0;
+            growAnimationOpen.To = 1.0;
+            storyboard.Children.Add(growAnimationOpen);
+            Storyboard.SetTargetProperty(growAnimationOpen, new PropertyPath("RenderTransform.ScaleX"));
+            Storyboard.SetTarget(growAnimationOpen, img_booster);
+
+            storyboard.Begin();
         }
 
         private void LoadPurchase(string Item)

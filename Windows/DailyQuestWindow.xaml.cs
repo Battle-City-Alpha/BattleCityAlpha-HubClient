@@ -25,17 +25,20 @@ namespace hub_client.Windows
     public partial class DailyQuestWindow : Window
     {
         private DailyQuestAdministrator _admin;
-        public DailyQuestWindow(DailyQuestAdministrator admin , DailyQuestType[] dqtype, string[] quests, int[] states)
+
+        private string[] _quests;
+        public DailyQuestWindow(DailyQuestAdministrator admin, DailyQuestType[] dqtype, string[] quests, int[] states)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             _admin = admin;
             _admin.ChangeQuestState += _admin_ChangeQuestState;
-            _admin.ChangeQuest += _admin_ChangeQuest;
+            _admin.ChangeQuest += (t, txt) => _admin_ChangeQuest(t, txt, false);
 
             this.MouseDown += Window_MouseDown;
 
+            _quests = quests;
             this.tbNormalQuest.Text = quests[0];
             this.tbSpecialQuest.Text = quests[1];
             this.tbFunQuest.Text = quests[2];
@@ -63,19 +66,25 @@ namespace hub_client.Windows
             LoadStyle();
         }
 
-        private void _admin_ChangeQuest(DailyQuestType dqtype, string quest)
+        private void _admin_ChangeQuest(DailyQuestType dqtype, string quest, bool savequest = false)
         {
             TextBlock target = tbNormalQuest;
             switch (dqtype)
             {
                 case DailyQuestType.Normal:
                     target = tbNormalQuest;
+                    if (savequest)
+                        _quests[0] = quest;
                     break;
                 case DailyQuestType.Special:
                     target = tbSpecialQuest;
+                    if (savequest)
+                        _quests[1] = quest;
                     break;
                 case DailyQuestType.Fun:
                     target = tbFunQuest;
+                    if (savequest)
+                        _quests[2] = quest;
                     break;
             }
             Storyboard storyboard = new Storyboard();

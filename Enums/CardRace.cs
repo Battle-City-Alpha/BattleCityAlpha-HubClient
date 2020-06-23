@@ -26,6 +26,6 @@
         Bête_Divine = 0x200000,
         Dieu_Créateur = 0x400000,
         Ver = 0x800000,
-        Cyber = 0x1000000
+        Cyberse = 0x1000000
     }
 }
