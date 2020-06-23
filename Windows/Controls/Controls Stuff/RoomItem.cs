@@ -21,5 +21,7 @@ namespace hub_client.Windows.Controls.Controls_Stuff
         public SolidColorBrush RoomColor { get; set; }
         public SolidColorBrush CaptionColor => new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CaptionDuelTextColor"));
         public Bet Bet { get; set; }
+        public int ObserversCount { get; set; }
+        public bool HasObservers => ObserversCount > 0;
     }
 }

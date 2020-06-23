@@ -113,7 +113,8 @@ namespace hub_client.Windows.Controls
                     IsRanked = room.IsRanked(),
                     CaptionText = room.Config.CaptionText,
                     IsShadowDuel = room.IsShadowRoom(),
-                    RoomColor = new SolidColorBrush(Colors.Black)
+                    RoomColor = new SolidColorBrush(Colors.Black),
+                    ObserversCount =  room.Observers.Count
 
                 };
                 if (room.Config.Banlist != 0 || (room.Config.StartDuelLP != 8000 && room.Config.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Config.Type == RoomType.Tag) || room.Config.CardByHand != 5 || room.Config.MasterRules != 5 || room.Config.DrawCount != 1 | room.Config.NoShuffleDeck == true)
