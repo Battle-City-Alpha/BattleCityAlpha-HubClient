@@ -27,6 +27,8 @@ namespace hub_client.Windows
 
         BoosterInfo BoosterChoosen;
 
+        private int _tutoIndex = 0;
+
         public Shop(ShopAdministrator admin)
         {
             InitializeComponent();
@@ -110,6 +112,69 @@ namespace hub_client.Windows
             img_booster.MouseLeftButtonDown += Img_booster_MouseLeftButtonDown;
 
             lb_booster.SelectedIndex = 0;
+
+            if (FormExecution.ClientConfig.DoTutoShop)
+            {
+                BCA_TutoPopup tutopopup = new BCA_TutoPopup();
+                maingrid.Children.Add(tutopopup);
+                tutopopup.HorizontalAlignment = HorizontalAlignment.Center;
+                tutopopup.VerticalAlignment = VerticalAlignment.Center;
+                tutopopup.tuto_popup.IsOpen = true;
+                tutopopup.tuto_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+                tutopopup.tuto_popup.PlacementTarget = maingrid;
+                tutopopup.SetText(StartDisclaimer.ShopTutorial[_tutoIndex]);
+                tutopopup.tuto_popup.MaxWidth = this.Width - 200;
+
+                tutopopup.SkipTuto += SkipTutorial;
+                tutopopup.NextStep += Tutopopup_NextStep;
+
+                SetTutorialColor(btn_searchcard);
+            }
+        }
+
+        private void Tutopopup_NextStep(BCA_TutoPopup popup)
+        {
+            _tutoIndex++;
+
+            if (_tutoIndex == StartDisclaimer.ShopTutorial.Length - 1)
+            {
+                popup.btnNext.Visibility = Visibility.Hidden;
+                popup.btnSkip.ButtonText = "Fin !";
+                popup.btnSkip.Update();
+            }
+
+            switch (_tutoIndex)
+            {
+                case 1:
+                    SetOriginalColor(btn_searchcard);
+                    SetTutorialColor(btn_brocante);
+                    break;
+            }
+
+            if (_tutoIndex >= StartDisclaimer.ShopTutorial.Length)
+                SkipTutorial(popup);
+            else
+                popup.SetText(StartDisclaimer.ShopTutorial[_tutoIndex]);
+        }
+
+        private void SkipTutorial(BCA_TutoPopup popup)
+        {
+            popup.tuto_popup.IsOpen = false;
+            LoadStyle();
+            FormExecution.ClientConfig.DoTutoShop = false;
+            FormExecution.ClientConfig.Save();
+        }
+        private void SetTutorialColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = Colors.Red;
+            btn.Color2 = Colors.PaleVioletRed;
+            btn.Update();
+        }
+        private void SetOriginalColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = style.GetGameColor("Color1ShopButton");
+            btn.Color2 = style.GetGameColor("Color2ShopButton");
+            btn.Update();
         }
 
         private void Img_booster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -180,7 +180,7 @@ namespace hub_client.Assets
                 catch (Exception ex)
                 {
                     logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur", true);
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur");
                 }
             }
 

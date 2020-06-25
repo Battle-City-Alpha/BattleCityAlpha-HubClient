@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.BCA_TutoPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls"
+             mc:Ignorable="d" >
+    <Popup x:Name="tuto_popup" AllowsTransparency="True" PopupAnimation="Fade">
+        <Border CornerRadius="0, 50, 0, 50" BorderThickness="3" BorderBrush="Black">
+            <Border.Background>
+                <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_prestigeshop.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+            <Border Grid.Column="0" Margin="5" CornerRadius="0, 50, 0, 50">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Grid MaxHeight="300">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="pack://siteoforigin:,,,/Assets/Tutorial/AstralTuto.png" Stretch="Uniform" Grid.Column="0" Margin="0, 0, 0 0" MaxHeight="300"/>
+                    <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="80"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="popText" Margin="5" Grid.Row="0" FontSize="20" Text="Félicitations pour votre victoire !" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" TextAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+                        <Grid Grid.Row="1" MaxWidth="500">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <local:BCA_ColorButton x:Name="btnNext" Margin="10" Color1="#FF202CB3" Color2="#FF1666B1" ButtonText="La suite !" VerticalAlignment="Center" ButtonTextSize="24"/>
+                            <local:BCA_ColorButton x:Name="btnSkip" Grid.Column="1" Margin="10" Color1="#FF202CB3" Color2="#FF1666B1" ButtonText="Passer le tutoriel" VerticalAlignment="Center" ButtonTextSize="24"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Border>
+    </Popup>
+</UserControl>
+

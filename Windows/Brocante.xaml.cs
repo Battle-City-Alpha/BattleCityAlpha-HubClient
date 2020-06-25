@@ -282,7 +282,8 @@ namespace hub_client.Windows
 
             NumberPopBox npb = new NumberPopBox(card.Quantity, card.Price);
             npb.SelectedNumber += (n) => Npb_SelectedNumber(n, card);
-            npb.ShowDialog();
+            npb.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => npb.Activate()));
         }
 
         private void Npb_SelectedNumber(int n, BrocanteCard card)

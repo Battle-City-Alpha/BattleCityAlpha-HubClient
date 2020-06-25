@@ -21,7 +21,7 @@
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Border.Background>
-        <Grid>
+        <Grid x:Name="maingrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="66*"/>
@@ -62,7 +62,7 @@
                             <TextBlock x:Name="tb_popup_players2" Text="???" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
-                            <TextBlock Text="Master Rules : "  FontSize="20"/>
+                            <TextBlock x:Name="tb_popup_MR_title" Text="Master Rules : "  FontSize="20"/>
                             <TextBlock x:Name="tb_popup_MR" Text="???" FontSize="20"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">

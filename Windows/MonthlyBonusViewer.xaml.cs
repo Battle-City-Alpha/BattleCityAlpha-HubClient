@@ -2,6 +2,7 @@
 using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Enums;
+using hub_client.Helpers;
 using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using NLog;
@@ -84,7 +85,7 @@ namespace hub_client.Windows
         private void Btn_get_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (current_bonus.Type == BonusType.Booster) {
-                FormExecution.OpenPurchase(new BoosterInfo { Name = current_bonus.Gift, Type = PurchaseType.Booster }, current_bonus.Cards);
+                FormExecution.OpenPurchase(BoosterManager.GetBoosterInfo(current_bonus.Gift), current_bonus.Cards);
             }
             else
             {

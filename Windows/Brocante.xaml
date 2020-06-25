@@ -43,7 +43,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="brocante_reload_popup_text" FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="La brocante a été mise à jour !" Grid.Row="1" />
+                        <TextBlock x:Name="brocante_reload_popup_text" FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="La liste a été mise à jour !" Grid.Row="1" />
                     </Grid>
                 </Border>
             </Popup>

@@ -61,7 +61,6 @@ namespace hub_client.Windows
         {
             UpdateCards(cards);
             SaveDeck((_infos.Type == PurchaseType.Demarrage || _infos.Type == PurchaseType.Structure));
-            StartCardAnimation();
         }
         public void UpdateCards(int[] list)
         {
@@ -82,6 +81,7 @@ namespace hub_client.Windows
             }
             cards = dcards.Values.ToArray();
             cards = cards.OrderBy(x => x.Name).ToArray();
+            StartCardAnimation();
         }
         private void SaveDeck(bool isStructureOrStartingDeck)
         {

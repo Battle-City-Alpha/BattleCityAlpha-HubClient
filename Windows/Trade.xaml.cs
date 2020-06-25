@@ -294,7 +294,7 @@ namespace hub_client.Windows
         {
             if (lb_choice.Items.Count <= 0)
             {
-                FormExecution.Client_PopMessageBox("Il faut proposer au moins une carte !", "Echange", true);
+                FormExecution.Client_PopMessageBox("Il faut proposer au moins une carte !", "Echange");
                 return;
             }
             if (!validate)

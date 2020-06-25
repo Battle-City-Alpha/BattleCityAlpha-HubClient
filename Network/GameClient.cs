@@ -29,7 +29,8 @@ namespace hub_client.Network
 
         private string _username;
 
-        public event Action<string, string, bool> PopMessageBox;
+        public event Action<string, string> PopMessageBox;
+        public event Action<string, string> PopMessageBoxShowDialog;
         public event Action<PlayerInfo, RoomConfig, ChoiceBoxType, string> ChoicePopBox;
         public event Action<PlayerInfo, RoomConfig, Bet> ShadowDuelRequest;
         public event Action<int, RoomType> RoomNeedPassword;
@@ -232,10 +233,10 @@ namespace hub_client.Network
             BlacklistManager = new BlacklistManager();
         }
 
-        public void OpenPopBox(string text, string title, bool showdialog = false)
+        public void OpenPopBox(string text, string title)
         {
             logger.Trace("Open PopBox - Text : {0}, Title : {1}", text, title);
-            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(text, title, showdialog));
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(text, title));
         }
 
         public string Username()
@@ -828,25 +829,24 @@ namespace hub_client.Network
 
         public void OnKick(StandardServerKick packet)
         {
-            OpenPopBox("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur", true);
+            Application.Current.Dispatcher.Invoke(() => PopMessageBoxShowDialog?.Invoke("Vous avez été kické par : " + packet.Kicker + " pour la raison : " + packet.Reason, "Ejection du serveur"));
             logger.Trace("KICKED - By : {0} | Reason : {1}", packet.Kicker, packet.Reason);
-            Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnDisabled(StandardServerDisabledAccount packet)
         {
-            OpenPopBox("Votre compte a été désactivé par : " + packet.Player + " pour la raison : " + packet.Reason, "Compte désactivé", true);
+            Application.Current.Dispatcher.Invoke(() => PopMessageBoxShowDialog?.Invoke("Votre compte a été désactivé par : " + packet.Player + " pour la raison : " + packet.Reason, "Compte désactivé"));
             logger.Trace("DISABLED - By : {0} | Reason : {1}", packet.Player, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnBan(StandardServerBan packet)
         {
-            OpenPopBox("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Banni du serveur", true);
+            Application.Current.Dispatcher.Invoke(() => PopMessageBoxShowDialog?.Invoke("Vous avez été banni par : " + packet.Banner + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Banni du serveur"));
             logger.Trace("BANNED - By : {0} | Time : {1} | Reason : {2}", packet.Banner, packet.Time, packet.Reason);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
         public void OnMute(StandardServerMute packet)
         {
-            OpenPopBox("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Mute");
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke("Vous avez été rendu muet par : " + packet.Muter + " pour la raison : " + packet.Reason + " pour une durée de " + packet.Time + "h.", "Mute"));
             logger.Trace("MUTED - By : {0} | Time : {1} | Reason : {2}", packet.Muter, packet.Time, packet.Reason);
         }
         public void OnMuted(StandardServerMuted packet)
@@ -862,7 +862,7 @@ namespace hub_client.Network
         public void OnUnmute(StandardServerUnmute packet)
         {
             string msg = "Tu as été démuté par " + packet.Player.Username + " !";
-            OpenPopBox(msg, "Modération", true);
+            OpenPopBox(msg, "Modération");
 
             logger.Trace("UNMUTE - By : {0}", packet.Player.Username);
         }
@@ -1107,7 +1107,7 @@ namespace hub_client.Network
                     boosters += Environment.NewLine + BoosterChoosen.Name + " (" + BoosterChoosen.PurchaseTag + ")";
                 }
             }
-            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte", true));
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke(boosters, "Recherche de carte"));
 
             logger.Trace("SEARCH CARD - Answer : {0}", packet.Boosters.ToArray().ToString());
         }
@@ -1159,7 +1159,7 @@ namespace hub_client.Network
         {
             if (FormExecution.ClientConfig.FirstTimeShadowDuel)
             {
-                FormExecution.Client_PopMessageBox(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !", true);
+                FormExecution.Client_PopMessageBoxShowDialog(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !");
                 FormExecution.ClientConfig.FirstTimeShadowDuel = false;
                 FormExecution.ClientConfig.Save();
             }
@@ -1270,7 +1270,7 @@ namespace hub_client.Network
 
         public void OnMaintenance(StandardServerMaintenance packet)
         {
-            OpenPopBox("Une maintenance va démarrer, vous allez être kické du serveur." + Environment.NewLine + "Raison: " + packet.Reason + Environment.NewLine + "Temps estimé: " + packet.TimeEstimation.ToString() + "h.", "Maintenance", true);
+            Application.Current.Dispatcher.Invoke(() => PopMessageBoxShowDialog?.Invoke("Une maintenance va démarrer, vous allez être kické du serveur." + Environment.NewLine + "Raison: " + packet.Reason + Environment.NewLine + "Temps estimé: " + packet.TimeEstimation.ToString() + "h.", "Maintenance"));
             logger.Trace("MAINTENANCE - Reason : {0} | Time Estimation : {1}", packet.Reason, packet.TimeEstimation);
             Application.Current.Dispatcher.Invoke(() => Shutdown?.Invoke());
         }
@@ -1284,26 +1284,26 @@ namespace hub_client.Network
         public void OnResetStat(StandardServerResetStat packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Tes stats viennent d'être réinitialisées !", "Réinitialisation des stats", false);
+            OpenPopBox("Tes stats viennent d'être réinitialisées !", "Réinitialisation des stats");
             logger.Trace("RESET STAT RECIEVED");
         }
         public void OnChangeUsername(StandardServerChangeUsername packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
             FormExecution.Username = packet.Username;
-            OpenPopBox("Ton pseudo a été changé ! Nouveau pseudo : " + packet.Username, "Changement de pseudo", false);
+            OpenPopBox("Ton pseudo a été changé ! Nouveau pseudo : " + packet.Username, "Changement de pseudo");
             logger.Trace("CHANGE USERNAME - New username : {0}", packet.Username);
         }
         public void OnChangeChatColor(StandardServerUsernameColor packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Tu as désormais une nouvelle couleur dans le chat, va l'essayer !", "Changement de couleur de pseudo", false);
+            OpenPopBox("Tu as désormais une nouvelle couleur dans le chat, va l'essayer !", "Changement de couleur de pseudo");
             logger.Trace("CHANGE USERNAME COLOR");
         }
         public void OnBuyMonthPack(StandardServerBuyMonthPack packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir le pack du mois, contenant un avatar, une bordure, une sleeve et t'offrant un jour de multiplication par deux de tes gains de BPs en duel ainsi qu'un mois VIP !", "Pack du mois !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir le pack du mois, contenant un avatar, une bordure, une sleeve et t'offrant un jour de multiplication par deux de tes gains de BPs en duel ainsi qu'un mois VIP !", "Pack du mois !");
             FormExecution.AddNotes("Fin de la période VIP : " + DateTime.Now.AddMonths(1) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY MONTH PACK");
         }
@@ -1315,40 +1315,40 @@ namespace hub_client.Network
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un mois ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1) + ". Cette date est stockée dans ton bloc-note !", "Customisation personnalisée !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une durée d'un mois ta customisation personnalisée ! Va vite l'essayer dans ton profil !" + Environment.NewLine + "Tu pourras l'utiliser jusqu'au " + DateTime.Now.AddMonths(1) + ". Cette date est stockée dans ton bloc-note !", "Customisation personnalisée !");
             FormExecution.AddNotes("Fin de ta customisation personnalisée : " + DateTime.Now.AddMonths(1) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY OWN CUSTOMIZATION");
         }
         public void OnBuyPrestigeCustomization(StandardServerBuyPrestigeCustomization packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une customisation de prestige ! Va vite l'essayer dans ton profil !", "Customisation de prestige !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir pour une customisation de prestige ! Va vite l'essayer dans ton profil !", "Customisation de prestige !");
             logger.Trace("BUY PRESTIGE CUSTOMIZATION");
         }
         public void OnBuyVIP(StandardServerBuyVIP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !" + Environment.NewLine + "Tu le seras jusqu'au " + DateTime.Now.AddMonths(3) + ". Cette date est indiquée dans ton bloc note sur le jeu !", "Nouveau VIP !", false);
+            OpenPopBox("Félicitations ! Tu viens de devenir VIP pour une période de 3 mois ! Cela te permet de doubler tes BPs en animation et de possèder un avatar, une bordure et une sleeve réservés aux VIPs !" + Environment.NewLine + "Tu le seras jusqu'au " + DateTime.Now.AddMonths(3) + ". Cette date est indiquée dans ton bloc note sur le jeu !", "Nouveau VIP !");
             FormExecution.AddNotes("Fin de la période VIP : " + DateTime.Now.AddMonths(3) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY VIP");
         }
         public void OnBuyDoubleBP(StandardServerDoubleBP packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !" + Environment.NewLine + "Tu pourras en profiter jusqu'au " + DateTime.Now.AddDays(3), "Double de BPs !", false);
+            OpenPopBox("Félicitations ! Pendant 3 jours, tes gains de BPs en duel vont être doublés !" + Environment.NewLine + "Tu pourras en profiter jusqu'au " + DateTime.Now.AddDays(3), "Double de BPs !");
             FormExecution.AddNotes("Fin de la période double BP : " + DateTime.Now.AddDays(3) + ". Date d'achat : " + DateTime.Now);
             logger.Trace("BUY DOUBLE BP");
         }
         public void OnBuyInfiniteGreet(StandardServerGreetInfinite packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu vas désormais pouvoir changer de greet à l'infini !", "Greet infini !", false);
+            OpenPopBox("Félicitations ! Tu vas désormais pouvoir changer de greet à l'infini !", "Greet infini !");
             logger.Trace("BUY INIFINITE GREET");
         }
         public void OnBuySpecialPack(StandardServerBuySpecialPack packet)
         {
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
-            OpenPopBox("Félicitations ! Tu viens d'obtenir un pack spécial disponible durant une durée limitée seulement !", "Pack special !", false);
+            OpenPopBox("Félicitations ! Tu viens d'obtenir un pack spécial disponible durant une durée limitée seulement !", "Pack special !");
             logger.Trace("BUY SPECIAL PACK");
         }
 
@@ -1558,7 +1558,7 @@ namespace hub_client.Network
 
         public void OnDuelServerStop(StandardServerDuelServerStop packet)
         {
-            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté", true));
+            Application.Current.Dispatcher.Invoke(() => PopMessageBox?.Invoke("Le serveur de duel est actuellement arrêté ! Ca ne devrait pas durer longtemps. ( Raison : " + packet.Reason + ")", "Serveur de duel arrêté"));
         }
 
         public void OnGetAnimations(StandardServerGetAnimations packet)

@@ -279,6 +279,9 @@
     <Compile Include="Windows\Controls\BCA_TextBox.xaml.cs">
       <DependentUpon>BCA_TextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Controls\BCA_TutoPopup.xaml.cs">
+      <DependentUpon>BCA_TutoPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
@@ -499,6 +502,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\BCA_TutoPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -880,6 +887,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Shop\specialpack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Tutorial\AstralTuto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

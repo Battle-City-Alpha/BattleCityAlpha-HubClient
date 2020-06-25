@@ -64,7 +64,7 @@
                     </Grid>
                 </Border>
             </Popup>
-
+        
             <TextBlock x:Name="tb_version" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Grid.Row="0" Text="2.0.0.0" Margin="40,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,5,5">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>

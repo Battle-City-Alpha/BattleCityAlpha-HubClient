@@ -45,7 +45,7 @@ namespace hub_client.Windows
             if (urlformat[urlformat.Length - 1] != "png" || (!tb_url.Text.StartsWith("http://") && !tb_url.Text.StartsWith("https://")))
             {
                 tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.";
-                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE ET HEBERGEMENT SUR LE WEB.", "Erreur", true);
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE ET HEBERGEMENT SUR LE WEB.", "Erreur");
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace hub_client.Windows
             if (urlformat[urlformat.Length - 1] != "png")
             {
                 tb_url.Text = "Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.";
-                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.", "Erreur", true);
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite. Veuillez vérifier votre URL. FORMAT PNG OBLIGATOIRE.", "Erreur");
                 return;
             }
 

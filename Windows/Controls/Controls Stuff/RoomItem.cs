@@ -16,6 +16,7 @@ namespace hub_client.Windows.Controls.Controls_Stuff
         public bool NeedPassword { get; set; }
         public bool IsRanked { get; set; }
         public bool IsShadowDuel { get; set;  }
+        public bool IsTurboDuel { get; set; }
         public string CaptionText { get; set; }
         public BitmapImage Image { get { return FormExecution.AssetsManager.GetImage("Duel", Type.ToString()); } }
         public SolidColorBrush RoomColor { get; set; }

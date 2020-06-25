@@ -114,7 +114,8 @@ namespace hub_client.Windows.Controls
                     CaptionText = room.Config.CaptionText,
                     IsShadowDuel = room.IsShadowRoom(),
                     RoomColor = new SolidColorBrush(Colors.Black),
-                    ObserversCount =  room.Observers.Count
+                    ObserversCount =  room.Observers.Count,
+                    IsTurboDuel = room.IsTurboDuel
 
                 };
                 if (room.Config.Banlist != 0 || (room.Config.StartDuelLP != 8000 && room.Config.Type != RoomType.Tag) || (room.Config.StartDuelLP != 16000 && room.Config.Type == RoomType.Tag) || room.Config.CardByHand != 5 || room.Config.MasterRules != 5 || room.Config.DrawCount != 1 | room.Config.NoShuffleDeck == true)
@@ -136,6 +137,9 @@ namespace hub_client.Windows.Controls
                     newitem.Bet = bet;
                     newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("ShadowRoomColor"));
                 }
+                if (room.IsTurboDuel)
+                    newitem.RoomColor = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("TurboDuelRoomColor"));
+
 
                 if (item == null)
                     AddItem(newitem);

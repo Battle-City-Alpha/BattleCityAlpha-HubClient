@@ -77,7 +77,7 @@ namespace hub_client.Windows
             {
                 btnDownloadPics.IsEnabled = true;
                 FormExecution.ClientConfig.BCA_Card_Design = bca_design.IsChecked == true;
-                FormExecution.Client_PopMessageBox("Le changement de style de cartes est terminé et effectif !", "Changement style de carte", true);
+                FormExecution.Client_PopMessageBox("Le changement de style de cartes est terminé et effectif !", "Changement style de carte");
                 Close();
             }
         }

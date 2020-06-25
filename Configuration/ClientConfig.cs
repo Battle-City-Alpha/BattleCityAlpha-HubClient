@@ -36,6 +36,9 @@ namespace hub_client.Configuration
         public int CardsStuffVersion = 0;
 
         public bool DoTutoChat = true;
+        public bool DoTutoArena = true;
+        public bool DoTutoShop = true;
+        public bool DoTutoQuests = true;
 
         public void Save()
         {

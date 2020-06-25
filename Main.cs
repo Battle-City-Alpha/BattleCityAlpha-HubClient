@@ -14,8 +14,8 @@ namespace hub_client
     class Main
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static int CLIENT_VERSION = 2157;
-        public static string VERSION = "2.1.5.7";
+        private static int CLIENT_VERSION = 2200;
+        public static string VERSION = "2.2.0.0";
 
         public Main()
         {
@@ -28,7 +28,7 @@ namespace hub_client
             catch (Exception ex)
             {
                 logger.Fatal(ex);
-                FormExecution.Client_PopMessageBox("Une erreur s'est produite.", "Problème", true);
+                FormExecution.Client_PopMessageBoxShowDialog("Une erreur s'est produite.", "Problème");
             }
         }
 
@@ -63,7 +63,7 @@ namespace hub_client
         private static void UpdateClient(string[] updatefilelines)
         {
             //FormExecution.HideLogin();
-            FormExecution.Client_PopMessageBox("Un mise à jour du jeu est disponible !", "Mise à jour", true);
+            FormExecution.Client_PopMessageBoxShowDialog("Un mise à jour du jeu est disponible !", "Mise à jour");
             List<string> updatesToDo = new List<string>();
             int i = 0;
             while (updatefilelines[i] != CLIENT_VERSION.ToString() && i < updatefilelines.Length - 1)

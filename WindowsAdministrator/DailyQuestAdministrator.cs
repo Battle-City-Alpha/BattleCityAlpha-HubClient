@@ -32,22 +32,22 @@ namespace hub_client.WindowsAdministrator
             if (success)
                 ChangeQuest?.Invoke(dqtype, quest);
             else
-                FormExecution.Client_PopMessageBox("Tu as déjà utilisé ton changement de quête aujourd'hui ! (Un seul changement par jour)", "Quête journalière !", true);
+                FormExecution.Client_PopMessageBox("Tu as déjà utilisé ton changement de quête aujourd'hui ! (Un seul changement par jour)", "Quête journalière !");
         }
 
         private void Client_DailyQuestReward(bool success, DailyQuestType dqtype, int amount, bool allquest)
         {
             if (allquest)
-                FormExecution.Client_PopMessageBox("Félicitations ! Tu as rempli toutes les quêtes possible aujourd'hui ! Tu remportes un bonus de 400 BPs supplémentaire !", "Quête journalière !", true);
+                FormExecution.Client_PopMessageBox("Félicitations ! Tu as rempli toutes les quêtes possible aujourd'hui ! Tu remportes un bonus de 400 BPs supplémentaire !", "Quête journalière !");
             else
             {
                 if (success)
                 {
                     ChangeQuestState?.Invoke(dqtype, success);
-                    FormExecution.Client_PopMessageBox("Félicitations ! La quête est complétée ! Tu remportes " + amount + " BPs." + Environment.NewLine + "Reviens demain pour de nouveaux défis !", "Quête journalière !", true);
+                    FormExecution.Client_PopMessageBox("Félicitations ! La quête est complétée ! Tu remportes " + amount + " BPs." + Environment.NewLine + "Reviens demain pour de nouveaux défis !", "Quête journalière !");
                 }
                 else
-                    FormExecution.Client_PopMessageBox("La quête n'est pas encore terminée ! Encore un petit effort...", "Quête journalière !", true);
+                    FormExecution.Client_PopMessageBox("La quête n'est pas encore terminée ! Encore un petit effort...", "Quête journalière !");
             }
             }
 

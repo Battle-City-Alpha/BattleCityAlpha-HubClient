@@ -20,7 +20,7 @@ namespace hub_client
             catch (Exception ex)
             {
                 logger.Error(ex.ToString());
-                FormExecution.Client_PopMessageBox("Une erreur s'est produite." + ex.ToString(), "Problème", true);
+                FormExecution.Client_PopMessageBox("Une erreur s'est produite." + ex.ToString(), "Problème");
                 Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
             }
         }
@@ -33,7 +33,7 @@ namespace hub_client
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             logger.Error("UNHANDLED EXCEPTION - {0}", e.Exception.ToString());
-            FormExecution.Client_PopMessageBox("Une erreur s'est produite.", "Problème", true);
+            FormExecution.Client_PopMessageBoxShowDialog("Une erreur s'est produite.", "Problème");
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
     }

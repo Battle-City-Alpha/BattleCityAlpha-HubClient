@@ -26,7 +26,7 @@ namespace hub_client.WindowsAdministrator
                 if (end)
                 {
                     EndLoading?.Invoke();
-                    FormExecution.Client_PopMessageBox("La récupération de données est terminée !", "Récupération de données", true);
+                    FormExecution.Client_PopMessageBox("La récupération de données est terminée !", "Récupération de données");
                 }
                 else
                     StartLoading?.Invoke();
@@ -44,7 +44,7 @@ namespace hub_client.WindowsAdministrator
                         error += "Tu as déjà récupéré tes données !";
                         break;
                 }
-                FormExecution.Client_PopMessageBox(error, "Récupération de données", true);
+                FormExecution.Client_PopMessageBox(error, "Récupération de données");
             }
         }
 

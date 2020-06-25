@@ -28,6 +28,7 @@ namespace hub_client.Configuration
 
             GameColors.Add("CustomRoomColor", Colors.Red);
             GameColors.Add("ShadowRoomColor", Colors.DarkViolet);
+            GameColors.Add("TurboDuelRoomColor", Colors.Maroon);
 
             GameColors.Add("ChatBackgroundColor", Colors.White);
             GameColors.Add("ChatInputBackgroundColor", Colors.White);

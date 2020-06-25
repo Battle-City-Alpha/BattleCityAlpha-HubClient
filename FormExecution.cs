@@ -134,6 +134,7 @@ namespace hub_client
             Client = new GameClient();
 
             Client.PopMessageBox += Client_PopMessageBox;
+            Client.PopMessageBoxShowDialog += Client_PopMessageBoxShowDialog;
             Client.ChoicePopBox += Client_ChoicePopBox;
             Client.ShadowDuelRequest += Client_ShadowDuelRequest;
             Client.RoomNeedPassword += Client_RoomNeedPassword;
@@ -258,7 +259,7 @@ namespace hub_client
             _windowload = new UpdateCardsStuffWindow(false);
             _windowload.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _windowload.Activate()));
-            FormExecution.Client_PopMessageBox("Un mise à jour mineure est disponible !", "Mise à jour", true);
+            FormExecution.Client_PopMessageBox("Un mise à jour mineure est disponible !", "Mise à jour");
 
             List<string> updatesToDo = new List<string>();
 
@@ -286,7 +287,6 @@ namespace hub_client
             AssetsManager.LoadSmileys();
             BoosterManager.LoadList();
         }
-
         private static void CardsUpdateDownloader_LoadingProgress(int i, int n)
         {
             _windowload.SetProgressUpdate(i, n);
@@ -316,12 +316,13 @@ namespace hub_client
 
         private static void Client_Restart()
         {
-            Client_PopMessageBox("Vous avez été déconnecté du serveur.", "Problème", true);
+            Client_PopMessageBox("Vous avez été déconnecté du serveur.", "Problème");
             _chat.Restart = true;
-            _chat.Close();
+            _chat.Close(); 
             Main.CheckClientUpdate();
             CheckCardsStuffUpdate();
             Init(true);
+            _chat = new Chat(Client.ChatAdmin);
         }
 
         private static void LoadBanlist()
@@ -525,15 +526,18 @@ namespace hub_client
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 
-        public static void Client_PopMessageBox(string text, string title, bool showDialog)
+        public static void Client_PopMessageBox(string text, string title)
         {
             PopBox box = new PopBox(text, title);
             box.Topmost = true;
-            if (showDialog)
-                box.ShowDialog();
-            else
-                box.Show();
+            box.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => box.Activate()));
+        }
+        public static void Client_PopMessageBoxShowDialog(string text, string title)
+        {
+            PopBox box = new PopBox(text, title);
+            box.Topmost = true;
+            box.ShowDialog();
         }
 
         public static void SaveConfig()
@@ -641,11 +645,21 @@ namespace hub_client
         {
             logger.Trace("Open Purchase");
 
-            _purchase = new Purchase(Client.PurchaseAdmin, booster);
-            _purchase.Title = booster.Name;
-            _purchase.Show();
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
-            _purchase.UpdateCards(cards);
+            if (!ClientConfig.AlternativePurchaseWindow)
+            {
+                PurchaseAlternateWindow paw = new PurchaseAlternateWindow(Client.PurchaseAdmin, booster);
+                paw.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => paw.Activate()));
+                paw.UpdateCards(cards);
+            }
+            else
+            {
+                _purchase = new Purchase(Client.PurchaseAdmin, booster);
+                _purchase.Title = booster.Name;
+                _purchase.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _purchase.Activate()));
+                _purchase.UpdateCards(cards);
+            }
         }
         public static void OpenTools()
         {
@@ -660,7 +674,7 @@ namespace hub_client
 
             if (ClientConfig.FirstTimeBrocante)
             {
-                Client_PopMessageBox(StartDisclaimer.BrocanteText, "Première ouverture de la brocante", true);
+                Client_PopMessageBoxShowDialog(StartDisclaimer.BrocanteText, "Première ouverture du marché aux cartes");
                 ClientConfig.FirstTimeBrocante = false;
                 ClientConfig.Save();
             }
@@ -722,7 +736,11 @@ namespace hub_client
 
         public static void ActivateShop()
         {
-            _shop.Activate();
+            try
+            {
+                _shop.Activate();
+            }
+            catch { };
         }
 
         public static void RefreshChatStyle()

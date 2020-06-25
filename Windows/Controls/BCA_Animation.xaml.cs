@@ -89,7 +89,8 @@ namespace hub_client.Windows.Controls
 
         private void Animation_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start(_anim.URL);
+            if (_anim.URL != null && _anim.URL != string.Empty)
+                System.Diagnostics.Process.Start(_anim.URL);
         }
 
         private void _timer_Tick(object sender, EventArgs e)

@@ -107,7 +107,8 @@ namespace hub_client.Windows
                 InputText form = new InputText("mise...");
                 form.Title = "Duel des ombres...";
                 form.SelectedText += BP_bet;
-                form.ShowDialog();
+                form.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => form.Activate()));
             }
         }
         private void Cb_dueltype_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -141,7 +142,7 @@ namespace hub_client.Windows
                 AllowToSend();
             }
             else
-               FormExecution.Client_PopMessageBox("Vous n'avez pas indiqué un nombre valable de BPs.", "Erreur", false);
+               FormExecution.Client_PopMessageBox("Vous n'avez pas indiqué un nombre valable de BPs.", "Erreur");
 
         }
 

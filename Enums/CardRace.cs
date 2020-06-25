@@ -4,7 +4,7 @@
     {
         Guerrier = 0x1,
         Magicien = 0x2,
-        Féé = 0x4,
+        Elfe = 0x4,
         Démon = 0x8,
         Zombie = 0x10,
         Machine = 0x20,

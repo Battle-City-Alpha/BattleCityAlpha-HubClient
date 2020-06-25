@@ -21,7 +21,7 @@
                 </ImageBrush.ImageSource>
             </ImageBrush>
         </Border.Background>
-        <Grid>
+        <Grid x:Name="maingrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
@@ -49,7 +49,7 @@
                         <Image Source="pack://siteoforigin:,,,/Assets/Logo/BPLogo.png" Margin="20" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                     <Controls:BCA_ColorButton x:Name="btn_searchcard" Margin="10" Width="Auto" Height="Auto" ButtonText="Recherche carte" Grid.Column="1" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_searchcard_MouseLeftButtonDown" VerticalAlignment="Center"/>
-                    <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Brocante" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown" VerticalAlignment="Center"/>
+                    <Controls:BCA_ColorButton x:Name="btn_brocante" Margin="10" Width="Auto" Height="Auto" ButtonText="Marché aux cartes" Grid.Column="2" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_brocante_MouseLeftButtonDown" VerticalAlignment="Center"/>
                     <Controls:BCA_ColorButton x:Name="btn_prestigeshop" Margin="10" Width="Auto" Height="Auto" ButtonText="Boutique Prestige" Grid.Column="3" Color1="#FF202CB3" Color2="#FF1666B1" MouseLeftButtonDown="btn_prestigeshop_MouseLeftButtonDown" VerticalAlignment="Center"/>
                 </Grid>
             </Border>

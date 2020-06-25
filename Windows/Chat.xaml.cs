@@ -48,6 +48,8 @@ namespace hub_client.Windows
 
         public bool Restart = false;
 
+        private int _tutoIndex = 0;
+
         public Chat(ChatAdministrator admin)
         {
             InitializeComponent();
@@ -364,6 +366,101 @@ namespace hub_client.Windows
             }
 
             logger.Trace("Style loaded.");
+
+
+            if (FormExecution.ClientConfig.DoTutoChat)
+            {
+                BCA_TutoPopup tutopopup = new BCA_TutoPopup();
+                maingrid.Children.Add(tutopopup);
+                tutopopup.HorizontalAlignment = HorizontalAlignment.Center;
+                tutopopup.VerticalAlignment = VerticalAlignment.Center;
+                tutopopup.tuto_popup.IsOpen = true;
+                tutopopup.tuto_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+                tutopopup.tuto_popup.PlacementTarget = maingrid;
+                tutopopup.SetText(StartDisclaimer.ChatTutorial[_tutoIndex]);
+                tutopopup.tuto_popup.MaxWidth = this.Width - 200;
+
+                tutopopup.SkipTuto += SkipTutorial;
+                tutopopup.NextStep += Tutopopup_NextStep;
+            }
+        }
+
+        private void Tutopopup_NextStep(BCA_TutoPopup popup)
+        {
+            _tutoIndex++;
+
+            if (_tutoIndex == StartDisclaimer.ChatTutorial.Length - 1)
+            {
+                popup.btnNext.Visibility = Visibility.Hidden;
+                popup.btnSkip.ButtonText = "Fin !";
+                popup.btnSkip.Update();
+            }
+
+            switch (_tutoIndex)
+            {
+                case 1:
+                    SetTutorialColor(btnArene);
+                    break;
+                case 2:
+                    SetOriginalColor(btnArene);
+                    SetTutorialColor(btnShop);
+                    break;
+                case 3:
+                    SetOriginalColor(btnShop);
+                    SetTutorialColor(btnDecks);
+                    break;
+                case 4:
+                    SetOriginalColor(btnDecks);
+                    SetTutorialColor(btnAnimations);
+                    break;
+                case 5:
+                    SetOriginalColor(btnAnimations);
+                    SetTutorialColor(btnTools);
+                    break;
+                case 6:
+                    SetOriginalColor(btnTools);
+                    SetTutorialColor(btnProfil);
+                    SetTutorialColor(btnReplay);
+                    SetTutorialColor(btnQuest);
+                    SetTutorialColor(btnRules);
+                    break;
+                case 7:
+                    SetTutorialColor(btnFAQ);
+                    SetOriginalColor(btnProfil);
+                    SetOriginalColor(btnReplay);
+                    SetOriginalColor(btnQuest);
+                    SetOriginalColor(btnRules);
+                    break;
+                case 8:
+                    SetOriginalColor(btnFAQ);
+                    SetTutorialColor(btnNote);
+                    SetTutorialColor(btnDiscord);
+                    break;
+            }
+            if (_tutoIndex >= StartDisclaimer.ChatTutorial.Length)
+                SkipTutorial(popup);
+            else
+                popup.SetText(StartDisclaimer.ChatTutorial[_tutoIndex]);
+        }
+
+        private void SkipTutorial(BCA_TutoPopup popup)
+        {
+            popup.tuto_popup.IsOpen = false;
+            LoadStyle();
+            FormExecution.ClientConfig.DoTutoChat = false;
+            FormExecution.ClientConfig.Save();
+        }
+        private void SetTutorialColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = Colors.Red;
+            btn.Color2 = Colors.PaleVioletRed;
+            btn.Update();
+        }
+        private void SetOriginalColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = style.GetGameColor("Color1HomeHeadButton");
+            btn.Color2 = style.GetGameColor("Color2HomeHeadButton");
+            btn.Update();
         }
 
         private void cb_defaultdeck_click(object sender, MouseButtonEventArgs e)
@@ -488,13 +585,8 @@ namespace hub_client.Windows
 
         private void btnProfil_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            foreach (PlayerInfo info in lvUserlist.Items)
-                if (info.Username == FormExecution.Username)
-                {
-                    Profil profil = new Profil(_admin.Client.ProfilAdmin);
-                    _admin.SendAskProfil(info);
-                    return;
-                }
+            Profil profil = new Profil(_admin.Client.ProfilAdmin);
+            _admin.SendAskProfil(FormExecution.PlayerInfos);
         }
         private void btnDecks_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -838,7 +930,7 @@ namespace hub_client.Windows
         {
             if (FormExecution.ClientConfig.FirstTimeShadowDuel)
             {
-                FormExecution.Client_PopMessageBox(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !", true);
+                FormExecution.Client_PopMessageBoxShowDialog(StartDisclaimer.ShadowDuelText, "Premier duel des ombres !");
                 FormExecution.ClientConfig.FirstTimeShadowDuel = false;
                 FormExecution.ClientConfig.Save();
             }

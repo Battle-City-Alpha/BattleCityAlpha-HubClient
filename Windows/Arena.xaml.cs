@@ -32,6 +32,9 @@ namespace hub_client.Windows
         private bool _isOverRankedBtn = false;
 
         private bool _availableRooms = true;
+
+        private int _tutoIndex = 0;
+
         public Arena(ArenaAdministrator admin)
         {
             InitializeComponent();
@@ -124,7 +127,15 @@ namespace hub_client.Windows
 
                     if (room.Config.MasterRules != 5)
                         tb_popup_MR.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
-                    tb_popup_MR.Text = room.Config.MasterRules.ToString();
+                    if (room.IsTurboDuel)
+                    {
+                        tb_popup_MR_title.Text = "🏍 Turbo Duel 🏍";
+                        tb_popup_MR.Text = "";
+                        tb_popup_MR_title.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("TurboDuelRoomColor"));
+                        Grid.SetColumnSpan(tb_popup_MR_title, 2);
+                    }
+                    else
+                        tb_popup_MR.Text = room.Config.MasterRules.ToString();
 
                     tb_popup_players1.Text = room.Players1;
                     tb_popup_players2.Text = room.Players2;
@@ -181,6 +192,81 @@ namespace hub_client.Windows
         private void Arena_Loaded(object sender, RoutedEventArgs e)
         {
             LoadStyle();
+            if (FormExecution.ClientConfig.DoTutoArena)
+            {
+                BCA_TutoPopup tutopopup = new BCA_TutoPopup();
+                maingrid.Children.Add(tutopopup);
+                tutopopup.HorizontalAlignment = HorizontalAlignment.Center;
+                tutopopup.VerticalAlignment = VerticalAlignment.Center;
+                tutopopup.tuto_popup.IsOpen = true;
+                tutopopup.tuto_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+                tutopopup.tuto_popup.PlacementTarget = maingrid;
+                tutopopup.SetText(StartDisclaimer.ArenaTutorial[_tutoIndex]);
+                tutopopup.tuto_popup.MaxWidth = this.Width - 200;
+
+                tutopopup.SkipTuto += SkipTutorial;
+                tutopopup.NextStep += Tutopopup_NextStep;
+            }
+        }
+
+        private void Tutopopup_NextStep(BCA_TutoPopup popup)
+        {
+            _tutoIndex++;
+
+            if  (_tutoIndex == StartDisclaimer.ArenaTutorial.Length -1)
+            {
+                popup.btnNext.Visibility = Visibility.Hidden;
+                popup.btnSkip.ButtonText = "Fin !";
+                popup.btnSkip.Update();
+            }
+
+            switch (_tutoIndex)
+            {
+                case 1:
+                    SetTutorialColor(btn_ranking);
+                    SetTutorialColor(btn_playranked);
+                    break;
+                case 2:
+                    SetOriginalColor(btn_ranking);
+                    SetOriginalColor(btn_playranked);
+                    SetTutorialColor(btn_host);
+                    break;
+                case 3:
+                    SetOriginalColor(btn_host);
+                    SetTutorialColor(btn_IA);
+                    break;
+                case 4:
+                    SetOriginalColor(btn_IA);
+                    SetTutorialColor(btn_Switch_Rooms_Visible);
+                    break;
+                case 5:
+                    SetOriginalColor(btn_Switch_Rooms_Visible);
+                    break;
+            }
+            if (_tutoIndex >= StartDisclaimer.ArenaTutorial.Length)
+                SkipTutorial(popup);
+            else
+                popup.SetText(StartDisclaimer.ArenaTutorial[_tutoIndex]);
+        }
+
+        private void SkipTutorial(BCA_TutoPopup popup)
+        {
+            popup.tuto_popup.IsOpen = false;
+            LoadStyle();
+            FormExecution.ClientConfig.DoTutoArena = false;
+            FormExecution.ClientConfig.Save();
+        }
+        private void SetTutorialColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = Colors.Blue;
+            btn.Color2 = Colors.BlueViolet;
+            btn.Update();
+        }
+        private void SetOriginalColor(BCA_ColorButton btn)
+        {
+            btn.Color1 = style.GetGameColor("Color1ArenaButton");
+            btn.Color2 = style.GetGameColor("Color2ArenaButton");
+            btn.Update();
         }
 
         private void Room_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -342,7 +428,7 @@ namespace hub_client.Windows
         {
             if (FormExecution.ClientConfig.FirstTimeRanked)
             {
-                FormExecution.Client_PopMessageBox(StartDisclaimer.RankedText, "Premièr duel classé !", true);
+                FormExecution.Client_PopMessageBoxShowDialog(StartDisclaimer.RankedText, "Premièr duel classé !");
                 FormExecution.ClientConfig.FirstTimeRanked = false;
                 FormExecution.ClientConfig.Save();
             }
@@ -356,7 +442,8 @@ namespace hub_client.Windows
             {
                 ChoicePopBox cpb = new ChoicePopBox(FormExecution.PlayerInfos, new RoomConfig(), ChoiceBoxType.DeckChoiceRanked, "", YgoproConfig.GetDefaultDeck());
                 cpb.Choice += Cpb_Choice;
-                cpb.ShowDialog();                
+                cpb.Show();
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => cpb.Activate()));
             }
         }
 

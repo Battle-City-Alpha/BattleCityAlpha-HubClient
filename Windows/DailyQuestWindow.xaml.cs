@@ -1,5 +1,6 @@
 ﻿using BCA.Common.Enums;
 using hub_client.Configuration;
+using hub_client.Helpers;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
@@ -64,6 +65,43 @@ namespace hub_client.Windows
             btn_changefun.MouseLeftButtonDown += (sender, e) => btn_changeClicked(sender, e, DailyQuestType.Fun);
 
             LoadStyle();
+
+            this.Loaded += DailyQuestWindow_Loaded;
+        }
+
+        private void DailyQuestWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FormExecution.ClientConfig.DoTutoQuests)
+            {
+                BCA_TutoPopup tutopopup = new BCA_TutoPopup();
+                maingrid.Children.Add(tutopopup);
+                tutopopup.HorizontalAlignment = HorizontalAlignment.Center;
+                tutopopup.VerticalAlignment = VerticalAlignment.Center;
+                tutopopup.tuto_popup.IsOpen = true;
+                tutopopup.tuto_popup.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+                tutopopup.tuto_popup.PlacementTarget = maingrid;
+                tutopopup.SetText(StartDisclaimer.QuestsTutorial);
+                tutopopup.tuto_popup.MaxWidth = FormExecution.GetChat().Width - 200;
+                tutopopup.btnNext.Visibility = Visibility.Hidden;
+                tutopopup.btnSkip.ButtonText = "Fin !";
+                tutopopup.btnSkip.Update();
+
+                tutopopup.SkipTuto += SkipTutorial;
+                tutopopup.NextStep += Tutopopup_NextStep;
+            }
+        }
+
+        private void Tutopopup_NextStep(BCA_TutoPopup popup)
+        {
+            SkipTutorial(popup);
+        }
+
+        private void SkipTutorial(BCA_TutoPopup popup)
+        {
+            popup.tuto_popup.IsOpen = false;
+            LoadStyle();
+            FormExecution.ClientConfig.DoTutoArena = false;
+            FormExecution.ClientConfig.Save();
         }
 
         private void _admin_ChangeQuest(DailyQuestType dqtype, string quest, bool savequest = false)
