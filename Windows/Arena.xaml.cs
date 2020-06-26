@@ -129,13 +129,16 @@ namespace hub_client.Windows
                         tb_popup_MR.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));
                     if (room.IsTurboDuel)
                     {
-                        tb_popup_MR_title.Text = "🏍 Turbo Duel 🏍";
+                        tb_popup_MR_title.Text = "🎮 Turbo Duel 🎮";
                         tb_popup_MR.Text = "";
                         tb_popup_MR_title.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("TurboDuelRoomColor"));
                         Grid.SetColumnSpan(tb_popup_MR_title, 2);
                     }
                     else
+                    {
+                        tb_popup_MR.Text = "Master Rules : ";
                         tb_popup_MR.Text = room.Config.MasterRules.ToString();
+                    }
 
                     tb_popup_players1.Text = room.Players1;
                     tb_popup_players2.Text = room.Players2;

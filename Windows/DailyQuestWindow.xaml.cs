@@ -100,7 +100,7 @@ namespace hub_client.Windows
         {
             popup.tuto_popup.IsOpen = false;
             LoadStyle();
-            FormExecution.ClientConfig.DoTutoArena = false;
+            FormExecution.ClientConfig.DoTutoQuests = false;
             FormExecution.ClientConfig.Save();
         }
 

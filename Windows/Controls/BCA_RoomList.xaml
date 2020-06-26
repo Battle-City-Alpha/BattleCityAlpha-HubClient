@@ -27,10 +27,10 @@
                             <TextBlock x:Name="tb_locker" Text="🔒" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding NeedPassword, Converter={StaticResource BoolToVis}}"/>
                             <TextBlock x:Name="tb_ranked" Text="🏆" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsRanked, Converter={StaticResource BoolToVis}}"/>
                             <TextBlock x:Name="tb_shadowduel" Text="🔥" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsShadowDuel, Converter={StaticResource BoolToVis}}"/>
-                            <TextBlock x:Name="tb_turboduel" Text="🏍" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding IsTurboDuel, Converter={StaticResource BoolToVis}}"/>
-                            <TextBlock Text=" " HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding HasObservers, Converter={StaticResource BoolToVis}}"/>
+                            <Image Source="pack://siteoforigin:,,,/Assets/Icon/turboduel.png" HorizontalAlignment="Center" Visibility="{Binding IsTurboDuel, Converter={StaticResource BoolToVis}}"/>
+                            <TextBlock Text=" " VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding HasObservers, Converter={StaticResource BoolToVis}}"/>
                             <TextBlock x:Name="tb_observerscount" Text="{Binding Path=ObserversCount}" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding HasObservers, Converter={StaticResource BoolToVis}}"/>
-                            <TextBlock Text="👁" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding HasObservers, Converter={StaticResource BoolToVis}}"/>
+                            <TextBlock Text=" 👀" HorizontalAlignment="Center" Foreground="{Binding RoomColor}" Grid.Row="0" FontSize="16" Visibility="{Binding HasObservers, Converter={StaticResource BoolToVis}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="{Binding Path=Players1}" HorizontalAlignment="Center" Grid.Row="2" FontSize="14" Foreground="{Binding RoomColor}"/>

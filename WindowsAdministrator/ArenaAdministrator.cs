@@ -39,7 +39,10 @@ namespace hub_client.WindowsAdministrator
                 case RoomState.Dueling:
                     if (WaitingRooms.ContainsKey(obj.Id))
                         WaitingRooms.Remove(obj.Id);
-                    DuelingRooms.Add(obj.Id, obj);
+                    if (DuelingRooms.ContainsKey(obj.Id))
+                        DuelingRooms[obj.Id] = obj;
+                    else
+                        DuelingRooms.Add(obj.Id, obj);
                     break;
                 case RoomState.Finished:
                     if (WaitingRooms.ContainsKey(obj.Id))
