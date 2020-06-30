@@ -411,5 +411,19 @@ namespace hub_client.Helpers
         {
             return new StandardClientDuelServerRestart { };
         }
+        public StandardClientKillRoom KillRoom(string txt)
+        {
+            string[] args = txt.Split(' ');
+
+            int id = -1;
+            int.TryParse(args[0], out id);
+            if (id == -1)
+                return null;
+
+            return new StandardClientKillRoom
+            {
+                ID = id
+            };
+        }
     }
 }

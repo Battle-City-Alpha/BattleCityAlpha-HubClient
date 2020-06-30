@@ -21,7 +21,7 @@ namespace hub_client.Windows
 
         public event Action PurchaseBtnClick;
 
-        public MonthPackViewer(int avatar, int border, int sleeve)
+        public MonthPackViewer(int avatar, int border, int sleeve, int partner)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -32,6 +32,7 @@ namespace hub_client.Windows
             img_avatar.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, avatar, false, ""));
             img_border.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, border, false, ""));
             img_sleeve.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, sleeve, false, ""));
+            img_partner.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Partner, partner, false, ""));
 
             btn_buy.MouseLeftButtonDown += Btn_buy_MouseLeftButtonDown;
         }

@@ -67,10 +67,7 @@ namespace hub_client.Helpers
         public static void LaunchGameAgainstBot()
         {
             YgoproConfig.UpdateForced(false);
-            UpdateAvatar(new Customization(CustomizationType.Avatar, 14, false, ""), 0);
-            UpdateBorder(new Customization(CustomizationType.Border, 1, false, ""), 0);
-            UpdateSleeve(new Customization(CustomizationType.Sleeve, 203, false, ""), 0);
-            UpdateSleeve(new Customization(CustomizationType.Partner, 75, false, ""), 0);
+            UpdateAvatar(FormExecution.PlayerInfos.Avatar, 0);
             UpdateAvatar(_bot_avatar, 1);
             UpdateBorder(_bot_border, 1);
             UpdateSleeve(_bot_sleeve, 1);

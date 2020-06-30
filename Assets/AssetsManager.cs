@@ -83,10 +83,17 @@ namespace hub_client.Assets
 
         public BitmapImage GetImage(string[] directory)
         {
-            string img_path = Path.Combine(path, "Assets");
-            foreach (string item in directory)
-                img_path = Path.Combine(img_path, item);
-            return new BitmapImage(new Uri(img_path));
+            try
+            {
+                string img_path = Path.Combine(path, "Assets");
+                foreach (string item in directory)
+                    img_path = Path.Combine(img_path, item);
+                return new BitmapImage(new Uri(img_path));
+            }
+            catch (Exception ex)
+            {
+                return GetUnknownCardPic();
+            }
         }
 
         public BitmapImage GetPics(string[] directory)

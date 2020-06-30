@@ -220,7 +220,7 @@ namespace hub_client.Windows
         }
         private void BuyVIP(object sender, MouseButtonEventArgs e)
         {
-            MonthPackViewer viewer = new MonthPackViewer(220, 21, 65);
+            MonthPackViewer viewer = new MonthPackViewer(220, 21, 65, 142);
             viewer.PurchaseBtnClick += VIP_BUY;
             viewer.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));

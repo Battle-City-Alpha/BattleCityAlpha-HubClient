@@ -45,7 +45,7 @@ namespace hub_client.Network
         public event Action<PlayerInfo, byte[], string> RecieveReplay;
         public event Action<CustomizationType, string, int> CustomizationAchievement;
         public event Action<string, List<int>, List<int>, List<CardRarity>> LoadBoosterCollection;
-        public event Action<int, int, int> LoadMonthPack;
+        public event Action<int, int, int, int> LoadMonthPack;
         public event Action<Dictionary<int, MonthlyBonus>, int, int[]> GetMonthlyBonus;
         public event Action<Room> RecieveRoomIsWaiting;
         #region Daily Quests
@@ -73,6 +73,7 @@ namespace hub_client.Network
         public event Action<PlayerInfo[], PlayerState> UpdateHubPlayers;
         public event Action DailyQuestNotification;
         public event Action<bool> AnimationNotification;
+        public event Action<Dictionary<RoomState, Room[]>> GetRoomsList;
         #endregion
         #region RegisterForm Events
         public event Action RegistrationComplete;
@@ -571,6 +572,9 @@ namespace hub_client.Network
                         break;
                     case PacketType.Mutechat:
                         OnMuteChat(JsonConvert.DeserializeObject<StandardServerMutechat>(packet));
+                        break;
+                    case PacketType.RoomList:
+                        OnGetRoomsList(JsonConvert.DeserializeObject<StandardServerRoomList>(packet));
                         break;
                 }
             }
@@ -1309,7 +1313,7 @@ namespace hub_client.Network
         }
         public void OnAskMonthPack(StandardServerAskMonthPack packet)
         {
-            Application.Current.Dispatcher.Invoke(() => LoadMonthPack?.Invoke(packet.Avatar, packet.Border, packet.Sleeve));
+            Application.Current.Dispatcher.Invoke(() => LoadMonthPack?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Partner));
             logger.Trace("ASK MONTH PACK");
         }
         public void OnBuyOwnCustomization(StandardServerBuyOwnCustomization packet)
@@ -1577,6 +1581,11 @@ namespace hub_client.Network
             Color c = FormExecution.AppDesignConfig.GetGameColor("DuelArenaMessageColor");
             string msg = "⚔️" + packet.WaitingRoom.Players[0].Username + " attend un adversaire dans l'arène pour un " + packet.WaitingRoom.Config.Type + " ! ⚔️";
             Application.Current.Dispatcher.InvokeAsync(() => SpecialChatMessageRecieved?.Invoke(c, msg, false, false));
+        }
+
+        public void OnGetRoomsList(StandardServerRoomList packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => GetRoomsList?.Invoke(packet.Rooms));
         }
 
         public void OnPing(StandardServerPing packet)

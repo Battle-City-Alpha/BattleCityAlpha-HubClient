@@ -18,9 +18,9 @@ namespace hub_client.WindowsAdministrator
             Client.LoadMonthPack += Client_LoadMonthPack;
         }
 
-        private void Client_LoadMonthPack(int avatar, int border, int sleeve)
+        private void Client_LoadMonthPack(int avatar, int border, int sleeve, int partner)
         {
-            MonthPackViewer viewer = new MonthPackViewer(avatar, border, sleeve);
+            MonthPackViewer viewer = new MonthPackViewer(avatar, border, sleeve, partner);
             viewer.PurchaseBtnClick += MonthPack_Buy;
             viewer.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => viewer.Activate()));

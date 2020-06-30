@@ -29,49 +29,60 @@ namespace hub_client.Windows.Controls
         {
             InitializeComponent();
             _isGray = isGray;
-
-            switch (bonus.Type)
+            try
             {
-                case BonusType.BP:
-                    tb_left.Text = bonus.Gift;
-                    tb_right.Text = "BPs";
-                    img_bonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/BPLogo.png"));
-                    break;
-                case BonusType.PP:
-                    tb_left.Text = bonus.Gift;
-                    tb_right.Text = "PPs";
-                    img_bonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/CoinPP.png"));
-                    break;
-                case BonusType.Avatar:
-                    tb_left.Text = "Avatar";
-                    tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, Convert.ToInt32(bonus.Gift), false, ""));
-                    break;
-                case BonusType.Sleeve:
-                    tb_left.Text = "Sleeve";
-                    tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, Convert.ToInt32(bonus.Gift), false, ""));
-                    break;
-                case BonusType.Border:
-                    tb_left.Text = "Bordure";
-                    tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, Convert.ToInt32(bonus.Gift), false, ""));
-                    break;
-                case BonusType.Title:
-                    tb_left.Text = "Titre";
-                    tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetPics(new string[] { "Assets", "Logo", "title_bonus.png" });
-                    break;
-                case BonusType.Card:
-                    tb_left.Text = "Carte";
-                    tb_right.Text = CardManager.GetCard(Convert.ToInt32(bonus.Gift)).Name;
-                    img_bonus.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", bonus.Gift + ".jpg" });
-                    break;
-                case BonusType.Booster:
-                    tb_left.Text = "Booster(s)";
-                    tb_right.Text = bonus.Gift;
-                    img_bonus.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", bonus.Gift + ".png" });
-                    break;
+                switch (bonus.Type)
+                {
+                    case BonusType.BP:
+                        tb_left.Text = bonus.Gift;
+                        tb_right.Text = "BPs";
+                        img_bonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/BPLogo.png"));
+                        break;
+                    case BonusType.PP:
+                        tb_left.Text = bonus.Gift;
+                        tb_right.Text = "PPs";
+                        img_bonus.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Assets/Logo/CoinPP.png"));
+                        break;
+                    case BonusType.Avatar:
+                        tb_left.Text = "Avatar";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Avatar, Convert.ToInt32(bonus.Gift), false, ""));
+                        break;
+                    case BonusType.Sleeve:
+                        tb_left.Text = "Sleeve";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Sleeve, Convert.ToInt32(bonus.Gift), false, ""));
+                        break;
+                    case BonusType.Border:
+                        tb_left.Text = "Bordure";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Border, Convert.ToInt32(bonus.Gift), false, ""));
+                        break;
+                    case BonusType.Partner:
+                        tb_left.Text = "Partenaire";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Partner, Convert.ToInt32(bonus.Gift), false, ""));
+                        break;
+                    case BonusType.Title:
+                        tb_left.Text = "Titre";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetPics(new string[] { "Assets", "Logo", "title_bonus.png" });
+                        break;
+                    case BonusType.Card:
+                        tb_left.Text = "Carte";
+                        tb_right.Text = CardManager.GetCard(Convert.ToInt32(bonus.Gift)).Name;
+                        img_bonus.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", bonus.Gift + ".jpg" });
+                        break;
+                    case BonusType.Booster:
+                        tb_left.Text = "Booster(s)";
+                        tb_right.Text = bonus.Gift;
+                        img_bonus.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", bonus.Gift + ".png" });
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                img_bonus.Source = FormExecution.AssetsManager.GetUnknownCardPic();
             }
 
             tb_day.Text = day.ToString();

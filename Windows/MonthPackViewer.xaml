@@ -42,32 +42,40 @@
                     </StackPanel>
                 </Border>
             </Grid>
-            
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="330"/>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Row="1" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.7"/>
-                    </Border.Background>
-                    <Image x:Name="img_border" Grid.Column="0" Width="306" Height="136" Margin="10" Stretch="Fill"/>
-                </Border>
-                <Border Grid.Column="1" CornerRadius="10" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.7"/>
-                    </Border.Background>
-                    <Image x:Name="img_avatar" Grid.Column="1" Width="256" Height="256" Margin="10" Stretch="Fill"/>
-                </Border>
-                <Border Grid.Column="2" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                    <Border.Background>
-                        <SolidColorBrush Color="White" Opacity="0.7"/>
-                    </Border.Background>
-                    <Image x:Name="img_sleeve" Grid.Column="2" Width="177" Height="254" Margin="10" Stretch="Fill"/>
-                </Border>
-            </Grid>
+            <ScrollViewer Grid.Row="2" x:Name="scr_customs" HorizontalScrollBarVisibility="Auto">
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="330"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="1" CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.Background>
+                        <Image x:Name="img_border" Grid.Column="0" Width="306" Height="136" Margin="10" Stretch="Fill"/>
+                    </Border>
+                    <Border Grid.Column="1" CornerRadius="10" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.Background>
+                        <Image x:Name="img_avatar" Grid.Column="1" Width="256" Height="256" Margin="10" Stretch="Fill"/>
+                    </Border>
+                    <Border Grid.Column="2" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.Background>
+                        <Image x:Name="img_sleeve" Grid.Column="2" Width="177" Height="254" Margin="10" Stretch="Fill"/>
+                    </Border>
+                    <Border Grid.Column="3" CornerRadius="10" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.7"/>
+                        </Border.Background>
+                        <Image x:Name="img_partner" Grid.Column="1" Width="256" Height="256" Margin="10" Stretch="Fill"/>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Border>
 </Window>

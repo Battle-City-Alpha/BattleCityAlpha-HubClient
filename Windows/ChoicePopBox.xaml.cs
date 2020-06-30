@@ -32,7 +32,12 @@ namespace hub_client.Windows
             {
                 case ChoiceBoxType.Duel:
                     txt = string.Format("Vous avez été invité en duel par {0}. \r\nType : {1}", player.Username, config.Type);
-                    txt += Environment.NewLine + string.Format("MasterRules : {0}", config.MasterRules);
+
+                    if (config.MasterRules > 0)
+                        txt += Environment.NewLine + string.Format("MasterRules : {0}", config.MasterRules);
+                    else
+                        txt += Environment.NewLine + string.Format("Turbo duel", config.MasterRules);
+
                     txt += Environment.NewLine + string.Format("Banlist : {0}", FormExecution.GetBanlistValue(config.Banlist));
                     txt += Environment.NewLine + string.Format("Point de vie : {0}", config.StartDuelLP);
                     txt += Environment.NewLine + string.Format("Carte dans la main au départ : {0}", config.CardByHand);

@@ -136,7 +136,7 @@ namespace hub_client.Windows
                     }
                     else
                     {
-                        tb_popup_MR.Text = "Master Rules : ";
+                        tb_popup_MR_title.Text = "Master Rules : ";
                         tb_popup_MR.Text = room.Config.MasterRules.ToString();
                     }
 

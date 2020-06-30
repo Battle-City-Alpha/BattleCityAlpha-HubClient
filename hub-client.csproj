@@ -137,6 +137,7 @@
     <Compile Include="Cards\CardInfos.cs" />
     <Compile Include="Cards\CardManager.cs" />
     <Compile Include="Cards\DatabaseHelper.cs" />
+    <Compile Include="Cards\PlayerCardComparerNewsFirst.cs" />
     <Compile Include="Cards\SQLCommands.cs" />
     <Compile Include="Configuration\AppDesignConfig.cs" />
     <Compile Include="Configuration\ClientConfig.cs" />

@@ -79,8 +79,11 @@ namespace hub_client.Windows
                 else
                     dcards[infos.Id].Quantity++;
             }
-            cards = dcards.Values.ToArray();
-            cards = cards.OrderBy(x => x.Name).ToArray();
+
+            List<PlayerCard> cardsToSort = dcards.Values.ToList();
+            cardsToSort.Sort(new PlayerCardComparerNewsFirst());
+
+            cards = cardsToSort.ToArray();
             StartCardAnimation();
         }
         private void SaveDeck(bool isStructureOrStartingDeck)

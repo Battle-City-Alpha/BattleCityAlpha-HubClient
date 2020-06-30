@@ -1,4 +1,5 @@
 ﻿using BCA.Common;
+using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Helpers;
@@ -49,8 +50,20 @@ namespace hub_client.WindowsAdministrator
             Client.DailyQuestNotification += Client_DailyQuestNotification;
             Client.AnimationNotification += Client_AnimationNotification;
             Client.Mutechat += Client_Mutechat;
+            Client.GetRoomsList += Client_GetRoomsList;
 
             _cmdParser = new ChatCommandParser();
+        }
+
+        private void Client_GetRoomsList(Dictionary<RoomState, Room[]> rooms)
+        {
+            Color c = FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor");
+            Client_SpecialChatMessageRecieved(c, "Duel en attente :", false, false);
+            foreach (Room r in rooms[RoomState.Waiting])
+                Client_SpecialChatMessageRecieved(c, string.Format("[{0}] - {1} - {2}", r.Id, r.Config.Type, string.Join<PlayerInfo>(" vs ", r.Players)), false, false);
+            Client_SpecialChatMessageRecieved(c, "Duel en cours :", false, false);
+            foreach (Room r in rooms[RoomState.Dueling])
+                Client_SpecialChatMessageRecieved(c, string.Format("[{0}] - {1} - {2}", r.Id, r.Config.Type, string.Join<PlayerInfo>(" vs ", r.Players)), false, false);
         }
 
         private void Client_Mutechat(PlayerInfo sender, string reason, bool ismuted)
@@ -309,6 +322,10 @@ namespace hub_client.WindowsAdministrator
                         case "LOGS":
                             _cmdParser.OpenLogFolder();
                             return null;
+                        case "ROOMSLIST":
+                            return new NetworkData(PacketType.RoomList, new StandardClientAskRoomList { });
+                        case "KILLROOM":
+                            return new NetworkData(PacketType.KillRoom, _cmdParser.KillRoom(txt.Substring(cmd.Length + 1)));
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
                             return null;
