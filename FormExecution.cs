@@ -17,6 +17,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -29,8 +30,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static string debug_ip = "127.0.0.1";
-        //public static string debug_ip = "185.212.225.85";
+        //public static string debug_ip = "127.0.0.1";
+        public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -52,7 +53,6 @@ namespace hub_client
         public static ClientConfig ClientConfig;
 
         private static Dictionary<string, int> _banlists = new Dictionary<string, int>();
-
         public static GameClient Client { get; private set; }
 
         public static Dictionary<int, PrivateMessageAdministrator> PrivateForms = new Dictionary<int, PrivateMessageAdministrator>();
@@ -106,7 +106,7 @@ namespace hub_client
 
         public static void Init(bool restart = false)
         {
-           if (!restart)
+            if (!restart)
             {
                 try
                 {
@@ -154,14 +154,13 @@ namespace hub_client
             Client.LoadBoosterCollection += Client_LoadBoosterCollection;
             Client.GetMonthlyBonus += Client_GetMonthlyBonus;
 
-            _login = new Login(Client.LoginAdmin);
-            if (restart)
+            if (IsWindowOpen<Login>())
             {
-                StartConnexion();
-                _login.Focus();
-                _login.Activate();
-                _login.Show();
+                _login.Restart = true;
+                _login.Close();
             }
+            
+            _login = new Login(Client.LoginAdmin);
 
             logger.Trace("FormExecution initialisation.");
         }
@@ -317,11 +316,14 @@ namespace hub_client
         private static void Client_Restart()
         {
             Client_PopMessageBoxShowDialog("Vous avez été déconnecté du serveur.", "Problème");
-            _chat.Restart = true;
-            _chat.Close(); 
             Main.CheckClientUpdate();
             CheckCardsStuffUpdate();
             Init(true);
+            _login.Show();
+
+            _chat.Restart = true;
+            if (IsWindowOpen<Chat>())
+                _chat.Close();
             _chat = new Chat(Client.ChatAdmin);
         }
 
@@ -389,7 +391,6 @@ namespace hub_client
             _windowload.EndDownload();
             _windowload.Close();
 
-            StartConnexion();
             _login.Focus();
             _login.Show();
 
@@ -397,15 +398,6 @@ namespace hub_client
             CardManager.LoadingFinished -= CardManager_LoadingFinished;
 
             _chat = new Chat(Client.ChatAdmin);
-        }
-
-        public static void HideLogin()
-        {
-            _login.Hide();
-        }
-        public static void ShowLogin()
-        {
-            _login.Show();
         }
 
         private static void Client_RoomNeedPassword(int id, RoomType type)
@@ -583,13 +575,17 @@ namespace hub_client
         public static void OpenArena()
         {
             logger.Trace("Open arena");
+            if (IsWindowOpen<Arena>())
+                _arena.Close();
             _arena = new Arena(Client.ArenaAdmin);
-            _arena.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _arena.Show()));
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _arena.Activate()));
         }
         public static void OpenShop()
         {
             logger.Trace("Open Shop");
+            if (IsWindowOpen<Shop>())
+                _shop.Close();
             _shop = new Shop(Client.ShopAdmin);
             _shop.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => _shop.Activate()));
@@ -597,6 +593,8 @@ namespace hub_client
         public static void OpenPrestigeShop()
         {
             logger.Trace("Open Prestige Shop");
+            if (IsWindowOpen<PrestigeShop>())
+                _pshop.Close();
             _pshop = new PrestigeShop(Client.PrestigeShopAdmin);
             Client.Send(PacketType.OpenPrestigeShop, new StandardClientOpenPrestigeShop { });
             _pshop.Show();
@@ -763,6 +761,13 @@ namespace hub_client
         public static void AddSmiley(string smileytxt)
         {
             _chat.AddSmiley(smileytxt);
+        }
+
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
+        {
+            return string.IsNullOrEmpty(name)
+               ? Application.Current.Windows.OfType<T>().Any()
+               : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
         }
     }
 }

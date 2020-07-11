@@ -9,7 +9,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows
@@ -29,7 +31,7 @@ namespace hub_client.Windows
 
         private bool IsMine()
         {
-            return FormExecution.Username == this.tb_username.Text;
+            return FormExecution.PlayerInfos.Username.ToUpper() == this.tb_username.Text.ToUpper();
         }
 
         public Profil(ProfilAdministrator admin)
@@ -82,9 +84,29 @@ namespace hub_client.Windows
             tb_giveup.Text = infos.GiveUp.ToString();
 
             tb_title.Text = infos.Title;
+            infos.TeamID = 1;
+            if (infos.TeamID != 0)
+            {
+                tb_rank.Visibility = Visibility.Hidden;
+                ImageBrush background = new ImageBrush(FormExecution.AssetsManager.GetTeamEmblem(infos.TeamID, infos.TeamEmblem));
+                background.Stretch = Stretch.UniformToFill;
+                team_emblem.Background = background;
+                team_emblem.MouseLeftButtonDown += (sender, e) => Img_border_MouseLeftButtonDown(sender,e, infos.TeamID);
+            }
+            else
+            {
+                team_border.Visibility = Visibility.Hidden;
+                Grid.SetColumnSpan(player_infos, 2);
+                Grid.SetColumn(player_infos, 0);
+            }
 
             this.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
+        }
+
+        private void Img_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e, int teamID)
+        {
+            _admin.SendAskTeamProfile(teamID);
         }
 
         private BitmapImage GetImage(string path)

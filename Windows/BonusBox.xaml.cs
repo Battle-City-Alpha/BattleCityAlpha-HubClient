@@ -1,4 +1,5 @@
-﻿using BCA.Common.Enums;
+﻿using BCA.Common;
+using BCA.Common.Enums;
 using hub_client.Cards;
 using hub_client.Configuration;
 using System;
@@ -59,6 +60,12 @@ namespace hub_client.Windows
                 case BonusType.Booster:
                     bonus += "Un booster " + gift + " !";
                     showBonus.Source = FormExecution.AssetsManager.GetImage(new string[] { "Booster", "pics", gift + ".jpg" });
+                    break;
+                case BonusType.Partner:
+                    bonus += "Le partenaire n°" + gift + " !";
+                    showBonus.Height = 256;
+                    showBonus.Width = 256;
+                    showBonus.Source = FormExecution.AssetsManager.GetCustom(new Customization(CustomizationType.Partner, Convert.ToInt32(gift), false, ""));
                     break;
             }
             bonus += Environment.NewLine + Environment.NewLine + "Reviens demain pour un nouveau bonus !";

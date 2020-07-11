@@ -193,5 +193,28 @@ namespace hub_client.Assets
 
             return GetImage(d, custom.Id.ToString());
         }
+        public BitmapImage GetTeamEmblem(int teamID, string emblem)
+        {
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
+            {
+                try
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.DownloadFile(
+                            new System.Uri(emblem),
+                            Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")
+                            );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur");
+                }
+            }
+
+            return GetImage("Team", teamID.ToString());
+        }
     }
 }

@@ -346,6 +346,7 @@ namespace hub_client.Windows
             cb_defaultdeck.Text = YgoproConfig.GetDefaultDeck();
 
             tb_version.Text = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
+            this.Title = FormExecution.Username + " - " + Main.VERSION + "c" + FormExecution.ClientConfig.CardsStuffVersion;
 
             foreach (var groups in FormExecution.AssetsManager.Smileys)
             {

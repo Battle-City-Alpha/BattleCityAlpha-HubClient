@@ -194,6 +194,7 @@
     <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
     <Compile Include="WindowsAdministrator\SleevesHandleAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\TeamProfileAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TradeAdministrator.cs" />
@@ -386,6 +387,9 @@
     </Compile>
     <Compile Include="Windows\SoloMode.xaml.cs">
       <DependentUpon>SoloMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TeamProfile.xaml.cs">
+      <DependentUpon>TeamProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\TitlesHandle.xaml.cs">
       <DependentUpon>TitlesHandle.xaml</DependentUpon>
@@ -646,6 +650,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\TeamProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\TitlesHandle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -894,6 +902,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Icon\turboduel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Background\bg_teams.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Team\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">

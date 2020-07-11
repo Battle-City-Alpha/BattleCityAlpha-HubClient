@@ -43,68 +43,84 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15" Margin="10,0">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
-                        </Border.Background>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5, 10, 5, 5"/>
-                                    <TextBlock x:Name="tb_rank" Text="0"  FontSize="24" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Padding="5, 10, 10, 5" FontStyle="Italic" />
-                                </Grid>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <TextBlock Text="Titre :" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5"/>
-                                    <TextBlock x:Name="tb_title" Text="????" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5" Cursor="Hand" MouseLeftButtonDown="tb_title_MouseLeftButtonDown"/>
-                                </StackPanel>
-                            </StackPanel>
-                            <Grid Grid.Row="1" Margin="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="team_border" CornerRadius="0, 0, 80, 80" Grid.Column="0" Height="140" Width="140" Cursor="Hand">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.9"/>
+                            </Border.Background>
+                            <Border Margin="1" CornerRadius="0, 0, 80, 80" Height="136" Width="136" Name="team_emblem" Cursor="Hand">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Shop/vip.png" Stretch="UniformToFill"/>
+                                </Border.Background>
+                            </Border>
+                        </Border>
+                        <Border x:Name="player_infos" BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15" Margin="10,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                            </Border.Background>
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="ELO" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="Bold"/>
-                                <TextBlock x:Name="tb_elo" Text="????" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-                                <TextBlock Text="Niveau"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" FontWeight="Bold"/>
-                                <TextBlock x:Name="tb_level" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-                                <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" FontWeight="Bold"/>
-                                <TextBlock x:Name="tb_experience" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
-                                <TextBlock Text="Cartes"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="3" FontWeight="Bold"/>
-                                <TextBlock x:Name="tb_cardcount" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="tb_username" Text="Pseudo_du_joueur" FontSize="24" Grid.ColumnSpan="2" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5, 10, 5, 5"/>
+                                        <TextBlock x:Name="tb_rank" Text="0"  FontSize="24" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Padding="5, 10, 10, 5" FontStyle="Italic" />
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock Text="Titre :" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5"/>
+                                        <TextBlock x:Name="tb_title" Text="????" FontSize="24" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="0" VerticalAlignment="Center" Padding="5" Cursor="Hand" MouseLeftButtonDown="tb_title_MouseLeftButtonDown"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Grid Grid.Row="1" Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="ELO" FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="Bold"/>
+                                    <TextBlock x:Name="tb_elo" Text="????" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                                    <TextBlock Text="Niveau"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" FontWeight="Bold"/>
+                                    <TextBlock x:Name="tb_level" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                                    <TextBlock Text="Expérience"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" FontWeight="Bold"/>
+                                    <TextBlock x:Name="tb_experience" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                                    <TextBlock Text="Cartes"  FontSize="20" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="3" FontWeight="Bold"/>
+                                    <TextBlock x:Name="tb_cardcount" Text="????"  FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Border>
+                        </Border>
+                    </Grid>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Border BorderBrush="Black" Visibility="Visible" Margin="10" CornerRadius="10" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border BorderBrush="Black" Visibility="Visible" Margin="5,10" CornerRadius="10" BorderThickness="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Border.Background>
                                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                             </Border.Background>
                             <Image x:Name="img_partner" Cursor="Hand" Grid.Column="2" Margin="0"  Stretch="Fill" Width="136" Height="136" Source="pack://siteoforigin:,,,/Assets/Partner/75.png"/>
                         </Border>
-                        <Border BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border x:Name="border_border" Padding="3" BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Border.Background>
                                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                             </Border.Background>
                             <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
-                        </Border>
+                        </Border>                        
                     </Grid>
                 </Grid>
             </Grid>

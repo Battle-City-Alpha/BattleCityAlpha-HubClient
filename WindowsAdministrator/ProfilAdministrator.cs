@@ -78,5 +78,12 @@ namespace hub_client.WindowsAdministrator
                 UserID = userID
             });
         }
+        public void SendAskTeamProfile(int teamID)
+        {
+            Client.Send(PacketType.AskTeamProfile, new StandardClientAskTeamProfile
+            {
+                TeamID = teamID
+            });
+        }
     }
 }

@@ -4,6 +4,7 @@ using hub_client.Assets;
 using hub_client.Stuff;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -178,9 +179,16 @@ namespace hub_client.Windows.Controls
             Run txt = new Run("]: ");
             txt.Foreground = new SolidColorBrush(color);
 
+            /*Image avatar = new Image();
+            avatar.Width = FormExecution.AppDesignConfig.FontSize + 10;
+            avatar.Height = FormExecution.AppDesignConfig.FontSize + 10;
+            avatar.Source = DrawingImageToBitmapImage(RoundCorners(FormExecution.AssetsManager.GetCustom(player.Avatar), 300, System.Drawing.Color.Transparent));
+            avatar.Margin = new Thickness(3);*/
+
             date.BaselineAlignment = BaselineAlignment.Center;
             pl.BaselineAlignment = BaselineAlignment.Center;
             txt.BaselineAlignment = BaselineAlignment.Center;
+            //pr.Inlines.Add(avatar);
             pr.Inlines.Add(date);
             pr.Inlines.Add(pl);
             pr.Inlines.Add(txt);
@@ -219,6 +227,8 @@ namespace hub_client.Windows.Controls
                         textLink.Background = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("HighlighMessageColor"));
                     textLink.NavigateUri = new Uri(url);
                     textLink.RequestNavigate += TextLink_RequestNavigate;
+
+                    textLink.BaselineAlignment = BaselineAlignment.Center;
 
                     pr.Inlines.Add(textLink);
 
@@ -295,6 +305,7 @@ namespace hub_client.Windows.Controls
                     normalTxt.Text = (word + " ");
                 }
 
+                normalTxt.BaselineAlignment = BaselineAlignment.Center;
                 normalTxt.Foreground = new SolidColorBrush(color);
                 pr.Inlines.Add(normalTxt);
             }
@@ -403,6 +414,43 @@ namespace hub_client.Windows.Controls
                 return "✮" + username;
             else
                 return username;
+        }
+
+        public System.Drawing.Image RoundCorners(BitmapImage StartImage, int CornerRadius, System.Drawing.Color BackgroundColor)
+        {
+            System.Drawing.Image img = System.Drawing.Image.FromFile(StartImage.UriSource.LocalPath);
+
+            CornerRadius *= 2;
+            System.Drawing.Bitmap RoundedImage = new System.Drawing.Bitmap(img.Width, img.Height);
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(RoundedImage))
+            {
+                g.Clear(BackgroundColor);
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                System.Drawing.Brush brush = new System.Drawing.TextureBrush(img);
+                System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+                gp.AddArc(0, 0, CornerRadius, CornerRadius, 180, 90);
+                gp.AddArc(0 + RoundedImage.Width - CornerRadius, 0, CornerRadius, CornerRadius, 270, 90);
+                gp.AddArc(0 + RoundedImage.Width - CornerRadius, 0 + RoundedImage.Height - CornerRadius, CornerRadius, CornerRadius, 0, 90);
+                gp.AddArc(0, 0 + RoundedImage.Height - CornerRadius, CornerRadius, CornerRadius, 90, 90);
+                g.FillPath(brush, gp);
+                return RoundedImage;
+            }
+        }
+        private BitmapImage DrawingImageToBitmapImage(System.Drawing.Image image)
+        {
+            using (var stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Position = 0;
+
+                BitmapImage pngImage = new System.Windows.Media.Imaging.BitmapImage();
+                pngImage.BeginInit();
+                pngImage.CacheOption = BitmapCacheOption.OnLoad;
+                pngImage.StreamSource = stream;
+                pngImage.EndInit();
+
+                return pngImage;
+            }
         }
     }
 }

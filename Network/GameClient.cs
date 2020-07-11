@@ -183,6 +183,7 @@ namespace hub_client.Network
         public DailyQuestAdministrator DailyQuestAdmin;
         public AnimationsScheduleAdministrator AnimationsScheduleAdmin;
         public DuelResultAdministrator DuelResultAdmin;
+        public TeamProfileAdministrator TeamProfileAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -226,6 +227,7 @@ namespace hub_client.Network
             DailyQuestAdmin = new DailyQuestAdministrator(this);
             AnimationsScheduleAdmin = new AnimationsScheduleAdministrator(this);
             DuelResultAdmin = new DuelResultAdministrator(this);
+            TeamProfileAdmin = new TeamProfileAdministrator(this);
         }
 
         private void InitManager()

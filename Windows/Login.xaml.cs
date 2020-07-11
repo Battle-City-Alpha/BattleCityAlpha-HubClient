@@ -21,6 +21,7 @@ namespace hub_client.Windows
         private static Logger logger = LogManager.GetCurrentClassLogger();
         LoginAdminstrator _admin;
         bool _complete = false;
+        public bool Restart = true;
 
         public Login(LoginAdminstrator admin)
         {
@@ -129,6 +130,16 @@ namespace hub_client.Windows
             FormExecution.Username = username;
 
             string encryptKey = File.ReadAllText("rsa_publickey.xml");
+
+            if (!_admin.Client.IsConnected)
+            {
+                FormExecution.StartConnexion();
+                _admin.Client.Connected += () => Client_Connected(username, password, HID, encryptKey);
+            }
+        }
+
+        private void Client_Connected(string username, string password, string HID, string encryptKey)
+        {
             _admin.SendAuthentification(username, password, encryptKey, HID);
         }
 
@@ -136,7 +147,7 @@ namespace hub_client.Windows
         {
             _admin.LoginComplete -= _admin_LoginComplete;
             Loaded -= Login_Loaded;
-            if (!_complete)
+            if (!_complete && !Restart)
                 Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
         }
 

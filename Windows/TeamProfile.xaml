@@ -1,0 +1,142 @@
+﻿<Window x:Class="hub_client.Windows.TeamProfile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hub_client.Windows"
+        mc:Ignorable="d"
+        Title="Profil - Team" Height="700" Width="700" Icon="/hub-client;component/Assets/Icon/BCA.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">
+    <Border x:Name="bg_border" BorderBrush="Black" BorderThickness="2" CornerRadius="50, 50, 20, 20">
+        <Border.Background>
+            <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="pack://siteoforigin:,,,/Assets/Background/bg_teams.jpg" CacheOption="OnLoad" CreateOptions="IgnoreImageCache"/>
+                </ImageBrush.ImageSource>
+            </ImageBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,40,5" Grid.Row="0" Grid.ColumnSpan="2">
+                <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
+                <Image x:Name="closeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/CloseWhite.png" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.RowSpan="2" CornerRadius="0, 0, 35, 35" Margin="0,0,0,10" HorizontalAlignment="Center" Padding="50,0">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <TextBlock x:Name="team_name" Text="Team : Staff" FontSize="30" TextAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Margin="10" CornerRadius="0, 0, 150, 150" Height="266" Width="266">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                    </Border.Background>
+                    <Border Margin="1" CornerRadius="0, 0, 150, 150" Height="256" Width="256" Name="team_emblem">
+                        <Border.Background>
+                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Assets/Shop/vip.png"/>
+                        </Border.Background>
+                    </Border>
+                </Border>
+                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" CornerRadius="15, 0, 0, 15" Margin="10, 10, 0, 10" MaxHeight="200">
+                    <Border.Background>
+                        <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Victoires :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
+                            <TextBlock x:Name="tb_rankedwin" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Défaites :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_rankedlose" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Nuls :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_rankeddraw" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Classement :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_ranking" Text="0"  Grid.Column="1" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" CornerRadius="0, 35, 35, 0" Margin="0,0, 50, 20" Padding="0">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="leader_avatar" CornerRadius="300" VerticalAlignment="Center" BorderBrush="Black" Width="200" Height="200" Grid.Row="0">
+                            <Border.Background>
+                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  Stretch="UniformToFill" ImageSource="/hub-client;component/Assets/Avatars/408.png"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock x:Name="leader_name" Text="Tic-Tac-Toc"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="1" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Name="grid_first_line">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <Grid Grid.Row="1" Name="grid_second_line">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
