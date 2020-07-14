@@ -64,7 +64,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Victoires :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}"/>
-                            <TextBlock x:Name="tb_rankedwin" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock x:Name="tb_wins" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1"/>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -72,15 +72,15 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Défaites :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_rankedlose" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_loses" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Nuls :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_rankeddraw" Text="0"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
+                            <TextBlock Text="Score :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_score" Text="???"  FontSize="20" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -88,12 +88,12 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Classement :"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="tb_ranking" Text="0"  Grid.Column="1" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="tb_rank" Text="N/A"  Grid.Column="1" FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </Border>
             </Grid>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" CornerRadius="0, 35, 35, 0" Margin="0,0, 50, 20" Padding="0">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" CornerRadius="0, 35, 35, 0" Margin="0,0, 20, 20" Padding="0, 0, 10, 0">
                 <Border.Background>
                     <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                 </Border.Background>
@@ -109,12 +109,12 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="leader_avatar" CornerRadius="300" VerticalAlignment="Center" BorderBrush="Black" Width="200" Height="200" Grid.Row="0">
                             <Border.Background>
-                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  Stretch="UniformToFill" ImageSource="/hub-client;component/Assets/Avatars/408.png"/>
+                                <ImageBrush RenderOptions.BitmapScalingMode="Fant"  Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
-                        <TextBlock x:Name="leader_name" Text="Tic-Tac-Toc"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="leader_name" Text="????"  FontSize="20" HorizontalAlignment="Center" TextDecorations="{x:Null}" Grid.Row="1" VerticalAlignment="Center"/>
                     </Grid>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="1" Name="members_grid" Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>

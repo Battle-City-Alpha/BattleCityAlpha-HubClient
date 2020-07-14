@@ -30,8 +30,86 @@ namespace hub_client.Windows
             this.MouseDown += Window_MouseDown;
 
             _admin = admin;
+            _admin.LoadTeamProfile += _admin_LoadTeamProfile;
+
+            this.Closed += TeamProfile_Closed;
         }
 
+        private void TeamProfile_Closed(object sender, EventArgs e)
+        {
+            _admin.LoadTeamProfile -= _admin_LoadTeamProfile;
+        }
+
+        private void _admin_LoadTeamProfile(int id, string url_emblem, string name, string tag, int wins, int loses, int rank, int leaderid, int coleaderid, PlayerInfo[] members, int score)
+        {
+            team_name.Text = name + " (" + tag + ")";
+            tb_score.Text = score.ToString();
+            tb_wins.Text = wins.ToString();
+            tb_loses.Text = loses.ToString();
+            if (rank > 0)
+                tb_rank.Text = rank.ToString();
+
+            ImageBrush emblem = new ImageBrush(FormExecution.AssetsManager.GetTeamEmblem(id, url_emblem));
+            emblem.Stretch = Stretch.UniformToFill;
+            team_emblem.Background = emblem;
+
+            int i = 0;
+            foreach (PlayerInfo p in members)
+            {
+                if (p.UserId == leaderid)
+                {
+                    leader_name.Text = p.Username;
+                    ImageBrush bg = new ImageBrush(FormExecution.AssetsManager.GetCustom(p.Avatar));
+                    bg.Stretch = Stretch.UniformToFill;
+                    leader_avatar.Background = bg;
+                }
+                else
+                {
+                    Grid gd = CreateMemberGrid(p, p.UserId == coleaderid);
+                    int x = 0;
+                    int y = 0;
+                    switch(i)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            x = 1;
+                            break;
+                        case 2:
+                            x = 2;
+                            break;
+                        case 3:
+                            y = 1;
+                            break;
+                        case 4:
+                            x = 1;
+                            y = 1;
+                            break;
+                        case 5:
+                            x = 2;
+                            y = 1;
+                            break;
+                        case 6:
+                            x = 3;
+                            y = 1;
+                            break;
+                        case 7:
+                            x = 4;
+                            y = 1;
+                            break;
+                    }
+                    if (y == 0)
+                        grid_first_line.Children.Add(gd);
+                    else
+                        grid_second_line.Children.Add(gd);
+                    Grid.SetColumn(gd, x);
+                    i++;
+                }
+            }
+
+            this.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
+        }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -67,6 +145,7 @@ namespace hub_client.Windows
             ImageBrush background = new ImageBrush();
             background.ImageSource = FormExecution.AssetsManager.GetCustom(player.Avatar);
             background.Stretch = Stretch.UniformToFill;
+            bd.Background = background;
             Grid.SetRow(bd, 0);
             TextBlock tb = new TextBlock();
             tb.Text = isColeader ? "🍩" + player.Username : player.Username;

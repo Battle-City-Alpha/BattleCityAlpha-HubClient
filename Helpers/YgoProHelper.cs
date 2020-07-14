@@ -19,11 +19,8 @@ namespace hub_client.Helpers
         private static Customization _bot_border = new Customization(CustomizationType.Border, 26, false, "");
         private static Customization _bot_sleeve = new Customization(CustomizationType.Sleeve, 64, false, "");
         private static Customization _bot_partner = new Customization(CustomizationType.Partner, 127, false, "");
-        private static string _deck = "";
         private const int _defaultPort = 1111;
         private const string _defaultHost = "127.0.0.1";
-
-        private static string _commandline = "";
 
         public static void LaunchYgoPro(string commandline)
         {
@@ -60,6 +57,8 @@ namespace hub_client.Helpers
                     File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "sleeves", "s_" + i + ".png"));
                 if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + i + ".png")))
                     File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + i + ".png"));
+                if (File.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems", "e_" + i + ".png")))
+                    File.Delete(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems", "e_" + i + ".png"));
             }
 
             LaunchYgoPro(commandline);
@@ -76,12 +75,13 @@ namespace hub_client.Helpers
             LaunchYgoPro(string.Format("-b"));
         }
 
-        public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, Customization partner, int pos)
+        public static void LoadCustomization(Customization avatar, Customization border, Customization sleeve, Customization partner, int team, string teamemblem, int pos)
         {
             UpdateAvatar(avatar, pos);
             UpdateBorder(border, pos);
             UpdateSleeve(sleeve, pos);
             UpdatePartner(partner, pos);
+            UpdateTeamEmblem(team, teamemblem, pos);
         }
         private static void UpdateAvatar(Customization avatar, int i)
         {
@@ -107,6 +107,18 @@ namespace hub_client.Helpers
                 FormExecution.AssetsManager.GetCustom(partner);
             CopyPartnerToTexturesFolder(partner, i);
         }
+        private static void UpdateTeamEmblem(int team, string emblem, int i)
+        {
+            if (!Directory.Exists(Path.Combine(FormExecution.path, "Assets", "Team")))
+                Directory.CreateDirectory(Path.Combine(FormExecution.path, "Assets", "Team"));
+
+            if (team == 0)
+                return;
+
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", team + ".png")))
+                FormExecution.AssetsManager.GetTeamEmblem(team, emblem);
+            CopyEmblemToTexturesFolder(team, i);
+        }
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
         {
@@ -125,6 +137,12 @@ namespace hub_client.Helpers
             if (!Directory.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners")))
                 Directory.CreateDirectory(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners"));
             File.Copy(Path.Combine(FormExecution.path, "Assets", "Partners", partner.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "p_" + index.ToString() + ".png"), true);
+        }
+        private static void CopyEmblemToTexturesFolder(int teamID, int index)
+        {
+            if (!Directory.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems")))
+                Directory.CreateDirectory(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems"));
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "e_" + index.ToString() + ".png"), true);
         }
     }
 }

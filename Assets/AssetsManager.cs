@@ -1,6 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Stuff;
+using hub_client.Windows.Controls;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -195,6 +196,9 @@ namespace hub_client.Assets
         }
         public BitmapImage GetTeamEmblem(int teamID, string emblem)
         {
+            if (!Directory.Exists(Path.Combine(FormExecution.path, "Assets", "Team")))
+                Directory.CreateDirectory(Path.Combine(FormExecution.path, "Assets", "Team"));
+
             if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
             {
                 try

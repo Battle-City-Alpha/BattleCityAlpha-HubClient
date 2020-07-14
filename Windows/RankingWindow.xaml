@@ -152,6 +152,11 @@
                                         <GridViewColumnHeader Tag="Rate" FontSize="14" BorderBrush="Black" BorderThickness="2" Background="{x:Null}">Taux de victoires</GridViewColumnHeader>
                                     </GridViewColumn.Header>
                                 </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Team}">
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Tag="Team" FontSize="14" BorderBrush="Black" BorderThickness="2" Background="{x:Null}">Team</GridViewColumnHeader>
+                                    </GridViewColumn.Header>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:hub_client.Windows"
         mc:Ignorable="d"
         Title="Profil" Height="614.556" Width="945.359" Icon="/hub-client;component/Assets/Icon/BCA.ico" Closed="Window_Closed" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
-        AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">
+        AllowsTransparency="True" Background="{x:Null}" WindowStyle="None">    
     <Border x:Name="bg_border" BorderBrush="Black" BorderThickness="2" CornerRadius="50">
         <Border.Background>
             <ImageBrush x:Name="bg_brush" Stretch="UniformToFill">
@@ -21,6 +21,16 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
+
+            <Popup x:Name="popup_teamname" AllowsTransparency="True" Placement="Center" PopupAnimation="Slide" PlacementTarget="{Binding ElementName=team_emblem}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border x:Name="smiley_border" CornerRadius="15" Margin="5" Padding="10" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <Border.Background>
+                        <SolidColorBrush Color="White" Opacity="1"/>
+                    </Border.Background>
+                    <TextBlock x:Name="tb_teamname" Text="???" FontSize="24"/>
+                </Border>
+            </Popup>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,50,5" Grid.Row="0" Grid.ColumnSpan="2">
                 <Image x:Name="minimizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MinimizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                 <Image x:Name="maximizeIcon" Source="pack://siteoforigin:,,,/Assets/Logo/WindowsBar/MaximizeWhite.png"  Margin="0,0,5,0" MouseLeftButtonDown="maximizeIcon_MouseLeftButtonDown"/>
@@ -115,11 +125,11 @@
                             </Border.Background>
                             <Image x:Name="img_partner" Cursor="Hand" Grid.Column="2" Margin="0"  Stretch="Fill" Width="136" Height="136" Source="pack://siteoforigin:,,,/Assets/Partner/75.png"/>
                         </Border>
-                        <Border x:Name="border_border" Padding="3" BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border x:Name="border_border" Padding="3" BorderBrush="Black" Margin="10" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="306" Height="136">
                             <Border.Background>
                                 <SolidColorBrush Color="#FFEBEBEB" Opacity="0.95"/>
                             </Border.Background>
-                            <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" Source="pack://siteoforigin:,,,/Assets/Borders/1.png" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill" Width="306" Height="136"/>
+                            <Image x:Name="img_border" Cursor="Hand" Grid.Column="2" Margin="0" MouseLeftButtonDown="img_border_MouseLeftButtonDown" Stretch="Fill"/>
                         </Border>                        
                     </Grid>
                 </Grid>

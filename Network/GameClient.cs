@@ -36,7 +36,7 @@ namespace hub_client.Network
         public event Action<int, RoomType> RoomNeedPassword;
         public event Action<Room, string> LaunchYGOPro;
         public event Action<string> LaunchYGOProWithoutRoom;
-        public event Action<Customization, Customization, Customization, Customization, int> LoadPlayerCustomizations;
+        public event Action<Customization, Customization, Customization, Customization, int, string, int> LoadPlayerCustomizations;
         public event Action LaunchTrade;
         public event Action CloseBrocante;
         public event Action<int, int, bool, int, RoomConfig, int> LaunchDuelResultBox;
@@ -152,6 +152,9 @@ namespace hub_client.Network
         #endregion
         #region Animations Schedule Events
         public event Action<Dictionary<string, string>, Animation[]> LoadAnimations;
+        #endregion
+        #region TeamProfile Events
+        public event Action<StandardServerAskTeam> TeamProfileInfos;
         #endregion
 
         #region Administrator
@@ -578,6 +581,12 @@ namespace hub_client.Network
                     case PacketType.RoomList:
                         OnGetRoomsList(JsonConvert.DeserializeObject<StandardServerRoomList>(packet));
                         break;
+                    case PacketType.CreateTeam:
+                        OnBuyCreateTeam(JsonConvert.DeserializeObject<StandardServerCreateTeam>(packet));
+                        break;
+                    case PacketType.AskTeamProfile:
+                        OnTeamProfil(JsonConvert.DeserializeObject<StandardServerAskTeam>(packet));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -821,6 +830,39 @@ namespace hub_client.Network
                     break;
                 case CommandErrorType.LevelTooLow:
                     msg = "••• Tu ne peux pas proposer un duel des ombres à un joueur qui n'est pas niveau 5 ! (Ou alors tu n'es pas niveau 5)";
+                    break;
+                case CommandErrorType.PlayerAlreadyInTeam:
+                    msg = "Tu es déjà dans une autre équipe !";
+                    break;
+                case CommandErrorType.TargetAlreadyInATeam:
+                    msg = "Ce joueur est déjà dans une autre équipe !";
+                    break;
+                case CommandErrorType.TargetNotInYourTeam:
+                    msg = "Ce joueur n'est pas dans ton équipe !";
+                    break;
+                case CommandErrorType.TeamNameAlreadyExist:
+                    msg = "Une équipe du même nom existe déjà !";
+                    break;
+                case CommandErrorType.TeamTagAlreadyExist:
+                    msg = "Une équipe a déjà pris ce tag !";
+                    break;
+                case CommandErrorType.YouAreAlreadyInATeam:
+                    msg = "Tu es déjà dans une équipe !";
+                    break;
+                case CommandErrorType.YouAreNotTeamCoLeader:
+                    msg = "Tu n'es pas co-leader de ton équipe !";
+                    break;
+                case CommandErrorType.YouAreNotTeamLeader:
+                    msg = "Tu n'es pas leader de ton équipe !";
+                    break;
+                case CommandErrorType.YouHaveNoTeam:
+                    msg = "Tu n'as pas d'équipe !";
+                    break;
+                case CommandErrorType.TeamFull:
+                    msg = "Ton équipe est pleine (8 joueurs) !";
+                    break;
+                case CommandErrorType.CantChangeTeamNow:
+                    msg = "Ce joueur ne peut intégrer une équipe actuellement ! Il doit attendre une semaine après avoir quitté une team pour en rejoindre une autre.";
                     break;
                 default:
                     msg = "••• Erreur inconnue, impossible à traiter.";
@@ -1221,7 +1263,7 @@ namespace hub_client.Network
 
         public void OnLoadPlayerCustomizationTextures(StandardServerLoadPlayerCustomizationTextures packet)
         {
-            Application.Current.Dispatcher.Invoke(() => LoadPlayerCustomizations?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Partner, packet.Pos));
+            Application.Current.Dispatcher.Invoke(() => LoadPlayerCustomizations?.Invoke(packet.Avatar, packet.Border, packet.Sleeve, packet.Partner, packet.Team, packet.TeamEmblem, packet.Pos));
             logger.Trace("LOAD PLAYER CUSTOMIZATION TEXTURES");
         }
 
@@ -1356,6 +1398,12 @@ namespace hub_client.Network
             Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
             OpenPopBox("Félicitations ! Tu viens d'obtenir un pack spécial disponible durant une durée limitée seulement !", "Pack special !");
             logger.Trace("BUY SPECIAL PACK");
+        }
+        public void OnBuyCreateTeam(StandardServerCreateTeam packet)
+        {
+            Application.Current.Dispatcher.Invoke(() => UpdatePP?.Invoke(packet.PP));
+            OpenPopBox("Félicitations ! Tu viens de créer ta team ! Fonce affrontez les autres !", "New TEAM !");
+            logger.Trace("BUY CREATE TEAM");
         }
 
         public void OnOpenPrestigeShop(StandardServerOpenPrestigeShop packet)
@@ -1588,6 +1636,11 @@ namespace hub_client.Network
         public void OnGetRoomsList(StandardServerRoomList packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => GetRoomsList?.Invoke(packet.Rooms));
+        }
+
+        public void OnTeamProfil(StandardServerAskTeam packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => TeamProfileInfos?.Invoke(packet));
         }
 
         public void OnPing(StandardServerPing packet)

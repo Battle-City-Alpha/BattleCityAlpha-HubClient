@@ -286,6 +286,9 @@
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
+    <Compile Include="Windows\CreateTeam.xaml.cs">
+      <DependentUpon>CreateTeam.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CustomCustomizationWindow.xaml.cs">
       <DependentUpon>CustomCustomizationWindow.xaml</DependentUpon>
     </Compile>
@@ -511,6 +514,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TutoPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateTeam.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -907,7 +914,7 @@
     <None Include="Assets\Background\bg_teams.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Team\1.png">
+    <None Include="Assets\Shop\team.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NLog.config">
@@ -998,6 +1005,7 @@
     <Folder Include="Assets\Avatars\" />
     <Folder Include="Assets\Borders\" />
     <Folder Include="Assets\Sleeves\" />
+    <Folder Include="Assets\Team\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

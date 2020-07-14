@@ -764,7 +764,10 @@ namespace hub_client.Windows
                 UserId = infos.UserId,
                 Username = infos.Username,
                 VIP = infos.VIP,
-                AvatarPic = PicsManager.GetCustom(infos.Avatar)
+                AvatarPic = PicsManager.GetCustom(infos.Avatar),
+                Team = infos.Team,
+                TeamEmblem = infos.TeamEmblem,
+                TeamTag = infos.TeamTag
             };
 
             return item;            
@@ -884,6 +887,16 @@ namespace hub_client.Windows
             popup_username.Text = _admin.Client.ParseUsernames(pitem.Username, pitem.Rank, pitem.VIP);
             popup_username.Foreground = pitem.ChatColor;
             popup_avatar.Background = border.Background;
+
+            if (pitem.Team != 0)
+            {
+                ImageBrush bg = new ImageBrush(PicsManager.GetTeamEmblem(pitem.Team, pitem.TeamEmblem));
+                bg.Stretch = Stretch.UniformToFill;
+                team_emblem.Background = bg;
+                team_emblem.Visibility = Visibility.Visible;
+            }
+            else
+                team_emblem.Visibility = Visibility.Hidden;
 
             popup_border.Opacity = 0;
             popup_border.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 100, new Duration(new TimeSpan(0, 0, 0, 1, 0))));

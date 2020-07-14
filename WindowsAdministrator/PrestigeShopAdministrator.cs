@@ -98,5 +98,14 @@ namespace hub_client.WindowsAdministrator
                 Id = id
             });
         }
+        public void SendBuyCreateTeam(string name, string urlemblem, string tag)
+        {
+            Client.Send(PacketType.CreateTeam, new StandardClientCreateTeam
+            {
+                Name = name,
+                Emblem = urlemblem,
+                Tag = tag
+            });
+        }
     }
 }

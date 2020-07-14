@@ -425,5 +425,40 @@ namespace hub_client.Helpers
                 ID = id
             };
         }
+
+
+        public StandardClientAddTeamMember AddTeamMember(string txt)
+        {            
+
+            return new StandardClientAddTeamMember
+            {
+                Target = txt
+            };
+        }
+        public StandardClientRemoveTeamMember RemoveTeamMember(string txt)
+        {            
+            return new StandardClientRemoveTeamMember
+            {
+                Target = txt
+            };
+        }
+        public StandardClientChangeTeamCoLeader ChangeTeamCoLeader(string txt)
+        {
+            return new StandardClientChangeTeamCoLeader
+            {
+                Target = txt
+            };
+        }
+        public StandardClientChangeTeamLeader ChangeTeamLeader(string txt)
+        {
+            return new StandardClientChangeTeamLeader
+            {
+                Target = txt
+            };
+        }
+        public StandardClientLeaveTeam LeaveTeam()
+        {
+            return new StandardClientLeaveTeam { };
+        }
     }
 }

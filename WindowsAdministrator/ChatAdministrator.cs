@@ -326,6 +326,16 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.RoomList, new StandardClientAskRoomList { });
                         case "KILLROOM":
                             return new NetworkData(PacketType.KillRoom, _cmdParser.KillRoom(txt.Substring(cmd.Length + 1)));
+                        case "TEAMADD":
+                            return new NetworkData(PacketType.AddTeamPlayer, _cmdParser.AddTeamMember(txt.Substring(cmd.Length + 1)));
+                        case "TEAMREMOVE":
+                            return new NetworkData(PacketType.RemoveTeamPlayer, _cmdParser.RemoveTeamMember(txt.Substring(cmd.Length + 1)));
+                        case "TEAMCHANGELEADER":
+                            return new NetworkData(PacketType.UpdateTeamLeader, _cmdParser.ChangeTeamLeader(txt.Substring(cmd.Length + 1)));
+                        case "TEAMCHANGECOLEADER":
+                            return new NetworkData(PacketType.UpdateTeamColeader, _cmdParser.ChangeTeamCoLeader(txt.Substring(cmd.Length + 1)));
+                        case "TEAMLEAVE":
+                            return new NetworkData(PacketType.LeaveTeam, _cmdParser.LeaveTeam());
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
                             return null;

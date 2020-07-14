@@ -40,6 +40,8 @@ namespace hub_client.Configuration
         public bool DoTutoShop = true;
         public bool DoTutoQuests = true;
 
+        public bool DisplayTagTeam = true;
+
         public void Save()
         {
             File.WriteAllText(FormExecution.ClientConfigPath, JsonConvert.SerializeObject(this, Formatting.Indented));

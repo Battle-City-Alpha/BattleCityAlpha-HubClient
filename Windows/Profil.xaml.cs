@@ -84,7 +84,6 @@ namespace hub_client.Windows
             tb_giveup.Text = infos.GiveUp.ToString();
 
             tb_title.Text = infos.Title;
-            infos.TeamID = 1;
             if (infos.TeamID != 0)
             {
                 tb_rank.Visibility = Visibility.Hidden;
@@ -92,6 +91,9 @@ namespace hub_client.Windows
                 background.Stretch = Stretch.UniformToFill;
                 team_emblem.Background = background;
                 team_emblem.MouseLeftButtonDown += (sender, e) => Img_border_MouseLeftButtonDown(sender,e, infos.TeamID);
+                this.tb_teamname.Text = infos.TeamName;
+                team_emblem.MouseEnter += Team_emblem_MouseEnter;
+                team_emblem.MouseLeave += Team_emblem_MouseLeave; ;
             }
             else
             {
@@ -102,6 +104,17 @@ namespace hub_client.Windows
 
             this.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
+        }
+
+        private void Team_emblem_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!team_emblem.IsMouseOver && !popup_teamname.IsMouseOver)
+                popup_teamname.IsOpen = false;
+        }
+
+        private void Team_emblem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            popup_teamname.IsOpen = true;
         }
 
         private void Img_border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e, int teamID)

@@ -143,13 +143,24 @@
                                 <CheckBox x:Name="cb_showarenamessage" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les messages de duel en attente" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
                         </Grid>
-
-                        <Border Grid.Row="5" Grid.Column="0" CornerRadius="15" Margin="25,0" VerticalAlignment="Center">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                            </Border.Background>
-                            <CheckBox x:Name="cb_popuppm" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher un popup à la réception d'un message privé" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="15" Margin="25,0, 5, 0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_popuppm" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher un popup à la réception d'un message privé" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1" CornerRadius="15" Margin="5,0, 25, 0" VerticalAlignment="Center">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Border.Background>
+                                <CheckBox x:Name="cb_tagteam" Grid.Row="0" Grid.Column="0" Margin="10" Content="Afficher les initiaux des teams des joueurs" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </Grid>
                         <Grid Grid.Row="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>

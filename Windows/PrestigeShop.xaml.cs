@@ -106,8 +106,9 @@ namespace hub_client.Windows
 
             PartnerList_Item.Initialize("Acheter un partenaire", "250 PP", "partnerList", "Permet de choisir un partenaire prestigieux et rare parmis une liste pour ensuite l'utiliser en duel.");
             TitleList_Item.Initialize("Acheter un titre", "100 PP", "titleList", "Permet de choisir un titre prestigieux et rare parmis une liste pour ensuite l'utiliser.");
-            Greet_Item.Initialize("Greets illimités", "100 PP", "greet", "Une fois achetée, permet de changer de greets à l'infini !");
+            CreateTeam_Item.Initialize("Créer une team", "300 PP", "team", "Permet de créer une team ! 8 joueurs avec une seule idée en tête : obtenir la première place du classement des équipes.");
             
+            Greet_Item.Initialize("Greets illimités", "100 PP", "greet", "Une fois achetée, permet de changer de greets à l'infini !");
             ChangeUsername_Item.Initialize("Changer de pseudo", "300 PP", "change_username", "Permet de changer de pseudo");
             ResetStat_Item.Initialize("Réinitialiser les statistiques", "50 PP", "reset_stats", "Permet de réinitialiser les statistiques");
 
@@ -134,6 +135,20 @@ namespace hub_client.Windows
 
             ChangeUsername_Item.btn_purchase.MouseLeftButtonDown += BuyChangeUsername;
             ResetStat_Item.btn_purchase.MouseLeftButtonDown += BuyResetStats;
+            CreateTeam_Item.btn_purchase.MouseLeftButtonDown += CreateTeam;
+        }
+
+        private void CreateTeam(object sender, MouseButtonEventArgs e)
+        {
+            CreateTeam ct = new CreateTeam();
+            ct.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => ct.Activate()));
+            ct.TeamCreation += Ct_TeamCreation;
+        }
+
+        private void Ct_TeamCreation(string name, string url_emblem, string tag)
+        {
+            _admin.SendBuyCreateTeam(name, url_emblem, tag);
         }
 
         private void BuyPrestigePartner(object sender, MouseButtonEventArgs e)

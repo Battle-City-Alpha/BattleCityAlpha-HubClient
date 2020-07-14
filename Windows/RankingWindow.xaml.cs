@@ -91,7 +91,8 @@ namespace hub_client.Windows
                     RankedLose = info.RankedLose,
                     RankedWin = info.RankedWin,
                     UserID = info.UserID,
-                    Username = info.Username
+                    Username = info.Username,
+                    Team = info.Team
                 };
                 if (info.RankedLose == 0 & info.RankedWin == 0)
                     item.WinRate = 1.0;

@@ -170,10 +170,12 @@ namespace hub_client.Windows.Controls
         {
             Paragraph pr = new Paragraph();
             Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] [");
-            date.Foreground = new SolidColorBrush(color);
-
+            date.Foreground = new SolidColorBrush(color);            
 
             Run pl = new Run(ParseUsername(player.Username, player.Rank, player.VIP));
+            if (player.Team != 0 && FormExecution.ClientConfig.DisplayTagTeam)            
+                pl.Text += " (" + player.TeamTag + ")";
+            
             pl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + player.ChatColorString));
 
             Run txt = new Run("]: ");
