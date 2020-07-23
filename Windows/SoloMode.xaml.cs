@@ -1,5 +1,4 @@
 ﻿using hub_client.Configuration;
-using hub_client.Helpers;
 using NLog;
 using System;
 using System.Collections.Generic;

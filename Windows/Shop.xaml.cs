@@ -257,8 +257,8 @@ namespace hub_client.Windows
             if (lb_booster.SelectedItem == null)
                 return;
 
-            LoadPurchase(lb_booster.SelectedItem.ToString()); 
-            
+            LoadPurchase(lb_booster.SelectedItem.ToString());
+
             Storyboard storyboard = new Storyboard();
 
             ScaleTransform scale = new ScaleTransform(1.0, 1.0);

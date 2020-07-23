@@ -84,7 +84,7 @@ namespace hub_client.Windows
 
                     try
                     {
-                        popup.Image = Image.FromFile(FormExecution.AssetsManager.GetCustom(infos.Avatar).UriSource.OriginalString);                        
+                        popup.Image = Image.FromFile(FormExecution.AssetsManager.GetCustom(infos.Avatar).UriSource.OriginalString);
                     }
                     catch (Exception ex)
                     {
@@ -107,7 +107,7 @@ namespace hub_client.Windows
                     if (tbChat.GetText() == string.Empty)
                         return;
                     _admin.SendMessage(_target, tbChat.GetText());
-                    rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), FormExecution.PlayerInfos,tbChat.GetText());
+                    rtbChat.OnPlayerColoredMessage(FormExecution.AppDesignConfig.GetGameColor("StandardMessageColor"), FormExecution.PlayerInfos, tbChat.GetText());
                     tbChat.Clear();
                     break;
             }

@@ -4,9 +4,6 @@ using hub_client.Windows.Controls.Controls_Stuff;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Windows.Media.Imaging;
 
 namespace hub_client.WindowsAdministrator
 {

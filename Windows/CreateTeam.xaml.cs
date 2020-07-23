@@ -4,14 +4,8 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,7 +21,7 @@ namespace hub_client.Windows
         private AppDesignConfig style = FormExecution.AppDesignConfig;
 
         public event Action<string, string, string> TeamCreation;
-        public CreateTeam()
+        public CreateTeam(string name = "", string tag = "")
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -36,6 +30,14 @@ namespace hub_client.Windows
 
             btn_load.MouseLeftButtonDown += LoadCustomization;
             btn_validate.MouseLeftButtonDown += ValidURL;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                tb_name.IsEnabled = false;
+                tb_name.Text = name;
+                tb_tag.IsEnabled = false;
+                tb_tag.Text = tag;
+            }
         }
 
         private void ValidURL(object sender, MouseButtonEventArgs e)

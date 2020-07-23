@@ -136,6 +136,8 @@ namespace hub_client.Windows
                 FormExecution.StartConnexion();
                 _admin.Client.Connected += () => Client_Connected(username, password, HID, encryptKey);
             }
+            else
+                _admin.SendAuthentification(username, password, encryptKey, HID);
         }
 
         private void Client_Connected(string username, string password, string HID, string encryptKey)

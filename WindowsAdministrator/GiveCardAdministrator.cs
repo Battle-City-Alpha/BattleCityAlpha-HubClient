@@ -1,6 +1,4 @@
 ﻿using BCA.Common;
-using BCA.Network.Packets.Enums;
-using BCA.Network.Packets.Standard.FromClient;
 using hub_client.Network;
 using System;
 using System.Collections.Generic;

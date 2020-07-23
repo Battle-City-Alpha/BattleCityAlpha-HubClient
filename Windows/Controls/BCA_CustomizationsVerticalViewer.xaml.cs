@@ -2,8 +2,6 @@
 using hub_client.Assets;
 using NLog;
 using System;
-using System.IO;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -25,7 +23,7 @@ namespace hub_client.Windows.Controls
         DoubleAnimation fadeInText;
         DoubleAnimation fadeOutText;
 
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
         public BCA_CustomizationsVerticalViewer()
         {
             InitializeComponent();

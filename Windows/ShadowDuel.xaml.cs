@@ -1,23 +1,14 @@
-﻿using BCA.Common;
-using BCA.Common.Bets;
+﻿using BCA.Common.Bets;
 using BCA.Common.Enums;
-using BCA.Network.Packets.Enums;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -96,7 +87,7 @@ namespace hub_client.Windows
             int MR = 5 - cb_masterrules.SelectedIndex;
             string password = string.Empty;
             _admin.SendShadowDuelRequest(_id, password, (RoomType)cb_dueltype.SelectedIndex, FormExecution.GetBanlistValue(cb_banlist.SelectedItem.ToString()), RoomRules.TCG, Convert.ToInt32(tb_handcard.Text), Convert.ToInt32(tb_lpstartduel.Text), MR, Convert.ToInt32(tb_drawcount.Text), chb_shuffledeck.IsChecked == true, "Duel des ombres...", _bettype, _bet);
-            
+
             Close();
         }
 
@@ -138,11 +129,11 @@ namespace hub_client.Windows
                         btnChoose.Update();
                         break;
                 }
-                
+
                 AllowToSend();
             }
             else
-               FormExecution.Client_PopMessageBox("Vous n'avez pas indiqué un nombre valable de BPs.", "Erreur");
+                FormExecution.Client_PopMessageBox("Vous n'avez pas indiqué un nombre valable de BPs.", "Erreur");
 
         }
 

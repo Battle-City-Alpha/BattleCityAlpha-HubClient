@@ -88,7 +88,7 @@ namespace hub_client.Windows.Controls
         {
             tb_item.Text = item;
             tb_price.Text = price;
-            border_img.Background = new ImageBrush(new BitmapImage(new Uri("Assets/Shop/" + img_source + ".png", UriKind.Relative)));            
+            border_img.Background = new ImageBrush(new BitmapImage(new Uri("Assets/Shop/" + img_source + ".png", UriKind.Relative)));
             tb_desc.Text = desc;
         }
     }

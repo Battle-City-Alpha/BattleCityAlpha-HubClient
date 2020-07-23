@@ -428,7 +428,7 @@ namespace hub_client.Helpers
 
 
         public StandardClientAddTeamMember AddTeamMember(string txt)
-        {            
+        {
 
             return new StandardClientAddTeamMember
             {
@@ -436,7 +436,7 @@ namespace hub_client.Helpers
             };
         }
         public StandardClientRemoveTeamMember RemoveTeamMember(string txt)
-        {            
+        {
             return new StandardClientRemoveTeamMember
             {
                 Target = txt

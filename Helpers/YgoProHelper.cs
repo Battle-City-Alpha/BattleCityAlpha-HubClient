@@ -2,12 +2,8 @@
 using BCA.Common.Enums;
 using hub_client.Configuration;
 using NLog;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Threading;
 
 namespace hub_client.Helpers
 {
@@ -122,7 +118,7 @@ namespace hub_client.Helpers
 
         private static void CopyAvatarToTexturesFolder(Customization avatar, int index)
         {
-            File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha","textures", "avatars", "a_" + index.ToString() + ".png"), true);
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Avatars", avatar.Id.ToString() + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "avatars", "a_" + index.ToString() + ".png"), true);
         }
         private static void CopyBorderToTexturesFolder(Customization border, int index)
         {
@@ -142,7 +138,7 @@ namespace hub_client.Helpers
         {
             if (!Directory.Exists(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems")))
                 Directory.CreateDirectory(Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems"));
-            File.Copy(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "partners", "e_" + index.ToString() + ".png"), true);
+            File.Copy(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png"), Path.Combine(FormExecution.path, "BattleCityAlpha", "textures", "emblems", "e_" + index.ToString() + ".png"), true);
         }
     }
 }

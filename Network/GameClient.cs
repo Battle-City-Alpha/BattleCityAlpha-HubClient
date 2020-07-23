@@ -146,6 +146,7 @@ namespace hub_client.Network
         #endregion
         #region RankingDisplay Events
         public event Action<RankingPlayerInfos[], Customization[], int> ShowRanking;
+        public event Action<RankingTeamInfos[], int> ShowTeamRanking;
         #endregion
         #region Games History Events
         public event Action<RoomResult[]> GetGamesHistory;
@@ -155,6 +156,9 @@ namespace hub_client.Network
         #endregion
         #region TeamProfile Events
         public event Action<StandardServerAskTeam> TeamProfileInfos;
+        #endregion
+        #region TeamGamesHistoryEvents
+        public event Action<TeamGameResult[]> TeamGamesHistory;
         #endregion
 
         #region Administrator
@@ -187,6 +191,7 @@ namespace hub_client.Network
         public AnimationsScheduleAdministrator AnimationsScheduleAdmin;
         public DuelResultAdministrator DuelResultAdmin;
         public TeamProfileAdministrator TeamProfileAdmin;
+        public TeamGamesHistoryAdministrator TeamGamesHistoryAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -231,6 +236,7 @@ namespace hub_client.Network
             AnimationsScheduleAdmin = new AnimationsScheduleAdministrator(this);
             DuelResultAdmin = new DuelResultAdministrator(this);
             TeamProfileAdmin = new TeamProfileAdministrator(this);
+            TeamGamesHistoryAdmin = new TeamGamesHistoryAdministrator(this);
         }
 
         private void InitManager()
@@ -276,7 +282,7 @@ namespace hub_client.Network
                 {
                     writer.Write((short)packetId);
                     byte[] toSend = CompressHelper.Zip(JsonConvert.SerializeObject(packet));
-                    writer.Write((int)toSend.Length);
+                    writer.Write(toSend.Length);
                     writer.Write(toSend);
                 }
                 Send(stream.ToArray());
@@ -587,6 +593,13 @@ namespace hub_client.Network
                     case PacketType.AskTeamProfile:
                         OnTeamProfil(JsonConvert.DeserializeObject<StandardServerAskTeam>(packet));
                         break;
+                    case PacketType.GetTeamsRanking:
+                        OnTeamsRanking(JsonConvert.DeserializeObject<StandardServerGetTeamsRanking>(packet));
+                        break;
+                    case PacketType.GetTeamGamesHistory:
+                    case PacketType.GetTeamMemberGamesHistory:
+                        OnTeamsGameHistory(JsonConvert.DeserializeObject<StandardServerTeamGamesHistory>(packet));
+                        break;
                 }
             }
             catch (Exception ex)
@@ -617,7 +630,7 @@ namespace hub_client.Network
                     msg = "[Animation - " + packet.Player.Username + "]: " + packet.Message;
                     break;
                 case ChatMessageType.Information:
-                    c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");                    
+                    c = FormExecution.AppDesignConfig.GetGameColor("InformationMessageColor");
                     msg = "**[Information - " + packet.Player.Username + "]:" + packet.Message + "**";
                     bold = true;
                     break;
@@ -1161,7 +1174,7 @@ namespace hub_client.Network
         }
 
         public void OnDuelStart(StandardServerDuelStart packet)
-        {        
+        {
             string arg = "-j " + FormExecution.GetIp() + " " + packet.Room.Id;
             YgoproConfig.UpdateNickname(FormExecution.Username);
             YgoproConfig.UpdateForced(packet.Room.IsRanked());
@@ -1193,7 +1206,7 @@ namespace hub_client.Network
             }
 
             logger.Trace("DUEL REQUEST - From {0} | Type : {1}", packet.Player.Username, packet.Config.Type);
-            
+
             Application.Current.Dispatcher.Invoke(() => ChoicePopBox?.Invoke(packet.Player, packet.Config, ChoiceBoxType.Duel, packet.RoomPass));
         }
         public void OnDuelRequestAnswer(StandardServerDuelRequestResult packet)
@@ -1515,7 +1528,7 @@ namespace hub_client.Network
                     txt += " car tu as créé ton compte il y a plus de " + packet.Amount + " jours !";
                     break;
                 case CustomizationAchievementType.Ranking:
-                    txt += " car tu as terminé à la " + packet.Amount + (packet.Amount != 1 ? "ème" : "er") +  " place du classement de la saison !";
+                    txt += " car tu as terminé à la " + packet.Amount + (packet.Amount != 1 ? "ème" : "er") + " place du classement de la saison !";
                     break;
                 default:
                     txt += " car ... aucune idée !";
@@ -1623,7 +1636,7 @@ namespace hub_client.Network
         {
             Application.Current.Dispatcher.InvokeAsync(() => AnimationNotification?.Invoke(packet.Update));
         }
-        
+
         public void OnRecieveRoomIsWaiting(StandardServerWaitingRoom packet)
         {
             if (!FormExecution.ClientConfig.ShowArenaWaitingRoomMessage)
@@ -1641,6 +1654,14 @@ namespace hub_client.Network
         public void OnTeamProfil(StandardServerAskTeam packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => TeamProfileInfos?.Invoke(packet));
+        }
+        public void OnTeamsRanking(StandardServerGetTeamsRanking packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => ShowTeamRanking?.Invoke(packet.Ranking, packet.Season));
+        }
+        public void OnTeamsGameHistory(StandardServerTeamGamesHistory packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => TeamGamesHistory?.Invoke(packet.Results));
         }
 
         public void OnPing(StandardServerPing packet)

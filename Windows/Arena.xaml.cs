@@ -216,7 +216,7 @@ namespace hub_client.Windows
         {
             _tutoIndex++;
 
-            if  (_tutoIndex == StartDisclaimer.ArenaTutorial.Length -1)
+            if (_tutoIndex == StartDisclaimer.ArenaTutorial.Length - 1)
             {
                 popup.btnNext.Visibility = Visibility.Hidden;
                 popup.btnSkip.ButtonText = "Fin !";

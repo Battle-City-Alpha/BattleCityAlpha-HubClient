@@ -1,23 +1,13 @@
 ﻿using BCA.Common;
 using BCA.Common.Bets;
 using BCA.Common.Enums;
-using BCA.Network.Packets.Enums;
-using hub_client.Cards;
 using hub_client.Windows.Controls;
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -51,7 +41,7 @@ namespace hub_client.Windows
             tb_popup_MR.Foreground = new SolidColorBrush(Colors.White);
             tb_popup_starthand.Foreground = new SolidColorBrush(Colors.White);
             tb_shuffledeck.Foreground = new SolidColorBrush(Colors.White);
-            tb_drawcount.Foreground = new SolidColorBrush(Colors.White); 
+            tb_drawcount.Foreground = new SolidColorBrush(Colors.White);
 
             if (config.Banlist != 0)
                 tb_popup_banlist.Foreground = new SolidColorBrush(FormExecution.AppDesignConfig.GetGameColor("CustomRoomColor"));

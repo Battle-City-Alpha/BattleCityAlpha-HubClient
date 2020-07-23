@@ -1,10 +1,8 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using NLog;
-using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows
 {

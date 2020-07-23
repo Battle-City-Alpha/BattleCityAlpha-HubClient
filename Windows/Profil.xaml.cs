@@ -1,13 +1,9 @@
-﻿using BCA.Common;
-using BCA.Common.Enums;
-using BCA.Network.Packets.Standard.FromServer;
+﻿using BCA.Network.Packets.Standard.FromServer;
 using hub_client.Assets;
 using hub_client.Configuration;
 using hub_client.WindowsAdministrator;
 using NLog;
 using System;
-using System.IO;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,7 +23,7 @@ namespace hub_client.Windows
 
         private int _userID = -1;
 
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
 
         private bool IsMine()
         {
@@ -90,7 +86,7 @@ namespace hub_client.Windows
                 ImageBrush background = new ImageBrush(FormExecution.AssetsManager.GetTeamEmblem(infos.TeamID, infos.TeamEmblem));
                 background.Stretch = Stretch.UniformToFill;
                 team_emblem.Background = background;
-                team_emblem.MouseLeftButtonDown += (sender, e) => Img_border_MouseLeftButtonDown(sender,e, infos.TeamID);
+                team_emblem.MouseLeftButtonDown += (sender, e) => Img_border_MouseLeftButtonDown(sender, e, infos.TeamID);
                 this.tb_teamname.Text = infos.TeamName;
                 team_emblem.MouseEnter += Team_emblem_MouseEnter;
                 team_emblem.MouseLeave += Team_emblem_MouseLeave; ;

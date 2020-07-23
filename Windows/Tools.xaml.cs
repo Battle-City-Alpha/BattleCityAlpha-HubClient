@@ -23,7 +23,7 @@ namespace hub_client.Windows
     {
         private AppDesignConfig style = FormExecution.AppDesignConfig;
         private ClientConfig client_config = FormExecution.ClientConfig;
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
 
         private ToolsAdministrator _admin;
 

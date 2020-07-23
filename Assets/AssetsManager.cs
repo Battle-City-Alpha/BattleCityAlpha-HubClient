@@ -1,7 +1,7 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Stuff;
-using hub_client.Windows.Controls;
+using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -19,10 +19,15 @@ namespace hub_client.Assets
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public Dictionary<string, List<Smiley>> Smileys;
+        private Dictionary<int, string> TeamEmblemsURL;
 
         public AssetsManager()
         {
             path = FormExecution.path;
+            if (File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", "emblems.json")))
+                TeamEmblemsURL = JsonConvert.DeserializeObject<Dictionary<int, string>>(File.ReadAllText(Path.Combine(FormExecution.path, "Assets", "Team", "emblems.json")));
+            else
+                TeamEmblemsURL = new Dictionary<int, string>();
         }
         public Smiley CheckSmiley(string word)
         {
@@ -91,7 +96,7 @@ namespace hub_client.Assets
                     img_path = Path.Combine(img_path, item);
                 return new BitmapImage(new Uri(img_path));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return GetUnknownCardPic();
             }
@@ -199,7 +204,7 @@ namespace hub_client.Assets
             if (!Directory.Exists(Path.Combine(FormExecution.path, "Assets", "Team")))
                 Directory.CreateDirectory(Path.Combine(FormExecution.path, "Assets", "Team"));
 
-            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
+            if (!TeamEmblemsURL.ContainsKey(teamID) || TeamEmblemsURL[teamID] != emblem || !File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
             {
                 try
                 {
@@ -210,6 +215,8 @@ namespace hub_client.Assets
                             Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")
                             );
                     }
+                    TeamEmblemsURL[teamID] = emblem;
+                    SaveTeamEmblem();
                 }
                 catch (Exception ex)
                 {
@@ -219,6 +226,11 @@ namespace hub_client.Assets
             }
 
             return GetImage("Team", teamID.ToString());
+        }
+
+        private void SaveTeamEmblem()
+        {
+            File.WriteAllText(Path.Combine(FormExecution.path, "Assets", "Team", "emblems.json"), JsonConvert.SerializeObject(TeamEmblemsURL));
         }
     }
 }

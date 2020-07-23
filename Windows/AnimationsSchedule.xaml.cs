@@ -5,17 +5,11 @@ using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace hub_client.Windows
@@ -120,7 +114,7 @@ namespace hub_client.Windows
         public void LoadAnims(Animation[] anims)
         {
             DateTime monday = DateTime.Now.AddDays((int)DayOfWeek.Monday - (int)DateTime.Now.DayOfWeek);
-            if ((int)DateTime.Now.DayOfWeek == (int)DayOfWeek.Sunday)
+            if (DateTime.Now.DayOfWeek == (int)DayOfWeek.Sunday)
                 monday = DateTime.Now.AddDays(-6);
 
             monday = new DateTime(monday.Year, monday.Month, monday.Day, 0, 0, 0);

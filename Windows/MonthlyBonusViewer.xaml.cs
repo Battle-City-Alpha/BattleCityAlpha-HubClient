@@ -1,24 +1,12 @@
 ﻿using BCA.Common;
 using BCA.Common.Enums;
 using hub_client.Configuration;
-using hub_client.Enums;
 using hub_client.Helpers;
-using hub_client.Stuff;
 using hub_client.Windows.Controls;
 using NLog;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -41,7 +29,7 @@ namespace hub_client.Windows
             foreach (var b in bonus)
             {
                 logger.Trace("{0} {1}", b.Key, b.Value.Gift);
-                BCA_MonthlyBonus widget = new BCA_MonthlyBonus(b.Value, b.Key, connectionnumber < b.Key,  connectionnumber == b.Key);
+                BCA_MonthlyBonus widget = new BCA_MonthlyBonus(b.Value, b.Key, connectionnumber < b.Key, connectionnumber == b.Key);
                 wp_bonus.Children.Add(widget);
             }
             current_bonus = bonus[connectionnumber];
@@ -84,7 +72,8 @@ namespace hub_client.Windows
 
         private void Btn_get_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (current_bonus.Type == BonusType.Booster) {
+            if (current_bonus.Type == BonusType.Booster)
+            {
                 FormExecution.OpenPurchase(BoosterManager.GetBoosterInfo(current_bonus.Gift), current_bonus.Cards);
             }
             else

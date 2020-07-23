@@ -5,9 +5,6 @@ using hub_client.Network;
 using hub_client.Windows;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace hub_client.WindowsAdministrator

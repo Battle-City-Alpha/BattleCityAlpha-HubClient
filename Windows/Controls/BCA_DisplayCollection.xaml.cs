@@ -142,7 +142,7 @@ namespace hub_client.Windows.Controls
         {
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
             SortColumn(column);
-            
+
         }
         private void SortColumn(GridViewColumnHeader column)
         {

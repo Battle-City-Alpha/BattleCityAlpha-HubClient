@@ -93,15 +93,28 @@ namespace hub_client.Windows
             string encryptKey = File.ReadAllText("rsa_publickey.xml");
 
             if (password == passwordConfirm)
-                _admin.Client.Send(PacketType.Register, new StandardClientRegister
+            {
+                if (!_admin.Client.IsConnected)
                 {
-                    Username = username,
-                    Password = CryptoManager.Encryption(password.Trim(), encryptKey),
-                    Email = email,
-                    HID = HID
-                });
+                    FormExecution.StartConnexion();
+                    _admin.Client.Connected += () => Client_Connected(username, password, encryptKey, email, HID);
+                }
+                else
+                    Client_Connected(username, password, encryptKey, email, HID);
+            }
             else
                 _admin.Client.OpenPopBox("Les mots de passe ne sont pas identiques.", "Problème");
+        }
+
+        private void Client_Connected(string username, string password, string encryptKey, string email, string HID)
+        {
+            _admin.Client.Send(PacketType.Register, new StandardClientRegister
+            {
+                Username = username,
+                Password = CryptoManager.Encryption(password.Trim(), encryptKey),
+                Email = email,
+                HID = HID
+            });
         }
 
         private void Window_Closed(object sender, EventArgs e)

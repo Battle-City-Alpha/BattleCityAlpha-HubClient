@@ -3,8 +3,6 @@ using BCA.Common.Enums;
 using hub_client.Assets;
 using NLog;
 using System;
-using System.IO;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -30,7 +28,7 @@ namespace hub_client.Windows.Controls
 
         private Image[] imgs;
 
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
 
         public BCA_CustomizationsViewer()
         {
@@ -229,7 +227,7 @@ namespace hub_client.Windows.Controls
 
         private BitmapImage LoadCustom(Customization custom)
         {
-            return PicsManager.GetCustom(custom);           
+            return PicsManager.GetCustom(custom);
         }
     }
 

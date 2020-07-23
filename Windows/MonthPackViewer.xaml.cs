@@ -2,13 +2,11 @@
 using BCA.Common.Enums;
 using hub_client.Configuration;
 using hub_client.Windows.Controls;
-using hub_client.WindowsAdministrator;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace hub_client.Windows
 {

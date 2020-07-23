@@ -2,17 +2,11 @@
 using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace hub_client.Windows
 {
@@ -22,6 +16,12 @@ namespace hub_client.Windows
     public partial class TeamProfile : Window
     {
         private TeamProfileAdministrator _admin;
+        private int _id;
+
+        DoubleAnimation fadeInBorder;
+        DoubleAnimation fadeOutBorder;
+        DoubleAnimation fadeInText;
+        DoubleAnimation fadeOutText;
 
         public TeamProfile(TeamProfileAdministrator admin)
         {
@@ -33,6 +33,48 @@ namespace hub_client.Windows
             _admin.LoadTeamProfile += _admin_LoadTeamProfile;
 
             this.Closed += TeamProfile_Closed;
+
+            fadeInBorder = new DoubleAnimation();
+            fadeInBorder.From = 0.3;
+            fadeInBorder.To = 1;
+            fadeInBorder.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeOutBorder = new DoubleAnimation();
+            fadeOutBorder.From = 1;
+            fadeOutBorder.To = 0.3;
+            fadeOutBorder.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeInText = new DoubleAnimation();
+            fadeInText.From = 0;
+            fadeInText.To = 1;
+            fadeInText.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            fadeOutText = new DoubleAnimation();
+            fadeOutText.From = 1;
+            fadeOutText.To = 0;
+            fadeOutText.Duration = new Duration(TimeSpan.FromSeconds(0.7));
+
+            this.team_emblem.MouseLeftButtonDown += AskTeamGamesHistory;
+        }
+
+        private void AskTeamGamesHistory(object sender, MouseButtonEventArgs e)
+        {
+            _admin.SendAskTeamGamesHistory(_id);
+        }
+
+        private void UpdateEmblem(object sender, MouseButtonEventArgs e)
+        {
+            string[] args = team_name.Text.Split('(');
+            CreateTeam ct = new CreateTeam(args[0].Split(' ')[0], args[1].Split(')')[0]);
+            ct.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => ct.Activate()));
+
+            ct.TeamCreation += UpdateEmblem;
+        }
+
+        private void UpdateEmblem(string name, string emblem, string tag)
+        {
+            _admin.SendUpdateTeamEmblem(emblem);
         }
 
         private void TeamProfile_Closed(object sender, EventArgs e)
@@ -40,8 +82,9 @@ namespace hub_client.Windows
             _admin.LoadTeamProfile -= _admin_LoadTeamProfile;
         }
 
-        private void _admin_LoadTeamProfile(int id, string url_emblem, string name, string tag, int wins, int loses, int rank, int leaderid, int coleaderid, PlayerInfo[] members, int score)
+        private void _admin_LoadTeamProfile(int id, string url_emblem, string name, string tag, int wins, int loses, int rank, int leaderid, int coleaderid, PlayerInfo[] members, int score, Dictionary<int, int[]> stats)
         {
+            _id = id;
             team_name.Text = name + " (" + tag + ")";
             tb_score.Text = score.ToString();
             tb_wins.Text = wins.ToString();
@@ -62,13 +105,19 @@ namespace hub_client.Windows
                     ImageBrush bg = new ImageBrush(FormExecution.AssetsManager.GetCustom(p.Avatar));
                     bg.Stretch = Stretch.UniformToFill;
                     leader_avatar.Background = bg;
+                    winleader.Text = stats[p.UserId][0] + "W";
+                    loseleader.Text = stats[p.UserId][1] + "L";
+                    leader_avatar.Cursor = Cursors.Hand;
+                    leader_avatar.MouseEnter += Leader_avatar_MouseEnter;
+                    leader_avatar.MouseLeave += Leader_avatar_MouseLeave;
+                    leader_avatar.MouseLeftButtonDown += (sender, e) => TeamMemberClick(sender, e, p.UserId);
                 }
                 else
                 {
-                    Grid gd = CreateMemberGrid(p, p.UserId == coleaderid);
+                    Grid gd = CreateMemberGrid(p, p.UserId == coleaderid, stats[p.UserId]);
                     int x = 0;
                     int y = 0;
-                    switch(i)
+                    switch (i)
                     {
                         case 0:
                             break;
@@ -107,8 +156,34 @@ namespace hub_client.Windows
                 }
             }
 
+            if (FormExecution.PlayerInfos.UserId == leaderid)
+            {
+                team_emblem.MouseRightButtonDown += UpdateEmblem;
+            }
+
             this.Show();
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
+        }
+
+        private void Leader_avatar_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (winleader.IsMouseOver || loseleader.IsMouseOver)
+                return;
+
+            fadeInBorder.From = ((Border)sender).Opacity;
+            fadeOutText.From = stats_leader.Opacity;
+
+            stats_leader.BeginAnimation(OpacityProperty, fadeOutText);
+            ((Border)sender).BeginAnimation(OpacityProperty, fadeInBorder);
+        }
+
+        private void Leader_avatar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            fadeOutBorder.From = ((Border)sender).Opacity;
+            fadeInText.From = stats_leader.Opacity;
+
+            stats_leader.BeginAnimation(OpacityProperty, fadeInText);
+            ((Border)sender).BeginAnimation(OpacityProperty, fadeOutBorder);
         }
 
         private void closeIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -129,7 +204,7 @@ namespace hub_client.Windows
             catch { }
         }
 
-        private Grid CreateMemberGrid(PlayerInfo player, bool isColeader)
+        private Grid CreateMemberGrid(PlayerInfo player, bool isColeader, int[] stats)
         {
             Grid g = new Grid();
             g.RowDefinitions.Add(new RowDefinition());
@@ -147,15 +222,69 @@ namespace hub_client.Windows
             background.Stretch = Stretch.UniformToFill;
             bd.Background = background;
             Grid.SetRow(bd, 0);
+
             TextBlock tb = new TextBlock();
             tb.Text = isColeader ? "🍩" + player.Username : player.Username;
             tb.FontSize = 15;
             tb.HorizontalAlignment = HorizontalAlignment.Center;
             tb.VerticalAlignment = VerticalAlignment.Center;
             Grid.SetRow(tb, 1);
+
+            StackPanel panelStats = new StackPanel();
+            panelStats.Orientation = Orientation.Vertical;
+            panelStats.HorizontalAlignment = HorizontalAlignment.Center;
+            panelStats.VerticalAlignment = VerticalAlignment.Center;
+            TextBlock win = new TextBlock();
+            win.Text = stats[0] + "W";
+            win.FontSize = 20;
+            win.HorizontalAlignment = HorizontalAlignment.Center;
+            win.VerticalAlignment = VerticalAlignment.Center;
+            TextBlock lose = new TextBlock();
+            lose.Text = stats[0] + "L";
+            lose.FontSize = 20;
+            lose.HorizontalAlignment = HorizontalAlignment.Center;
+            lose.VerticalAlignment = VerticalAlignment.Center;
+            panelStats.Children.Add(win);
+            panelStats.Children.Add(lose);
+            panelStats.Opacity = 0.0;
+            Grid.SetRow(panelStats, 0);
+
             g.Children.Add(bd);
             g.Children.Add(tb);
+            g.Children.Add(panelStats);
+
+            bd.Cursor = Cursors.Hand;
+            bd.MouseEnter += (sender, e) => Bd_MouseEnter(sender, e, panelStats);
+            bd.MouseLeave += (sender, e) => Bd_MouseLeave(sender, e, panelStats);
+            bd.MouseLeftButtonDown += (sender, e) => TeamMemberClick(sender, e, player.UserId);
+
             return g;
+        }
+
+        private void TeamMemberClick(object sender, MouseButtonEventArgs e, int userID)
+        {
+            _admin.SendAskTeamMemberGamesHistory(userID);
+        }
+
+        private void Bd_MouseLeave(object sender, MouseEventArgs e, StackPanel stats)
+        {
+            if (stats.Children[0].IsMouseOver || stats.Children[1].IsMouseOver)
+                return;
+
+            fadeInBorder.From = ((Border)sender).Opacity;
+            fadeOutText.From = stats.Opacity;
+
+            stats.BeginAnimation(OpacityProperty, fadeOutText);
+            ((Border)sender).BeginAnimation(OpacityProperty, fadeInBorder);
+        }
+
+        private void Bd_MouseEnter(object sender, MouseEventArgs e, StackPanel stats)
+        {
+            fadeOutBorder.From = ((Border)sender).Opacity;
+            fadeInText.From = stats.Opacity;
+
+            stats.BeginAnimation(OpacityProperty, fadeInText);
+            ((Border)sender).BeginAnimation(OpacityProperty, fadeOutBorder);
         }
     }
 }

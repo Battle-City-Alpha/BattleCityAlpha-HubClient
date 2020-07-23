@@ -2,18 +2,10 @@
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -33,7 +25,7 @@ namespace hub_client.Windows
             if (anim != null)
             {
                 id = anim.ID;
-                tb_animation_name.Text = anim.Name;                
+                tb_animation_name.Text = anim.Name;
                 tb_duration.Text = anim.Duration.ToString();
                 tb_host.Text = anim.Host;
                 tb_url.Text = anim.URL;
@@ -104,7 +96,7 @@ namespace hub_client.Windows
                 Duration = chk_perma.IsChecked == true ? -1 : Convert.ToInt32(tb_duration.Text),
                 Description = new TextRange(rtb_desc.Document.ContentStart, rtb_desc.Document.ContentEnd).Text,
                 URL = tb_url.Text,
-                StartDate = chk_perma.IsChecked == true ? DateTime.Now :(DateTime)dp_startdate.Value
+                StartDate = chk_perma.IsChecked == true ? DateTime.Now : (DateTime)dp_startdate.Value
             }, true);
             Close();
         }

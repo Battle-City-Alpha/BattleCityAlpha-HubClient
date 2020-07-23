@@ -1,5 +1,4 @@
 ﻿using BCA.Common;
-using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using hub_client.Assets;
 using hub_client.Configuration;
@@ -12,7 +11,6 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,7 +39,7 @@ namespace hub_client.Windows
         private List<PlayerItem> PlayersFound;
         private PlayerItemNameComparer _playersNameComparer;
 
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
 
         private List<string> _last_messages;
         int _index_last_message = 0;
@@ -155,6 +153,9 @@ namespace hub_client.Windows
             item.Avatar = info.Avatar;
             item.VIP = info.VIP;
             item.ChatColorString = info.ChatColorString;
+            item.TeamEmblem = info.TeamEmblem;
+            item.TeamTag = info.TeamTag;
+            item.Team = info.Team;
             _admin_AddHubPlayer(item, false);
 
             lvUserlist.Items.Refresh();
@@ -485,7 +486,7 @@ namespace hub_client.Windows
         {
             border_quest_notif.Background = new SolidColorBrush(style.GetGameColor("NotificationColor"));
 
-            List <BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
+            List<BCA_ColorButton> Buttons = new List<BCA_ColorButton>();
             Buttons.AddRange(new[] { btnArene, btnShop, btnDecks, btnAnimations, btnTools, btnProfil, btnFAQ, btnReplay, btnNote, btnDiscord, btnRules, btnQuest });
 
             foreach (BCA_ColorButton btn in Buttons)
@@ -770,7 +771,7 @@ namespace hub_client.Windows
                 TeamTag = infos.TeamTag
             };
 
-            return item;            
+            return item;
         }
 
         private void userAvatarDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e, PlayerItem item)
@@ -951,9 +952,9 @@ namespace hub_client.Windows
             if (target != null && target.Username != FormExecution.Username)
             {
 #endif
-                ShadowDuel sd = new ShadowDuel(_admin.Client.DuelRequestAdmin, target.UserId);
-                sd.Show();
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sd.Activate()));
+            ShadowDuel sd = new ShadowDuel(_admin.Client.DuelRequestAdmin, target.UserId);
+            sd.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => sd.Activate()));
 #if !DEBUG
         }
 #endif

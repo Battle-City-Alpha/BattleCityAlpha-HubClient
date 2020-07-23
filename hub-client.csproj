@@ -167,6 +167,7 @@
     <Compile Include="Stuff\CollectionCardItem.cs" />
     <Compile Include="Stuff\PlayerItem.cs" />
     <Compile Include="Stuff\RankingPlayerItem.cs" />
+    <Compile Include="Stuff\RankingTeamItem.cs" />
     <Compile Include="Stuff\Smiley.cs" />
     <Compile Include="WindowsAdministrator\AnimationsScheduleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ArenaAdministrator.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
     <Compile Include="WindowsAdministrator\SleevesHandleAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\TeamGamesHistoryAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TeamProfileAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ToolsAdministrator.cs" />
@@ -286,6 +288,7 @@
     </Compile>
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
+    <Compile Include="Windows\Controls\Controls Stuff\TeamGameResultItem.cs" />
     <Compile Include="Windows\CreateTeam.xaml.cs">
       <DependentUpon>CreateTeam.xaml</DependentUpon>
     </Compile>
@@ -390,6 +393,9 @@
     </Compile>
     <Compile Include="Windows\SoloMode.xaml.cs">
       <DependentUpon>SoloMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TeamGamesHistory.xaml.cs">
+      <DependentUpon>TeamGamesHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\TeamProfile.xaml.cs">
       <DependentUpon>TeamProfile.xaml</DependentUpon>
@@ -654,6 +660,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SoloMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TeamGamesHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -114,7 +114,7 @@ namespace hub_client.Windows.Controls
                     CaptionText = room.Config.CaptionText,
                     IsShadowDuel = room.IsShadowRoom(),
                     RoomColor = new SolidColorBrush(Colors.Black),
-                    ObserversCount =  room.Observers.Count,
+                    ObserversCount = room.Observers.Count,
                     IsTurboDuel = room.IsTurboDuel
 
                 };

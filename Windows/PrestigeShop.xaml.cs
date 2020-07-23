@@ -38,7 +38,7 @@ namespace hub_client.Windows
 
         private void _admin_UpdatePack(CustomSpecialPack pack)
         {
-            _pack = pack; 
+            _pack = pack;
             SpecialPack_Item.Initialize("Offre spéciale !", pack.Price + " PP", "specialpack", pack.Infos.Replace("\\n", Environment.NewLine));
             SpecialPack_Item.Visibility = Visibility.Visible;
 
@@ -49,7 +49,7 @@ namespace hub_client.Windows
         {
             CustomSpecialPackWindow window = new CustomSpecialPackWindow(_pack);
             window.Show();
-            window.PurchaseBtnClick += Window_PurchaseBtnClick; 
+            window.PurchaseBtnClick += Window_PurchaseBtnClick;
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => window.Activate()));
         }
 
@@ -107,7 +107,7 @@ namespace hub_client.Windows
             PartnerList_Item.Initialize("Acheter un partenaire", "250 PP", "partnerList", "Permet de choisir un partenaire prestigieux et rare parmis une liste pour ensuite l'utiliser en duel.");
             TitleList_Item.Initialize("Acheter un titre", "100 PP", "titleList", "Permet de choisir un titre prestigieux et rare parmis une liste pour ensuite l'utiliser.");
             CreateTeam_Item.Initialize("Créer une team", "300 PP", "team", "Permet de créer une team ! 8 joueurs avec une seule idée en tête : obtenir la première place du classement des équipes.");
-            
+
             Greet_Item.Initialize("Greets illimités", "100 PP", "greet", "Une fois achetée, permet de changer de greets à l'infini !");
             ChangeUsername_Item.Initialize("Changer de pseudo", "300 PP", "change_username", "Permet de changer de pseudo");
             ResetStat_Item.Initialize("Réinitialiser les statistiques", "50 PP", "reset_stats", "Permet de réinitialiser les statistiques");

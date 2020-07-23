@@ -4,17 +4,10 @@ using hub_client.Configuration;
 using hub_client.Windows.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace hub_client.Windows
@@ -39,7 +32,7 @@ namespace hub_client.Windows
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.IsEnabled = true;
-            timer.Tick += Timer_Tick; 
+            timer.Tick += Timer_Tick;
             lbl_time.Content = string.Format("{0}h{1}m{2}s", _interval.Hours + 24 * _interval.Days, _interval.Minutes, _interval.Seconds);
 
             this.btn_buy.MouseLeftButtonDown += Btn_buy_MouseLeftButtonDown;

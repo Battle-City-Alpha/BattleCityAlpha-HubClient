@@ -54,7 +54,8 @@ namespace hub_client.Helpers
         {
             Collections = new Dictionary<int, PlayerCard>();
             foreach (string line in File.ReadLines(Path.Combine(FormExecution.path, "BattleCityAlpha", "chest.list")))
-                Collections.Add(Convert.ToInt32(line.Split(' ')[0]), new PlayerCard {
+                Collections.Add(Convert.ToInt32(line.Split(' ')[0]), new PlayerCard
+                {
                     Quantity = Convert.ToInt32(line.Split(' ')[1]),
                     Id = Convert.ToInt32(line.Split(' ')[0])
                 });

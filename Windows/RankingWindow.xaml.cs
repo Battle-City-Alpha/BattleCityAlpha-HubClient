@@ -4,8 +4,6 @@ using hub_client.Stuff;
 using hub_client.WindowsAdministrator;
 using NLog;
 using System;
-using System.IO;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,7 +21,7 @@ namespace hub_client.Windows
 
         private int _seasonOffset = 0;
 
-        AssetsManager PicsManager = new AssetsManager();
+        AssetsManager PicsManager = FormExecution.AssetsManager;
         public RankingWindow(RankingDisplayAdministrator admin)
         {
             InitializeComponent();
@@ -32,26 +30,102 @@ namespace hub_client.Windows
             _admin = admin;
 
             _admin.ShowRanking += _admin_ShowRanking;
+            _admin.ShowTeamsRanking += _admin_ShowTeamsRanking;
 
             this.MouseDown += Window_MouseDown;
             this.Closed += RankingWindow_Closed;
 
             this.lvRanking.MouseDoubleClick += LvRanking_MouseDoubleClick;
+            this.lvTeamsRanking.MouseDoubleClick += LvTeamsRanking_MouseDoubleClick;
 
             this.img_left.MouseLeftButtonDown += PreviousSeason;
             this.img_right.MouseLeftButtonDown += NextSeason;
+
+            rb_teams.Checked += RB_CheckedChange;
+            rb_players.Checked += RB_CheckedChange;
+        }
+
+        private void LvTeamsRanking_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lvTeamsRanking.SelectedIndex == -1) return;
+            RankingTeamItem target = lvTeamsRanking.SelectedItem as RankingTeamItem;
+            if (target != null)
+            {
+                _admin.SendAskTeamProfile(target.TeamID);
+            }
+        }
+
+        private void _admin_ShowTeamsRanking(RankingTeamInfos[] rankings, int season)
+        {
+            lblSeason.Content = season;
+            lvRanking.Items.Clear();
+            lvTeamsRanking.Items.Clear();
+            Border[] borders = new Border[3] { bg_first, bg_second, bg_third };
+            Border[] frames = new Border[3] { frame_first, frame_second, frame_third };
+            TextBlock[] textblocks = new TextBlock[3] { tb_first, tb_second, tb_third };
+            StackPanel[] panels = new StackPanel[3] { panel_first, panel_second, panel_third };
+
+            for (int i = 0; i < 3; i++)
+            {
+                panels[i].Visibility = Visibility.Hidden;
+                textblocks[i].Text = "NR";
+                borders[i].Background = null;
+                frames[i].Background = new SolidColorBrush(Colors.White);
+            }
+            foreach (RankingTeamInfos info in rankings)
+            {
+                RankingTeamItem item = new RankingTeamItem
+                {
+                    Name = info.Name,
+                    Wins = info.Wins,
+                    Loses = info.Loses,
+                    Rank = info.Rank,
+                    Score = info.Score,
+                    TeamID = info.TeamID
+                };
+
+                lvTeamsRanking.Items.Add(item);
+            }
+
+            for (int i = 0; i < Math.Min(3, rankings.Length); i++)
+            {
+                ImageBrush bg = new ImageBrush(PicsManager.GetTeamEmblem(rankings[i].TeamID, rankings[i].Emblem));
+                bg.Stretch = Stretch.UniformToFill;
+                frames[i].Background = bg;
+                frames[i].CornerRadius = new CornerRadius(10, 10, 50, 50);
+            }
+
+            bd_playersranking.Visibility = Visibility.Hidden;
+            bd_teamsrankings.Visibility = Visibility.Visible;
+
+            this.Show();
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => this.Activate()));
+        }
+
+        private void RB_CheckedChange(object sender, RoutedEventArgs e)
+        {
+            if ((bool)rb_players.IsChecked)
+                _admin.SendGetRanking(_seasonOffset);
+            else
+                _admin.SendGetTeamRanking(_seasonOffset);
         }
 
         private void NextSeason(object sender, MouseButtonEventArgs e)
         {
             _seasonOffset++;
-            _admin.SendGetRanking(_seasonOffset);
+            if ((bool)rb_players.IsChecked)
+                _admin.SendGetRanking(_seasonOffset);
+            else
+                _admin.SendGetTeamRanking(_seasonOffset);
         }
 
         private void PreviousSeason(object sender, MouseButtonEventArgs e)
         {
             _seasonOffset--;
-            _admin.SendGetRanking(_seasonOffset);
+            if ((bool)rb_players.IsChecked)
+                _admin.SendGetRanking(_seasonOffset);
+            else
+                _admin.SendGetTeamRanking(_seasonOffset);
         }
 
         private void LvRanking_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -68,19 +142,25 @@ namespace hub_client.Windows
         private void RankingWindow_Closed(object sender, EventArgs e)
         {
             _admin.ShowRanking -= _admin_ShowRanking;
+            _admin.ShowTeamsRanking -= _admin_ShowTeamsRanking;
         }
 
         private void _admin_ShowRanking(RankingPlayerInfos[] infos, Customization[] customs, int season)
         {
             lblSeason.Content = season;
             lvRanking.Items.Clear();
+            lvTeamsRanking.Items.Clear();
             Border[] borders = new Border[3] { bg_first, bg_second, bg_third };
+            Border[] frames = new Border[3] { frame_first, frame_second, frame_third };
             TextBlock[] textblocks = new TextBlock[3] { tb_first, tb_second, tb_third };
+            StackPanel[] panels = new StackPanel[3] { panel_first, panel_second, panel_third };
 
             for (int i = 0; i < 3; i++)
             {
+                panels[i].Visibility = Visibility.Visible;
                 textblocks[i].Text = "NR";
                 borders[i].Background = null;
+                frames[i].Background = new SolidColorBrush(Colors.White);
             }
             foreach (RankingPlayerInfos info in infos)
             {
@@ -101,10 +181,15 @@ namespace hub_client.Windows
                 lvRanking.Items.Add(item);
             }
 
+            bd_playersranking.Visibility = Visibility.Visible;
+            bd_teamsrankings.Visibility = Visibility.Hidden;
+
             for (int i = 0; i < customs.Length; i++)
             {
                 textblocks[i].Text = infos[i].Username;
-                borders[i].Background = new ImageBrush(PicsManager.GetCustom(customs[i]));                
+                borders[i].Background = new ImageBrush(PicsManager.GetCustom(customs[i]));
+                frames[i].CornerRadius = new CornerRadius(50, 50, 10, 10);
+                borders[i].CornerRadius = new CornerRadius(200);
             }
 
             this.Show();

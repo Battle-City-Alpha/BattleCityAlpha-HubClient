@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -30,8 +29,8 @@ namespace hub_client
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static string debug_ip = "127.0.0.1";
-        //public static string debug_ip = "185.212.225.85";
+        //public static string debug_ip = "127.0.0.1";
+        public static string debug_ip = "185.212.225.85";
         public static string test_ip = "185.212.226.12";
         public static string release_ip = "185.212.225.85";
 
@@ -85,7 +84,7 @@ namespace hub_client
         {
             return _chat;
         }
-        
+
         public static void InitConfig()
         {
             if (File.Exists(AppConfigPath))
@@ -159,7 +158,7 @@ namespace hub_client
                 _login.Restart = true;
                 _login.Close();
             }
-            
+
             _login = new Login(Client.LoginAdmin);
 
             logger.Trace("FormExecution initialisation.");
@@ -282,7 +281,7 @@ namespace hub_client
             CardsUpdateDownloader.LoadingProgress -= CardsUpdateDownloader_LoadingProgress;
             CardsUpdateDownloader.UpdateCompleted -= CardsUpdateDownloader_UpdateCompleted;
 
-            LoadCDB(); 
+            LoadCDB();
             AssetsManager.LoadSmileys();
             BoosterManager.LoadList();
         }

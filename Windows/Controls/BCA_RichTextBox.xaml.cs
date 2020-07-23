@@ -1,6 +1,5 @@
 ﻿using BCA.Common;
 using BCA.Network.Packets.Enums;
-using hub_client.Assets;
 using hub_client.Stuff;
 using System;
 using System.Diagnostics;
@@ -170,12 +169,12 @@ namespace hub_client.Windows.Controls
         {
             Paragraph pr = new Paragraph();
             Run date = new Run("[" + DateTime.Now.ToString("HH:mm") + "] [");
-            date.Foreground = new SolidColorBrush(color);            
+            date.Foreground = new SolidColorBrush(color);
 
             Run pl = new Run(ParseUsername(player.Username, player.Rank, player.VIP));
-            if (player.Team != 0 && FormExecution.ClientConfig.DisplayTagTeam)            
-                pl.Text += " (" + player.TeamTag + ")";
-            
+            if (player.Team != 0 && FormExecution.ClientConfig.DisplayTagTeam)
+                pl.Text = player.TeamTag + " - " + pl.Text;
+
             pl.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#" + player.ChatColorString));
 
             Run txt = new Run("]: ");
@@ -236,7 +235,7 @@ namespace hub_client.Windows.Controls
 
                     normalTxt.Text = " ";
                 }
-                else if (word.Length > 2 && word.StartsWith(":") && word.EndsWith(":") && FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length-2)) != null)
+                else if (word.Length > 2 && word.StartsWith(":") && word.EndsWith(":") && FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)) != null)
                 {
                     Image img = new Image();
                     img.Source = FormExecution.AssetsManager.CheckSmiley(word.Substring(1, word.Length - 2)).Pic.Source.Clone();

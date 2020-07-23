@@ -9,17 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace hub_client.Windows
 {
@@ -37,7 +30,7 @@ namespace hub_client.Windows
 
         public PurchaseAlternateWindow(PurchaseAdministrator admin, BoosterInfo infos)
         {
-            InitializeComponent(); 
+            InitializeComponent();
             LoadStyle();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
@@ -203,7 +196,7 @@ namespace hub_client.Windows
 
             storyboard.Begin();
         }
-        
+
 
         private void LoadStyle()
         {
