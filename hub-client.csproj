@@ -289,6 +289,15 @@
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\TeamGameResultItem.cs" />
+    <Compile Include="Windows\Controls\Story Mode\DialogScene.xaml.cs">
+      <DependentUpon>DialogScene.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\OpenWorldScenes.xaml.cs">
+      <DependentUpon>OpenWorldScenes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\StoryScene.xaml.cs">
+      <DependentUpon>StoryScene.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreateTeam.xaml.cs">
       <DependentUpon>CreateTeam.xaml</DependentUpon>
     </Compile>
@@ -394,6 +403,12 @@
     <Compile Include="Windows\SoloMode.xaml.cs">
       <DependentUpon>SoloMode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\StoryMode\Enums\DirectionEnum.cs" />
+    <Compile Include="Windows\StoryMode\StoryModeConsole.xaml.cs">
+      <DependentUpon>StoryModeConsole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\StoryMode\Stuff\CharacterBody.cs" />
+    <Compile Include="Windows\StoryMode\Stuff\Joystick.cs" />
     <Compile Include="Windows\TeamGamesHistory.xaml.cs">
       <DependentUpon>TeamGamesHistory.xaml</DependentUpon>
     </Compile>
@@ -520,6 +535,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\BCA_TutoPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\DialogScene.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\OpenWorldScenes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\StoryScene.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -660,6 +687,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SoloMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\StoryMode\StoryModeConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -900,9 +931,7 @@
     <None Include="Assets\Background\bg_animationschedule.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Partners\75.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Assets\Partners\75.png" />
     <None Include="Assets\Shop\partnerList.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -955,7 +984,11 @@
   <ItemGroup>
     <ProjectReference Include="..\BattleCityAlpha-NetworkLibrary\BCA-Network.csproj">
       <Project>{4E818F97-BB68-461C-8F2C-A03F8D3EF9E4}</Project>
-      <Name>BCA</Name>
+      <Name>BCA-Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCA_StoryMode\BCA_StoryMode.csproj">
+      <Project>{06754E69-23DC-4C76-A656-AF32BE8812AE}</Project>
+      <Name>BCA_StoryMode</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1015,6 +1048,7 @@
     <Folder Include="Assets\Avatars\" />
     <Folder Include="Assets\Borders\" />
     <Folder Include="Assets\Sleeves\" />
+    <Folder Include="Assets\Story Mode\" />
     <Folder Include="Assets\Team\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

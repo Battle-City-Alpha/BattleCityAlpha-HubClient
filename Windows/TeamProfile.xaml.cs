@@ -240,7 +240,7 @@ namespace hub_client.Windows
             win.HorizontalAlignment = HorizontalAlignment.Center;
             win.VerticalAlignment = VerticalAlignment.Center;
             TextBlock lose = new TextBlock();
-            lose.Text = stats[0] + "L";
+            lose.Text = stats[1] + "L";
             lose.FontSize = 20;
             lose.HorizontalAlignment = HorizontalAlignment.Center;
             lose.VerticalAlignment = VerticalAlignment.Center;

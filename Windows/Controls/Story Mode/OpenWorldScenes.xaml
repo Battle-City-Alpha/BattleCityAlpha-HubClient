@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.Story_Mode.OpenWorldScenes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls.Story_Mode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="main_grid" Grid.Column="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border x:Name="bd_black_fade" Background="Black" Grid.RowSpan="3" CornerRadius="0" Panel.ZIndex="3" Opacity="0">
+
+        </Border>
+
+        <Border x:Name="bd_scene_name" Background="White" Grid.Row="0" Grid.RowSpan="2" Opacity="0.8" Margin="0, 20, 5, 5" CornerRadius="0, 20, 20, 0" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock x:Name="tb_scene_name" Padding="10" Text="" FontSize="15" TextWrapping="WrapWithOverflow" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 10, 0"/>
+        </Border>
+
+        <Image Panel.ZIndex="2" x:Name="character_pic_left" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="0, 5"/>
+        <Image Panel.ZIndex="2" x:Name="dialog_pic" Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="0, 5" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/dialog.png" Visibility="Hidden"/>
+    </Grid>
+</UserControl>

@@ -2,9 +2,12 @@
 using BCA.Common.Enums;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
+using BCA_StoryMode.ARCS._5DS.Scenes.ScYusei;
+using BCA_StoryMode.OpenWorld;
 using hub_client.Helpers;
 using hub_client.Network;
 using hub_client.Windows;
+using hub_client.Windows.StoryMode;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -336,6 +339,12 @@ namespace hub_client.WindowsAdministrator
                             return new NetworkData(PacketType.UpdateTeamColeader, _cmdParser.ChangeTeamCoLeader(txt.Substring(cmd.Length + 1)));
                         case "TEAMLEAVE":
                             return new NetworkData(PacketType.LeaveTeam, _cmdParser.LeaveTeam());
+                        case "RESTARTASTRAL":
+                            return new NetworkData(PacketType.RestartAstral, new StandardClientRestartAstral { });
+                        case "STORY":
+                            StoryModeConsole console = new StoryModeConsole();
+                            console.Show();
+                            return null;
                         default:
                             SpecialChatMessage?.Invoke(FormExecution.AppDesignConfig.GetGameColor("LauncherMessageColor"), "••• Cette commande n'existe pas.", false, false);
                             return null;
