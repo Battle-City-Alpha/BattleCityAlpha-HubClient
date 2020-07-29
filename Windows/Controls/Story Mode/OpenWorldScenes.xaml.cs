@@ -58,6 +58,7 @@ namespace hub_client.Windows.Controls.Story_Mode
             _joystick.StopMoveLeft += JoystickLeftReleased;
             _joystick.StopMoveRight += JoystickRightReleased;
             _joystick.PressSpace += CheckInteraction;
+            _joystick.CloseEvents += CloseEvent;
 
             LoadMainCharacter();
             LoadScene();
@@ -240,10 +241,11 @@ namespace hub_client.Windows.Controls.Story_Mode
         {
             if (OpenWorldManager.GetScene(_sceneIndex + 1) == null || _isMapChanging)
             {
-                if (_mainCharacter.MoveTransform.X + 10 < main_grid.ActualWidth + _mainCharacter.Sprites.SpriteWidth)
+                int offset = _isMapChanging ? _mainCharacter.Sprites.SpriteWidth : 0;
+                if (_mainCharacter.MoveTransform.X + 10 < main_grid.ActualWidth - _mainCharacter.Sprites.SpriteWidth + offset)
                     _mainCharacter.MoveTransform.X += 10;
                 else
-                    _mainCharacter.MoveTransform.X = main_grid.ActualWidth + _mainCharacter.Sprites.SpriteWidth;
+                    _mainCharacter.MoveTransform.X = main_grid.ActualWidth - _mainCharacter.Sprites.SpriteWidth + offset;
                 return;
             }
 
@@ -273,10 +275,11 @@ namespace hub_client.Windows.Controls.Story_Mode
         {
             if (OpenWorldManager.GetScene(_sceneIndex - 1) == null || _isMapChanging)
             {
-                if (_mainCharacter.MoveTransform.X - 10 > 0 - _mainCharacter.Sprites.SpriteWidth)
+                int offset = _isMapChanging ? _mainCharacter.Sprites.SpriteWidth : 0;
+                if (_mainCharacter.MoveTransform.X - 10 > 0 - offset)
                     _mainCharacter.MoveTransform.X -= 10;
                 else
-                    _mainCharacter.MoveTransform.X = 0 - _mainCharacter.Sprites.SpriteWidth;
+                    _mainCharacter.MoveTransform.X = 0 - offset;
                 return;
             }
 
@@ -359,13 +362,14 @@ namespace hub_client.Windows.Controls.Story_Mode
             }
         }
 
-        private void CloseEvent()
+        public void CloseEvent()
         {
             _joystick.MoveLeft -= JoystickLeft;
             _joystick.MoveRight -= JoystickRight;
             _joystick.StopMoveLeft -= JoystickLeftReleased;
             _joystick.StopMoveRight -= JoystickRightReleased;
             _joystick.PressSpace -= CheckInteraction;
+            _joystick.CloseEvents -= CloseEvent;
         }
     }
 }

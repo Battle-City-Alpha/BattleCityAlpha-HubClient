@@ -289,14 +289,29 @@
     <Compile Include="Windows\Controls\Controls Stuff\RoomItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\RoomResultItem.cs" />
     <Compile Include="Windows\Controls\Controls Stuff\TeamGameResultItem.cs" />
+    <Compile Include="Windows\Controls\Story Mode\ArcsMenu.xaml.cs">
+      <DependentUpon>ArcsMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\Story Mode\DialogScene.xaml.cs">
       <DependentUpon>DialogScene.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\Items\StoryModeArcsMenu.xaml.cs">
+      <DependentUpon>StoryModeArcsMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\Items\StoryModeMenu.xaml.cs">
+      <DependentUpon>StoryModeMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Story Mode\OpenWorldScenes.xaml.cs">
       <DependentUpon>OpenWorldScenes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Story Mode\StoryScene.xaml.cs">
       <DependentUpon>StoryScene.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\TitleScreen.xaml.cs">
+      <DependentUpon>TitleScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\CreateTeam.xaml.cs">
       <DependentUpon>CreateTeam.xaml</DependentUpon>
@@ -538,7 +553,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Controls\Story Mode\ArcsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Controls\Story Mode\DialogScene.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\Items\StoryModeArcsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\Items\StoryModeMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -547,6 +578,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\Story Mode\StoryScene.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\TitleScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -956,6 +991,8 @@
     <None Include="Assets\Shop\team.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Assets\Story Mode\Console\RightPart.png" />
+    <Resource Include="Assets\Story Mode\Console\LeftPart.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -1048,7 +1085,6 @@
     <Folder Include="Assets\Avatars\" />
     <Folder Include="Assets\Borders\" />
     <Folder Include="Assets\Sleeves\" />
-    <Folder Include="Assets\Story Mode\" />
     <Folder Include="Assets\Team\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

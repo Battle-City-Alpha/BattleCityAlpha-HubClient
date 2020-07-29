@@ -5,45 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hub_client.Windows.StoryMode"
         mc:Ignorable="d"
-        Title="Scène principale" ResizeMode="NoResize" Height="400" Width="800" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Background="{x:Null}">
-    <Border Padding="0" CornerRadius="100" x:Name="bg_border" BorderBrush="White" BorderThickness="2" Background="#FFA663F1">
+        Title="Scène principale" ResizeMode="NoResize" Height="400" Width="805" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Background="{x:Null}">
+    <Border Padding="0" CornerRadius="80" x:Name="bg_border" BorderBrush="White" BorderThickness="2" Background="#FFA663F1">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="505"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" CornerRadius="100, 0, 0, 100" BorderBrush="White" BorderThickness="0">
+            <Border Grid.Column="0" CornerRadius="80, 0, 0, 80" BorderBrush="White" BorderThickness="0">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/Stuff/DarkMagicianGirl.png"/>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="/hub-client;component/Assets/Story Mode/Console/LeftPart.png"/>
                 </Border.Background>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border Visibility="Visible" CornerRadius="100" Grid.Row="0" Background="White" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="5" Width="40" Height="40" Margin="20, 10, 10, 10" BorderBrush="Black" BorderThickness="1" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown">
-                        <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/home.png" Margin="1" MouseLeftButtonDown="closeIcon_MouseLeftButtonDown"/>
+                    <Border x:Name="home_border" Visibility="Visible" CornerRadius="100" Grid.Row="0" Background="White" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="5" Width="40" Height="40" Margin="20, 10, 10, 10" BorderBrush="Black" BorderThickness="1">
+                        <Image x:Name="home_pic" VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/home.png" Margin="1"/>
                     </Border>
-                    <Border Background="White" Opacity="0.8" CornerRadius="80" VerticalAlignment="Center" HorizontalAlignment="Center" Height="140" Width="140">
+                    <Border x:Name="minimize_border" Visibility="Visible" CornerRadius="100" Grid.Row="0" Background="White" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="5" Width="40" Height="40" Margin="20, 10, 52, 10" BorderBrush="Black" BorderThickness="1" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown">
+                        <Rectangle x:Name="minimize_rectangle" Fill="Black" Height="5" MouseLeftButtonDown="minimizeIcon_MouseLeftButtonDown"/>
                     </Border>
+                    <Border Background="White" Opacity="0.8" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" Height="140" Width="50"/>
+                    <Border Background="White" Opacity="0.8" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="140"/>
+
                     <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Border x:Name="btn_left" Background="Black" Grid.Row="0"  Width="55" Height="20" CornerRadius="5"/>
-                        <Border x:Name="btn_right" Background="Black" Grid.Row="0"  Width="55" Height="20" CornerRadius="5"/>
+                        <Border x:Name="btn_left" Background="White" Grid.Row="0"  Width="55" Height="20" CornerRadius="2" BorderThickness="9" BorderBrush="Black"/>
+                        <Border x:Name="btn_right" Background="White" Grid.Row="0"  Width="55" Height="20" CornerRadius="2" BorderThickness="9" BorderBrush="Black"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Border x:Name="btn_top" Background="Black" Grid.Row="0"  Width="20" Height="55" CornerRadius="5"/>
-                        <Border x:Name="btn_bottom" Background="Black" Grid.Row="0"  Width="20" Height="55" CornerRadius="5"/>
+                        <Border x:Name="btn_top" Background="White" Grid.Row="0"  Width="20" Height="55" CornerRadius="2" BorderThickness="9" BorderBrush="Black"/>
+                        <Border x:Name="btn_bottom" Background="White" Grid.Row="0"  Width="20" Height="55" CornerRadius="2" BorderThickness="9" BorderBrush="Black"/>
                     </StackPanel>
-                    <Image Visibility="Hidden" Grid.Row="0" Grid.RowSpan="2" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Stuff/DarkMagicianGirl.png"/>
                 </Grid>
             </Border>
             <Border x:Name="bd_black_fade" Background="Black" Grid.Column="1" Panel.ZIndex="3" Opacity="0" Margin="0,2"/>
             <Border x:Name="console_screen" Grid.Column="1" BorderBrush="Black" BorderThickness="5" Margin="0,2">
-                
+
             </Border>
-            <Border Grid.Column="2" CornerRadius="0, 100, 100, 0" BorderBrush="White" BorderThickness="0">
+            <Border Grid.Column="2" CornerRadius="0, 80, 80, 0" BorderBrush="White" BorderThickness="0">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/Stuff/DarkMagician.png"/>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="/hub-client;component/Assets/Story Mode/Console/RightPart.png"/>
                 </Border.Background>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -67,12 +70,55 @@
                             <ColumnDefinition Width="42" />
                         </Grid.ColumnDefinitions>
                         <Border CornerRadius="100" Grid.Row="0" Grid.RowSpan="3" Background="Black" Height="40" Width="40" BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Rectangle Stroke="White" StrokeThickness="2" Margin="8" Visibility="Hidden"/>
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/joystickleft.png" Margin="2"/>
+                            </Grid>
                         </Border>
                         <Border CornerRadius="100" Grid.Row="1" Grid.Column="2" Background="Black" Height="40" Width="40" BorderBrush="Black" BorderThickness="1">
+                            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/joystickright.png" Margin="5" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="40"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
                         </Border>
-                        <Border CornerRadius="100" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Black" Height="40" Width="40" BorderBrush="Black" BorderThickness="1">
+                        <Border CornerRadius="100" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Black" Height="40" Width="40" BorderBrush="Black" BorderThickness="1" Padding="0">
+                            <Grid>
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/joystickup.png" Margin="3"/>
+
+                                <Polygon Visibility="Hidden" Margin="0,0,0,0" Points="0,20 20,20 10,0" Stroke="White" StrokeThickness="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Grid>
                         </Border>
                         <Border CornerRadius="100" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="Black" Height="40" Width="40" BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Rectangle Visibility="Hidden" Fill="White" Height="2" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" >
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="-45"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle Visibility="Hidden" Fill="White" Height="2" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" >
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="45"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Logos/joystickdown.png" Margin="3"/>
+
+                            </Grid>
                         </Border>
                     </Grid>
                     <Image Visibility="Hidden" Grid.Row="0" Source="pack://application:,,,/BCA_StoryMode;component/Assets/Stuff/DarkMagician.png" />

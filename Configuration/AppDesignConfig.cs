@@ -101,6 +101,8 @@ namespace hub_client.Configuration
 
             GameColors.Add("Color1ShadowDuel", (Color)ColorConverter.ConvertFromString("#FF1114FF"));
             GameColors.Add("Color2ShadowDuel", (Color)ColorConverter.ConvertFromString("#FF061235"));
+
+            GameColors.Add("ConsoleBackground", (Color)ColorConverter.ConvertFromString("#FFA663F1"));
         }
 
         public Color GetGameColor(string propertyName)

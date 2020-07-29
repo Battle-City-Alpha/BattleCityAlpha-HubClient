@@ -54,6 +54,7 @@ namespace hub_client.Windows.Controls.Story_Mode
         {
             _state = 0;
             _joystick.PressSpace += _joystick_PressSpace;
+            _joystick.CloseEvents += CloseEvents;
             LoadDialogState();
         }
 
@@ -136,6 +137,12 @@ namespace hub_client.Windows.Controls.Story_Mode
             }
             else
                 Dispatcher.Invoke(() => tb_text.Text = _currentSentence.Text.Substring(0, _textDisplayIndex));
+        }
+
+        public void CloseEvents()
+        {
+            _joystick.PressSpace -= _joystick_PressSpace;
+            _joystick.CloseEvents -= CloseEvents;
         }
     }
 }

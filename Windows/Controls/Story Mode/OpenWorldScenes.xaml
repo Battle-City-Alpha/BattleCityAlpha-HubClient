@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:hub_client.Windows.Controls.Story_Mode"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="main_grid" Grid.Column="1">
+    <Grid x:Name="main_grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="2*" />

@@ -1,0 +1,27 @@
+﻿<UserControl xmlns:Items="clr-namespace:hub_client.Windows.Controls.Story_Mode.Items"  x:Class="hub_client.Windows.Controls.Story_Mode.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls.Story_Mode"
+             mc:Ignorable="d" 
+             Height="393" Width="500">
+    <UserControl.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Menus/main_menu.png"/>
+    </UserControl.Background>
+
+    <Grid>
+        <Items:StoryModeMenu x:Name="item_adventure" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20, 18, 0, 0"/>
+        <Border x:Name="bd_firstitem" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="-3" Opacity="0.8" Margin="85, 18, 0, 0" Width="0" Height="140" CornerRadius="0, 20, 20, 0">
+            <TextBlock TextAlignment="Center" Text="Viens affronter des duellistes de renoms dans de nouvelles aventures inedites ! Rien de mieux pour se faire la main et gagner de beaux cadeaux !" FontFamily="Dealer Strikes Straight" Width="240" Margin="80, 20, 20, 20" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20"/>
+        </Border>
+        <Items:StoryModeMenu x:Name="item_free" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80, 130, 0, 0" Panel.ZIndex="-2"/>
+        <Border x:Name="bd_second" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="-3" Opacity="0.8" Margin="145, 130, 0, 0" Width="0" Height="140" CornerRadius="0, 20, 20, 0">
+            <TextBlock TextAlignment="Center" Text="Viens tenter de combattre et de recruter les duellistes que tu as rencontre au cours de ton aventure." FontFamily="Dealer Strikes Straight" Width="240" Margin="80, 20, 20, 20" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20"/>
+        </Border>
+        <Items:StoryModeMenu x:Name="item_quit" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20, 240, 0, 0"/>
+        <Border x:Name="bd_third" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="-3" Opacity="0.8" Margin="85, 240, 0, 0" Width="0" Height="140" CornerRadius="0, 20, 20, 0">
+            <TextBlock Text="A bientot !" TextAlignment="Center" FontFamily="Dealer Strikes Straight" Width="240" Margin="80, 20, 20, 20" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20"/>
+        </Border>
+    </Grid>
+</UserControl>
