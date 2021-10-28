@@ -342,7 +342,7 @@ namespace hub_client.WindowsAdministrator
                         case "RESTARTASTRAL":
                             return new NetworkData(PacketType.RestartAstral, new StandardClientRestartAstral { });
                         case "STORY":
-                            StoryModeConsole console = new StoryModeConsole();
+                            StoryModeConsole console = new StoryModeConsole(Client.StoryModeConsoleAdmin);
                             console.Show();
                             return null;
                         default:

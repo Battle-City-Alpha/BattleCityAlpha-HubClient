@@ -1,4 +1,6 @@
-﻿using BCA_StoryMode.Helpers;
+﻿using BCA.Story_Mode;
+using BCA_StoryMode.Enums;
+using BCA_StoryMode.Helpers;
 using BCA_StoryMode.Models;
 using BCA_StoryMode.OpenWorld;
 using hub_client.Windows.StoryMode.Enums;
@@ -126,7 +128,7 @@ namespace hub_client.Windows.Controls.Story_Mode
                     Grid.SetRow(newCharacter.CharacterPic, 2);
                     Grid.SetZIndex(newCharacter.CharacterPic, 2);
 
-                    newCharacter.MoveTransform = new TranslateTransform(new Random().Next(30, (int)this.ActualWidth - 2 * newCharacter.Sprites.SpriteWidth), 0);
+                    newCharacter.MoveTransform = new TranslateTransform(new Random().Next(30, 480 - 3 * newCharacter.Sprites.SpriteWidth), 0);
                     newCharacter.CharacterPic.RenderTransform = newCharacter.MoveTransform;
                     newCharacter.Direction = new Random().Next(2) == 0 ? DirectionEnum.IDLELeft : DirectionEnum.IDLERight;
                     newCharacter.MoveSpriteIndex = 0;
@@ -137,7 +139,7 @@ namespace hub_client.Windows.Controls.Story_Mode
         }
         private void LoadMainCharacter()
         {
-            Character player = CharactersManager.GetCharacter(2);
+            Character player = CharactersManager.GetCharacter((int)CharacterID.Yusei);
             if (player == null)
                 CloseScene?.Invoke();
 

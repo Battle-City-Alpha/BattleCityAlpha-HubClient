@@ -27,7 +27,7 @@ namespace hub_client.Windows.Controls.Story_Mode.Items
         }
         public void InitItem(int id, string title, string infos)
         {
-            ImageBrush background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Menus/arcsmenu_" + id + ".jpg")));
+            ImageBrush background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Menus/arcsmenu_" + id + ".png")));
             background.Stretch = Stretch.UniformToFill;
             bg_polygon.Fill = background;
 

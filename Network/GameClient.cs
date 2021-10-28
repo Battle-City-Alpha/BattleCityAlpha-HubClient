@@ -7,6 +7,8 @@ using BCA.Network.Packets;
 using BCA.Network.Packets.Enums;
 using BCA.Network.Packets.Standard.FromClient;
 using BCA.Network.Packets.Standard.FromServer;
+using BCA.Network.Packets.Story_Mode.FromServer;
+using BCA.Story_Mode;
 using hub_client.Cards;
 using hub_client.Configuration;
 using hub_client.Enums;
@@ -160,6 +162,10 @@ namespace hub_client.Network
         #region TeamGamesHistoryEvents
         public event Action<TeamGameResult[]> TeamGamesHistory;
         #endregion
+        #region Story Mode Events
+        public event Action<OpenWorldCharacter[]> GetOpenWorldCharacters;
+        public event Action<SceneInfo[]> GetScenes;
+        #endregion
 
         #region Administrator
         public ChatAdministrator ChatAdmin;
@@ -192,6 +198,7 @@ namespace hub_client.Network
         public DuelResultAdministrator DuelResultAdmin;
         public TeamProfileAdministrator TeamProfileAdmin;
         public TeamGamesHistoryAdministrator TeamGamesHistoryAdmin;
+        public StoryModeConsoleAdministrator StoryModeConsoleAdmin;
         #endregion
 
         public PlayerManager PlayerManager;
@@ -237,6 +244,7 @@ namespace hub_client.Network
             DuelResultAdmin = new DuelResultAdministrator(this);
             TeamProfileAdmin = new TeamProfileAdministrator(this);
             TeamGamesHistoryAdmin = new TeamGamesHistoryAdministrator(this);
+            StoryModeConsoleAdmin = new StoryModeConsoleAdministrator(this);
         }
 
         private void InitManager()
@@ -599,6 +607,12 @@ namespace hub_client.Network
                     case PacketType.GetTeamGamesHistory:
                     case PacketType.GetTeamMemberGamesHistory:
                         OnTeamsGameHistory(JsonConvert.DeserializeObject<StandardServerTeamGamesHistory>(packet));
+                        break;
+                    case PacketType.GetOpenWorldCharacters:
+                        OnGetOpenWorldCharacters(JsonConvert.DeserializeObject<StoryModeServerGetOpenWorldCharacters>(packet));
+                        break;
+                    case PacketType.GetScenes:
+                        OnGetScenes(JsonConvert.DeserializeObject<StoryModeServerGetScenes>(packet));
                         break;
                 }
             }
@@ -1662,6 +1676,15 @@ namespace hub_client.Network
         public void OnTeamsGameHistory(StandardServerTeamGamesHistory packet)
         {
             Application.Current.Dispatcher.InvokeAsync(() => TeamGamesHistory?.Invoke(packet.Results));
+        }
+
+        public void OnGetOpenWorldCharacters(StoryModeServerGetOpenWorldCharacters packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => GetOpenWorldCharacters?.Invoke(packet.Characters));
+        }
+        public void OnGetScenes(StoryModeServerGetScenes packet)
+        {
+            Application.Current.Dispatcher.InvokeAsync(() => GetScenes?.Invoke(packet.Scenes));
         }
 
         public void OnPing(StandardServerPing packet)

@@ -22,12 +22,12 @@ namespace hub_client.Helpers
                     i++;
                     Application.Current.Dispatcher.Invoke(() => LoadingProgress?.Invoke(i, n));
                     UnzipFromStream(wc.OpenRead(GetUpdateFileLink(updates[u])), FormExecution.path);
+                    FormExecution.ClientConfig.CardsStuffVersion = Convert.ToInt32(updates[u]);
+                    FormExecution.SaveConfig();
                 }
             }
 
             Application.Current.Dispatcher.Invoke(() => UpdateCompleted?.Invoke());
-            FormExecution.ClientConfig.CardsStuffVersion = FormExecution.GetLastVersion(updates);
-            FormExecution.SaveConfig();
         }
 
         private static Uri GetUpdateFileLink(string updatename)

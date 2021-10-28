@@ -1,8 +1,12 @@
-﻿using BCA_StoryMode.Models;
+﻿using BCA.Story_Mode;
+using BCA.Story_Mode.Enums;
+using BCA_StoryMode.Enums;
+using BCA_StoryMode.Models;
 using BCA_StoryMode.OpenWorld;
 using hub_client.Windows.Controls.Story_Mode;
 using hub_client.Windows.StoryMode.Enums;
 using hub_client.Windows.StoryMode.Stuff;
+using hub_client.WindowsAdministrator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +31,17 @@ namespace hub_client.Windows.StoryMode
     public partial class StoryModeConsole : Window
     {
         private Joystick _joystick;
+        private StoryModeConsoleAdministrator _admin;
 
-        public StoryModeConsole()
+        public StoryModeConsole(StoryModeConsoleAdministrator admin)
         {
             InitializeComponent();
             this.MouseDown += Window_MouseDown;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            _admin = admin;
+            _admin.Client.GetOpenWorldCharacters += LoadOpenWorld;
+            _admin.Client.GetScenes += LoadScenesMenu;
 
             _joystick = new Joystick();
             this.btn_left.MouseDown += (sender, e) => JoystickMove(sender, e, DirectionEnum.Left);
@@ -53,6 +62,13 @@ namespace hub_client.Windows.StoryMode
             LoadStyle();
 
             LoadTitleScreen();
+        }
+
+        private void LoadOpenWorld(OpenWorldCharacter[] characters)
+        {
+            OpenWorldScenes scenes = new OpenWorldScenes(characters, _joystick);
+            scenes.OpenDialog += OpenDialogScenes;
+            console_screen.Child = scenes;
         }
 
         private void LoadStyle()
@@ -124,16 +140,36 @@ namespace hub_client.Windows.StoryMode
             bd_black_fade.BeginAnimation(OpacityProperty, new DoubleAnimation(bd_black_fade.Opacity, 0.0, TimeSpan.FromMilliseconds(200)));
             console_screen.Child = menu;
         }
-        private void LoadOpenWorld()
-        {
-            OpenWorldScenes scenes = new OpenWorldScenes(new OpenWorldCharacter[] { new OpenWorldCharacter(100004, 1) }, _joystick);
-            scenes.OpenDialog += OpenDialogScenes;
-            console_screen.Child = scenes;
-        }
         private void LoadArcsMenu()
         {
             ArcsMenu menu = new ArcsMenu(_joystick);
+            menu.MakeChoice += ArcChoose;
             console_screen.Child = menu;
+        }
+        private void ArcChoose(int id)
+        {
+            switch ((ArcID)id)
+            {
+                case ArcID.SD5:
+                    _admin.SendGetScenes(ArcID.SD5);
+                    LoadLoadingScreen();
+                    break;
+                default:
+                    LoadArcsMenu();
+                    break;
+            }
+        }
+
+        private void LoadScenesMenu(SceneInfo[] scenes)
+        {
+            ChooseSceneMenu menu = new ChooseSceneMenu(scenes, _joystick);
+            console_screen.Child = menu;
+        }
+
+        private void LoadLoadingScreen()
+        {
+            LoadingScreen loading = new LoadingScreen();
+            console_screen.Child = loading;
         }
 
         private void OpenDialogScenes(Scene scene)
@@ -157,7 +193,8 @@ namespace hub_client.Windows.StoryMode
                     LoadArcsMenu();
                     break;
                 case 2:
-                    LoadOpenWorld();
+                    _admin.SendGetOpenWorldCharacter();
+                    LoadLoadingScreen();
                     break;
                 case 3:
                     StartClosing();
@@ -201,6 +238,9 @@ namespace hub_client.Windows.StoryMode
         }
         private void StartClosing()
         {
+            _admin.Client.GetOpenWorldCharacters -= LoadOpenWorld; 
+            _admin.Client.GetScenes -= LoadScenesMenu;
+
             bd_power.Background = new SolidColorBrush(Colors.Red);
             Storyboard storyboard = new Storyboard();
 

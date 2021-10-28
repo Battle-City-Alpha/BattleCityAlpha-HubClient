@@ -178,22 +178,26 @@ namespace hub_client.Assets
             }
 
             if (!File.Exists(Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")))
-            {
-                string url = custom.IsHost ? custom.URL : string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/BattleCityAlpha-v2-Assets/master/{0}/{1}.png", d, custom.Id);
-                try
+            {               
+                if (!custom.IsHost)
+                    return GetUnknownCardPic();
+                else
                 {
-                    using (WebClient wc = new WebClient())
+                    try
                     {
-                        wc.DownloadFile(
-                            new System.Uri(url),
-                            Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")
-                            );
+                        using (WebClient wc = new WebClient())
+                        {
+                            wc.DownloadFile(
+                                new System.Uri(custom.URL),
+                                Path.Combine(FormExecution.path, "Assets", d, custom.Id + ".png")
+                                );
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.ToString());
-                    FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur");
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        FormExecution.Client_PopMessageBox("Une erreur s'est produite lors du chargement de votre image.", "Erreur");
+                    }
                 }
             }
 
@@ -204,7 +208,10 @@ namespace hub_client.Assets
             if (!Directory.Exists(Path.Combine(FormExecution.path, "Assets", "Team")))
                 Directory.CreateDirectory(Path.Combine(FormExecution.path, "Assets", "Team"));
 
-            if (!TeamEmblemsURL.ContainsKey(teamID) || TeamEmblemsURL[teamID] != emblem || !File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
+            if (!File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")) && emblem == "")
+                return null;
+
+            if (!TeamEmblemsURL.ContainsKey(teamID) || (TeamEmblemsURL[teamID] != emblem && emblem != "") || !File.Exists(Path.Combine(FormExecution.path, "Assets", "Team", teamID + ".png")))
             {
                 try
                 {

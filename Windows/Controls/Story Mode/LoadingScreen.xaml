@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="hub_client.Windows.Controls.Story_Mode.LoadingScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:hub_client.Windows.Controls.Story_Mode"
+             mc:Ignorable="d" 
+             Height="393" Width="500">
+    <UserControl.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Menus/main_menu.png"/>
+    </UserControl.Background>
+
+    <Grid>
+        <Path x:Name="hexagon_loading" Width="240" Height="280" Stretch="Uniform" Opacity="1" Stroke="White" StrokeThickness="5" VerticalAlignment="Top" Margin="0,20"
+         Data="M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" RenderTransformOrigin="0.5,0.5">
+            <Path.Fill>
+                <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Loading/1.png"/>
+            </Path.Fill>
+        </Path>
+
+        <Polygon Fill="White" Opacity="0.8" Points="0,50 20,0 280,0 300,50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20,0" Width="300" Height="50"/>
+        <TextBlock x:Name="tb_loading" Text="CHARGEMENT" FontFamily="Dealer Strikes Straight" FontSize="25" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center" Margin="0, 15"/>
+
+    </Grid>
+</UserControl>

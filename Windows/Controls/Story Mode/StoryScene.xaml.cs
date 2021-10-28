@@ -60,6 +60,7 @@ namespace hub_client.Windows.Controls.Story_Mode
         private void LoadScene()
         {
             ImageBrush background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Backgrounds/" + _scene.Background + ".jpg")));
+            background.Stretch = Stretch.UniformToFill;
             bg_border.Background = background;
         }
         private void LoadCharacters()

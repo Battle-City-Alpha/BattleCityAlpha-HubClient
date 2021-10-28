@@ -44,7 +44,7 @@ namespace hub_client.Windows
             progressBar_update.Maximum = CardManager.Count;
             tb_update_total.Text = CardManager.Count.ToString();
 
-            DownloadPics();
+            //DownloadPics();
         }
 
         private async void DownloadPics()
@@ -84,11 +84,7 @@ namespace hub_client.Windows
 
         public Uri GetUri(string id)
         {
-            string s = "";
-            if (base_design.IsChecked == true)
-                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/base_design/{0}.jpg", id);
-            else
-                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/bca_design/{0}.jpg", id);
+            string s = string.Format("https://ignis-pics.hel.lu:2096/pics/{0}.jpg", id);
 
             return new Uri(s);
         }

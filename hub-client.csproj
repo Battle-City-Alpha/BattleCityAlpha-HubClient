@@ -195,6 +195,7 @@
     <Compile Include="WindowsAdministrator\SelectCardAdministrator.cs" />
     <Compile Include="WindowsAdministrator\ShopAdministrator.cs" />
     <Compile Include="WindowsAdministrator\SleevesHandleAdministrator.cs" />
+    <Compile Include="WindowsAdministrator\StoryModeConsoleAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TeamGamesHistoryAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TeamProfileAdministrator.cs" />
     <Compile Include="WindowsAdministrator\TitlesHandleAdministrator.cs" />
@@ -292,6 +293,9 @@
     <Compile Include="Windows\Controls\Story Mode\ArcsMenu.xaml.cs">
       <DependentUpon>ArcsMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Controls\Story Mode\ChooseSceneMenu.xaml.cs">
+      <DependentUpon>ChooseSceneMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\Story Mode\DialogScene.xaml.cs">
       <DependentUpon>DialogScene.xaml</DependentUpon>
     </Compile>
@@ -300,6 +304,12 @@
     </Compile>
     <Compile Include="Windows\Controls\Story Mode\Items\StoryModeMenu.xaml.cs">
       <DependentUpon>StoryModeMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\Items\StoryModeSceneItem.xaml.cs">
+      <DependentUpon>StoryModeSceneItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Controls\Story Mode\LoadingScreen.xaml.cs">
+      <DependentUpon>LoadingScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\Story Mode\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
@@ -557,6 +567,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Controls\Story Mode\ChooseSceneMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Controls\Story Mode\DialogScene.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -566,6 +580,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Controls\Story Mode\Items\StoryModeMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\Items\StoryModeSceneItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\Story Mode\LoadingScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

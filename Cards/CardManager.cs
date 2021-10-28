@@ -116,8 +116,16 @@ namespace hub_client.Cards
                 LoadSetCodesFromFile(CreateFileStreamFromString(File.ReadAllText(Path.Combine(FormExecution.path, "BattleCityAlpha", "strings.conf"))));
             SetCodesStringInit();
 
+            int iter = 0;
             while (progress != total)
+            {
+                iter++;
                 Thread.Sleep(500);
+
+                if (iter > 20)
+                    break;
+            }
+                
             Application.Current.Dispatcher.Invoke(() => LoadingFinished?.Invoke());
 
             return true;
@@ -287,11 +295,7 @@ namespace hub_client.Cards
 
         public static Uri GetUri(string id)
         {
-            string s = "";
-            if (!FormExecution.ClientConfig.BCA_Card_Design)
-                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/base_design/{0}.jpg", id);
-            else
-                s = string.Format("http://raw.githubusercontent.com/Battle-City-Alpha/Pics_BCA/master/bca_design/{0}.jpg", id);
+            string s = string.Format("https://ignis-pics.hel.lu:2096/pics/{0}.jpg", id);
             return new Uri(s);
         }
     }

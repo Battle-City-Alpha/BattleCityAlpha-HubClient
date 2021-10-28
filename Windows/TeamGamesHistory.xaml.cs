@@ -33,19 +33,23 @@ namespace hub_client.Windows
 
         private void _admin_ShowResults(TeamGameResult[] results)
         {
-            foreach (TeamGameResult result in results)
+            try
             {
-                TeamGameResultItem item = new TeamGameResultItem
+                foreach (TeamGameResult result in results)
                 {
-                    Winner = result.Winner.Username + " (" + result.Winner.TeamTag + ")",
-                    WinnerAvatar = FormExecution.AssetsManager.GetCustom(result.Winner.Avatar),
-                    WinnerTeam = FormExecution.AssetsManager.GetTeamEmblem(result.Winner.Team, result.Winner.TeamEmblem),
-                    Looser = result.Looser.Username + " (" + result.Looser.TeamTag + ")",
-                    LooserAvatar = FormExecution.AssetsManager.GetCustom(result.Looser.Avatar),
-                    LooserTeam = FormExecution.AssetsManager.GetTeamEmblem(result.Looser.Team, result.Looser.TeamEmblem)
-                };
-                gamesList.Items.Add(item);
+                    TeamGameResultItem item = new TeamGameResultItem
+                    {
+                        Winner = result.Winner.Username + " (" + result.Winner.TeamTag + ")",
+                        WinnerAvatar = FormExecution.AssetsManager.GetCustom(result.Winner.Avatar),
+                        WinnerTeam = FormExecution.AssetsManager.GetTeamEmblem(result.TeamWinner, ""),
+                        Looser = result.Looser.Username + " (" + result.Looser.TeamTag + ")",
+                        LooserAvatar = FormExecution.AssetsManager.GetCustom(result.Looser.Avatar),
+                        LooserTeam = FormExecution.AssetsManager.GetTeamEmblem(result.TeamLooser, "")
+                    };
+                    gamesList.Items.Add(item);
+                }
             }
+            catch { } 
 
             this.Show();
             this.Width = gamesList.ActualWidth + 50;

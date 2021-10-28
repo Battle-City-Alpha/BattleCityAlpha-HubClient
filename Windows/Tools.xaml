@@ -308,19 +308,6 @@
                         </Border>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Battle City Alpha - Autre">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Controls:BCA_ColorButton x:Name="btn_datasretrieval" Grid.Row="0" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données V1" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
-                        <Controls:BCA_ColorButton x:Name="btn_choosepics" Grid.Row="1" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Choix du style d'image" MouseLeftButtonDown="btn_choosepics_MouseLeftButtonDown"  HorizontalAlignment="Center"/>
-                    </Grid>
-                </TabItem>
                 <TabItem Header="YGOPro - Design image">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -351,6 +338,20 @@
                             </Border.Background>
                             <Image x:Name="showroom_ygopro_pics" Margin="10" MouseLeftButtonDown="showroom_pics_MouseLeftButtonDown" Cursor="Hand"/>
                         </Border>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Battle City Alpha - Autre" Visibility="Hidden">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Controls:BCA_ColorButton x:Name="btn_datasretrieval" Grid.Row="0" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Récupérer ses données V1" MouseLeftButtonDown="btn_datasretrieval_MouseLeftButtonDown" HorizontalAlignment="Center"/>
+                        <Controls:BCA_ColorButton x:Name="btn_choosepics" Grid.Row="1" VerticalAlignment="Center" Margin="5,15" Color1="#FF001EBF" Color2="#FF070B3A" ButtonText="Choix du style d'image" MouseLeftButtonDown="btn_choosepics_MouseLeftButtonDown"  HorizontalAlignment="Center"/>
                     </Grid>
                 </TabItem>
             </TabControl>

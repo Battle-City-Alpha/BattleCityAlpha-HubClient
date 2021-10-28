@@ -8,7 +8,7 @@
     <Grid Width="150" Height="310">
         <Polygon x:Name="bg_polygon" Points="0,50 75,10 150,50 150,310 0,310" StrokeThickness="5" Stroke="White">
             <Polygon.Fill>
-                <ImageBrush Stretch="UniformToFill" ImageSource="pack://application:,,,/BCA_StoryMode;component/Assets/StoryMode/Menus/arcsmenu_1.jpg" Viewbox="0.0, 0, 0.7, 1"/>
+                <ImageBrush Stretch="UniformToFill" Viewbox="0.0, 0, 0.7, 1"/>
             </Polygon.Fill>
         </Polygon>
         <Border x:Name="bd_title" Height="30" Opacity="1" Background="White" Margin="0" VerticalAlignment="Bottom">

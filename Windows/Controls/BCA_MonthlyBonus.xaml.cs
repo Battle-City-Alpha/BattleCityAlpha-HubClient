@@ -62,7 +62,11 @@ namespace hub_client.Windows.Controls
                         break;
                     case BonusType.Card:
                         tb_left.Text = "Carte";
-                        tb_right.Text = CardManager.GetCard(Convert.ToInt32(bonus.Gift)).Name;
+                        try
+                        {
+                            tb_right.Text = CardManager.GetCard(Convert.ToInt32(bonus.Gift)).Name;
+                        }
+                        catch { tb_right.Text = bonus.Gift; }
                         img_bonus.Source = FormExecution.AssetsManager.GetPics(new string[] { "BattleCityAlpha", "pics", bonus.Gift + ".jpg" });
                         break;
                     case BonusType.Booster:
